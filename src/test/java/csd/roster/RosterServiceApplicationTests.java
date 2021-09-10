@@ -1,4 +1,4 @@
-package com.example.RosterService;
+package csd.roster;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
