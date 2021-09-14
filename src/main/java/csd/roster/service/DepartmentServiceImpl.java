@@ -25,7 +25,7 @@ public class DepartmentServiceImpl implements DepartmentService {
 
     @Override
     public List<Department> getAllDepartments() {
-        throw new NotYetImplementedException();
+        return departmentRepository.findAll();
     }
 
     @Override
