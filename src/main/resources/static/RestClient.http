@@ -16,7 +16,7 @@ POST http://localhost:8080/companies/efd12781-392b-4c97-b388-8722bd709601/depart
 Content-Type: application/json
 
 {
-    "name": "SCIS Dept 1"
+    "name": "SCIS Dept 2"
 }
 
 ###

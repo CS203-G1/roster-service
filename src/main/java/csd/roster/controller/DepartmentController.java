@@ -25,13 +25,14 @@ public class DepartmentController {
     }
 
     @PostMapping("/companies/{companyId}/departments")
-    public Department addDepartment(@PathVariable (value = "companyId") UUID companyId,
+    public ResponseEntity<?> addDepartment(@PathVariable (value = "companyId") UUID companyId,
                                     @RequestBody Department department) {
-        return companyService.getCompanyById(companyId).map(company -> {
-            department.setCompany(company);
-            return departmentService.addDepartment(department);
-        }).orElseThrow(() -> new CompanyNotFoundException(companyId));
-
+        try {
+            Department newDepartment = departmentService.add(companyId, department);
+            return new ResponseEntity<>(newDepartment, HttpStatus.OK);
+        } catch (RuntimeException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+        }
     }
 
     @GetMapping("/companies/{companyId}/departments/{departmentId}")

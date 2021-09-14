@@ -7,7 +7,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 public interface DepartmentService {
-    Department addDepartment(Department department);
+    Department add(UUID companyId, Department department);
 
     List<Department> getAllDepartments();
 

@@ -25,7 +25,11 @@ public class DepartmentServiceImpl implements DepartmentService {
     }
 
     @Override
-    public Department addDepartment(Department department) {
+    public Department add(UUID companyId, Department department) {
+        Company company = companyService.getCompanyById(companyId)
+                .orElseThrow(() -> new CompanyNotFoundException(companyId));
+
+        department.setCompany(company);
         return departmentRepository.save(department);
     }
 
