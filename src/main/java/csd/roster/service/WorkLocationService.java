@@ -9,7 +9,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 public interface WorkLocationService {
-    WorkLocation add(UUID departmentId, WorkLocation workLocation);
+    WorkLocation add(UUID companyId,UUID departmentId, WorkLocation workLocation);
 
     List<WorkLocation> getWorkLocationsFromDepartment(UUID departmentId);
 
