@@ -1,5 +1,6 @@
 package csd.roster.service;
 
+import csd.roster.exception.CompanyNotFoundException;
 import csd.roster.model.Company;
 import csd.roster.repository.CompanyRepository;
 import org.hibernate.cfg.NotYetImplementedException;
@@ -29,8 +30,8 @@ public class CompanyServiceImpl implements CompanyService {
     }
 
     @Override
-    public Optional<Company> getCompanyById(UUID id) {
-        return companyRepository.findById(id);
+    public Company getCompanyById(UUID id) {
+        return companyRepository.findById(id).orElseThrow(() -> new CompanyNotFoundException(id));
     }
 
     @Override
