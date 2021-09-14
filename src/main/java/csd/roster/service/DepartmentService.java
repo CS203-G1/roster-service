@@ -15,7 +15,9 @@ public interface DepartmentService {
 
     Department updateCompanyById(UUID id);
 
-    void delete(Department department);
+    void delete(UUID companyId, UUID departmentId);
+
+    Department update(UUID companyId, UUID departmentId, Department department);
 
     Optional<Department> getDepartmentByIdAndCompanyId(UUID departmentId, UUID companyId);
 }
