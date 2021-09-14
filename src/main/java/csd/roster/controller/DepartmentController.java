@@ -1,10 +1,7 @@
 package csd.roster.controller;
 
-import csd.roster.exception.CompanyNotFoundException;
-import csd.roster.exception.DepartmentNotFoundException;
 import csd.roster.exception.ResourceNotFoundException;
 import csd.roster.model.Department;
-import csd.roster.service.CompanyService;
 import csd.roster.service.DepartmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
