@@ -3,6 +3,7 @@ package csd.roster.service;
 import csd.roster.model.Company;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 public interface CompanyService {
@@ -10,7 +11,7 @@ public interface CompanyService {
 
     List<Company> getAllCompanies();
 
-    Company getCompanyById(UUID id);
+    Optional<Company> getCompanyById(UUID id);
 
     Company updateCompanyByid(UUID id, Company company);
 
