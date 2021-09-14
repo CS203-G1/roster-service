@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+@Service
 public class WorkLocationServiceImpl implements WorkLocationService {
     final private WorkLocationRepository workLocationRepository;
     final private DepartmentService departmentService;
