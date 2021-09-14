@@ -1,14 +1,17 @@
+# Get all companies
 GET http://localhost:8080/companies
 
 ###
+# Add a company
 POST http://localhost:8080/companies
 Content-Type: application/json
 
 {
-    "name": "SCIS"
+    "name": "SOL"
 }
 
 ###
+# Add department to a company
 POST http://localhost:8080/companies/efd12781-392b-4c97-b388-8722bd709601/departments
 Content-Type: application/json
 
@@ -17,8 +20,19 @@ Content-Type: application/json
 }
 
 ###
-GET http://localhost:8080/companies/efd12781-392b-4c97-b388-8722bd709601/departments/
+# Get a department by company and department id
+GET http://localhost:8080/companies/efd12781-392b-4c97-b388-8722bd709601/departments/692b1d0e-fe49-4b05-8b01-f79607da7632
 
 ###
-DELETE http://localhost:8080/companies/efd12781-392b-4c97-b388-8722bd709601/departments/cfad0d46-ac87-4a06-9141-55ec28fc0738
+# Update company
+PUT http://localhost:8080/companies/efd12781-392b-4c97-b388-8722bd709601/departments/692b1d0e-fe49-4b05-8b01-f79607da7631
+Content-Type: application/json
+
+{
+  "name": "SCIS Updated Dept 1"
+}
+
+###
+# Delete department
+DELETE http://localhost:8080/companies/efd12781-392b-4c97-b388-8722bd709601/departments/7348d95b-d780-4af9-b8be-774ff8ab55cd
 
