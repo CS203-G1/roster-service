@@ -16,3 +16,9 @@ Content-Type: application/json
     "name": "SCIS Dept 1"
 }
 
+###
+GET http://localhost:8080/companies/efd12781-392b-4c97-b388-8722bd709601/departments/
+
+###
+DELETE http://localhost:8080/companies/efd12781-392b-4c97-b388-8722bd709601/departments/cfad0d46-ac87-4a06-9141-55ec28fc0738
+
