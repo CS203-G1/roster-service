@@ -6,6 +6,7 @@ import org.hibernate.cfg.NotYetImplementedException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -19,7 +20,7 @@ public class DepartmentServiceImpl implements DepartmentService {
 
     @Override
     public Department addDepartment(Department department) {
-        throw new NotYetImplementedException();
+        return departmentRepository.save(department);
     }
 
     @Override
@@ -28,8 +29,13 @@ public class DepartmentServiceImpl implements DepartmentService {
     }
 
     @Override
-    public Department getDepartmentById(UUID id) {
+    public Optional<Department> getDepartmentById(UUID id) {
         throw new NotYetImplementedException();
+    }
+
+    @Override
+    public Optional<Department> getDepartmentByIdAndCompanyId(UUID departmentId, UUID companyId) {
+        return departmentRepository.findByIdAndCompanyId(departmentId, companyId);
     }
 
     @Override
