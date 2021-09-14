@@ -1,12 +1,9 @@
 package csd.roster.model;
 
 import lombok.*;
-import org.springframework.data.annotation.Id;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
+import javax.persistence.*;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -20,10 +17,13 @@ public class Company {
 
     @javax.persistence.Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name="id")
+    @Column(name = "id")
     private UUID id;
 
-    @Column(name="name")
+    @Column(name = "name")
     private String name;
+
+    @OneToMany(mappedBy = "company", cascade = CascadeType.ALL)
+    private List<Department> departments;
 
 }
