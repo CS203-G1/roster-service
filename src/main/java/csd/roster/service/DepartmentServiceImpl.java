@@ -44,7 +44,7 @@ public class DepartmentServiceImpl implements DepartmentService {
     }
 
     @Override
-    public Department deleteDepartmentById(UUID id) {
-        throw new NotYetImplementedException();
+    public void delete(Department department) {
+        departmentRepository.delete(department);
     }
 }
