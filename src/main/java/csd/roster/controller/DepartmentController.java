@@ -7,6 +7,7 @@ import csd.roster.service.CompanyService;
 import csd.roster.service.DepartmentService;
 import org.hibernate.cfg.NotYetImplementedException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -33,8 +34,9 @@ public class DepartmentController {
 
     }
 
-    @GetMapping("/companies/{companyId}/departments/{id}")
-    public Department getDepartmentById(@PathVariable UUID companyId, @PathVariable UUID departmentId) {
+    @GetMapping("/companies/{companyId}/departments/{departmentId}")
+    public Department getDepartmentById(@PathVariable (value = "companyId") UUID companyId,
+                                        @PathVariable (value = "departmentId") UUID departmentId) {
         if (companyService.getCompanyById(companyId) == null)
             throw new CompanyNotFoundException(companyId);
 
@@ -54,10 +56,15 @@ public class DepartmentController {
         throw new NotYetImplementedException();
     }
 
-    @DeleteMapping("/companies/{companyId}/departments/{id}")
-    public Department deleteDepartment(@PathVariable UUID companyId,
-                                       @PathVariable UUID departmentId,
-                                       @RequestBody Department department) {
-        throw new NotYetImplementedException();
+    @DeleteMapping("/companies/{companyId}/departments/{departmentId}")
+    public ResponseEntity<?> deleteDepartment(@PathVariable (value = "companyId") UUID companyId,
+                                       @PathVariable (value = "departmentId") UUID departmentId) {
+        if (companyService.getCompanyById(companyId) == null)
+            throw new CompanyNotFoundException(companyId);
+
+        return departmentService.getDepartmentByIdAndCompanyId(departmentId, companyId).map(department -> {
+            departmentService.delete(department);
+            return ResponseEntity.ok().build();
+        }).orElseThrow(() -> new CompanyNotFoundException(companyId));
     }
 }
