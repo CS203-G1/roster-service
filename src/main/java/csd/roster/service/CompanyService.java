@@ -11,7 +11,7 @@ public interface CompanyService {
 
     List<Company> getAllCompanies();
 
-    Optional<Company> getCompanyById(UUID id);
+    Company getCompanyById(UUID id);
 
     Company updateCompanyByid(UUID id, Company company);
 
