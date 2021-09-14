@@ -36,13 +36,14 @@ public class DepartmentController {
     }
 
     @GetMapping("/companies/{companyId}/departments/{departmentId}")
-    public Department getDepartmentById(@PathVariable (value = "companyId") UUID companyId,
+    public ResponseEntity<?> getDepartmentById(@PathVariable (value = "companyId") UUID companyId,
                                         @PathVariable (value = "departmentId") UUID departmentId) {
-        if (companyService.getCompanyById(companyId) == null)
-            throw new CompanyNotFoundException(companyId);
-
-        return departmentService.getDepartmentByIdAndCompanyId(departmentId, companyId)
-                .orElseThrow(() -> new DepartmentNotFoundException(companyId, departmentId));
+        try {
+            Department newDepartment = departmentService.getDepartmentByIdAndCompanyId(companyId, departmentId);
+            return new ResponseEntity<>(newDepartment, HttpStatus.OK);
+        } catch (RuntimeException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+        }
     }
 
     @GetMapping("/departments")

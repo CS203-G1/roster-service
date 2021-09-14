@@ -6,7 +6,6 @@ import csd.roster.model.Company;
 import csd.roster.model.Department;
 import csd.roster.repository.DepartmentRepository;
 import org.hibernate.cfg.NotYetImplementedException;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -44,8 +43,12 @@ public class DepartmentServiceImpl implements DepartmentService {
     }
 
     @Override
-    public Optional<Department> getDepartmentByIdAndCompanyId(UUID departmentId, UUID companyId) {
-        return departmentRepository.findByIdAndCompanyId(departmentId, companyId);
+    public Department getDepartmentByIdAndCompanyId(UUID companyId, UUID departmentId) {
+        if (companyService.getCompanyById(companyId) == null)
+            throw new CompanyNotFoundException(companyId);
+
+        return departmentRepository.findByIdAndCompanyId(departmentId, companyId)
+                .orElseThrow(() -> new DepartmentNotFoundException(companyId, departmentId));
     }
 
     @Override
@@ -55,25 +58,24 @@ public class DepartmentServiceImpl implements DepartmentService {
 
     @Override
     public void delete(UUID companyId, UUID departmentId) {
-        if (companyService.getCompanyById(companyId) == null)
-            throw new CompanyNotFoundException(companyId);
-
-        Department department = getDepartmentByIdAndCompanyId(departmentId, companyId)
-                .orElseThrow(() -> new DepartmentNotFoundException(companyId, departmentId));
+        // Using getDepartmentByIdAndCompanyId for DRY purposes
+        Department department = getDepartmentByIdAndCompanyId(companyId, departmentId);
 
         departmentRepository.delete(department);
     }
 
     @Override
     public Department update(UUID companyId, UUID departmentId, Department department) {
+        // Notice here we are using repeated code as getDepartmentByIdAndCompanyId
+        // The rational is that we need to get the company object so we can pass it in the params of setCompany
+
         Company company = companyService.getCompanyById(companyId)
                 .orElseThrow(() -> new CompanyNotFoundException(companyId));
 
-        return getDepartmentByIdAndCompanyId(departmentId, companyId).map(oldDepartment -> {
+        return departmentRepository.findByIdAndCompanyId(departmentId, companyId).map(oldDepartment -> {
             department.setCompany(company);
             department.setId(departmentId);
             return departmentRepository.save(department);
         }).orElseThrow(() -> new DepartmentNotFoundException(companyId, departmentId));
-
     }
 }
