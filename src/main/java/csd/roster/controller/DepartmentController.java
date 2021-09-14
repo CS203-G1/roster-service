@@ -2,6 +2,7 @@ package csd.roster.controller;
 
 import csd.roster.exception.CompanyNotFoundException;
 import csd.roster.exception.DepartmentNotFoundException;
+import csd.roster.exception.ResourceNotFoundException;
 import csd.roster.model.Department;
 import csd.roster.service.CompanyService;
 import csd.roster.service.DepartmentService;
@@ -16,12 +17,10 @@ import java.util.UUID;
 @RestController
 public class DepartmentController {
     private DepartmentService departmentService;
-    private CompanyService companyService;
 
     @Autowired
-    public DepartmentController(DepartmentService departmentService, CompanyService companyService) {
+    public DepartmentController(DepartmentService departmentService) {
         this.departmentService = departmentService;
-        this.companyService = companyService;
     }
 
     @PostMapping("/companies/{companyId}/departments")
@@ -30,7 +29,7 @@ public class DepartmentController {
         try {
             Department newDepartment = departmentService.add(companyId, department);
             return new ResponseEntity<>(newDepartment, HttpStatus.OK);
-        } catch (RuntimeException e) {
+        } catch (ResourceNotFoundException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         }
     }
@@ -41,7 +40,7 @@ public class DepartmentController {
         try {
             Department newDepartment = departmentService.getDepartmentByIdAndCompanyId(companyId, departmentId);
             return new ResponseEntity<>(newDepartment, HttpStatus.OK);
-        } catch (RuntimeException e) {
+        } catch (ResourceNotFoundException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         }
     }
@@ -58,7 +57,7 @@ public class DepartmentController {
         try {
             Department updatedDepartment = departmentService.update(companyId, departmentId, department);
             return new ResponseEntity<>(updatedDepartment, HttpStatus.OK);
-        } catch (RuntimeException e) {
+        } catch (ResourceNotFoundException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         }
     }
@@ -70,7 +69,7 @@ public class DepartmentController {
         try {
             departmentService.delete(companyId, departmentId);
             return ResponseEntity.ok().build();
-        } catch (RuntimeException e) {
+        } catch (ResourceNotFoundException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         }
     }
