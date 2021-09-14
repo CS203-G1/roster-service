@@ -49,11 +49,11 @@ public class DepartmentController {
         return departmentService.getAllDepartments();
     }
 
-    @PutMapping("/companies/{companyId}/departments/{id}")
-    public Department updateDepartment(@PathVariable UUID companyId,
-                                       @PathVariable UUID departmentId,
+    @PutMapping("/companies/{companyId}/departments/{departmentId}")
+    public Department updateDepartment(@PathVariable (value = "companyId") UUID companyId,
+                                       @PathVariable (value = "departmentId") UUID departmentId,
                                        @RequestBody Department department) {
-        throw new NotYetImplementedException();
+        return departmentService.update(companyId, departmentId, department);
     }
 
     @DeleteMapping("/companies/{companyId}/departments/{departmentId}")
