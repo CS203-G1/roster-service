@@ -59,12 +59,8 @@ public class DepartmentController {
     @DeleteMapping("/companies/{companyId}/departments/{departmentId}")
     public ResponseEntity<?> deleteDepartment(@PathVariable (value = "companyId") UUID companyId,
                                        @PathVariable (value = "departmentId") UUID departmentId) {
-        if (companyService.getCompanyById(companyId) == null)
-            throw new CompanyNotFoundException(companyId);
 
-        return departmentService.getDepartmentByIdAndCompanyId(departmentId, companyId).map(department -> {
-            departmentService.delete(department);
-            return ResponseEntity.ok().build();
-        }).orElseThrow(() -> new CompanyNotFoundException(companyId));
+        departmentService.delete(companyId, departmentId);
+        return ResponseEntity.ok().build();
     }
 }
