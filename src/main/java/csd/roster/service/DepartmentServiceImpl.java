@@ -5,11 +5,9 @@ import csd.roster.exception.DepartmentNotFoundException;
 import csd.roster.model.Company;
 import csd.roster.model.Department;
 import csd.roster.repository.DepartmentRepository;
-import org.hibernate.cfg.NotYetImplementedException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -38,22 +36,12 @@ public class DepartmentServiceImpl implements DepartmentService {
     }
 
     @Override
-    public Optional<Department> getDepartmentById(UUID id) {
-        throw new NotYetImplementedException();
-    }
-
-    @Override
     public Department getDepartmentByIdAndCompanyId(UUID companyId, UUID departmentId) {
         if (companyService.getCompanyById(companyId) == null)
             throw new CompanyNotFoundException(companyId);
 
         return departmentRepository.findByIdAndCompanyId(departmentId, companyId)
                 .orElseThrow(() -> new DepartmentNotFoundException(companyId, departmentId));
-    }
-
-    @Override
-    public Department updateCompanyById(UUID id) {
-        throw new NotYetImplementedException();
     }
 
     @Override
