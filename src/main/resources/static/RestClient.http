@@ -61,3 +61,7 @@ Content-Type: application/json
   "address": "Address 2",
   "capacity": 50
 }
+
+###
+# Delete specific work location
+DELETE http://localhost:8080/companies/efd12781-392b-4c97-b388-8722bd709601/departments/d23b5840-0cbc-41b7-b96b-ee90c534c398/work-locations/a07194ab-d6ff-4e5e-9bcc-d75323c8a58d
