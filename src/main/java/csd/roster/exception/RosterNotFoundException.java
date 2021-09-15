@@ -9,7 +9,8 @@ import java.util.UUID;
 public class RosterNotFoundException extends ResourceNotFoundException {
     private static final long serialVersionUID = 1L;
 
-    public RosterNotFoundException(UUID rosterId) {
-        super(String.format("Unable to find roster %s", rosterId));
+    public RosterNotFoundException(UUID rosterId, UUID workLocationId, UUID departmentId, UUID companyId) {
+        super(String.format("Unable to find roster %s from work location %s from department %s from company %s",
+                rosterId, workLocationId, departmentId, companyId));
     }
 }
