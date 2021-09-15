@@ -23,6 +23,6 @@ public class Roster {
     private LocalDate localDate;
 
     @ManyToOne
-    @JoinColumn(name = "work_location_id")
+    @JoinColumn(name = "workLocation_id")
     private WorkLocation workLocation;
 }
