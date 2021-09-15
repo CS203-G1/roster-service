@@ -2,9 +2,11 @@ package csd.roster.model;
 
 import lombok.*;
 import javax.persistence.*;
-import java.util.UUID;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import java.util.UUID;
 import java.util.List;
+
 
 @Entity
 @Getter
@@ -32,6 +34,7 @@ public class WorkLocation {
     @Column(name = "capacity")
     private int capacity;
 
-    @OneToMany(mappedBy = "roster", cascade = CascadeType.ALL)
+    @JsonIgnore
+    @OneToMany(mappedBy = "workLocation", cascade = CascadeType.ALL)
     private List<Roster> rosters;
 }
