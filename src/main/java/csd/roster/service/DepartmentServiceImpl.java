@@ -23,8 +23,7 @@ public class DepartmentServiceImpl implements DepartmentService {
 
     @Override
     public Department add(UUID companyId, Department department) {
-        Company company = companyService.getCompanyById(companyId)
-                .orElseThrow(() -> new CompanyNotFoundException(companyId));
+        Company company = companyService.getCompanyById(companyId);
 
         department.setCompany(company);
         return departmentRepository.save(department);
@@ -37,8 +36,7 @@ public class DepartmentServiceImpl implements DepartmentService {
 
     @Override
     public Department getDepartmentByIdAndCompanyId(UUID companyId, UUID departmentId) {
-        if (companyService.getCompanyById(companyId) == null)
-            throw new CompanyNotFoundException(companyId);
+        companyService.getCompanyById(companyId);
 
         return departmentRepository.findByIdAndCompanyId(departmentId, companyId)
                 .orElseThrow(() -> new DepartmentNotFoundException(companyId, departmentId));
@@ -57,8 +55,7 @@ public class DepartmentServiceImpl implements DepartmentService {
         // Notice here we are using repeated code as getDepartmentByIdAndCompanyId
         // The rational is that we need to get the company object so we can pass it in the params of setCompany
 
-        Company company = companyService.getCompanyById(companyId)
-                .orElseThrow(() -> new CompanyNotFoundException(companyId));
+        Company company = companyService.getCompanyById(companyId);
 
         return departmentRepository.findByIdAndCompanyId(departmentId, companyId).map(oldDepartment -> {
             department.setCompany(company);
