@@ -13,7 +13,7 @@ public interface WorkLocationService {
 
     List<WorkLocation> getWorkLocationsFromDepartment(UUID departmentId);
 
-    void delete(UUID departmentId, UUID workLocationId);
+    void delete(UUID companyId, UUID departmentId, UUID workLocationId);
 
     WorkLocation update(UUID companyId, UUID departmentId, UUID workLocationId, WorkLocation workLocation);
 
