@@ -45,5 +45,18 @@ public class WorkLocationController {
         }
     }
 
+    @PutMapping("/companies/{companyId}/departments/{departmentId}/work-locations/{workLocationId}")
+    public ResponseEntity<?> updateWorkLocation(@PathVariable (value = "companyId") UUID companyId,
+                                             @PathVariable (value = "departmentId") UUID departmentId,
+                                             @PathVariable (value = "workLocationId") UUID workLocationId,
+                                                @RequestBody WorkLocation newWorkLocation) {
+        try {
+            WorkLocation workLocation = workLocationService.update(companyId, departmentId, workLocationId, newWorkLocation);
+            return new ResponseEntity<>(workLocation, HttpStatus.OK);
+        } catch (ResourceNotFoundException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+        }
+    }
+
 
 }
