@@ -20,7 +20,7 @@ public class Roster {
     private UUID id;
 
     @Column(name = "date", columnDefinition = "DATE")
-    private LocalDate localDate;
+    private LocalDate date;
 
     @ManyToOne
     @JoinColumn(name = "workLocation_id")
