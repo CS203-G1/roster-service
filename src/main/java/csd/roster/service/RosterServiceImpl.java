@@ -47,9 +47,20 @@ public class RosterServiceImpl implements RosterService {
     }
 
     @Override
-    public void delete(UUID companyId, UUID departmentId, UUID workLocationId, UUID rosterId) {
+    public void deleteRoster(UUID companyId, UUID departmentId, UUID workLocationId, UUID rosterId) {
         Roster roster = getRoster(companyId, departmentId, workLocationId, rosterId);
 
         rosterRepository.delete(roster);
+    }
+
+    @Override
+    public Roster updateRoster(UUID companyId, UUID departmentId, UUID workLocationId, UUID rosterId, Roster roster) {
+        workLocationService.get(companyId, departmentId, workLocationId);
+
+        return rosterRepository.findByIdAndWorkLocationId(rosterId, workLocationId).map(oldRoster -> {
+            oldRoster.setDate(roster.getDate());
+            return rosterRepository.save(oldRoster);
+
+        }).orElseThrow(() -> new RosterNotFoundException(rosterId, workLocationId, departmentId, companyId));
     }
 }
