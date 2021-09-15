@@ -15,7 +15,7 @@ public interface WorkLocationService {
 
     void delete(UUID departmentId, UUID workLocationId);
 
-    WorkLocation update(UUID departmentId, UUID workLocationId, WorkLocation workLocation);
+    WorkLocation update(UUID companyId, UUID departmentId, UUID workLocationId, WorkLocation workLocation);
 
     WorkLocation get(UUID companyId, UUID departmentId, UUID workLocationId);
 }
