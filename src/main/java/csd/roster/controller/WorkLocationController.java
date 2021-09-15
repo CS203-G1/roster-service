@@ -58,5 +58,16 @@ public class WorkLocationController {
         }
     }
 
+    @DeleteMapping("/companies/{companyId}/departments/{departmentId}/work-locations/{workLocationId}")
+    public ResponseEntity<?> updateWorkLocation(@PathVariable (value = "companyId") UUID companyId,
+                                                @PathVariable (value = "departmentId") UUID departmentId,
+                                                @PathVariable (value = "workLocationId") UUID workLocationId) {
+        try {
+            workLocationService.delete(companyId, departmentId, workLocationId);
+            return new ResponseEntity<>(null, HttpStatus.OK);
+        } catch (ResourceNotFoundException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+        }
+    }
 
 }
