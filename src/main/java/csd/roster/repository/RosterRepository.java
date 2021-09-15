@@ -10,5 +10,5 @@ import java.util.UUID;
 
 @Repository
 public interface RosterRepository extends JpaRepository<Roster, UUID> {
-    Optional<Roster> findByIdAndCompanyId(UUID rosterId, UUID companyId);
+    Optional<Roster> findByIdAndWorkLocationId(UUID rosterId, UUID workLocationId);
 }
