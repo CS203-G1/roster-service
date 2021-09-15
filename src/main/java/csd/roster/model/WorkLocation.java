@@ -1,9 +1,10 @@
 package csd.roster.model;
 
 import lombok.*;
-
 import javax.persistence.*;
 import java.util.UUID;
+
+import java.util.List;
 
 @Entity
 @Getter
@@ -13,21 +14,24 @@ import java.util.UUID;
 @NoArgsConstructor
 @EqualsAndHashCode
 public class WorkLocation {
-    @javax.persistence.Id
+    @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name="id")
+    @Column(name = "id")
     private UUID id;
 
     @ManyToOne
-    @JoinColumn(name="department_id")
+    @JoinColumn(name = "department_id")
     private Department department;
 
-    @Column(name="name")
+    @Column(name = "name")
     private String name;
 
-    @Column(name="address")
+    @Column(name = "address")
     private String address;
 
-    @Column(name="capacity")
+    @Column(name = "capacity")
     private int capacity;
+
+    @OneToMany(mappedBy = "roster", cascade = CascadeType.ALL)
+    private List<Roster> rosters;
 }
