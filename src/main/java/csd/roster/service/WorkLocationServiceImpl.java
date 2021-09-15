@@ -44,8 +44,14 @@ public class WorkLocationServiceImpl implements WorkLocationService {
     }
 
     @Override
-    public WorkLocation update(UUID departmentId, UUID workLocationId, WorkLocation workLocation) {
-        return null;
+    public WorkLocation update(UUID companyId, UUID departmentId, UUID workLocationId, WorkLocation newWorkLocation) {
+        Department department = departmentService.getDepartmentByIdAndCompanyId(companyId, departmentId);
+
+        return workLocationRepository.findByIdAndDepartmentId(workLocationId, departmentId).map(workLocation -> {
+            newWorkLocation.setDepartment(department);
+            newWorkLocation.setId(workLocationId);
+            return workLocationRepository.save(newWorkLocation);
+        }).orElseThrow(() -> new WorkLocationNotFoundException(departmentId, companyId, workLocationId));
     }
 
     @Override
