@@ -10,6 +10,6 @@ public interface RosterService {
     Roster addRoster(UUID companyId, UUID departmentId, UUID workLocationId, Roster roster);
     List<Roster> getRosters(UUID companyId, UUID departmentId, UUID workLocationId);
     Roster getRoster(UUID companyId, UUID departmentId, UUID workLocationId, UUID rosterId);
-    void delete(UUID companyId, UUID departmentId, UUID workLocationId, UUID rosterId);
-    Roster update(UUID companyId, UUID departmentId, UUID workLocationId, UUID rosterId, LocalDate date);
+    void deleteRoster(UUID companyId, UUID departmentId, UUID workLocationId, UUID rosterId);
+    Roster updateRoster(UUID companyId, UUID departmentId, UUID workLocationId, UUID rosterId, Roster roster);
 }

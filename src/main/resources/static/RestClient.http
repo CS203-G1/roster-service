@@ -88,3 +88,12 @@ Content-Type: application/json
 ###
 # Delete roster
 DELETE http://localhost:8080/companies/efd12781-392b-4c97-b388-8722bd709601/departments/d23b5840-0cbc-41b7-b96b-ee90c534c398/work-locations/79e6e0b0-29f8-4211-b5e7-ee5fe42a64b9/rosters/fdff99ac-36cf-45ce-b72a-5fa8b868bf46
+
+###
+# Update roster details
+PUT http://localhost:8080/companies/efd12781-392b-4c97-b388-8722bd709601/departments/d23b5840-0cbc-41b7-b96b-ee90c534c398/work-locations/79e6e0b0-29f8-4211-b5e7-ee5fe42a64b9/rosters/bff4ccd3-bae4-4c2f-a8bd-fdc703df8c25
+Content-Type: application/json
+
+{
+  "date": "2021-09-14"
+}
