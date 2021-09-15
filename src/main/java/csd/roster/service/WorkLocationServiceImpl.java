@@ -2,6 +2,7 @@ package csd.roster.service;
 
 import csd.roster.exception.CompanyNotFoundException;
 import csd.roster.exception.DepartmentNotFoundException;
+import csd.roster.exception.WorkLocationNotFoundException;
 import csd.roster.model.Company;
 import csd.roster.model.Department;
 import csd.roster.model.WorkLocation;
@@ -26,7 +27,6 @@ public class WorkLocationServiceImpl implements WorkLocationService {
 
     @Override
     public WorkLocation add(UUID companyId, UUID departmentId, WorkLocation workLocation) {
-        // throw error
         Department department = departmentService.getDepartmentByIdAndCompanyId(companyId, departmentId);
 
         workLocation.setDepartment(department);
@@ -49,7 +49,10 @@ public class WorkLocationServiceImpl implements WorkLocationService {
     }
 
     @Override
-    public WorkLocation getWorkLocationByIdAndDepartmentId(UUID departmentId, UUID workLocationId) {
-        return null;
+    public WorkLocation get(UUID companyId, UUID departmentId, UUID workLocationId) {
+        Department department = departmentService.getDepartmentByIdAndCompanyId(companyId, departmentId);
+
+        return workLocationRepository.findByIdAndDepartmentId(workLocationId, departmentId)
+                .orElseThrow(() -> new WorkLocationNotFoundException(departmentId, companyId, workLocationId));
     }
 }

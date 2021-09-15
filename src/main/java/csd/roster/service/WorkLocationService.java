@@ -17,5 +17,5 @@ public interface WorkLocationService {
 
     WorkLocation update(UUID departmentId, UUID workLocationId, WorkLocation workLocation);
 
-    WorkLocation getWorkLocationByIdAndDepartmentId(UUID departmentId, UUID workLocationId);
+    WorkLocation get(UUID companyId, UUID departmentId, UUID workLocationId);
 }
