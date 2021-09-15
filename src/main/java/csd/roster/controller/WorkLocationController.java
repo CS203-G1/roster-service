@@ -22,7 +22,7 @@ public class WorkLocationController {
     }
 
     @PostMapping("/companies/{companyId}/departments/{departmentId}/work-locations")
-    public ResponseEntity<?> addDepartment(@PathVariable (value = "companyId") UUID companyId,
+    public ResponseEntity<?> addWorkLocation(@PathVariable (value = "companyId") UUID companyId,
                                            @PathVariable (value = "departmentId") UUID departmentId,
                                            @RequestBody WorkLocation workLocation) {
         try {
@@ -32,5 +32,18 @@ public class WorkLocationController {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
         }
     }
+
+    @GetMapping("/companies/{companyId}/departments/{departmentId}/work-locations/{workLocationId}")
+    public ResponseEntity<?> getWorkLocation(@PathVariable (value = "companyId") UUID companyId,
+                                             @PathVariable (value = "departmentId") UUID departmentId,
+                                           @PathVariable (value = "workLocationId") UUID workLocationId) {
+        try {
+            WorkLocation workLocation = workLocationService.get(companyId, departmentId, workLocationId);
+            return new ResponseEntity<>(workLocation, HttpStatus.OK);
+        } catch (ResourceNotFoundException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+        }
+    }
+
 
 }
