@@ -39,8 +39,10 @@ public class WorkLocationServiceImpl implements WorkLocationService {
     }
 
     @Override
-    public void delete(UUID departmentId, UUID workLocationId) {
+    public void delete(UUID companyId, UUID departmentId, UUID workLocationId) {
+        WorkLocation workLocation = get(companyId, departmentId, workLocationId);
 
+        workLocationRepository.delete(workLocation);
     }
 
     @Override
@@ -56,7 +58,7 @@ public class WorkLocationServiceImpl implements WorkLocationService {
 
     @Override
     public WorkLocation get(UUID companyId, UUID departmentId, UUID workLocationId) {
-        Department department = departmentService.getDepartmentByIdAndCompanyId(companyId, departmentId);
+        departmentService.getDepartmentByIdAndCompanyId(companyId, departmentId);
 
         return workLocationRepository.findByIdAndDepartmentId(workLocationId, departmentId)
                 .orElseThrow(() -> new WorkLocationNotFoundException(departmentId, companyId, workLocationId));
