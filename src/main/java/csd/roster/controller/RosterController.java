@@ -28,47 +28,37 @@ public class RosterController {
         this.rosterService = rosterService;
     }
 
-    @GetMapping("/companies/{companyId}/departments/{departmentId}/work-locations/{workLocationId}/rosters/{rosterId}")
-    public Roster getRoster(@PathVariable(value = "companyId") UUID companyId,
-                            @PathVariable(value = "departmentId") UUID departmentId,
-                            @PathVariable(value = "workLocationId") UUID workLocationId,
+    @GetMapping("/work-locations/{workLocationId}/rosters/{rosterId}")
+    public Roster getRoster(@PathVariable(value = "workLocationId") UUID workLocationId,
                             @PathVariable(value = "rosterId") UUID rosterId) {
-        return rosterService.getRoster(companyId, departmentId, workLocationId, rosterId);
+        return rosterService.getRoster(workLocationId, rosterId);
     }
 
-    @GetMapping("/companies/{companyId}/departments/{departmentId}/work-locations/{workLocationId}/rosters")
-    public List<Roster> getRosters(@PathVariable(value = "companyId") UUID companyId,
-                                    @PathVariable(value = "departmentId") UUID departmentId,
-                                    @PathVariable(value = "workLocationId") UUID workLocationId) {
-        return rosterService.getRosters(companyId, departmentId, workLocationId);
+    @GetMapping("/work-locations/{workLocationId}/rosters")
+    public List<Roster> getRosters(@PathVariable(value = "workLocationId") UUID workLocationId) {
+        return rosterService.getRosters(workLocationId);
     }
 
-    @PostMapping("/companies/{companyId}/departments/{departmentId}/work-locations/{workLocationId}/rosters")
-    public Roster addRoster(@PathVariable(value = "companyId") UUID companyId,
-                            @PathVariable(value = "departmentId") UUID departmentId,
-                            @PathVariable(value = "workLocationId") UUID workLocationId,
+    @PostMapping("/work-locations/{workLocationId}/rosters")
+    public Roster addRoster(@PathVariable(value = "workLocationId") UUID workLocationId,
                             @Valid @RequestBody Roster roster) {
-        return rosterService.addRoster(companyId, departmentId, workLocationId, roster);
+        return rosterService.addRoster(workLocationId, roster);
     }
 
-    @DeleteMapping("/companies/{companyId}/departments/{departmentId}/work-locations/{workLocationId}/rosters/{rosterId}")
-    public void deleteRoster(@PathVariable(value = "companyId") UUID companyId,
-                            @PathVariable(value = "departmentId") UUID departmentId,
-                            @PathVariable(value = "workLocationId") UUID workLocationId,
+    @DeleteMapping("/work-locations/{workLocationId}/rosters/{rosterId}")
+    public void deleteRoster(@PathVariable(value = "workLocationId") UUID workLocationId,
                             @PathVariable(value = "rosterId") UUID rosterId) {
         try {
-            rosterService.deleteRoster(companyId, departmentId, workLocationId, rosterId);
+            rosterService.deleteRoster(workLocationId, rosterId);
         } catch (EmptyResultDataAccessException e) {
-            throw new RosterNotFoundException(rosterId, workLocationId, departmentId, companyId);
+            throw new RosterNotFoundException(rosterId, workLocationId);
         }
     }
 
-    @PutMapping("/companies/{companyId}/departments/{departmentId}/work-locations/{workLocationId}/rosters/{rosterId}")
-    public Roster updateRoster(@PathVariable(value = "companyId") UUID companyId,
-                            @PathVariable(value = "departmentId") UUID departmentId,
-                            @PathVariable(value = "workLocationId") UUID workLocationId,
+    @PutMapping("/work-locations/{workLocationId}/rosters/{rosterId}")
+    public Roster updateRoster(@PathVariable(value = "workLocationId") UUID workLocationId,
                             @PathVariable(value = "rosterId") UUID rosterId,
                             @RequestBody Roster roster) {
-        return rosterService.updateRoster(companyId, departmentId, workLocationId, rosterId, roster);
+        return rosterService.updateRoster(workLocationId, rosterId, roster);
     }
 }
