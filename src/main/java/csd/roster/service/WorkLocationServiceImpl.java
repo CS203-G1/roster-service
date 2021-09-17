@@ -60,7 +60,7 @@ public class WorkLocationServiceImpl implements WorkLocationService {
     }
 
     @Override
-    public WorkLocation getById(UUID workLocationId) {
+    public WorkLocation getWorkLocationById(UUID workLocationId) {
         return workLocationRepository.findById(workLocationId)
                 .orElseThrow(() -> new WorkLocationNotFoundException(workLocationId));
     }
