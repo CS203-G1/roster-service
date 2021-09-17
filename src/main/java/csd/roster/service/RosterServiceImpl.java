@@ -1,6 +1,5 @@
 package csd.roster.service;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
@@ -24,43 +23,42 @@ public class RosterServiceImpl implements RosterService {
     }
 
     @Override
-    public Roster addRoster(UUID companyId, UUID departmentId, UUID workLocationId, Roster roster) {
-        WorkLocation workLocation = workLocationService.get(companyId, departmentId, workLocationId);
+    public Roster addRoster(UUID workLocationId, Roster roster) {
+        WorkLocation workLocation = workLocationService.getWorkLocationById(workLocationId);
         roster.setWorkLocation(workLocation);
 
         return rosterRepository.save(roster);
     }
 
     @Override
-    public List<Roster> getRosters(UUID companyId, UUID departmentId, UUID workLocationId) {
-        workLocationService.get(companyId, departmentId, workLocationId);
+    public List<Roster> getRosters(UUID workLocationId) {
+        List<Roster> rosters = rosterRepository.findByWorkLocationId(workLocationId);
 
-        return rosterRepository.findByWorkLocationId(workLocationId);
+        if (rosters.isEmpty()) {
+            throw new RosterNotFoundException(workLocationId);
+        }
+        return rosters;
     }
 
     @Override
-    public Roster getRoster(UUID companyId, UUID departmentId, UUID workLocationId, UUID rosterId) {
-        workLocationService.get(companyId, departmentId, workLocationId);
-
+    public Roster getRoster(UUID workLocationId, UUID rosterId) {
         return rosterRepository.findByIdAndWorkLocationId(rosterId, workLocationId)
-                .orElseThrow(() -> new RosterNotFoundException(rosterId, workLocationId, departmentId, companyId));
+                .orElseThrow(() -> new RosterNotFoundException(rosterId, workLocationId));
     }
 
     @Override
-    public void deleteRoster(UUID companyId, UUID departmentId, UUID workLocationId, UUID rosterId) {
-        Roster roster = getRoster(companyId, departmentId, workLocationId, rosterId);
+    public void deleteRoster(UUID workLocationId, UUID rosterId) {
+        Roster roster = getRoster(workLocationId, rosterId);
 
         rosterRepository.delete(roster);
     }
 
     @Override
-    public Roster updateRoster(UUID companyId, UUID departmentId, UUID workLocationId, UUID rosterId, Roster roster) {
-        workLocationService.get(companyId, departmentId, workLocationId);
-
+    public Roster updateRoster(UUID workLocationId, UUID rosterId, Roster roster) {
         return rosterRepository.findByIdAndWorkLocationId(rosterId, workLocationId).map(oldRoster -> {
             oldRoster.setDate(roster.getDate());
             return rosterRepository.save(oldRoster);
 
-        }).orElseThrow(() -> new RosterNotFoundException(rosterId, workLocationId, departmentId, companyId));
+        }).orElseThrow(() -> new RosterNotFoundException(rosterId, workLocationId));
     }
 }
