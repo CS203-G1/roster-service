@@ -16,4 +16,9 @@ public class WorkLocationNotFoundException extends ResourceNotFoundException {
                 companyId));
     }
 
+    // Overloaded constructor
+    public WorkLocationNotFoundException(UUID workLocationId) {
+        super(String.format("Could not find work location %s", workLocationId));
+    }
+
 }
