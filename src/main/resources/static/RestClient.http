@@ -1,9 +1,67 @@
+# Get all companies
 GET http://localhost:8080/companies
 
 ###
+# Add a company
 POST http://localhost:8080/companies
 Content-Type: application/json
 
 {
-    "name": "SCIS"
+    "name": "SOL"
 }
+
+###
+# Add department to a company
+POST http://localhost:8080/companies/efd12781-392b-4c97-b388-8722bd709601/departments
+Content-Type: application/json
+
+{
+    "name": "SCIS Dept 2"
+}
+
+###
+# Get a department by company and department id
+GET http://localhost:8080/companies/efd12781-392b-4c97-b388-8722bd709601/departments/692b1d0e-fe49-4b05-8b01-f79607da7632
+
+###
+# Update company
+PUT http://localhost:8080/companies/efd12781-392b-4c97-b388-8722bd709601/departments/692b1d0e-fe49-4b05-8b01-f79607da7631
+Content-Type: application/json
+
+{
+  "name": "SCIS Updated Dept 1"
+}
+
+###
+# Delete department
+DELETE http://localhost:8080/companies/efd12781-392b-4c97-b388-8722bd709601/departments/7348d95b-d780-4af9-b8be-774ff8ab55cd
+
+###
+# Add work location to department
+POST http://localhost:8080/companies/efd12781-392b-4c97-b388-8722bd709601/departments/d23b5840-0cbc-41b7-b96b-ee90c534c398/work-locations
+Content-Type: application/json
+
+{
+  "name": "SCIS Dept 1 Location 1",
+  "address": "Address 1",
+  "capacity": 50
+}
+
+###
+# Get a work location based on the companyId, departmentId and workLocationId
+GET http://localhost:8080/companies/efd12781-392b-4c97-b388-8722bd709601/departments/d23b5840-0cbc-41b7-b96b-ee90c534c398/work-locations/a07194ab-d6ff-4e5e-9bcc-d75323c8a582
+
+###
+# Update work location details
+PUT http://localhost:8080/companies/efd12781-392b-4c97-b388-8722bd709601/departments/d23b5840-0cbc-41b7-b96b-ee90c534c398/work-locations/a07194ab-d6ff-4e5e-9bcc-d75323c8a58d
+Content-Type: application/json
+
+{
+  "name": "SCIS Dept 1 Location 1",
+  "address": "Address 2",
+  "capacity": 50
+}
+
+###
+# Delete specific work location
+DELETE http://localhost:8080/companies/efd12781-392b-4c97-b388-8722bd709601/departments/d23b5840-0cbc-41b7-b96b-ee90c534c398/work-locations/a07194ab-d6ff-4e5e-9bcc-d75323c8a58d

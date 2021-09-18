@@ -6,11 +6,11 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import java.util.UUID;
 
 @ResponseStatus(HttpStatus.NOT_FOUND) // 404 Error
-public class CompanyNotFoundException extends ResourceNotFoundException {
+public class DepartmentNotFoundException extends ResourceNotFoundException {
     private static final long serialVersionUID = 1L;
 
-    public CompanyNotFoundException(UUID id) {
-        super("Could not find company " + id);
+    public DepartmentNotFoundException(UUID departmentId, UUID companyId) {
+        super(String.format("Could not find department %s from company %s", departmentId, companyId));
     }
 
 }
