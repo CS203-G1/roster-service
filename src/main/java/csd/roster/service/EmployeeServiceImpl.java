@@ -26,7 +26,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 //        WorkLocation workLocation = workLocationService.getWorkLocationById(workLocationId);
 //        roster.setWorkLocation(workLocation);
 
-        employeeRepository.save(employee);
+        return employeeRepository.save(employee);
     }
 
     @Override
