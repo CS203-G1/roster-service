@@ -25,5 +25,28 @@ import lombok.ToString;
 @NoArgsConstructor
 @EqualsAndHashCode
 public class Employee {
-    
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id")
+    private UUID id;
+
+    @OneToOne
+    @JsonIgnore
+    @JoinColumn(name = "department_id")
+    private Department department;
+
+    @Column(name = "name")
+    private String name;
+
+    @Enumerated(EnumType.ORDINAL)
+    @Column(name = "vaccination_status")
+    private VaccinationStatus vaccinationStatus;
+
+    @Enumerated(EnumType.ORDINAL)
+    @Column(name = "vaccine_brand")
+    private VaccineBrand vaccineBrand;
+
+    @Enumerated(EnumType.ORDINAL)
+    @Column(name = "health_status")
+    private HealthStatus healthStatus;
 }
