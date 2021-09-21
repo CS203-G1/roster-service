@@ -1,7 +1,6 @@
 
 package csd.roster.model;
 
-import java.time.LocalDate;
 import java.util.UUID;
 
 import javax.persistence.*;
