@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.UUID;
 
 import csd.roster.model.Employee;
+import csd.roster.model.WorkLocation;
 import csd.roster.repository.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,7 +22,11 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public Employee addEmployee(UUID workLocationId, Employee employee) {
-        return null;
+        // TODO: wait for workLocation updates to be merged to develop branch
+//        WorkLocation workLocation = workLocationService.getWorkLocationById(workLocationId);
+//        roster.setWorkLocation(workLocation);
+
+        employeeRepository.save(employee);
     }
 
     @Override
