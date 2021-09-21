@@ -20,22 +20,22 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public Employee addEmployee(Employee employee) {
+    public Employee addEmployee(UUID workLocationId, Employee employee) {
         return null;
     }
 
     @Override
-    public Employee getEmployee(UUID employeeId) {
+    public Employee getEmployee(UUID workLocationId, UUID employeeId) {
         return null;
     }
 
     @Override
-    public void deleteEmployee(UUID employeeId) {
+    public void deleteEmployee(UUID workLocationId, UUID employeeId) {
 
     }
 
     @Override
-    public Employee updateEmployee(UUID employeeId, Employee employee) {
+    public Employee updateEmployee(UUID workLocationId, UUID employeeId, Employee employee) {
         return null;
     }
 }
