@@ -49,7 +49,7 @@ public class EmployeeServiceImpl implements EmployeeService {
             employee.setDepartment(department);
             employee.setId(employeeId);
             return employeeRepository.save(employee);
-        }).orElseThrow(() -> new EmployeeNotFoundException(employeeId);
+        }).orElseThrow(() -> new EmployeeNotFoundException(employeeId));
     }
 }
 
