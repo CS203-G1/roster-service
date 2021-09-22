@@ -37,4 +37,18 @@ public class EmployeeController {
                                     @Valid @RequestBody Employee employee) {
         return employeeService.updateEmployee(departmentId, employeeId, employee);
     }
+
+    @GetMapping("/departments/{departmentId}/employees/{employeeId}")
+    public Employee getEmployee (@PathVariable(value = "departmentId") UUID departmentId,
+                                    @PathVariable(value = "employeeId") UUID employeeId,
+                                    @Valid @RequestBody Employee employee) {
+        return employeeService.getEmployee(departmentId, employeeId);
+    }
+
+    @DeleteMapping("/departments/{departmentId}/employees/{employeeId}")
+    public Employee deleteEmployee (@PathVariable(value = "departmentId") UUID departmentId,
+                                 @PathVariable(value = "employeeId") UUID employeeId,
+                                 @Valid @RequestBody Employee employee) {
+        employeeService.deleteEmployee(departmentId, employeeId);
+    }
 }
