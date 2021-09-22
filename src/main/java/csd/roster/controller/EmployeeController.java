@@ -5,6 +5,7 @@ import java.util.UUID;
 
 import javax.validation.Valid;
 
+import csd.roster.model.Employee;
 import csd.roster.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -23,4 +24,9 @@ public class EmployeeController {
         this.employeeService = employeeService;
     }
 
+    @PostMapping("/departments/{departmentId}/employees")
+    public Employee addEmployee (@PathVariable(value = "departmentId") UUID departmentId,
+                                 @Valid @RequestBody Employee employee) {
+        return employeeService.addEmployee(departmentId, employee);
+    }
 }
