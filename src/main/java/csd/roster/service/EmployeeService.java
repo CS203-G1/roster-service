@@ -9,5 +9,5 @@ public interface EmployeeService {
     Employee addEmployee(UUID departmentId, Employee employee);
     Employee getEmployee(UUID departmentId, UUID employeeId);
     void deleteEmployee(UUID departmentId, UUID employeeId);
-    Employee updateEmployee(UUID departmentId, Employee employee);
+    Employee updateEmployee(UUID departmentId, UUID employeeId, Employee employee);
 }
