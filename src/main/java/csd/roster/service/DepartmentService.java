@@ -15,4 +15,6 @@ public interface DepartmentService {
     Department update(UUID companyId, UUID departmentId, Department department);
 
     Department getDepartmentByIdAndCompanyId(UUID departmentId, UUID companyId);
+
+    Department getDepartmentById(UUID departmentId);
 }
