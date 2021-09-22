@@ -18,3 +18,9 @@ Content-Type: application/json
   "vaccineBrand": "PFIZER",
   "healthStatus": "ILL"
 }
+
+###
+GET http://localhost:8080/departments/692b1d0e-fe49-4b05-8b01-f79607da7632/employees/c1219cbb-5c2e-4f1a-95e3-273a62321aae
+
+###
+DELETE http://localhost:8080/departments/692b1d0e-fe49-4b05-8b01-f79607da7632/employees/fe8d9896-cfbe-4b22-97a1-0a37aec50312
