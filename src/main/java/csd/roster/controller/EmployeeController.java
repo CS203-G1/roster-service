@@ -40,15 +40,13 @@ public class EmployeeController {
 
     @GetMapping("/departments/{departmentId}/employees/{employeeId}")
     public Employee getEmployee (@PathVariable(value = "departmentId") UUID departmentId,
-                                    @PathVariable(value = "employeeId") UUID employeeId,
-                                    @Valid @RequestBody Employee employee) {
+                                    @PathVariable(value = "employeeId") UUID employeeId) {
         return employeeService.getEmployee(departmentId, employeeId);
     }
 
     @DeleteMapping("/departments/{departmentId}/employees/{employeeId}")
     public void deleteEmployee (@PathVariable(value = "departmentId") UUID departmentId,
-                                 @PathVariable(value = "employeeId") UUID employeeId,
-                                 @Valid @RequestBody Employee employee) {
+                                 @PathVariable(value = "employeeId") UUID employeeId) {
         employeeService.deleteEmployee(departmentId, employeeId);
     }
 }
