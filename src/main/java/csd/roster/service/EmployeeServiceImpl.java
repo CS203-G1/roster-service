@@ -3,6 +3,9 @@ package csd.roster.service;
 import java.util.List;
 import java.util.UUID;
 
+import csd.roster.exception.DepartmentNotFoundException;
+import csd.roster.exception.EmployeeNotFoundException;
+import csd.roster.model.Company;
 import csd.roster.model.Department;
 import csd.roster.model.Employee;
 import csd.roster.repository.EmployeeRepository;
@@ -40,6 +43,13 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public Employee updateEmployee(UUID departmentId, UUID employeeId, Employee employee) {
-        return null;
+        Department department = departmentService.getDepartmentById(departmentId);
+
+        return employeeRepository.findByIdAndDepartmentId(employeeId, departmentId).map(oldEmployee -> {
+            employee.setDepartment(department);
+            employee.setId(employeeId);
+            return employeeRepository.save(employee);
+        }).orElseThrow(() -> new EmployeeNotFoundException(employeeId);
     }
 }
+
