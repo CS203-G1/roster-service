@@ -43,6 +43,11 @@ public class DepartmentServiceImpl implements DepartmentService {
     }
 
     @Override
+    public Department getDepartmentById(UUID departmentId) {
+        return departmentRepository.getById(departmentId);
+    }
+
+    @Override
     public void delete(UUID companyId, UUID departmentId) {
         // Using getDepartmentByIdAndCompanyId for DRY purposes
         Department department = getDepartmentByIdAndCompanyId(companyId, departmentId);
