@@ -21,26 +21,25 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public Employee addEmployee(UUID companyId, UUID departmentId, Employee employee) {
-        // TODO: wait for workLocation updates to be merged to develop branch
-        Department department = departmentService.getDepartmentByIdAndCompanyId(departmentId, companyId);
+    public Employee addEmployee(UUID departmentId, Employee employee) {
+        Department department = departmentService.getDepartmentById(departmentId);
         employee.setDepartment(department);
 
         return employeeRepository.save(employee);
     }
 
     @Override
-    public Employee getEmployee(UUID companyId, UUID departmentId, UUID employeeId) {
+    public Employee getEmployee(UUID departmentId, UUID employeeId) {
         return null;
     }
 
     @Override
-    public void deleteEmployee(UUID companyId, UUID departmentId, UUID employeeId) {
-        return null
+    public void deleteEmployee(UUID departmentId, UUID employeeId) {
+        return;
     }
 
     @Override
-    public Employee updateEmployee(UUID departmentId, UUID employeeId, Employee employee) {
+    public Employee updateEmployee(UUID employeeId, Employee employee) {
         return null;
     }
 }
