@@ -46,7 +46,7 @@ public class EmployeeController {
     }
 
     @DeleteMapping("/departments/{departmentId}/employees/{employeeId}")
-    public Employee deleteEmployee (@PathVariable(value = "departmentId") UUID departmentId,
+    public void deleteEmployee (@PathVariable(value = "departmentId") UUID departmentId,
                                  @PathVariable(value = "employeeId") UUID employeeId,
                                  @Valid @RequestBody Employee employee) {
         employeeService.deleteEmployee(departmentId, employeeId);
