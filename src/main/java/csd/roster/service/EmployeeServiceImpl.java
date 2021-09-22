@@ -39,7 +39,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public Employee updateEmployee(UUID employeeId, Employee employee) {
+    public Employee updateEmployee(UUID departmentId, UUID employeeId, Employee employee) {
         return null;
     }
 }
