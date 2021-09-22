@@ -1,0 +1,9 @@
+POST http://localhost:8080/departments/692b1d0e-fe49-4b05-8b01-f79607da7632/employees
+Content-Type: application/json
+
+{
+  "name": "Employee 1",
+  "vaccinationStatus": "SECOND_DOSE",
+  "vaccineBrand": "PFIZER",
+  "healthStatus": "HEALTHY"
+}
