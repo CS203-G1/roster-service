@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+@RestController
 public class EmployeeController {
     private EmployeeService employeeService;
 
@@ -28,5 +29,12 @@ public class EmployeeController {
     public Employee addEmployee (@PathVariable(value = "departmentId") UUID departmentId,
                                  @Valid @RequestBody Employee employee) {
         return employeeService.addEmployee(departmentId, employee);
+    }
+
+    @PutMapping("/departments/{departmentId}/employees/{employeeId}")
+    public Employee updateEmployee (@PathVariable(value = "departmentId") UUID departmentId,
+                                    @PathVariable(value = "employeeId") UUID employeeId,
+                                    @Valid @RequestBody Employee employee) {
+        return employeeService.updateEmployee(departmentId, employeeId, employee);
     }
 }
