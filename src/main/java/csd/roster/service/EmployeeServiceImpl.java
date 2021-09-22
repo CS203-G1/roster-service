@@ -33,12 +33,15 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public Employee getEmployee(UUID departmentId, UUID employeeId) {
-        return null;
+        return employeeRepository.findByIdAndDepartmentId(employeeId, departmentId)
+                .orElseThrow(() -> new EmployeeNotFoundException(employeeId));
     }
 
     @Override
     public void deleteEmployee(UUID departmentId, UUID employeeId) {
-        return;
+        Employee employee = getEmployee(departmentId, employeeId);
+
+        employeeRepository.delete(employee);
     }
 
     @Override
