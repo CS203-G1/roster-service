@@ -52,7 +52,7 @@ public class RosterController {
     @PutMapping("/work-locations/{workLocationId}/rosters/{rosterId}")
     public Roster updateRoster(@PathVariable(value = "workLocationId") UUID workLocationId,
                             @PathVariable(value = "rosterId") UUID rosterId,
-                            @RequestBody Roster roster) {
+                            @Valid @RequestBody Roster roster) {
         return rosterService.updateRoster(workLocationId, rosterId, roster);
     }
 }
