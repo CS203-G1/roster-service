@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 
 import csd.roster.enumerator.HealthStatus;
 import lombok.AllArgsConstructor;
@@ -33,21 +34,25 @@ public class RosterEmployee {
 
     @ManyToOne
     @JoinColumn(name = "roster_id")
+    @NotBlank(message = "Roster must not be blank")
     Roster roster;
 
     @ManyToOne
     @JoinColumn(name = "employee_id")
+    @NotBlank(message = "Employee must not be blank")
     Employee employee;
 
     // When the roster for this employee starts
     @Column(name = "from_datetime")
-    private LocalDateTime from_datetime;
+    @NotBlank(message = "FromDateTime must not be blank")
+    private LocalDateTime fromDateTime;
 
     // When the roster for this employee ends
     @Column(name = "to_datetime")
-    private LocalDateTime to_datetime;
+    @NotBlank(message = "ToDateTime must not be blank")
+    private LocalDateTime toDateTime;
 
     // The health status of the employee during the duration of this roster
     @Column(name = "current_health_status")
-    private HealthStatus current_health_status;
+    private HealthStatus currentHealthStatus;
 }
