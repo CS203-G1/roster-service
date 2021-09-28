@@ -14,4 +14,9 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Constraint(validatedBy = DateTimesValidator.class)
 public @interface ValidDateTimes {
+    String fromDateTime();
+    String toDateTime();
+
+    // Custom message
+    String message() default "FromDateTime must be before ToDateTime";
 }
