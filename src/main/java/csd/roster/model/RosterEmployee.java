@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 import javax.persistence.*;
+import javax.validation.constraints.Future;
 import javax.validation.constraints.NotBlank;
 
 import csd.roster.enumerator.HealthStatus;
@@ -40,16 +41,19 @@ public class RosterEmployee {
     @ManyToOne
     @JoinColumn(name = "employee_id")
     @NotBlank(message = "Employee must not be blank")
+
     Employee employee;
 
     // When the roster for this employee starts
     @Column(name = "from_datetime")
     @NotBlank(message = "FromDateTime must not be blank")
+    @Future
     private LocalDateTime fromDateTime;
 
     // When the roster for this employee ends
     @Column(name = "to_datetime")
     @NotBlank(message = "ToDateTime must not be blank")
+    @Future
     private LocalDateTime toDateTime;
 
     // The health status of the employee during the duration of this roster
