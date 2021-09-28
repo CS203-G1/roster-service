@@ -24,6 +24,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode
+// To validate that fromDateTime is before toDateTime
 @ValidDateTimes(fromDateTime = "fromDateTime", toDateTime = "toDateTime")
 public class RosterEmployee {
     @Id
