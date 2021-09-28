@@ -1,6 +1,7 @@
 
 package csd.roster.model;
 
+import java.util.Set;
 import java.util.UUID;
 
 import javax.persistence.*;
@@ -28,6 +29,9 @@ public class Employee {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
     private UUID id;
+
+    @OneToMany(mappedBy = "employee")
+    private Set<RosterEmployee> roster_employees;
 
     @OneToOne
     @JsonIgnore
