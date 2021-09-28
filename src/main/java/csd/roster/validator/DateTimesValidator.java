@@ -15,4 +15,10 @@ public class DateTimesValidator implements ConstraintValidator<ValidDateTimes, R
     private String fromDateTimeFieldName;
     private String toDateTimeFieldName;
 
+    @Override
+    public void initialize(ValidDateTimes constraintAnnotation) {
+        this.fromDateTimeFieldName = constraintAnnotation.fromDateTime();
+        this.toDateTimeFieldName = constraintAnnotation.toDateTime();
+    }
+
 }
