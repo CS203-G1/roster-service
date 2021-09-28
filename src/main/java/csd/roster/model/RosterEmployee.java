@@ -8,6 +8,7 @@ import javax.persistence.*;
 import javax.validation.constraints.Future;
 import javax.validation.constraints.NotBlank;
 
+import csd.roster.annotation.ValidDateTimes;
 import csd.roster.enumerator.HealthStatus;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -23,6 +24,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode
+@ValidDateTimes(fromDateTime = "fromDateTime", toDateTime = "toDateTime")
 public class RosterEmployee {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
