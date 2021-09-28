@@ -21,4 +21,16 @@ public class DateTimesValidator implements ConstraintValidator<ValidDateTimes, R
         this.toDateTimeFieldName = constraintAnnotation.toDateTime();
     }
 
+    @Override
+    public boolean isValid(RosterEmployee rosterEmployee, ConstraintValidatorContext constraintValidatorContext) {
+        final LocalDateTime fromDateTime = (LocalDateTime) new BeanWrapperImpl(rosterEmployee)
+                .getPropertyValue(fromDateTimeFieldName);
+        final LocalDateTime toDateTime = (LocalDateTime) new BeanWrapperImpl(rosterEmployee)
+                .getPropertyValue(toDateTimeFieldName);
+
+        // return whether fromDatetime is before toDateTime
+        // reference: https://docs.oracle.com/javase/8/docs/api/java/time/LocalDateTime.html#isBefore-java.time.chrono.ChronoLocalDateTime-
+        return fromDateTime.isBefore(toDateTime);
+    }
+
 }
