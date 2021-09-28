@@ -39,12 +39,15 @@ public class RosterEmployee {
     @JoinColumn(name = "employee_id")
     Employee employee;
 
+    // When the roster for this employee starts
     @Column(name = "from_datetime")
     private LocalDateTime from_datetime;
 
+    // When the roster for this employee ends
     @Column(name = "to_datetime")
     private LocalDateTime to_datetime;
 
+    // The health status of the employee during the duration of this roster
     @Column(name = "current_health_status")
     private HealthStatus current_health_status;
 }
