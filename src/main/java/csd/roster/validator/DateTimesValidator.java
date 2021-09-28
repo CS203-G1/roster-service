@@ -23,8 +23,12 @@ public class DateTimesValidator implements ConstraintValidator<ValidDateTimes, R
 
     @Override
     public boolean isValid(RosterEmployee rosterEmployee, ConstraintValidatorContext constraintValidatorContext) {
+        // What I am doing here is to get the value of rosterEmployee.fromDateTime and convert it to a LocalDateTime
+        // object
+        // reference: https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/beans/BeanWrapperImpl.html
         final LocalDateTime fromDateTime = (LocalDateTime) new BeanWrapperImpl(rosterEmployee)
                 .getPropertyValue(fromDateTimeFieldName);
+        // Same as fromDateTime
         final LocalDateTime toDateTime = (LocalDateTime) new BeanWrapperImpl(rosterEmployee)
                 .getPropertyValue(toDateTimeFieldName);
 
