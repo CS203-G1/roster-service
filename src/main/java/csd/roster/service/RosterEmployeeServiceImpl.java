@@ -28,8 +28,6 @@ public class RosterEmployeeServiceImpl implements RosterEmployeeService {
         rosterEmployee.setEmployee(employee);
         rosterEmployee.setRoster(roster);
 
-
-
-        return null;
+        return rosterEmployeeRepository.save(rosterEmployee);
     }
 }
