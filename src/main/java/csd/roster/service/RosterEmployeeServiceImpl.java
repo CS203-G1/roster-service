@@ -44,7 +44,9 @@ public class RosterEmployeeServiceImpl implements RosterEmployeeService {
     }
 
     @Override
-    public RosterEmployee removeRosterEmployee(UUID rosterId, UUID employeeId) {
-        return null;
+    public void removeRosterEmployee(UUID rosterId, UUID employeeId) {
+        RosterEmployee rosterEmployee = getRosterEmployee(rosterId, employeeId);
+
+        rosterEmployeeRepository.delete(rosterEmployee);
     }
 }
