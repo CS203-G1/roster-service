@@ -1,5 +1,6 @@
 package csd.roster.service;
 
+import csd.roster.exception.RosterEmployeeNotFoundException;
 import csd.roster.model.Employee;
 import csd.roster.model.Roster;
 import csd.roster.model.RosterEmployee;
@@ -34,6 +35,12 @@ public class RosterEmployeeServiceImpl implements RosterEmployeeService {
         rosterEmployee.setRoster(roster);
 
         return rosterEmployeeRepository.save(rosterEmployee);
+    }
+
+    @Override
+    public RosterEmployee getRosterEmployee(UUID rosterId, UUID employeeId) {
+        return rosterEmployeeRepository.findByRosterIdAndEmployeeId(rosterId, employeeId)
+                .orElseThrow(() -> new RosterEmployeeNotFoundException(rosterId, employeeId));
     }
 
     @Override
