@@ -34,4 +34,10 @@ public class RosterEmployeeController {
                             @Valid @RequestBody RosterEmployee rosterEmployee) {
         return rosterEmployeeService.addRosterEmployee(rosterId, employeeId, rosterEmployee);
     }
+
+    @DeleteMapping("/rosters/{rosterId}/employees/{employeeId}")
+    public void deleteRosterEmployee(@PathVariable(value = "rosterId") UUID rosterId,
+                                            @PathVariable(value = "employeeId") UUID employeeId) {
+        rosterEmployeeService.removeRosterEmployee(rosterId, employeeId);
+    }
 }
