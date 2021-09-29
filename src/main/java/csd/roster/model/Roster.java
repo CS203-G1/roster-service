@@ -1,15 +1,10 @@
 package csd.roster.model;
 
 import java.time.LocalDate;
+import java.util.Set;
 import java.util.UUID;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -37,4 +32,7 @@ public class Roster {
     @ManyToOne
     @JoinColumn(name = "workLocation_id")
     private WorkLocation workLocation;
+
+    @OneToMany(mappedBy = "roster")
+    private Set<RosterEmployee> roster_employees;
 }
