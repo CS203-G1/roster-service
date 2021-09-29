@@ -37,6 +37,7 @@ public class EmployeeServiceImpl implements EmployeeService {
                 .orElseThrow(() -> new EmployeeNotFoundException(employeeId));
     }
 
+    // This is added and meant to be used in RosterEmployeeService
     @Override
     public Employee getEmployee(UUID employeeId) {
         return employeeRepository.findById(employeeId)
