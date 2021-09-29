@@ -62,7 +62,7 @@ public class RosterEmployeeServiceImpl implements RosterEmployeeService {
         RosterEmployee rosterEmployee = getRosterEmployee(rosterId, employeeId);
 
         // Different from the usual updates because we only want to allow the frontend request to be able to
-        // update from date time and to date time 
+        // update from date time and to date time
         rosterEmployee.setFromDateTime(newRosterEmployee.getFromDateTime());
         rosterEmployee.setToDateTime(newRosterEmployee.getToDateTime());
 
