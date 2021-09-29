@@ -5,6 +5,7 @@ import java.util.UUID;
 
 import javax.validation.Valid;
 
+import csd.roster.model.Roster;
 import csd.roster.service.RosterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -25,5 +26,12 @@ public class RosterEmployeeController {
     @Autowired
     public RosterEmployeeController(RosterEmployeeService rosterEmployeeService) {
         this.rosterEmployeeService = rosterEmployeeService;
+    }
+
+    @PostMapping("/roster-employee")
+    public RosterEmployee addRosterEmployee(@PathVariable(value = "rosterId") UUID rosterId,
+                            @PathVariable(value = "employeeId") UUID employeeId,
+                            @Valid @RequestBody RosterEmployee rosterEmployee) {
+        return rosterEmployeeService.addRosterEmployee(rosterId, employeeId, rosterEmployee);
     }
 }
