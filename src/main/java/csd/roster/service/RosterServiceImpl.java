@@ -46,6 +46,13 @@ public class RosterServiceImpl implements RosterService {
                 .orElseThrow(() -> new RosterNotFoundException(rosterId, workLocationId));
     }
 
+    // This is added and meant to be used in RosterEmployeeService
+    @Override
+    public Roster getRoster(UUID rosterId) {
+        return rosterRepository.findById(rosterId)
+                .orElseThrow(() -> new RosterNotFoundException(rosterId));
+    }
+
     @Override
     public void deleteRoster(UUID workLocationId, UUID rosterId) {
         Roster roster = getRoster(workLocationId, rosterId);

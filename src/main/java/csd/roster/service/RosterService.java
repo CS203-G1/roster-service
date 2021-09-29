@@ -9,6 +9,7 @@ public interface RosterService {
     Roster addRoster(UUID workLocationId, Roster roster);
     List<Roster> getRosters(UUID workLocationId);
     Roster getRoster(UUID workLocationId, UUID rosterId);
+    Roster getRoster(UUID rosterId);
     void deleteRoster(UUID workLocationId, UUID rosterId);
     Roster updateRoster(UUID workLocationId, UUID rosterId, Roster roster);
 }
