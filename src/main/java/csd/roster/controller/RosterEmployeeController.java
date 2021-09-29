@@ -28,7 +28,7 @@ public class RosterEmployeeController {
         this.rosterEmployeeService = rosterEmployeeService;
     }
 
-    @PostMapping("/roster/{rosterId}/employee/{employeeId}")
+    @PostMapping("/rosters/{rosterId}/employees/{employeeId}")
     public RosterEmployee addRosterEmployee(@PathVariable(value = "rosterId") UUID rosterId,
                             @PathVariable(value = "employeeId") UUID employeeId,
                             @Valid @RequestBody RosterEmployee rosterEmployee) {
