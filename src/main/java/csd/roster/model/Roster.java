@@ -6,6 +6,9 @@ import java.util.UUID;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -31,8 +34,10 @@ public class Roster {
 
     @ManyToOne
     @JoinColumn(name = "workLocation_id")
+    @JsonIgnore
     private WorkLocation workLocation;
 
     @OneToMany(mappedBy = "roster")
+    @JsonIgnore
     private Set<RosterEmployee> roster_employees;
 }
