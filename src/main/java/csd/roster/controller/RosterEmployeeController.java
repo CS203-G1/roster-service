@@ -40,4 +40,11 @@ public class RosterEmployeeController {
                                             @PathVariable(value = "employeeId") UUID employeeId) {
         rosterEmployeeService.removeRosterEmployee(rosterId, employeeId);
     }
+
+    @PutMapping("/rosters/{rosterId}/employees/{employeeId}")
+    public RosterEmployee updateRosterEmployee(@PathVariable(value = "rosterId") UUID rosterId,
+                                            @PathVariable(value = "employeeId") UUID employeeId,
+                                            @Valid @RequestBody RosterEmployee rosterEmployee) {
+        return rosterEmployeeService.updateRosterEmployee(rosterId, employeeId, rosterEmployee);
+    }
 }
