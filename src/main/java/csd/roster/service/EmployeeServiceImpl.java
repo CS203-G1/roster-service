@@ -38,6 +38,12 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
+    public Employee getEmployee(UUID employeeId) {
+        return employeeRepository.findById(employeeId)
+                .orElseThrow(() -> new EmployeeNotFoundException(employeeId));
+    }
+
+    @Override
     public void deleteEmployee(UUID departmentId, UUID employeeId) {
         Employee employee = getEmployee(departmentId, employeeId);
 
