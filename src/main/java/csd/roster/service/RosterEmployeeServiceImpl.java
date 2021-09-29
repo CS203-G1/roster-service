@@ -1,5 +1,8 @@
 package csd.roster.service;
 
+import csd.roster.enumerator.HealthStatus;
+import csd.roster.exception.EmployeeNotHealthyException;
+import csd.roster.exception.RosterEmployeeNotFoundException;
 import csd.roster.model.Employee;
 import csd.roster.model.Roster;
 import csd.roster.model.RosterEmployee;
@@ -30,9 +33,27 @@ public class RosterEmployeeServiceImpl implements RosterEmployeeService {
         Employee employee = employeeService.getEmployee(employeeId);
 
         rosterEmployee.setEmployee(employee);
+
+        if (employee.getHealthStatus() != HealthStatus.HEALTHY) {
+            throw new EmployeeNotHealthyException(employee);
+        }
+
         rosterEmployee.setCurrentHealthStatus(employee.getHealthStatus());
         rosterEmployee.setRoster(roster);
 
         return rosterEmployeeRepository.save(rosterEmployee);
+    }
+
+    @Override
+    public RosterEmployee getRosterEmployee(UUID rosterId, UUID employeeId) {
+        return rosterEmployeeRepository.findByRosterIdAndEmployeeId(rosterId, employeeId)
+                .orElseThrow(() -> new RosterEmployeeNotFoundException(rosterId, employeeId));
+    }
+
+    @Override
+    public void removeRosterEmployee(UUID rosterId, UUID employeeId) {
+        RosterEmployee rosterEmployee = getRosterEmployee(rosterId, employeeId);
+
+        rosterEmployeeRepository.delete(rosterEmployee);
     }
 }
