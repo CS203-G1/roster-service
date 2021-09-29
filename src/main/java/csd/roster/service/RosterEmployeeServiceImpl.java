@@ -35,4 +35,9 @@ public class RosterEmployeeServiceImpl implements RosterEmployeeService {
 
         return rosterEmployeeRepository.save(rosterEmployee);
     }
+
+    @Override
+    public RosterEmployee removeRosterEmployee(UUID rosterId, UUID employeeId) {
+        return null;
+    }
 }
