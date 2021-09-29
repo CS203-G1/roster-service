@@ -30,6 +30,7 @@ public class RosterEmployeeServiceImpl implements RosterEmployeeService {
         Employee employee = employeeService.getEmployee(employeeId);
 
         rosterEmployee.setEmployee(employee);
+        rosterEmployee.setCurrentHealthStatus(employee.getHealthStatus());
         rosterEmployee.setRoster(roster);
 
         return rosterEmployeeRepository.save(rosterEmployee);
