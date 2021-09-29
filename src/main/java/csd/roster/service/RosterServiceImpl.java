@@ -47,6 +47,12 @@ public class RosterServiceImpl implements RosterService {
     }
 
     @Override
+    public Roster getRoster(UUID rosterId) {
+        return rosterRepository.findById(rosterId)
+                .orElseThrow(() -> new RosterNotFoundException(rosterId));
+    }
+
+    @Override
     public void deleteRoster(UUID workLocationId, UUID rosterId) {
         Roster roster = getRoster(workLocationId, rosterId);
 
