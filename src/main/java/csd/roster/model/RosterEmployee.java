@@ -38,12 +38,10 @@ public class RosterEmployee {
 
     @ManyToOne
     @JoinColumn(name = "roster_id")
-//    @NotBlank(message = "Roster must not be blank")
     Roster roster;
 
     @ManyToOne
     @JoinColumn(name = "employee_id")
-//    @NotBlank(message = "Employee must not be blank")
     Employee employee;
 
     // When the roster for this employee starts

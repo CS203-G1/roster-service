@@ -6,7 +6,9 @@ import java.util.UUID;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import csd.roster.enumerator.HealthStatus;
 import csd.roster.enumerator.VaccinationStatus;
 import csd.roster.enumerator.VaccineBrand;
@@ -31,6 +33,7 @@ public class Employee {
     private UUID id;
 
     @OneToMany(mappedBy = "employee")
+    @JsonIgnore
     private Set<RosterEmployee> roster_employees;
 
     @OneToOne
