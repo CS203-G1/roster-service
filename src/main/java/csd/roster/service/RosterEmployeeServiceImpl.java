@@ -1,5 +1,6 @@
 package csd.roster.service;
 
+import csd.roster.model.Employee;
 import csd.roster.model.Roster;
 import csd.roster.model.RosterEmployee;
 import csd.roster.repository.RosterEmployeeRepository;
@@ -21,6 +22,8 @@ public class RosterEmployeeServiceImpl implements RosterEmployeeService {
 
     @Override
     public RosterEmployee addRosterEmployee(UUID rosterId, UUID employeeId, RosterEmployee rosterEmployee) {
+        Roster roster = rosterService.getRoster(rosterId);
+        Employee employee = employeeService.getEmployee(employeeId);
 
         return null;
     }
