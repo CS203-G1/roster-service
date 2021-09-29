@@ -20,7 +20,7 @@ import csd.roster.service.RosterEmployeeService;
 
 @RestController
 public class RosterEmployeeController {
-    private RosterEmployeeService rosterEmployeeService;
+    private final RosterEmployeeService rosterEmployeeService;
 
     @Autowired
     public RosterEmployeeController(RosterEmployeeService rosterEmployeeService) {
