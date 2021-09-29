@@ -6,5 +6,5 @@ import java.util.UUID;
 
 public interface RosterEmployeeService {
     RosterEmployee addRosterEmployee(UUID rosterId, UUID employeeId, RosterEmployee rosterEmployee);
-
+    RosterEmployee removeRosterEmployee(UUID rosterId, UUID employeeId);
 }
