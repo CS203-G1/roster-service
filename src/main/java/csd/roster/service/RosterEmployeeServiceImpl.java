@@ -25,6 +25,11 @@ public class RosterEmployeeServiceImpl implements RosterEmployeeService {
         Roster roster = rosterService.getRoster(rosterId);
         Employee employee = employeeService.getEmployee(employeeId);
 
+        rosterEmployee.setEmployee(employee);
+        rosterEmployee.setRoster(roster);
+
+
+
         return null;
     }
 }
