@@ -1,19 +1,14 @@
 package csd.roster.service;
 
-import csd.roster.exception.CompanyNotFoundException;
-import csd.roster.exception.DepartmentNotFoundException;
-import csd.roster.exception.WorkLocationNotFoundException;
-import csd.roster.model.Company;
-import csd.roster.model.Department;
-import csd.roster.model.WorkLocation;
-import csd.roster.repository.DepartmentRepository;
-import csd.roster.repository.WorkLocationRepository;
-import org.hibernate.cfg.NotYetImplementedException;
+import java.util.List;
+import java.util.UUID;
+
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import csd.roster.exception.WorkLocationNotFoundException;
+import csd.roster.model.Department;
+import csd.roster.model.WorkLocation;
+import csd.roster.repository.WorkLocationRepository;
 
 @Service
 public class WorkLocationServiceImpl implements WorkLocationService {
@@ -62,5 +57,11 @@ public class WorkLocationServiceImpl implements WorkLocationService {
 
         return workLocationRepository.findByIdAndDepartmentId(workLocationId, departmentId)
                 .orElseThrow(() -> new WorkLocationNotFoundException(departmentId, companyId, workLocationId));
+    }
+
+    @Override
+    public WorkLocation getWorkLocationById(UUID workLocationId) {
+        return workLocationRepository.findById(workLocationId)
+                .orElseThrow(() -> new WorkLocationNotFoundException(workLocationId));
     }
 }
