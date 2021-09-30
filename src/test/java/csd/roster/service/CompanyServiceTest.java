@@ -57,7 +57,7 @@ public class CompanyServiceTest {
     }
 
     @Test
-    void getAllCompanies_ThreeCompaniesExist_ReturnListOfCompanies(){
+    void getAllCompanies_AfterAddingThreeCompanies_ReturnListOfCompanies(){
         UUID id1 = UUID.fromString("a4ccc2c4-0426-41a2-b904-f7a941ba27e0");
         Company company1 = new Company(id1, "Eppal", null);
 
