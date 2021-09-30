@@ -60,6 +60,7 @@
             <artifactId>spring-security-oauth2-resource-server</artifactId>
             <version>5.5.2</version>
         </dependency>
+        <!-- required since oauth2 doesnt come with JwtConvert package       -->
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-oauth2-jose</artifactId>
