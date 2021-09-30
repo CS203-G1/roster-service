@@ -8,6 +8,10 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 
 // For reference on how to do security configuration with AWS Cognito
 // https://www.tutorialsbuddy.com/secure-spring-boot-rest-apis-with-amazon-cognito-example
+// For spring security: https://www.baeldung.com/spring-security-oauth-cognito
+// For spring security with OAuth: https://auth0.com/blog/spring-boot-authorization-tutorial-secure-an-api-java/
+// For kotlin spring with OAuth: https://kevcodez.de/posts/2020-03-26-secure-spring-boot-app-with-oauth2-aws-cognito/ 
+// A github repo with cognito auth: https://github.com/ihuaylupo/cognitoAuthentication/tree/master/src/main/java/com/huaylupo/cognito/security/config
 
 @Configuration
 @EnableWebSecurity
