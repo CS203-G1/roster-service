@@ -30,94 +30,94 @@ public class WorkLocationServiceTest {
 
     @Test
     public void addWorkLocation_NewWorkLocation_ReturnSavedWorkLocation(){
-        UUID company_id = UUID.randomUUID();
-        Company company = new Company(company_id, "Eppal", null);
+        UUID companyId = UUID.randomUUID();
+        Company company = new Company(companyId, "Eppal", null);
 
-        UUID dept_id = UUID.randomUUID();
-        Department department = new Department(dept_id, company, "Marketing");
+        UUID departmentId = UUID.randomUUID();
+        Department department = new Department(departmentId, company, "Marketing");
 
         WorkLocation workLocation = new WorkLocation(null, null, "Eppal Headquarter", "7 Jalan Naga Sari", 40, null);
 
         when(departmentService.getDepartmentByIdAndCompanyId(any(UUID.class), any(UUID.class))).thenReturn(department);
         when(workLocations.save(any(WorkLocation.class))).thenReturn(workLocation);
 
-        WorkLocation savedWorkLocation = workLocationService.add(company_id,dept_id, workLocation);
+        WorkLocation savedWorkLocation = workLocationService.add(companyId,departmentId, workLocation);
 
         assertNotNull(savedWorkLocation);
         assertEquals(department, workLocation.getDepartment());
 
         verify(workLocations, times(1)).save(workLocation);
-        verify(departmentService, times(1)).getDepartmentByIdAndCompanyId(company_id,dept_id);
+        verify(departmentService, times(1)).getDepartmentByIdAndCompanyId(companyId,departmentId);
     }
 
     @Test
     public void get_WorkLocationExists_ReturnFoundWorkLocation(){
-        UUID company_id = UUID.randomUUID();
-        Company company = new Company(company_id, "Eppal", null);
+        UUID companyId = UUID.randomUUID();
+        Company company = new Company(companyId, "Eppal", null);
 
-        UUID dept_id = UUID.randomUUID();
-        Department department = new Department(dept_id, company, "Marketing");
+        UUID departmentId = UUID.randomUUID();
+        Department department = new Department(departmentId, company, "Marketing");
 
-        UUID work_location_id = UUID.randomUUID();
-        WorkLocation workLocation = new WorkLocation(work_location_id, department, "Eppal Headquarter", "7 Jalan Naga Sari", 40, null);
+        UUID workLocationId = UUID.randomUUID();
+        WorkLocation workLocation = new WorkLocation(workLocationId, department, "Eppal Headquarter", "7 Jalan Naga Sari", 40, null);
 
         when(departmentService.getDepartmentByIdAndCompanyId(any(UUID.class), any(UUID.class))).thenReturn(department);
-        when(workLocations.findByIdAndDepartmentId(work_location_id, dept_id)).thenReturn(java.util.Optional.of(workLocation));
+        when(workLocations.findByIdAndDepartmentId(workLocationId, departmentId)).thenReturn(java.util.Optional.of(workLocation));
 
-        WorkLocation foundWorkLocation = workLocationService.get(company_id, dept_id, work_location_id);
+        WorkLocation foundWorkLocation = workLocationService.get(companyId, departmentId, workLocationId);
 
         assertEquals(workLocation, foundWorkLocation);
 
-        verify(departmentService, times(1)).getDepartmentByIdAndCompanyId(company_id, dept_id);
-        verify(workLocations,times(1)).findByIdAndDepartmentId(work_location_id,dept_id);
+        verify(departmentService, times(1)).getDepartmentByIdAndCompanyId(companyId, departmentId);
+        verify(workLocations,times(1)).findByIdAndDepartmentId(workLocationId,departmentId);
 
     }
 
     @Test
     public void get_WorkLocationDoesNotExist_ThrowException(){
-        UUID company_id = UUID.randomUUID();
-        UUID dept_id = UUID.randomUUID();
-        UUID work_location_id = UUID.randomUUID();
+        UUID companyId = UUID.randomUUID();
+        UUID departmentId = UUID.randomUUID();
+        UUID workLocationId = UUID.randomUUID();
 
-        Exception exception = assertThrows(WorkLocationNotFoundException.class, () -> workLocationService.get(company_id,dept_id,work_location_id));
+        Exception exception = assertThrows(WorkLocationNotFoundException.class, () -> workLocationService.get(companyId,departmentId,workLocationId));
 
         String expectedExceptionMessage = String.format("Could not find work location %s from department %s from company %s",
-                work_location_id,
-                dept_id,
-                company_id);
+                workLocationId,
+                departmentId,
+                companyId);
         assertEquals(expectedExceptionMessage, exception.getMessage());
-        verify(departmentService, times(1)).getDepartmentByIdAndCompanyId(company_id, dept_id);
-        verify(workLocations,times(1)).findByIdAndDepartmentId(work_location_id,dept_id);
+        verify(departmentService, times(1)).getDepartmentByIdAndCompanyId(companyId, departmentId);
+        verify(workLocations,times(1)).findByIdAndDepartmentId(workLocationId,departmentId);
     }
 
     @Test
     public void getWorkLocationById_WorkLocationExists_ReturnFoundWorkLocation(){
-        UUID company_id = UUID.randomUUID();
-        Company company = new Company(company_id, "Eppal", null);
+        UUID companyId = UUID.randomUUID();
+        Company company = new Company(companyId, "Eppal", null);
 
-        UUID dept_id = UUID.randomUUID();
-        Department department = new Department(dept_id, company, "Marketing");
+        UUID departmentId = UUID.randomUUID();
+        Department department = new Department(departmentId, company, "Marketing");
 
-        UUID work_location_id = UUID.randomUUID();
-        WorkLocation workLocation = new WorkLocation(work_location_id, department, "Eppal Headquarter", "7 Jalan Naga Sari", 40, null);
+        UUID workLocationId = UUID.randomUUID();
+        WorkLocation workLocation = new WorkLocation(workLocationId, department, "Eppal Headquarter", "7 Jalan Naga Sari", 40, null);
 
-        when(workLocations.findById(work_location_id)).thenReturn(java.util.Optional.of(workLocation));
+        when(workLocations.findById(workLocationId)).thenReturn(java.util.Optional.of(workLocation));
 
-        WorkLocation foundWorkLocation = workLocationService.getWorkLocationById(work_location_id);
+        WorkLocation foundWorkLocation = workLocationService.getWorkLocationById(workLocationId);
 
         assertEquals(workLocation, foundWorkLocation);
-        verify(workLocations, times(1)).findById(work_location_id);
+        verify(workLocations, times(1)).findById(workLocationId);
     }
 
     @Test
     public void getWorkLocationById_WorkLocationDoesNotExist_ThrowException(){
-        UUID work_location_id = UUID.randomUUID();
+        UUID workLocationId = UUID.randomUUID();
 
-        Exception exception = assertThrows(WorkLocationNotFoundException.class, () -> workLocationService.getWorkLocationById(work_location_id));
-        String expectedExceptionMessage = String.format("Could not find work location %s", work_location_id);
+        Exception exception = assertThrows(WorkLocationNotFoundException.class, () -> workLocationService.getWorkLocationById(workLocationId));
+        String expectedExceptionMessage = String.format("Could not find work location %s", workLocationId);
         assertEquals(expectedExceptionMessage, exception.getMessage());
 
-        verify(workLocations, times(1)).findById(work_location_id);
+        verify(workLocations, times(1)).findById(workLocationId);
     }
 
 }
