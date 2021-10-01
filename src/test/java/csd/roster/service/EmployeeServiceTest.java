@@ -80,6 +80,8 @@ public class EmployeeServiceTest {
     public void getEmployee_NullEmployee_ThrowsException(){
         UUID emp_id = UUID.fromString("adef9b37-3dd0-400f-8c11-1e5737af458f");
         Exception exception = assertThrows(EmployeeNotFoundException.class, () -> employeeService.getEmployee(emp_id));
+
         assertEquals("Could not find employee " + emp_id, exception.getMessage());
+        verify(employees,times(1)).findById(any(UUID.class));
     }
 }
