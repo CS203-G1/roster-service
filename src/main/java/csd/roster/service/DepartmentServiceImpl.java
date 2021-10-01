@@ -51,7 +51,7 @@ public class DepartmentServiceImpl implements DepartmentService {
     @Override
     public void delete(UUID companyId, UUID departmentId) {
         // Using getDepartmentByIdAndCompanyId for DRY purposes
-        Department department = getDepartmentByIdAndCompanyId(companyId, departmentId);
+        Department department = getDepartmentByIdAndCompanyId(departmentId, companyId);
 
         departmentRepository.delete(department);
     }
