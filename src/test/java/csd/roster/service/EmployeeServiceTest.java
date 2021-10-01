@@ -84,4 +84,38 @@ public class EmployeeServiceTest {
         assertEquals("Could not find employee " + emp_id, exception.getMessage());
         verify(employees,times(1)).findById(any(UUID.class));
     }
+
+    @Test
+    public void getEmployeeByDeptIdAndEmpId_EmployeeExists_ReturnEmployee(){
+        UUID company_id = UUID.fromString("a4ccc2c4-0426-41a2-b904-f7a941ba27e0");
+        Company company = new Company(company_id, "Eppal", null);
+
+        UUID dept_id = UUID.fromString("decf52aa-94a8-48c5-abca-04f037d98e56");
+        Department department = new Department(dept_id, company, "Marketing");
+
+        UUID emp_id = UUID.fromString("adef9b37-3dd0-400f-8c11-1e5737af458f");
+        VaccinationStatus vaccinationStatus = VaccinationStatus.NOT_VACCINATED;
+        VaccineBrand vaccineBrand = null;
+        HealthStatus healthStatus = HealthStatus.COVID;
+        Employee employee = new Employee(emp_id, null, department, "John Doe", vaccinationStatus, vaccineBrand, healthStatus);
+
+        when(employees.findByIdAndDepartmentId(any(UUID.class), any(UUID.class))).thenReturn(java.util.Optional.of(employee));
+
+        Employee foundEmployee = employeeService.getEmployee(dept_id,emp_id);
+
+        assertEquals(employee,foundEmployee);
+
+        verify(employees,times(1)).findByIdAndDepartmentId(any(UUID.class),any(UUID.class));
+    }
+
+    @Test
+    public void getEmployeeByDeptIdAndEmpId_EmployeeDoesNotExist_ThrowException(){
+        UUID dept_id = UUID.fromString("decf52aa-94a8-48c5-abca-04f037d98e56");
+        UUID emp_id = UUID.fromString("adef9b37-3dd0-400f-8c11-1e5737af458f");
+
+        Exception exception = assertThrows(EmployeeNotFoundException.class, ()-> employeeService.getEmployee(dept_id,emp_id));
+
+        assertEquals("Could not find employee " + emp_id, exception.getMessage());
+        verify(employees,times(1)).findByIdAndDepartmentId(any(UUID.class),any(UUID.class));
+    }
 }
