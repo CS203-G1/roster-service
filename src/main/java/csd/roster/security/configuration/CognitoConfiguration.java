@@ -1,4 +1,4 @@
-package csd.roster.configuration;
+package csd.roster.security.configuration;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;

@@ -1,4 +1,4 @@
-package csd.roster.store;
+package csd.roster.security.store;
 
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
