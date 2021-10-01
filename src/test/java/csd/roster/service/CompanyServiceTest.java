@@ -1,5 +1,6 @@
 package csd.roster.service;
 
+import csd.roster.exception.CompanyNotFoundException;
 import csd.roster.model.Company;
 import csd.roster.repository.CompanyRepository;
 import org.junit.jupiter.api.Test;
@@ -12,8 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
@@ -92,6 +92,15 @@ public class CompanyServiceTest {
         verify(companies, times(3)).save(any(Company.class));
         verify(companies, times(1)).findAll();
 
+    }
+
+    @Test
+    void getCompanyByID_CompanyDoesNotExist_ThrowException(){
+        UUID id = UUID.fromString("a4ccc2c4-0426-41a2-b904-f7a941ba27e0");
+        Exception exception = assertThrows(CompanyNotFoundException.class, () -> companyService.getCompanyById(id));
+
+        assertEquals("Could not find company " + id, exception.getMessage());
+        verify(companies,times(1)).findById(any(UUID.class));
     }
 //    @Test
 //    void updateCompanyById_CompanyExists_ReturnUpdatedCompany(){
