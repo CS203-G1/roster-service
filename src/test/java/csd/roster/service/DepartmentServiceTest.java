@@ -104,7 +104,8 @@ public class DepartmentServiceTest {
 
         Exception exception = assertThrows(DepartmentNotFoundException.class, ()-> departmentService.getDepartmentByIdAndCompanyId(company_id,dept_id));
 
-        assertEquals("Could not find department " + dept_id + " from company " + company_id, exception.getMessage());
+        String expectedExceptionMessage = String.format("Could not find department %s from company %s", dept_id, company_id);
+        assertEquals(expectedExceptionMessage, exception.getMessage());
         verify(departments, times(1)).findByIdAndCompanyId(dept_id, company_id);
 
     }
