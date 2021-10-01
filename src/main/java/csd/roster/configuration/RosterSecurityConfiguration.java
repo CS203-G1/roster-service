@@ -1,5 +1,8 @@
 package csd.roster.configuration;
 
+import csd.roster.store.CognitoAccessTokenConverter;
+import org.springframework.boot.autoconfigure.security.oauth2.resource.ResourceServerProperties;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -7,11 +10,13 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter;
 import org.springframework.security.oauth2.jwt.Jwt;
+import org.springframework.security.oauth2.provider.token.TokenStore;
+import org.springframework.security.oauth2.provider.token.store.jwk.JwkTokenStore;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter;
 
-import java.util.ArrayList;
-import java.util.Collection;
+import java.util.*;
 
 // For reference on how to do security configuration with AWS Cognito
 // https://www.tutorialsbuddy.com/secure-spring-boot-rest-apis-with-amazon-cognito-example
@@ -27,6 +32,11 @@ import java.util.Collection;
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class RosterSecurityConfiguration extends WebSecurityConfigurerAdapter {
+    private final ResourceServerProperties resource;
+
+    public RosterSecurityConfiguration(ResourceServerProperties resource) {
+        this.resource = resource;
+    }
 
     // Currently not doing any antMatchers yet since this is just a general configuration to enable jwt
     @Override
