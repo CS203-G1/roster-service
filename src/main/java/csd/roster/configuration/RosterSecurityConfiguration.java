@@ -53,4 +53,13 @@ public class RosterSecurityConfiguration extends ResourceServerConfigurerAdapter
         http.authorizeRequests()
                 .anyRequest().authenticated();
     }
+
+    // Enabling Cognito Converter
+    @Bean
+    public TokenStore jwkTokenStore() {
+        return new JwkTokenStore(
+                Collections.singletonList(resource.getJwk().getKeySetUri()),
+                new CognitoAccessTokenConverter(),
+                null);
+    }
 }
