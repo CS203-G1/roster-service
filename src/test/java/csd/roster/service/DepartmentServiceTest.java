@@ -83,7 +83,7 @@ public class DepartmentServiceTest {
 
         verify(departments, times(3)).save(any(Department.class));
         verify(departments, times(1)).findAll();
-        
+
 
     }
 }
