@@ -35,7 +35,7 @@ public class DepartmentServiceImpl implements DepartmentService {
     }
 
     @Override
-    public Department getDepartmentByIdAndCompanyId(UUID companyId, UUID departmentId) {
+    public Department getDepartmentByIdAndCompanyId(UUID departmentId, UUID companyId) {
         companyService.getCompanyById(companyId);
 
         return departmentRepository.findByIdAndCompanyId(departmentId, companyId)
