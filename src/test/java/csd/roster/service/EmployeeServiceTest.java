@@ -58,4 +58,23 @@ public class EmployeeServiceTest {
         verify(departmentService, times(1)).getDepartmentById(dept_id);
         verify(employees, times(1)).save(employee);
     }
+
+    @Test
+    public void getEmployee_EmployeeExists_ReturnEmployee(){
+        UUID emp_id = UUID.fromString("adef9b37-3dd0-400f-8c11-1e5737af458f");
+        VaccinationStatus vaccinationStatus = VaccinationStatus.NOT_VACCINATED;
+        VaccineBrand vaccineBrand = null;
+        HealthStatus healthStatus = HealthStatus.COVID;
+        Employee employee = new Employee(emp_id, null, null, "John Doe", vaccinationStatus, vaccineBrand, healthStatus);
+
+        when(employees.findById(any(UUID.class))).thenReturn(java.util.Optional.of(employee));
+
+        Employee foundEmployee = employeeService.getEmployee(emp_id);
+
+
+        assertEquals(employee, foundEmployee);
+        verify(employees, times(1)).findById(any(UUID.class));
+    }
+
+
 }
