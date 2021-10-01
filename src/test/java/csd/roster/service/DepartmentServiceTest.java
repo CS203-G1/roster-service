@@ -63,7 +63,7 @@ public class DepartmentServiceTest {
     }
 
     @Test
-    public void getDepartmentById_DepartmentExists(){
+    public void getDepartmentById_DepartmentExists_ReturnFoundDepartment(){
         UUID company_id = UUID.fromString("a4ccc2c4-0426-41a2-b904-f7a941ba27e0");
         Company company = new Company(company_id, "Eppal", null);
 
@@ -76,5 +76,21 @@ public class DepartmentServiceTest {
 
         assertEquals(department,foundDepartment);
         verify(departments, times(1)).findById(dept_id);
+    }
+
+    @Test
+    public void getDepartmentByIdAndCompanyId_DepartmentExists_ReturnFoundDepartment(){
+        UUID company_id = UUID.fromString("a4ccc2c4-0426-41a2-b904-f7a941ba27e0");
+        Company company = new Company(company_id, "Eppal", null);
+
+        UUID dept_id = UUID.fromString("decf52aa-94a8-48c5-abca-04f037d98e56");
+        Department department = new Department(dept_id, company, "Marketing");
+
+        when(departments.findByIdAndCompanyId(any(UUID.class),any(UUID.class))).thenReturn(java.util.Optional.of(department));
+
+        Department foundDepartment = departmentService.getDepartmentByIdAndCompanyId(company_id,dept_id);
+
+        assertEquals(department, foundDepartment);
+        verify(departments, times(1)).findByIdAndCompanyId(dept_id, company_id);
     }
 }
