@@ -30,10 +30,10 @@ public class WorkLocationServiceTest {
 
     @Test
     public void addWorkLocation_NewWorkLocation_ReturnSavedWorkLocation(){
-        UUID company_id = UUID.fromString("a4ccc2c4-0426-41a2-b904-f7a941ba27e0");
+        UUID company_id = UUID.randomUUID();
         Company company = new Company(company_id, "Eppal", null);
 
-        UUID dept_id = UUID.fromString("decf52aa-94a8-48c5-abca-04f037d98e56");
+        UUID dept_id = UUID.randomUUID();
         Department department = new Department(dept_id, company, "Marketing");
 
         WorkLocation workLocation = new WorkLocation(null, null, "Eppal Headquarter", "7 Jalan Naga Sari", 40, null);
@@ -52,10 +52,10 @@ public class WorkLocationServiceTest {
 
     @Test
     public void get_WorkLocationExists_ReturnFoundWorkLocation(){
-        UUID company_id = UUID.fromString("a4ccc2c4-0426-41a2-b904-f7a941ba27e0");
+        UUID company_id = UUID.randomUUID();
         Company company = new Company(company_id, "Eppal", null);
 
-        UUID dept_id = UUID.fromString("decf52aa-94a8-48c5-abca-04f037d98e56");
+        UUID dept_id = UUID.randomUUID();
         Department department = new Department(dept_id, company, "Marketing");
 
         UUID work_location_id = UUID.randomUUID();
@@ -75,8 +75,8 @@ public class WorkLocationServiceTest {
 
     @Test
     public void get_WorkLocationDoesNotExist_ThrowException(){
-        UUID company_id = UUID.fromString("a4ccc2c4-0426-41a2-b904-f7a941ba27e0");
-        UUID dept_id = UUID.fromString("decf52aa-94a8-48c5-abca-04f037d98e56");
+        UUID company_id = UUID.randomUUID();
+        UUID dept_id = UUID.randomUUID();
         UUID work_location_id = UUID.randomUUID();
 
         Exception exception = assertThrows(WorkLocationNotFoundException.class, () -> workLocationService.get(company_id,dept_id,work_location_id));
