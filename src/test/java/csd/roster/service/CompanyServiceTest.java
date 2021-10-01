@@ -58,41 +58,15 @@ public class CompanyServiceTest {
     }
 
     @Test
-    void getAllCompanies_AfterAddingThreeCompanies_ReturnListOfCompanies(){
-        UUID id1 = UUID.randomUUID();
-        Company company1 = new Company(id1, "Eppal", null);
-
-        UUID id2 = UUID.randomUUID();
-        Company company2 = new Company(id2, "PayPal", null);
-
-        UUID id3 = UUID.randomUUID();
-        Company company3 = new Company(id3, "PeePal", null);
-
+    void getAllCompanies_NoCompanies_ReturnEmptyList(){
         when(companies.findAll()).thenReturn(new ArrayList<Company>());
-        when(companies.save(any(Company.class)))
-                .thenReturn(company1)
-                .thenReturn(company2)
-                .thenReturn(company3);
+
 
         List<Company> allCompanies = companyService.getAllCompanies();
-        Company savedCompany1 = companyService.addCompany(company1);
-        Company savedCompany2 = companyService.addCompany(company2);
-        Company savedCompany3 = companyService.addCompany(company3);
-
-        allCompanies.add(savedCompany1);
-        allCompanies.add(savedCompany2);
-        allCompanies.add(savedCompany3);
-
-        assertEquals(company1,savedCompany1);
-        assertEquals(company2,savedCompany2);
-        assertEquals(company3,savedCompany3);
 
         assertNotNull(allCompanies);
-        assertEquals(3,allCompanies.size());
-
-        verify(companies, times(3)).save(any(Company.class));
+        assertEquals(0,allCompanies.size());
         verify(companies, times(1)).findAll();
-
     }
 
     @Test
