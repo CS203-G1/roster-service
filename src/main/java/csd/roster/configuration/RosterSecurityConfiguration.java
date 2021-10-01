@@ -53,21 +53,4 @@ public class RosterSecurityConfiguration extends ResourceServerConfigurerAdapter
         http.authorizeRequests()
                 .anyRequest().authenticated();
     }
-
-    private JwtAuthenticationConverter grantedAuthoritiesExtractor() {
-        JwtAuthenticationConverter jwtAuthenticationConverter = new JwtAuthenticationConverter();
-
-        jwtAuthenticationConverter.setJwtGrantedAuthoritiesConverter(jwt -> {
-            Converter<Jwt, Collection<GrantedAuthority>> converter = new Converter<Jwt, Collection<GrantedAuthority>>() {
-                @Override
-                public Collection<GrantedAuthority> convert(Jwt jwt) {
-                    return (Collection<GrantedAuthority>) jwt.getClaims().getOrDefault("cognito:groups", new ArrayList<String>());
-                }
-            };
-
-            return converter.convert(jwt);
-        });
-
-        return jwtAuthenticationConverter;
-    }
 }
