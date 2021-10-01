@@ -31,7 +31,6 @@ import java.util.*;
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
-
 // Since we are authenticating and authorizing access to the resources at the HTTP layer
 // We use ResourceServerConfigurerAdapter instead
 // It inherits WebSecurityConfigurer Adapter
@@ -46,14 +45,13 @@ public class RosterSecurityConfiguration extends ResourceServerConfigurerAdapter
 
     // Currently not doing any antMatchers yet since this is just a general configuration to enable jwt
     @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests(auth ->
-                        auth.anyRequest().authenticated()
-                )
-                .oauth2ResourceServer(oauth2 ->
-                        oauth2.jwt(jwt ->
-                                jwt.jwtAuthenticationConverter(grantedAuthoritiesExtractor())
-                        ));
+    public void configure(HttpSecurity http) throws Exception {
+        http.cors();
+
+        http.csrf().disable();
+
+        http.authorizeRequests()
+                .anyRequest().authenticated();
     }
 
     private JwtAuthenticationConverter grantedAuthoritiesExtractor() {
