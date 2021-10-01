@@ -88,7 +88,7 @@ public class DepartmentServiceTest {
 
         when(departments.findByIdAndCompanyId(any(UUID.class),any(UUID.class))).thenReturn(java.util.Optional.of(department));
 
-        Department foundDepartment = departmentService.getDepartmentByIdAndCompanyId(companyId,departmentId);
+        Department foundDepartment = departmentService.getDepartmentByIdAndCompanyId(departmentId, companyId);
 
         assertEquals(department, foundDepartment);
         verify(departments, times(1)).findByIdAndCompanyId(departmentId, companyId);
@@ -102,7 +102,8 @@ public class DepartmentServiceTest {
         UUID departmentId = UUID.randomUUID();
         Department department = new Department(departmentId, company, "Marketing");
 
-        Exception exception = assertThrows(DepartmentNotFoundException.class, ()-> departmentService.getDepartmentByIdAndCompanyId(companyId,departmentId));
+        Exception exception = assertThrows(DepartmentNotFoundException.class,
+                () -> departmentService.getDepartmentByIdAndCompanyId(departmentId, companyId));
 
         String expectedExceptionMessage = String.format("Could not find department %s from company %s", departmentId, companyId);
         assertEquals(expectedExceptionMessage, exception.getMessage());
