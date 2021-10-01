@@ -28,7 +28,8 @@ public class CompanyServiceTest {
 
     @Test
     void addCompany_NewCompany_ReturnSavedCompany(){
-        Company company = new Company(UUID.fromString("a4ccc2c4-0426-41a2-b904-f7a941ba27e0"), "Eppal", null);
+        UUID id = UUID.randomUUID();
+        Company company = new Company(id, "Eppal", null);
 
         when(companies.save(any(Company.class))).thenReturn(company);
 
@@ -42,7 +43,7 @@ public class CompanyServiceTest {
 
     @Test
     void getCompanyById_CompanyExists_ReturnCompany(){
-        UUID id = UUID.fromString("a4ccc2c4-0426-41a2-b904-f7a941ba27e0");
+        UUID id = UUID.randomUUID();
         Company company = new Company(id, "Eppal", null);
 
         when(companies.findById(any(UUID.class))).thenReturn(java.util.Optional.of(company));
@@ -58,14 +59,14 @@ public class CompanyServiceTest {
 
     @Test
     void getAllCompanies_AfterAddingThreeCompanies_ReturnListOfCompanies(){
-        UUID id1 = UUID.fromString("a4ccc2c4-0426-41a2-b904-f7a941ba27e0");
+        UUID id1 = UUID.randomUUID();
         Company company1 = new Company(id1, "Eppal", null);
 
-        UUID id2 = UUID.fromString("a4ccc2c4-0426-41a2-b904-f7a941ba27e0");
-        Company company2 = new Company(id1, "PayPal", null);
+        UUID id2 = UUID.randomUUID();
+        Company company2 = new Company(id2, "PayPal", null);
 
-        UUID id3 = UUID.fromString("a4ccc2c4-0426-41a2-b904-f7a941ba27e0");
-        Company company3 = new Company(id1, "PeePal", null);
+        UUID id3 = UUID.randomUUID();
+        Company company3 = new Company(id3, "PeePal", null);
 
         when(companies.findAll()).thenReturn(new ArrayList<Company>());
         when(companies.save(any(Company.class)))
@@ -96,7 +97,7 @@ public class CompanyServiceTest {
 
     @Test
     void getCompanyByID_CompanyDoesNotExist_ThrowException(){
-        UUID id = UUID.fromString("a4ccc2c4-0426-41a2-b904-f7a941ba27e0");
+        UUID id = UUID.randomUUID();
         Exception exception = assertThrows(CompanyNotFoundException.class, () -> companyService.getCompanyById(id));
 
         assertEquals("Could not find company " + id, exception.getMessage());
