@@ -1,20 +1,15 @@
-package csd.roster.configuration;
+package csd.roster.security.configuration;
 
-import csd.roster.store.CognitoAccessTokenConverter;
+import csd.roster.security.store.CognitoAccessTokenConverter;
 import org.springframework.boot.autoconfigure.security.oauth2.resource.ResourceServerProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.convert.converter.Converter;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter;
-import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.jwk.JwkTokenStore;
-import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter;
 
 import java.util.*;
 
@@ -27,6 +22,8 @@ import java.util.*;
 
 // For more extension implementation of Cognito: https://github.com/szerhusenBC/jwt-spring-security-demo
 // This has their own implementation of JWT and filters
+
+// Actual implementation taken from: https://arjunsk.medium.com/resource-server-with-cognito-b7fbfbee0155
 
 @Configuration
 @EnableWebSecurity
