@@ -14,7 +14,7 @@ public class RosterNotFoundException extends ResourceNotFoundException {
                 rosterId, workLocationId));
     }
 
-    public RosterNotFoundException(UUID workLocationId) {
-        super(String.format("Work location %s does not contain any rosters", workLocationId));
+    public RosterNotFoundException(UUID rosterId) {
+        super(String.format("Roster %s does not exist", rosterId));
     }
 }
