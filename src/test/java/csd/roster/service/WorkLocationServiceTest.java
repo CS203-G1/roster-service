@@ -1,0 +1,53 @@
+package csd.roster.service;
+
+import csd.roster.model.Company;
+import csd.roster.model.Department;
+import csd.roster.model.WorkLocation;
+import csd.roster.repository.WorkLocationRepository;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
+
+import java.util.UUID;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.*;
+
+@ExtendWith(MockitoExtension.class)
+public class WorkLocationServiceTest {
+    @Mock
+    WorkLocationRepository workLocations;
+
+    @Mock
+    DepartmentServiceImpl departmentService;
+
+    @InjectMocks
+    WorkLocationServiceImpl workLocationService;
+
+    @Test
+    public void addWorkLocation_NewWorkLocation_ReturnSavedWorkLocation(){
+        UUID company_id = UUID.fromString("a4ccc2c4-0426-41a2-b904-f7a941ba27e0");
+        Company company = new Company(company_id, "Eppal", null);
+
+        UUID dept_id = UUID.fromString("decf52aa-94a8-48c5-abca-04f037d98e56");
+        Department department = new Department(dept_id, company, "Marketing");
+
+        WorkLocation workLocation = new WorkLocation(null, null, "Eppal Headquarter", "7 Jalan Naga Sari", 40, null);
+
+        when(departmentService.getDepartmentByIdAndCompanyId(any(UUID.class), any(UUID.class))).thenReturn(department);
+        when(workLocations.save(any(WorkLocation.class))).thenReturn(workLocation);
+
+        WorkLocation savedWorkLocation = workLocationService.add(company_id,dept_id, workLocation);
+
+        assertNotNull(savedWorkLocation);
+        assertEquals(department, workLocation.getDepartment());
+
+        verify(workLocations, times(1)).save(workLocation);
+        verify(departmentService, times(1)).getDepartmentByIdAndCompanyId(company_id,dept_id);
+    }
+
+}
