@@ -109,4 +109,15 @@ public class WorkLocationServiceTest {
         verify(workLocations, times(1)).findById(work_location_id);
     }
 
+    @Test
+    public void getWorkLocationById_WorkLocationDoesNotExist_ThrowException(){
+        UUID work_location_id = UUID.randomUUID();
+
+        Exception exception = assertThrows(WorkLocationNotFoundException.class, () -> workLocationService.getWorkLocationById(work_location_id));
+        String expectedExceptionMessage = String.format("Could not find work location %s", work_location_id);
+        assertEquals(expectedExceptionMessage, exception.getMessage());
+
+        verify(workLocations, times(1)).findById(work_location_id);
+    }
+
 }
