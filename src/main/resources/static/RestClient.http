@@ -1,5 +1,7 @@
 # Get all companies
 GET http://localhost:8080/companies
+Accept: application/json
+Authorization: Bearer <JWT here>
 
 ###
 # Add a company

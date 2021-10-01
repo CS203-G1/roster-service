@@ -1,6 +1,7 @@
 # Add roster employee
 POST http://localhost:8080/rosters/bff4ccd3-bae4-4c2f-a8bd-fdc703df8c25/employees/a88f8825-34e2-44cb-a9f5-4482c82bbc48
 Content-Type: application/json
+Authorization: Bearer <JWT>
 
 {
   "fromDateTime": "2022-09-16T15:00:00.000",
@@ -10,3 +11,15 @@ Content-Type: application/json
 ###
 # Delete roster employee
 DELETE http://localhost:8080/rosters/bff4ccd3-bae4-4c2f-a8bd-fdc703df8c25/employees/a88f8825-34e2-44cb-a9f5-4482c82bbc48
+Authorization: Bearer <JWT>
+
+###
+# Add roster employee
+PUT http://localhost:8080/rosters/bff4ccd3-bae4-4c2f-a8bd-fdc703df8c25/employees/a88f8825-34e2-44cb-a9f5-4482c82bbc48
+Content-Type: application/json
+Authorization: Bearer <JWT>
+
+{
+  "fromDateTime": "2022-09-16T15:00:00.000",
+  "toDateTime": "2022-09-16T17:00:00.000"
+}
