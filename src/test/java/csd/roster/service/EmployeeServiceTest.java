@@ -34,13 +34,13 @@ public class EmployeeServiceTest {
 
     @Test
     public void addEmployee_NewEmployee_ReturnSavedEmployee(){
-        UUID company_id = UUID.fromString("a4ccc2c4-0426-41a2-b904-f7a941ba27e0");
+        UUID company_id = UUID.randomUUID();
         Company company = new Company(company_id, "Eppal", null);
 
-        UUID dept_id = UUID.fromString("decf52aa-94a8-48c5-abca-04f037d98e56");
+        UUID dept_id = UUID.randomUUID();
         Department department = new Department(dept_id, company, "Marketing");
 
-        UUID emp_id = UUID.fromString("adef9b37-3dd0-400f-8c11-1e5737af458f");
+        UUID emp_id = UUID.randomUUID();
         VaccinationStatus vaccinationStatus = VaccinationStatus.NOT_VACCINATED;
         VaccineBrand vaccineBrand = null;
         HealthStatus healthStatus = HealthStatus.COVID;
@@ -61,7 +61,7 @@ public class EmployeeServiceTest {
 
     @Test
     public void getEmployee_EmployeeExists_ReturnEmployee(){
-        UUID emp_id = UUID.fromString("adef9b37-3dd0-400f-8c11-1e5737af458f");
+        UUID emp_id = UUID.randomUUID();
         VaccinationStatus vaccinationStatus = VaccinationStatus.NOT_VACCINATED;
         VaccineBrand vaccineBrand = null;
         HealthStatus healthStatus = HealthStatus.COVID;
@@ -78,7 +78,7 @@ public class EmployeeServiceTest {
 
     @Test
     public void getEmployee_NullEmployee_ThrowsException(){
-        UUID emp_id = UUID.fromString("adef9b37-3dd0-400f-8c11-1e5737af458f");
+        UUID emp_id = UUID.randomUUID();
         Exception exception = assertThrows(EmployeeNotFoundException.class, () -> employeeService.getEmployee(emp_id));
 
         assertEquals("Could not find employee " + emp_id, exception.getMessage());
@@ -87,13 +87,13 @@ public class EmployeeServiceTest {
 
     @Test
     public void getEmployeeByDeptIdAndEmpId_EmployeeExists_ReturnEmployee(){
-        UUID company_id = UUID.fromString("a4ccc2c4-0426-41a2-b904-f7a941ba27e0");
+        UUID company_id = UUID.randomUUID();
         Company company = new Company(company_id, "Eppal", null);
 
-        UUID dept_id = UUID.fromString("decf52aa-94a8-48c5-abca-04f037d98e56");
+        UUID dept_id = UUID.randomUUID();
         Department department = new Department(dept_id, company, "Marketing");
 
-        UUID emp_id = UUID.fromString("adef9b37-3dd0-400f-8c11-1e5737af458f");
+        UUID emp_id = UUID.randomUUID();
         VaccinationStatus vaccinationStatus = VaccinationStatus.NOT_VACCINATED;
         VaccineBrand vaccineBrand = null;
         HealthStatus healthStatus = HealthStatus.COVID;
@@ -110,8 +110,8 @@ public class EmployeeServiceTest {
 
     @Test
     public void getEmployeeByDeptIdAndEmpId_EmployeeDoesNotExist_ThrowException(){
-        UUID dept_id = UUID.fromString("decf52aa-94a8-48c5-abca-04f037d98e56");
-        UUID emp_id = UUID.fromString("adef9b37-3dd0-400f-8c11-1e5737af458f");
+        UUID dept_id = UUID.randomUUID();
+        UUID emp_id = UUID.randomUUID();
 
         Exception exception = assertThrows(EmployeeNotFoundException.class, ()-> employeeService.getEmployee(dept_id,emp_id));
 
