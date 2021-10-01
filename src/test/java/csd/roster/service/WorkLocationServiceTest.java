@@ -1,5 +1,6 @@
 package csd.roster.service;
 
+import csd.roster.exception.WorkLocationNotFoundException;
 import csd.roster.model.Company;
 import csd.roster.model.Department;
 import csd.roster.model.WorkLocation;
@@ -12,8 +13,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.UUID;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
@@ -71,6 +71,23 @@ public class WorkLocationServiceTest {
         verify(departmentService, times(1)).getDepartmentByIdAndCompanyId(company_id, dept_id);
         verify(workLocations,times(1)).findByIdAndDepartmentId(work_location_id,dept_id);
 
+    }
+
+    @Test
+    public void get_WorkLocationDoesNotExist_ThrowException(){
+        UUID company_id = UUID.fromString("a4ccc2c4-0426-41a2-b904-f7a941ba27e0");
+        UUID dept_id = UUID.fromString("decf52aa-94a8-48c5-abca-04f037d98e56");
+        UUID work_location_id = UUID.randomUUID();
+
+        Exception exception = assertThrows(WorkLocationNotFoundException.class, () -> workLocationService.get(company_id,dept_id,work_location_id));
+
+        String expectedExceptionMessage = String.format("Could not find work location %s from department %s from company %s",
+                work_location_id,
+                dept_id,
+                company_id);
+        assertEquals(expectedExceptionMessage, exception.getMessage());
+        verify(departmentService, times(1)).getDepartmentByIdAndCompanyId(company_id, dept_id);
+        verify(workLocations,times(1)).findByIdAndDepartmentId(work_location_id,dept_id);
     }
 
 }
