@@ -3,6 +3,7 @@ package csd.roster.service;
 import csd.roster.enumerator.HealthStatus;
 import csd.roster.enumerator.VaccinationStatus;
 import csd.roster.enumerator.VaccineBrand;
+import csd.roster.exception.EmployeeNotFoundException;
 import csd.roster.model.Company;
 import csd.roster.model.Department;
 import csd.roster.model.Employee;
@@ -15,8 +16,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.UUID;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
@@ -76,5 +76,10 @@ public class EmployeeServiceTest {
         verify(employees, times(1)).findById(any(UUID.class));
     }
 
-
+    @Test
+    public void getEmployee_NullEmployee_ThrowsException(){
+        UUID emp_id = UUID.fromString("adef9b37-3dd0-400f-8c11-1e5737af458f");
+        Exception exception = assertThrows(EmployeeNotFoundException.class, () -> employeeService.getEmployee(emp_id));
+        assertEquals("Could not find employee " + emp_id, exception.getMessage());
+    }
 }
