@@ -1,5 +1,6 @@
 package csd.roster.service;
 
+import csd.roster.exception.RosterNotFoundException;
 import csd.roster.model.Roster;
 import csd.roster.model.WorkLocation;
 import csd.roster.repository.RosterRepository;
@@ -14,8 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
@@ -70,5 +70,21 @@ public class RosterServiceTest {
         assertEquals(1, rostersForWorkLocation.size());
 
         verify(rosters, times(1)).findByWorkLocationId(workLocationId);
+    }
+
+    @Test
+    public void getRoster_EmptyRosters_ThrowException(){
+        List<Roster> allRostersInWorkLocation = new ArrayList<Roster>();
+
+        UUID workLocationId = UUID.randomUUID();
+        WorkLocation workLocation = new WorkLocation(workLocationId, null, null, null, 40, allRostersInWorkLocation);
+
+        when(rosters.findByWorkLocationId(workLocationId)).thenReturn(workLocation.getRosters());
+
+        Exception exception = assertThrows(RosterNotFoundException.class, () -> rosterService.getRosters(workLocationId));
+        String expectedExceptionMessage = String.format("Work location %s does not contain any rosters", workLocationId);
+
+        assertEquals(expectedExceptionMessage, exception.getMessage());
+        verify(rosters,times(1)).findByWorkLocationId(workLocationId);
     }
 }
