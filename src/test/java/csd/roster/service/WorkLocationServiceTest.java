@@ -47,7 +47,7 @@ public class WorkLocationServiceTest {
         assertEquals(department, workLocation.getDepartment());
 
         verify(workLocations, times(1)).save(workLocation);
-        verify(departmentService, times(1)).getDepartmentByIdAndCompanyId(companyId,departmentId);
+        verify(departmentService, times(1)).getDepartmentByIdAndCompanyId(departmentId, companyId);
     }
 
     @Test
@@ -68,7 +68,7 @@ public class WorkLocationServiceTest {
 
         assertEquals(workLocation, foundWorkLocation);
 
-        verify(departmentService, times(1)).getDepartmentByIdAndCompanyId(companyId, departmentId);
+        verify(departmentService, times(1)).getDepartmentByIdAndCompanyId(departmentId, companyId);
         verify(workLocations,times(1)).findByIdAndDepartmentId(workLocationId,departmentId);
 
     }
@@ -86,7 +86,7 @@ public class WorkLocationServiceTest {
                 departmentId,
                 companyId);
         assertEquals(expectedExceptionMessage, exception.getMessage());
-        verify(departmentService, times(1)).getDepartmentByIdAndCompanyId(companyId, departmentId);
+        verify(departmentService, times(1)).getDepartmentByIdAndCompanyId(departmentId, companyId);
         verify(workLocations,times(1)).findByIdAndDepartmentId(workLocationId,departmentId);
     }
 
