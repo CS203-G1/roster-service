@@ -31,7 +31,13 @@ import java.util.*;
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
-public class RosterSecurityConfiguration extends WebSecurityConfigurerAdapter {
+
+// Since we are authenticating and authorizing access to the resources at the HTTP layer
+// We use ResourceServerConfigurerAdapter instead
+// It inherits WebSecurityConfigurer Adapter
+// More on the difference between ResourceServerConfigurerAdapter and WebSecurityConfigurer can be found on:
+// https://jeffrey-chen.medium.com/source-code-tracing-resourceserverconfigureradapter-and-websecurityconfigureradapter-54fe6f2af573
+public class RosterSecurityConfiguration extends ResourceServerConfigurerAdapter {
     private final ResourceServerProperties resource;
 
     public RosterSecurityConfiguration(ResourceServerProperties resource) {
