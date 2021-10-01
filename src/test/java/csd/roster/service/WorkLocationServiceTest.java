@@ -90,4 +90,23 @@ public class WorkLocationServiceTest {
         verify(workLocations,times(1)).findByIdAndDepartmentId(work_location_id,dept_id);
     }
 
+    @Test
+    public void getWorkLocationById_WorkLocationExists_ReturnFoundWorkLocation(){
+        UUID company_id = UUID.randomUUID();
+        Company company = new Company(company_id, "Eppal", null);
+
+        UUID dept_id = UUID.randomUUID();
+        Department department = new Department(dept_id, company, "Marketing");
+
+        UUID work_location_id = UUID.randomUUID();
+        WorkLocation workLocation = new WorkLocation(work_location_id, department, "Eppal Headquarter", "7 Jalan Naga Sari", 40, null);
+
+        when(workLocations.findById(work_location_id)).thenReturn(java.util.Optional.of(workLocation));
+
+        WorkLocation foundWorkLocation = workLocationService.getWorkLocationById(work_location_id);
+
+        assertEquals(workLocation, foundWorkLocation);
+        verify(workLocations, times(1)).findById(work_location_id);
+    }
+
 }
