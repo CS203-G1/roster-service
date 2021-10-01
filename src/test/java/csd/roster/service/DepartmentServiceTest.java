@@ -31,10 +31,10 @@ public class DepartmentServiceTest {
 
     @Test
     public void addDepartment_NewDepartment_ReturnSavedDepartment(){
-        UUID company_id = UUID.fromString("a4ccc2c4-0426-41a2-b904-f7a941ba27e0");
+        UUID company_id = UUID.randomUUID();
         Company company = new Company(company_id, "Eppal", null);
 
-        UUID dept_id = UUID.fromString("decf52aa-94a8-48c5-abca-04f037d98e56");
+        UUID dept_id = UUID.randomUUID();
         Department department = new Department(dept_id, null, "Marketing");
 
         when(companyService.getCompanyById(any(UUID.class))).thenReturn(company);
@@ -64,10 +64,10 @@ public class DepartmentServiceTest {
 
     @Test
     public void getDepartmentById_DepartmentExists_ReturnFoundDepartment(){
-        UUID company_id = UUID.fromString("a4ccc2c4-0426-41a2-b904-f7a941ba27e0");
+        UUID company_id = UUID.randomUUID();
         Company company = new Company(company_id, "Eppal", null);
 
-        UUID dept_id = UUID.fromString("decf52aa-94a8-48c5-abca-04f037d98e56");
+        UUID dept_id = UUID.randomUUID();
         Department department = new Department(dept_id, company, "Marketing");
 
         when(departments.findById(any(UUID.class))).thenReturn(java.util.Optional.of(department));
@@ -80,10 +80,10 @@ public class DepartmentServiceTest {
 
     @Test
     public void getDepartmentByIdAndCompanyId_DepartmentExists_ReturnFoundDepartment(){
-        UUID company_id = UUID.fromString("a4ccc2c4-0426-41a2-b904-f7a941ba27e0");
+        UUID company_id = UUID.randomUUID();
         Company company = new Company(company_id, "Eppal", null);
 
-        UUID dept_id = UUID.fromString("decf52aa-94a8-48c5-abca-04f037d98e56");
+        UUID dept_id = UUID.randomUUID();
         Department department = new Department(dept_id, company, "Marketing");
 
         when(departments.findByIdAndCompanyId(any(UUID.class),any(UUID.class))).thenReturn(java.util.Optional.of(department));
@@ -96,10 +96,10 @@ public class DepartmentServiceTest {
 
     @Test
     public void getDepartmentByIdAndCompanyId_DepartmentDoesNotExist_ThrowException(){
-        UUID company_id = UUID.fromString("a4ccc2c4-0426-41a2-b904-f7a941ba27e0");
+        UUID company_id = UUID.randomUUID();
         Company company = new Company(company_id, "Eppal", null);
 
-        UUID dept_id = UUID.fromString("decf52aa-94a8-48c5-abca-04f037d98e56");
+        UUID dept_id = UUID.randomUUID();
         Department department = new Department(dept_id, company, "Marketing");
 
         Exception exception = assertThrows(DepartmentNotFoundException.class, ()-> departmentService.getDepartmentByIdAndCompanyId(company_id,dept_id));
