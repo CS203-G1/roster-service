@@ -106,4 +106,23 @@ public class RosterServiceTest {
 
         verify(rosters, times(1)).findByIdAndWorkLocationId(rosterId, workLocationId);
     }
+
+    @Test
+    public void getRoster_RosterDoesNotExist_ThrowException(){
+        List<Roster> allRostersInWorkLocation = new ArrayList<Roster>();
+
+        UUID workLocationId = UUID.randomUUID();
+        WorkLocation workLocation = new WorkLocation(workLocationId, null, null, null, 40, allRostersInWorkLocation);
+
+        UUID rosterId = UUID.randomUUID();
+        Roster roster = new Roster(rosterId, LocalDate.now(), workLocation, null);
+
+
+        Exception exception = assertThrows(RosterNotFoundException.class, () -> rosterService.getRoster(workLocationId, rosterId));
+        String expectedExceptionMessage = String.format("Unable to find roster %s from work location %s",
+                rosterId, workLocationId);
+
+        assertEquals(expectedExceptionMessage, exception.getMessage());
+        verify(rosters, times(1)).findByIdAndWorkLocationId(rosterId, workLocationId);
+    }
 }
