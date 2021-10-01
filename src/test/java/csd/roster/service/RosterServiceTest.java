@@ -10,6 +10,8 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -46,5 +48,27 @@ public class RosterServiceTest {
 
         verify(workLocationService,times(1)).getWorkLocationById(workLocationId);
         verify(rosters, times(1)).save(roster);
+    }
+
+    @Test
+    public void getRosters_RostersExist_ReturnListOfRosters(){
+        List<Roster> allRostersInWorkLocation = new ArrayList<Roster>();
+
+        UUID workLocationId = UUID.randomUUID();
+        WorkLocation workLocation = new WorkLocation(workLocationId, null, null, null, 40, allRostersInWorkLocation);
+
+        UUID rosterId = UUID.randomUUID();
+        Roster roster = new Roster(rosterId, LocalDate.now(), workLocation, null);
+
+        allRostersInWorkLocation.add(roster);
+
+        when(rosters.findByWorkLocationId(workLocationId)).thenReturn(workLocation.getRosters());
+
+        List<Roster> rostersForWorkLocation = rosterService.getRosters(workLocationId);
+
+        assertNotNull(rostersForWorkLocation);
+        assertEquals(1, rostersForWorkLocation.size());
+
+        verify(rosters, times(1)).findByWorkLocationId(workLocationId);
     }
 }
