@@ -73,7 +73,7 @@ public class RosterServiceTest {
     }
 
     @Test
-    public void getRoster_EmptyRosters_ThrowException(){
+    public void getRosters_EmptyRosters_ThrowException(){
         List<Roster> allRostersInWorkLocation = new ArrayList<Roster>();
 
         UUID workLocationId = UUID.randomUUID();
@@ -86,5 +86,24 @@ public class RosterServiceTest {
 
         assertEquals(expectedExceptionMessage, exception.getMessage());
         verify(rosters,times(1)).findByWorkLocationId(workLocationId);
+    }
+
+    @Test
+    public void getRoster_RosterExists_ReturnFoundRoster(){
+        List<Roster> allRostersInWorkLocation = new ArrayList<Roster>();
+
+        UUID workLocationId = UUID.randomUUID();
+        WorkLocation workLocation = new WorkLocation(workLocationId, null, null, null, 40, allRostersInWorkLocation);
+
+        UUID rosterId = UUID.randomUUID();
+        Roster roster = new Roster(rosterId, LocalDate.now(), workLocation, null);
+
+        when(rosters.findByIdAndWorkLocationId(rosterId,workLocationId)).thenReturn(java.util.Optional.of(roster));
+
+        Roster foundRoster = rosterService.getRoster(workLocationId, rosterId);
+
+        assertEquals(roster, foundRoster);
+
+        verify(rosters, times(1)).findByIdAndWorkLocationId(rosterId, workLocationId);
     }
 }
