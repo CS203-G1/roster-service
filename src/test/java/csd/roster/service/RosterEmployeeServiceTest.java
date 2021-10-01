@@ -4,6 +4,7 @@ import csd.roster.enumerator.HealthStatus;
 import csd.roster.enumerator.VaccinationStatus;
 import csd.roster.enumerator.VaccineBrand;
 import csd.roster.exception.EmployeeNotHealthyException;
+import csd.roster.exception.RosterEmployeeNotFoundException;
 import csd.roster.model.Employee;
 import csd.roster.model.Roster;
 import csd.roster.model.RosterEmployee;
@@ -94,5 +95,47 @@ public class RosterEmployeeServiceTest {
         verify(rosterService,times(1)).getRoster(rosterId);
 
     }
-    
+
+    @Test
+    public void getRosterEmployee_RosterEmployeeExists_ReturnFoundRosterEmployee(){
+        UUID rosterId = UUID.randomUUID();
+        Roster roster = new Roster(rosterId, LocalDate.now(), null, null);
+
+        UUID employeeId = UUID.randomUUID();
+        VaccinationStatus vaccinationStatus = VaccinationStatus.SECOND_DOSE;
+        VaccineBrand vaccineBrand = VaccineBrand.PFIZER;
+        HealthStatus healthStatus = HealthStatus.COVID;
+        Employee employee = new Employee(employeeId, null, null, "John Doe", vaccinationStatus, vaccineBrand, healthStatus);
+
+        UUID rosterEmployeeId = UUID.randomUUID();
+        LocalDateTime fromTime = LocalDateTime.of(2023, 12, 12, 9,0,0);
+        LocalDateTime toTime = LocalDateTime.of(2023, 12, 12, 17,0,0);
+        RosterEmployee rosterEmployee = new RosterEmployee(rosterEmployeeId, roster, employee, fromTime, toTime, null);
+
+        when(rosterEmployees.findByRosterIdAndEmployeeId(rosterId, employeeId)).thenReturn(java.util.Optional.of(rosterEmployee));
+
+        RosterEmployee foundRosterEmployee = rosterEmployeeService.getRosterEmployee(rosterId,employeeId);
+
+        assertEquals(rosterEmployee ,foundRosterEmployee);
+        verify(rosterEmployees,times(1)).findByRosterIdAndEmployeeId(rosterId,employeeId);
+    }
+
+    @Test
+    public void getRosterEmployee_RosterEmployeeDoesNotExist_ThrowException(){
+        UUID rosterId = UUID.randomUUID();
+        Roster roster = new Roster(rosterId, LocalDate.now(), null, null);
+
+        UUID employeeId = UUID.randomUUID();
+        VaccinationStatus vaccinationStatus = VaccinationStatus.SECOND_DOSE;
+        VaccineBrand vaccineBrand = VaccineBrand.PFIZER;
+        HealthStatus healthStatus = HealthStatus.COVID;
+        Employee employee = new Employee(employeeId, null, null, "John Doe", vaccinationStatus, vaccineBrand, healthStatus);
+
+        Exception exception = assertThrows(RosterEmployeeNotFoundException.class, () -> rosterEmployeeService.getRosterEmployee(rosterId,employeeId));
+
+        String expectedExceptionMessage = String.format("Employee %s is not is Roster %s", employeeId, rosterId);
+
+        assertEquals(expectedExceptionMessage, exception.getMessage());
+        verify(rosterEmployees,times(1)).findByRosterIdAndEmployeeId(rosterId,employeeId);
+    }
 }
