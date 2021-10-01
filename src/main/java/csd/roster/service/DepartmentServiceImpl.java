@@ -44,7 +44,8 @@ public class DepartmentServiceImpl implements DepartmentService {
 
     @Override
     public Department getDepartmentById(UUID departmentId) {
-        return departmentRepository.getById(departmentId);
+        return departmentRepository.findById(departmentId)
+                .orElseThrow(() -> new DepartmentNotFoundException(departmentId));
     }
 
     @Override
