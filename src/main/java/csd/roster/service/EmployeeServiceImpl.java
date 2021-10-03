@@ -31,7 +31,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     public Employee addEmployee(UUID departmentId, Employee employee) {
         Department department = departmentService.getDepartmentById(departmentId);
         employee.setDepartment(department);
-        employee.setCompany(department.getCompany());
+//        employee.setCompany(department.getCompany());
 
         return employeeRepository.save(employee);
     }
