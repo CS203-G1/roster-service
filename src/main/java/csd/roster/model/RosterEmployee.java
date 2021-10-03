@@ -55,7 +55,7 @@ public class RosterEmployee {
 
     @OneToOne
     @JoinColumn(name = "company_id")
-    Company company;f
+    Company company;
 
     // When the roster for this employee starts
     @Column(name = "from_date_time")
