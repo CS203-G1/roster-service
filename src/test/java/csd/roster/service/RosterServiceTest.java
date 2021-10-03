@@ -156,7 +156,7 @@ public class RosterServiceTest {
         Roster roster = new Roster(rosterId, LocalDate.now(), workLocation, null);
 
         Exception exception = assertThrows(RosterNotFoundException.class, () -> rosterService.getRoster(rosterId));
-        String expectedExceptionMessage = String.format("Work location %s does not contain any rosters", workLocationId);
+        String expectedExceptionMessage = String.format("Roster %s does not exist", rosterId);
 
         assertEquals(expectedExceptionMessage, exception.getMessage());
         verify(rosters, times(1)).findById(rosterId);
