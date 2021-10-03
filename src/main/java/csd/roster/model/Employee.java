@@ -49,15 +49,13 @@ public class Employee {
     @JsonIgnore
     private Set<RosterEmployee> roster_employees;
 
-    @OneToOne
+    @ManyToOne
     @JsonIgnore
-    @JoinColumn(name = "department_id")
+    @JoinColumns({
+            @JoinColumn(name="company_id", referencedColumnName="company_id"),
+            @JoinColumn(name="department_id", referencedColumnName="id")
+    })
     private Department department;
-
-    @OneToOne
-    @JsonIgnore
-    @JoinColumn(name = "company_id")
-    private Company company;
 
     @Column(name = "name")
     private String name;
