@@ -59,7 +59,7 @@ public class RosterEmployeeServiceTest {
         UUID rosterEmployeeId = UUID.randomUUID();
         LocalDateTime fromTime = LocalDateTime.of(2023, 12, 12, 9,0,0);
         LocalDateTime toTime = LocalDateTime.of(2023, 12, 12, 17,0,0);
-        RosterEmployee rosterEmployee = new RosterEmployee(rosterEmployeeId, null, null, fromTime, toTime, null);
+        RosterEmployee rosterEmployee = new RosterEmployee(rosterEmployeeId, null, null, null, fromTime, toTime, null);
 
         when(employeeService.getEmployee(employeeId)).thenReturn(employee);
         when(rosterService.getRoster(rosterId)).thenReturn(roster);
@@ -93,7 +93,7 @@ public class RosterEmployeeServiceTest {
         UUID rosterEmployeeId = UUID.randomUUID();
         LocalDateTime fromTime = LocalDateTime.of(2023, 12, 12, 9,0,0);
         LocalDateTime toTime = LocalDateTime.of(2023, 12, 12, 17,0,0);
-        RosterEmployee rosterEmployee = new RosterEmployee(rosterEmployeeId, null, null, fromTime, toTime, null);
+        RosterEmployee rosterEmployee = new RosterEmployee(rosterEmployeeId, null, null, null, fromTime, toTime, null);
 
         when(employeeService.getEmployee(employeeId)).thenReturn(employee);
         when(rosterService.getRoster(rosterId)).thenReturn(roster);
@@ -125,7 +125,7 @@ public class RosterEmployeeServiceTest {
         UUID rosterEmployeeId = UUID.randomUUID();
         LocalDateTime fromTime = LocalDateTime.of(2023, 12, 12, 9,0,0);
         LocalDateTime toTime = LocalDateTime.of(2023, 12, 12, 17,0,0);
-        RosterEmployee rosterEmployee = new RosterEmployee(rosterEmployeeId, roster, employee, fromTime, toTime, null);
+        RosterEmployee rosterEmployee = new RosterEmployee(rosterEmployeeId, roster, employee, null, fromTime, toTime, null);
 
         when(rosterEmployees.findByRosterIdAndEmployeeId(rosterId, employeeId)).thenReturn(java.util.Optional.of(rosterEmployee));
 
