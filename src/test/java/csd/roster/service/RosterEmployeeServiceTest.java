@@ -2,14 +2,13 @@ package csd.roster.service;
 
 import csd.roster.enumerator.HealthStatus;
 import csd.roster.enumerator.VaccinationStatus;
-import csd.roster.enumerator.VaccineBrand;
+import csd.roster.enumerator.VaccinationBrand;
 import csd.roster.exception.EmployeeNotHealthyException;
 import csd.roster.exception.RosterEmployeeNotFoundException;
 import csd.roster.model.Employee;
 import csd.roster.model.Roster;
 import csd.roster.model.RosterEmployee;
 import csd.roster.repository.RosterEmployeeRepository;
-import org.apache.tomcat.jni.Local;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -45,9 +44,9 @@ public class RosterEmployeeServiceTest {
 
         UUID employeeId = UUID.randomUUID();
         VaccinationStatus vaccinationStatus = VaccinationStatus.SECOND_DOSE;
-        VaccineBrand vaccineBrand = VaccineBrand.PFIZER;
+        VaccinationBrand vaccinationBrand = VaccinationBrand.PFIZER;
         HealthStatus healthStatus = HealthStatus.HEALTHY;
-        Employee employee = new Employee(employeeId, null, null, "John Doe", vaccinationStatus, vaccineBrand, healthStatus);
+        Employee employee = new Employee(employeeId, null, null, "John Doe", vaccinationStatus, vaccinationBrand, healthStatus);
 
         UUID rosterEmployeeId = UUID.randomUUID();
         LocalDateTime fromTime = LocalDateTime.of(2023, 12, 12, 9,0,0);
@@ -75,9 +74,9 @@ public class RosterEmployeeServiceTest {
 
         UUID employeeId = UUID.randomUUID();
         VaccinationStatus vaccinationStatus = VaccinationStatus.SECOND_DOSE;
-        VaccineBrand vaccineBrand = VaccineBrand.PFIZER;
+        VaccinationBrand vaccinationBrand = VaccinationBrand.PFIZER;
         HealthStatus healthStatus = HealthStatus.COVID;
-        Employee employee = new Employee(employeeId, null, null, "John Doe", vaccinationStatus, vaccineBrand, healthStatus);
+        Employee employee = new Employee(employeeId, null, null, "John Doe", vaccinationStatus, vaccinationBrand, healthStatus);
 
         UUID rosterEmployeeId = UUID.randomUUID();
         LocalDateTime fromTime = LocalDateTime.of(2023, 12, 12, 9,0,0);
@@ -103,9 +102,9 @@ public class RosterEmployeeServiceTest {
 
         UUID employeeId = UUID.randomUUID();
         VaccinationStatus vaccinationStatus = VaccinationStatus.SECOND_DOSE;
-        VaccineBrand vaccineBrand = VaccineBrand.PFIZER;
+        VaccinationBrand vaccinationBrand = VaccinationBrand.PFIZER;
         HealthStatus healthStatus = HealthStatus.COVID;
-        Employee employee = new Employee(employeeId, null, null, "John Doe", vaccinationStatus, vaccineBrand, healthStatus);
+        Employee employee = new Employee(employeeId, null, null, "John Doe", vaccinationStatus, vaccinationBrand, healthStatus);
 
         UUID rosterEmployeeId = UUID.randomUUID();
         LocalDateTime fromTime = LocalDateTime.of(2023, 12, 12, 9,0,0);
@@ -127,9 +126,9 @@ public class RosterEmployeeServiceTest {
 
         UUID employeeId = UUID.randomUUID();
         VaccinationStatus vaccinationStatus = VaccinationStatus.SECOND_DOSE;
-        VaccineBrand vaccineBrand = VaccineBrand.PFIZER;
+        VaccinationBrand vaccinationBrand = VaccinationBrand.PFIZER;
         HealthStatus healthStatus = HealthStatus.COVID;
-        Employee employee = new Employee(employeeId, null, null, "John Doe", vaccinationStatus, vaccineBrand, healthStatus);
+        Employee employee = new Employee(employeeId, null, null, "John Doe", vaccinationStatus, vaccinationBrand, healthStatus);
 
         Exception exception = assertThrows(RosterEmployeeNotFoundException.class, () -> rosterEmployeeService.getRosterEmployee(rosterId,employeeId));
 
