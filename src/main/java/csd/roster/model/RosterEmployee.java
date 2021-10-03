@@ -53,6 +53,10 @@ public class RosterEmployee {
     @JoinColumn(name = "employee_id")
     Employee employee;
 
+    @OneToOne
+    @JoinColumn(name = "company_id")
+    Company company;f
+
     // When the roster for this employee starts
     @Column(name = "from_date_time")
     @NotNull(message = "FromDateTime must not be blank")
