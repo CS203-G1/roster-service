@@ -1,5 +1,7 @@
 package csd.roster.service;
 
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -67,5 +69,11 @@ public class RosterServiceImpl implements RosterService {
             return rosterRepository.save(oldRoster);
 
         }).orElseThrow(() -> new RosterNotFoundException(rosterId, workLocationId));
+    }
+
+    @Override
+    public Roster getCurrentRosterByWorkLocation(WorkLocation workLocation) {
+        return rosterRepository.findByWorkLocationIdAndDate(workLocation.getId(), LocalDate.now())
+                .orElseThrow(() -> new RosterNotFoundException(workLocation));
     }
 }
