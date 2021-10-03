@@ -1,10 +1,11 @@
 POST http://localhost:8080/departments/692b1d0e-fe49-4b05-8b01-f79607da7632/employees
 Content-Type: application/json
+Authorization: Bearer eyJraWQiOiJESCtSN05oekRDXC9tKzNDbVhKRXM0M08zRDdNR0o3dnQ4ZDAxelVsQmZUND0iLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI4Y2RiZjNmNS00Y2FlLTRjMjAtYWRjZC05ZWU3MzZjMTgxM2MiLCJjb2duaXRvOmdyb3VwcyI6WyJST0xFX0VNUExPWUVFIiwiUk9MRV9FTVBMT1lFUiJdLCJpc3MiOiJodHRwczpcL1wvY29nbml0by1pZHAuYXAtc291dGhlYXN0LTEuYW1hem9uYXdzLmNvbVwvYXAtc291dGhlYXN0LTFfcFpvSXc5a2lOIiwiY2xpZW50X2lkIjoiNHM4dG90ZmlvdmxrNzgydWo5OGNqZGpncDAiLCJvcmlnaW5fanRpIjoiMmE3NTFkODYtZGZmOC00OWUxLWIwMWEtYjZjZTNhN2Q2ZTI3IiwiZXZlbnRfaWQiOiJjNTIwZTIzMy0zNzFiLTRmNGYtODMwNy1lOGFmZGM0YzZjNzQiLCJ0b2tlbl91c2UiOiJhY2Nlc3MiLCJzY29wZSI6ImF3cy5jb2duaXRvLnNpZ25pbi51c2VyLmFkbWluIiwiYXV0aF90aW1lIjoxNjMzMTg3MDk5LCJleHAiOjE2MzMxOTA2OTksImlhdCI6MTYzMzE4NzA5OSwianRpIjoiMzNlMzE0NWUtMzUwNi00NzZhLTliNjMtNjY1Nzk3YTFhMmM5IiwidXNlcm5hbWUiOiI4Y2RiZjNmNS00Y2FlLTRjMjAtYWRjZC05ZWU3MzZjMTgxM2MifQ.WxLM_ke6aJXWfIM5SqK9i3doKVzmqrAt1gj5C66yhUvhDvy332tZghbeRHvdpVNCvo9zM8eamYgcj1vX1nsK2nz-1yzgAPaLBtM5gK8yCmk8y0gXr4lnXNc1QZt6F-yBrz1ncWkz6LO5y-qYB4IGJj70BpKbZjEJQk0BUsw8dky5GAaVslLaLXl8Tqdkpeo0Ry3F8e6Akj8CQm93_SzZMpwVqa8D7T55sDKvS1ELyExHU8AHx4yTmKi4wJPZgUMh55bdIPLyNAiVeFmp9khrV5BBMUD3qw9fgR9p8NBRE_pxcfHnqWF9WGAjtZft0Iw9Tf7nSPIVhzRXpYt_RRTovw
 
 {
   "name": "Employee 1",
   "vaccinationStatus": "SECOND_DOSE",
-  "vaccineBrand": "PFIZER",
+  "vaccinationBrand": "PFIZER",
   "healthStatus": "HEALTHY"
 }
 
@@ -15,7 +16,7 @@ Content-Type: application/json
 {
   "name": "Employee 1",
   "vaccinationStatus": "SECOND_DOSE",
-  "vaccineBrand": "PFIZER",
+  "vaccinationBrand": "PFIZER",
   "healthStatus": "ILL"
 }
 

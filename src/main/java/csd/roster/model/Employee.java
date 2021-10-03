@@ -6,12 +6,10 @@ import java.util.UUID;
 
 import javax.persistence.*;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import csd.roster.enumerator.HealthStatus;
 import csd.roster.enumerator.VaccinationStatus;
-import csd.roster.enumerator.VaccineBrand;
+import csd.roster.enumerator.VaccinationBrand;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -49,8 +47,8 @@ public class Employee {
     private VaccinationStatus vaccinationStatus;
 
     @Enumerated(EnumType.ORDINAL)
-    @Column(name = "vaccine_brand")
-    private VaccineBrand vaccineBrand;
+    @Column(name = "vaccination_brand")
+    private VaccinationBrand vaccinationBrand;
 
     @Enumerated(EnumType.ORDINAL)
     @Column(name = "health_status")

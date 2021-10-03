@@ -1,8 +1,8 @@
 package csd.roster.service;
 
 import csd.roster.enumerator.HealthStatus;
+import csd.roster.enumerator.VaccinationBrand;
 import csd.roster.enumerator.VaccinationStatus;
-import csd.roster.enumerator.VaccineBrand;
 import csd.roster.exception.EmployeeNotFoundException;
 import csd.roster.model.Company;
 import csd.roster.model.Department;
@@ -42,9 +42,9 @@ public class EmployeeServiceTest {
 
         UUID employeeId = UUID.randomUUID();
         VaccinationStatus vaccinationStatus = VaccinationStatus.NOT_VACCINATED;
-        VaccineBrand vaccineBrand = null;
+        VaccinationBrand vaccinationBrand = null;
         HealthStatus healthStatus = HealthStatus.COVID;
-        Employee employee = new Employee(employeeId, null, null, "John Doe", vaccinationStatus, vaccineBrand, healthStatus);
+        Employee employee = new Employee(employeeId, null, null, "John Doe", vaccinationStatus, vaccinationBrand, healthStatus);
 
         when(departmentService.getDepartmentById(any(UUID.class))).thenReturn(department);
         when(employees.save(any(Employee.class))).thenReturn(employee);
@@ -63,9 +63,9 @@ public class EmployeeServiceTest {
     public void getEmployee_EmployeeExists_ReturnEmployee(){
         UUID employeeId = UUID.randomUUID();
         VaccinationStatus vaccinationStatus = VaccinationStatus.NOT_VACCINATED;
-        VaccineBrand vaccineBrand = null;
+        VaccinationBrand vaccinationBrand = null;
         HealthStatus healthStatus = HealthStatus.COVID;
-        Employee employee = new Employee(employeeId, null, null, "John Doe", vaccinationStatus, vaccineBrand, healthStatus);
+        Employee employee = new Employee(employeeId, null, null, "John Doe", vaccinationStatus, vaccinationBrand, healthStatus);
 
         when(employees.findById(any(UUID.class))).thenReturn(java.util.Optional.of(employee));
 
@@ -95,9 +95,9 @@ public class EmployeeServiceTest {
 
         UUID employeeId = UUID.randomUUID();
         VaccinationStatus vaccinationStatus = VaccinationStatus.NOT_VACCINATED;
-        VaccineBrand vaccineBrand = null;
+        VaccinationBrand vaccinationBrand = null;
         HealthStatus healthStatus = HealthStatus.COVID;
-        Employee employee = new Employee(employeeId, null, department, "John Doe", vaccinationStatus, vaccineBrand, healthStatus);
+        Employee employee = new Employee(employeeId, null, department, "John Doe", vaccinationStatus, vaccinationBrand, healthStatus);
 
         when(employees.findByIdAndDepartmentId(any(UUID.class), any(UUID.class))).thenReturn(java.util.Optional.of(employee));
 
