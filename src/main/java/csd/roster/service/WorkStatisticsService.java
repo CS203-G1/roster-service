@@ -1,2 +1,9 @@
-package csd.roster.service;public class WorkStatisticsService {
+package csd.roster.service;
+
+import csd.roster.response_model.WorkingStatisticResponseModel;
+
+import java.util.UUID;
+
+public interface WorkStatisticsService {
+    WorkingStatisticResponseModel getCurrentWorkStatisticsByCompany(UUID companyId);
 }
