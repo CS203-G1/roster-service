@@ -39,7 +39,7 @@ public class DepartmentServiceImpl implements DepartmentService {
         companyService.getCompanyById(companyId);
 
         return departmentRepository.findByIdAndCompanyId(departmentId, companyId)
-                .orElseThrow(() -> new DepartmentNotFoundException(companyId, departmentId));
+                .orElseThrow(() -> new DepartmentNotFoundException(departmentId, companyId));
     }
 
     @Override
