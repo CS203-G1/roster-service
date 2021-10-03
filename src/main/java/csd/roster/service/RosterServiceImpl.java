@@ -35,7 +35,7 @@ public class RosterServiceImpl implements RosterService {
         List<Roster> rosters = rosterRepository.findByWorkLocationId(workLocationId);
 
         if (rosters.isEmpty()) {
-            throw new RosterNotFoundException(workLocationId);
+            throw new RosterNotFoundException(workLocationId.toString());
         }
         return rosters;
     }
