@@ -49,4 +49,9 @@ public class EmployeeController {
                                  @PathVariable(value = "employeeId") UUID employeeId) {
         employeeService.deleteEmployee(departmentId, employeeId);
     }
+
+    @GetMapping("companies/{companyId}/employees")
+    public Iterable<Employee> getEmployeesByCompanyId(@PathVariable(value = "companyId") UUID companyId) {
+        return employeeService.getAllEmployeesByCompanyId(companyId);
+    }
 }
