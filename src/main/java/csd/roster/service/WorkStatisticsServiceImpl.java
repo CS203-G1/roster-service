@@ -12,4 +12,9 @@ public class WorkStatisticsServiceImpl implements WorkStatisticsService {
         this.companyService = companyService;
         this.rosterEmployeeService = rosterEmployeeService;
     }
+
+    @Override
+    public WorkingStatisticResponseModel getCurrentWorkStatisticsByCompany(UUID companyId) {
+        return null;
+    }
 }
