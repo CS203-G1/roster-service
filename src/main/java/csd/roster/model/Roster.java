@@ -51,5 +51,5 @@ public class Roster {
     // Done to prevent infinite recursion
     // https://www.baeldung.com/jackson-bidirectional-relationships-and-infinite-recursion
     @JsonManagedReference
-    private Set<RosterEmployee> roster_employees;
+    private Set<RosterEmployee> rosterEmployees;
 }
