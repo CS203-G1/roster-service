@@ -29,8 +29,8 @@ import org.springframework.format.annotation.DateTimeFormat;
 @EqualsAndHashCode
 // To validate that fromDateTime is before toDateTime
 @ValidDateTimes(fromDateTime = "fromDateTime", toDateTime = "toDateTime")
-@Table(uniqueConstraints = { @UniqueConstraint(name = "UniqueRosterAndEmployee",
-        columnNames = { "roster_id", "employee_id" }) })
+@Table(uniqueConstraints = {@UniqueConstraint(name = "UniqueRosterAndEmployee",
+        columnNames = {"roster_id", "employee_id"})})
 public class RosterEmployee {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -42,7 +42,7 @@ public class RosterEmployee {
     // Reference: https://www.baeldung.com/jpa-many-to-many
 
     @ManyToOne
-    @JoinColumn(name = "roster_id")
+    @JoinColumn(name = "roster_id", referencedColumnName = "id")
     // @JsonBackReference means that this will be omitted in the serialization
     // Done to prevent infinite recursion
     // https://www.baeldung.com/jackson-bidirectional-relationships-and-infinite-recursion
@@ -50,7 +50,7 @@ public class RosterEmployee {
     Roster roster;
 
     @ManyToOne
-    @JoinColumn(name="employee_id", referencedColumnName="id")
+    @JoinColumn(name = "employee_id", referencedColumnName = "id")
     Employee employee;
 
 
