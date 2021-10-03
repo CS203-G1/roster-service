@@ -35,7 +35,7 @@ public class DepartmentServiceImpl implements DepartmentService {
     }
 
     @Override
-    public Department getDepartmentByIdAndCompanyId(UUID companyId, UUID departmentId) {
+    public Department getDepartmentByIdAndCompanyId(UUID departmentId, UUID companyId) {
         companyService.getCompanyById(companyId);
 
         return departmentRepository.findByIdAndCompanyId(departmentId, companyId)
@@ -44,13 +44,14 @@ public class DepartmentServiceImpl implements DepartmentService {
 
     @Override
     public Department getDepartmentById(UUID departmentId) {
-        return departmentRepository.getById(departmentId);
+        return departmentRepository.findById(departmentId)
+                .orElseThrow(() -> new DepartmentNotFoundException(departmentId));
     }
 
     @Override
     public void delete(UUID companyId, UUID departmentId) {
         // Using getDepartmentByIdAndCompanyId for DRY purposes
-        Department department = getDepartmentByIdAndCompanyId(companyId, departmentId);
+        Department department = getDepartmentByIdAndCompanyId(departmentId, companyId);
 
         departmentRepository.delete(department);
     }

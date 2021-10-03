@@ -42,7 +42,7 @@ public class WorkLocationServiceImpl implements WorkLocationService {
 
     @Override
     public WorkLocation update(UUID companyId, UUID departmentId, UUID workLocationId, WorkLocation newWorkLocation) {
-        Department department = departmentService.getDepartmentByIdAndCompanyId(companyId, departmentId);
+        Department department = departmentService.getDepartmentByIdAndCompanyId(departmentId, companyId);
 
         return workLocationRepository.findByIdAndDepartmentId(workLocationId, departmentId).map(workLocation -> {
             newWorkLocation.setDepartment(department);
@@ -53,7 +53,7 @@ public class WorkLocationServiceImpl implements WorkLocationService {
 
     @Override
     public WorkLocation get(UUID companyId, UUID departmentId, UUID workLocationId) {
-        departmentService.getDepartmentByIdAndCompanyId(companyId, departmentId);
+        departmentService.getDepartmentByIdAndCompanyId(departmentId, companyId);
 
         return workLocationRepository.findByIdAndDepartmentId(workLocationId, departmentId)
                 .orElseThrow(() -> new WorkLocationNotFoundException(departmentId, companyId, workLocationId));

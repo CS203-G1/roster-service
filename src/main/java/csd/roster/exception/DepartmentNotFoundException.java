@@ -13,4 +13,8 @@ public class DepartmentNotFoundException extends ResourceNotFoundException {
         super(String.format("Could not find department %s from company %s", departmentId, companyId));
     }
 
+    public DepartmentNotFoundException(UUID departmentId) {
+        super(String.format("Could not find department %s", departmentId));
+    }
+
 }
