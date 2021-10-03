@@ -50,12 +50,9 @@ public class RosterEmployee {
     Roster roster;
 
     @ManyToOne
-    @JoinColumn(name = "employee_id")
+    @JoinColumn(name="employee_id", referencedColumnName="id")
     Employee employee;
 
-    @OneToOne
-    @JoinColumn(name = "company_id")
-    Company company;
 
     // When the roster for this employee starts
     @Column(name = "from_date_time")
