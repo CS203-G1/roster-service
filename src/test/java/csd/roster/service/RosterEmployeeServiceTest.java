@@ -46,12 +46,12 @@ public class RosterEmployeeServiceTest {
         VaccinationStatus vaccinationStatus = VaccinationStatus.SECOND_DOSE;
         VaccinationBrand vaccinationBrand = VaccinationBrand.PFIZER;
         HealthStatus healthStatus = HealthStatus.HEALTHY;
-        Employee employee = new Employee(employeeId, null, null, null, "John Doe", vaccinationStatus, vaccinationBrand, healthStatus);
+        Employee employee = new Employee(employeeId, null, null, "John Doe", vaccinationStatus, vaccinationBrand, healthStatus);
 
         UUID rosterEmployeeId = UUID.randomUUID();
         LocalDateTime fromTime = LocalDateTime.of(2023, 12, 12, 9,0,0);
         LocalDateTime toTime = LocalDateTime.of(2023, 12, 12, 17,0,0);
-        RosterEmployee rosterEmployee = new RosterEmployee(rosterEmployeeId, null, null, null, fromTime, toTime, null);
+        RosterEmployee rosterEmployee = new RosterEmployee(rosterEmployeeId, null, null, fromTime, toTime, null);
 
         when(employeeService.getEmployee(employeeId)).thenReturn(employee);
         when(rosterService.getRoster(rosterId)).thenReturn(roster);
@@ -76,12 +76,12 @@ public class RosterEmployeeServiceTest {
         VaccinationStatus vaccinationStatus = VaccinationStatus.SECOND_DOSE;
         VaccinationBrand vaccinationBrand = VaccinationBrand.PFIZER;
         HealthStatus healthStatus = HealthStatus.COVID;
-        Employee employee = new Employee(employeeId, null, null, null, "John Doe", vaccinationStatus, vaccinationBrand, healthStatus);
+        Employee employee = new Employee(employeeId, null, null, "John Doe", vaccinationStatus, vaccinationBrand, healthStatus);
 
         UUID rosterEmployeeId = UUID.randomUUID();
         LocalDateTime fromTime = LocalDateTime.of(2023, 12, 12, 9,0,0);
         LocalDateTime toTime = LocalDateTime.of(2023, 12, 12, 17,0,0);
-        RosterEmployee rosterEmployee = new RosterEmployee(rosterEmployeeId, null, null, null, fromTime, toTime, null);
+        RosterEmployee rosterEmployee = new RosterEmployee(rosterEmployeeId, null, null, fromTime, toTime, null);
 
         when(employeeService.getEmployee(employeeId)).thenReturn(employee);
         when(rosterService.getRoster(rosterId)).thenReturn(roster);
@@ -104,12 +104,12 @@ public class RosterEmployeeServiceTest {
         VaccinationStatus vaccinationStatus = VaccinationStatus.SECOND_DOSE;
         VaccinationBrand vaccinationBrand = VaccinationBrand.PFIZER;
         HealthStatus healthStatus = HealthStatus.COVID;
-        Employee employee = new Employee(employeeId, null, null, null, "John Doe", vaccinationStatus, vaccinationBrand, healthStatus);
+        Employee employee = new Employee(employeeId, null, null, "John Doe", vaccinationStatus, vaccinationBrand, healthStatus);
 
         UUID rosterEmployeeId = UUID.randomUUID();
         LocalDateTime fromTime = LocalDateTime.of(2023, 12, 12, 9,0,0);
         LocalDateTime toTime = LocalDateTime.of(2023, 12, 12, 17,0,0);
-        RosterEmployee rosterEmployee = new RosterEmployee(rosterEmployeeId, roster, employee, null, fromTime, toTime, null);
+        RosterEmployee rosterEmployee = new RosterEmployee(rosterEmployeeId, roster, employee,fromTime, toTime, null);
 
         when(rosterEmployees.findByRosterIdAndEmployeeId(rosterId, employeeId)).thenReturn(java.util.Optional.of(rosterEmployee));
 
@@ -128,7 +128,7 @@ public class RosterEmployeeServiceTest {
         VaccinationStatus vaccinationStatus = VaccinationStatus.SECOND_DOSE;
         VaccinationBrand vaccinationBrand = VaccinationBrand.PFIZER;
         HealthStatus healthStatus = HealthStatus.COVID;
-        Employee employee = new Employee(employeeId, null, null, null, "John Doe", vaccinationStatus, vaccinationBrand, healthStatus);
+        Employee employee = new Employee(employeeId, null, null, "John Doe", vaccinationStatus, vaccinationBrand, healthStatus);
 
         Exception exception = assertThrows(RosterEmployeeNotFoundException.class, () -> rosterEmployeeService.getRosterEmployee(rosterId,employeeId));
 

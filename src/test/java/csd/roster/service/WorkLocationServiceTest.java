@@ -36,7 +36,7 @@ public class WorkLocationServiceTest {
         UUID departmentId = UUID.randomUUID();
         Department department = new Department(departmentId, company, "Marketing");
 
-        WorkLocation workLocation = new WorkLocation(null, null, "Eppal Headquarter", "7 Jalan Naga Sari", 40, null);
+        WorkLocation workLocation = new WorkLocation(null, null, null, "Eppal Headquarter", "7 Jalan Naga Sari", 40);
 
         when(departmentService.getDepartmentByIdAndCompanyId(any(UUID.class), any(UUID.class))).thenReturn(department);
         when(workLocations.save(any(WorkLocation.class))).thenReturn(workLocation);
@@ -59,7 +59,7 @@ public class WorkLocationServiceTest {
         Department department = new Department(departmentId, company, "Marketing");
 
         UUID workLocationId = UUID.randomUUID();
-        WorkLocation workLocation = new WorkLocation(workLocationId, department, "Eppal Headquarter", "7 Jalan Naga Sari", 40, null);
+        WorkLocation workLocation = new WorkLocation(workLocationId, department, null, "Eppal Headquarter", "7 Jalan Naga Sari", 40);
 
         when(departmentService.getDepartmentByIdAndCompanyId(any(UUID.class), any(UUID.class))).thenReturn(department);
         when(workLocations.findByIdAndDepartmentId(workLocationId, departmentId)).thenReturn(java.util.Optional.of(workLocation));
@@ -99,7 +99,7 @@ public class WorkLocationServiceTest {
         Department department = new Department(departmentId, company, "Marketing");
 
         UUID workLocationId = UUID.randomUUID();
-        WorkLocation workLocation = new WorkLocation(workLocationId, department, "Eppal Headquarter", "7 Jalan Naga Sari", 40, null);
+        WorkLocation workLocation = new WorkLocation(workLocationId, department, null, "Eppal Headquarter", "7 Jalan Naga Sari", 40);
 
         when(workLocations.findById(workLocationId)).thenReturn(java.util.Optional.of(workLocation));
 
