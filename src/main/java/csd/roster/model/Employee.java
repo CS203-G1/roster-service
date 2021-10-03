@@ -39,6 +39,11 @@ public class Employee {
     @JoinColumn(name = "department_id")
     private Department department;
 
+    @OneToOne
+    @JsonIgnore
+    @JoinColumn(name = "company_id")
+    private Company company;
+
     @Column(name = "name")
     private String name;
 
