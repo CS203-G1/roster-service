@@ -1,6 +1,6 @@
 package csd.roster.enumerator;
 
-public enum VaccineBrand {
+public enum VaccinationBrand {
     // Currently we are just keeping track of the vaccines that are deployed in Singapore
     // Refer to : https://en.wikipedia.org/wiki/COVID-19_vaccination_in_Singapore#Vaccines_used
 
