@@ -22,7 +22,7 @@ public class WorkLocationServiceImpl implements WorkLocationService {
 
     @Override
     public WorkLocation add(UUID companyId, UUID departmentId, WorkLocation workLocation) {
-        Department department = departmentService.getDepartmentByIdAndCompanyId(companyId, departmentId);
+        Department department = departmentService.getDepartmentByIdAndCompanyId(departmentId, companyId);
 
         workLocation.setDepartment(department);
         return workLocationRepository.save(workLocation);
