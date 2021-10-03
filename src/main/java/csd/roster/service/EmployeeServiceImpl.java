@@ -27,6 +27,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     public Employee addEmployee(UUID departmentId, Employee employee) {
         Department department = departmentService.getDepartmentById(departmentId);
         employee.setDepartment(department);
+        employee.setCompany(department.getCompany());
 
         return employeeRepository.save(employee);
     }
@@ -60,6 +61,11 @@ public class EmployeeServiceImpl implements EmployeeService {
             employee.setId(employeeId);
             return employeeRepository.save(employee);
         }).orElseThrow(() -> new EmployeeNotFoundException(employeeId));
+    }
+
+    @Override
+    public Iterable<Employee> getAllEmployeesByCompanyId(UUID companyId) {
+        return employeeRepository.findAllByCompanyId(companyId);
     }
 }
 
