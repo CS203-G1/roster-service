@@ -7,6 +7,9 @@ import javax.persistence.*;
 import javax.validation.constraints.Future;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import csd.roster.annotation.ValidDateTimes;
 import csd.roster.enumerator.HealthStatus;
 import lombok.AllArgsConstructor;
@@ -40,6 +43,10 @@ public class RosterEmployee {
 
     @ManyToOne
     @JoinColumn(name = "roster_id")
+    // @JsonBackReference means that this will be omitted in the serialization
+    // Done to prevent infinite recursion
+    // https://www.baeldung.com/jackson-bidirectional-relationships-and-infinite-recursion
+    @JsonBackReference
     Roster roster;
 
     @ManyToOne
