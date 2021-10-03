@@ -24,7 +24,7 @@ public class EmployeeVaccinationServiceImpl implements EmployeeVaccinationServic
 
     @Override
     public EmployeeVaccination addEmployeeVaccination(UUID employeeId, EmployeeVaccination employeeVaccination) {
-        Employee employee = employeeService.getEmployeeById(employeeId);
+        Employee employee = employeeService.getEmployee(employeeId);
         employeeVaccination.setEmployee(employee);
 
         return employeeVaccinationRepository.save(employeeVaccination);
