@@ -44,7 +44,7 @@ public class RosterEmployee {
     @ManyToOne
     @JoinColumn(name = "roster_id")
     // @JsonBackReference means that this will be omitted in the serialization
-    // Done to prevent infinite recursion   
+    // Done to prevent infinite recursion
     // https://www.baeldung.com/jackson-bidirectional-relationships-and-infinite-recursion
     @JsonBackReference
     Roster roster;
