@@ -16,11 +16,15 @@ import org.springframework.stereotype.Service;
 public class EmployeeServiceImpl implements EmployeeService {
     private EmployeeRepository employeeRepository;
     private DepartmentService departmentService;
+    private CompanyService companyService;
 
     @Autowired
-    public EmployeeServiceImpl(EmployeeRepository employeeRepository, DepartmentService departmentService) {
+    public EmployeeServiceImpl(EmployeeRepository employeeRepository,
+                               DepartmentService departmentService,
+                               CompanyService companyService) {
         this.employeeRepository = employeeRepository;
         this.departmentService = departmentService;
+        this.companyService = companyService;
     }
 
     @Override
@@ -65,6 +69,9 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public Iterable<Employee> getAllEmployeesByCompanyId(UUID companyId) {
+        // To check if company exists
+        companyService.getCompanyById(companyId);
+
         return employeeRepository.findAllByCompanyId(companyId);
     }
 }
