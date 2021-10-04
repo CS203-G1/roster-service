@@ -3,8 +3,10 @@ package csd.roster.service;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
+import csd.roster.model.RosterEmployee;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -75,5 +77,18 @@ public class RosterServiceImpl implements RosterService {
     public Roster getCurrentRosterByWorkLocation(WorkLocation workLocation) {
         return rosterRepository.findByWorkLocationIdAndDate(workLocation.getId(), LocalDate.now())
                 .orElseThrow(() -> new RosterNotFoundException(workLocation));
+    }
+
+    @Override
+    public Set<RosterEmployee> getCurrentRemoteRosterEmployeesByCompany(UUID companyId) {
+
+        // Get the remote work location that belongs to this company
+        WorkLocation remoteWorkLocation = workLocationService.getRemoteWorkLocationByCompanyId(companyId);
+
+        // Get the roster for today for the remote work location
+        Roster remoteRoster = getCurrentRosterByWorkLocation(remoteWorkLocation);
+
+        // Get the collection of roster employees that are assigned to this remote roster
+        return remoteRoster.getRosterEmployees();
     }
 }

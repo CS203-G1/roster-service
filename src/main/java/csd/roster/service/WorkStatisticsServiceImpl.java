@@ -28,7 +28,7 @@ public class WorkStatisticsServiceImpl implements WorkStatisticsService {
         // Confirm that company exists
         Company company = companyService.getCompanyById(companyId);
 
-        Set<RosterEmployee> remoteRosterEmployees = getCurrentRemoteRosterEmployeesByCompany(companyId);
+        Set<RosterEmployee> remoteRosterEmployees = rosterService.getCurrentRemoteRosterEmployeesByCompany(companyId);
         int remoteEmployeesCount = remoteRosterEmployees.size();
 
 
@@ -41,16 +41,5 @@ public class WorkStatisticsServiceImpl implements WorkStatisticsService {
         return null;
     }
 
-    @Override
-    public Set<RosterEmployee> getCurrentRemoteRosterEmployeesByCompany(UUID companyId) {
 
-        // Get the remote work location that belongs to this company
-        WorkLocation remoteWorkLocation = workLocationService.getRemoteWorkLocationByCompanyId(companyId);
-
-        // Get the roster for today for the remote work location
-        Roster remoteRoster = rosterService.getCurrentRosterByWorkLocation(remoteWorkLocation);
-
-        // Get the collection of roster employees that are assigned to this remote roster
-        return remoteRoster.getRosterEmployees();
-    }
 }
