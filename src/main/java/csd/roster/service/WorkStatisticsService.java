@@ -8,5 +8,4 @@ import java.util.UUID;
 
 public interface WorkStatisticsService {
     WorkingStatisticResponseModel getCurrentWorkStatisticsByCompany(UUID companyId);
-    Set<RosterEmployee> getCurrentRosterEmployeesByCompany(UUID companyId);
 }
