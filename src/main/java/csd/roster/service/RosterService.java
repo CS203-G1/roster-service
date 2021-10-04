@@ -23,5 +23,7 @@ public interface RosterService {
 
     Roster getCurrentRosterByWorkLocation(WorkLocation workLocation);
 
-    Set<RosterEmployee> getCurrentRemoteRosterEmployeesByCompany(UUID companyId);
+    Roster getCurrentRemoteRosterByCompany(UUID companyId);
+
+    List<Roster> getCurrentRostersByCompany(UUID companyId);
 }
