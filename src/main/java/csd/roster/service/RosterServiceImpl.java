@@ -1,10 +1,7 @@
 package csd.roster.service;
 
 import java.time.LocalDate;
-import java.util.Date;
-import java.util.List;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 import csd.roster.model.RosterEmployee;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -80,15 +77,27 @@ public class RosterServiceImpl implements RosterService {
     }
 
     @Override
-    public Set<RosterEmployee> getCurrentRemoteRosterEmployeesByCompany(UUID companyId) {
+    public Roster getCurrentRemoteRosterByCompany(UUID companyId) {
 
         // Get the remote work location that belongs to this company
         WorkLocation remoteWorkLocation = workLocationService.getRemoteWorkLocationByCompanyId(companyId);
 
         // Get the roster for today for the remote work location
-        Roster remoteRoster = getCurrentRosterByWorkLocation(remoteWorkLocation);
+        return getCurrentRosterByWorkLocation(remoteWorkLocation);
+    }
 
-        // Get the collection of roster employees that are assigned to this remote roster
-        return remoteRoster.getRosterEmployees();
+    @Override
+    public List<Roster> getCurrentRostersByCompany(UUID companyId) {
+
+        List<WorkLocation> workLocations = workLocationService.getWorkLocationsByCompanyId(companyId);
+
+        // Using linked list data structure to have an O(1) of appending the list
+        List<Roster> rosters = new LinkedList<Roster>();
+
+        for (WorkLocation workLocation : workLocations) {
+            rosters.add(getCurrentRosterByWorkLocation(workLocation));
+        }
+
+        return rosters;
     }
 }
