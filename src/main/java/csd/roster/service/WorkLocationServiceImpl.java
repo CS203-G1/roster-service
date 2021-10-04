@@ -70,4 +70,9 @@ public class WorkLocationServiceImpl implements WorkLocationService {
         return workLocationRepository.findRemoteWorkLocationByCompanyId(companyId)
                 .orElseThrow(() -> new WorkLocationNotFoundException(companyId));
     }
+
+    @Override
+    public List<WorkLocation> getWorkLocationsByCompanyId(UUID companyId) {
+        return workLocationRepository.findAllByCompanyId(companyId);
+    }
 }
