@@ -28,18 +28,12 @@ public class WorkStatisticsServiceImpl implements WorkStatisticsService {
         // Confirm that company exists
         Company company = companyService.getCompanyById(companyId);
 
-        Set<RosterEmployee> remoteRosterEmployees = rosterService.getCurrentRemoteRosterEmployeesByCompany(companyId);
+        Roster remoteRoster = rosterService.getCurrentRemoteRosterByCompany(companyId);
+        Set<RosterEmployee> remoteRosterEmployees = remoteRoster.getRosterEmployees();
         int remoteEmployeesCount = remoteRosterEmployees.size();
 
-
+        List<Roster> currentRoster = rosterService.getCurrentRostersByCompany(companyId);
 
         return null;
     }
-
-    @Override
-    public Set<RosterEmployee> getCurrentRosterEmployeesByCompany(UUID companyId) {
-        return null;
-    }
-
-
 }
