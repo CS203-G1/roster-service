@@ -15,5 +15,5 @@ public interface CompanyService {
 
     Company updateCompanyByid(UUID id, Company company);
 
-    Company deleteCompanyByid(UUID id);
+    void deleteCompanyByid(UUID id);
 }

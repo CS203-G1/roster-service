@@ -16,17 +16,22 @@ import org.springframework.stereotype.Service;
 public class EmployeeServiceImpl implements EmployeeService {
     private EmployeeRepository employeeRepository;
     private DepartmentService departmentService;
+    private CompanyService companyService;
 
     @Autowired
-    public EmployeeServiceImpl(EmployeeRepository employeeRepository, DepartmentService departmentService) {
+    public EmployeeServiceImpl(EmployeeRepository employeeRepository,
+                               DepartmentService departmentService,
+                               CompanyService companyService) {
         this.employeeRepository = employeeRepository;
         this.departmentService = departmentService;
+        this.companyService = companyService;
     }
 
     @Override
     public Employee addEmployee(UUID departmentId, Employee employee) {
         Department department = departmentService.getDepartmentById(departmentId);
         employee.setDepartment(department);
+//        employee.setCompany(department.getCompany());
 
         return employeeRepository.save(employee);
     }
@@ -60,6 +65,14 @@ public class EmployeeServiceImpl implements EmployeeService {
             employee.setId(employeeId);
             return employeeRepository.save(employee);
         }).orElseThrow(() -> new EmployeeNotFoundException(employeeId));
+    }
+
+    @Override
+    public Iterable<Employee> getAllEmployeesByCompanyId(UUID companyId) {
+        // To check if company exists
+        companyService.getCompanyById(companyId);
+
+        return employeeRepository.findAllByCompanyId(companyId);
     }
 }
 

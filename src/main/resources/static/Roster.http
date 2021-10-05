@@ -2,16 +2,19 @@
 # Get all rosters by company
 GET http://localhost:8080/work-locations/79e6e0b0-29f8-4211-b5e7-ee5fe42a64b9/rosters
 Content-Type: application/json
+Authorization: Bearer <JWT>
 
 ###
 # Get individual roster details
 GET http://localhost:8080/work-locations/79e6e0b0-29f8-4211-b5e7-ee5fe42a64b9/rosters/bff4ccd3-bae4-4c2f-a8bd-fdc703df8c25
 Content-Type: application/json
+Authorization: Bearer <JWT>
 
 ###
 # Add roster
 POST http://localhost:8080/work-locations/79e6e0b0-29f8-4211-b5e7-ee5fe42a64b9/rosters
 Content-Type: application/json
+Authorization: Bearer <JWT>
 
 {
   "date": "2021-09-16"
@@ -20,11 +23,13 @@ Content-Type: application/json
 ###
 # Delete roster
 DELETE http://localhost:8080/work-locations/79e6e0b0-29f8-4211-b5e7-ee5fe42a64b9/rosters/370f3c13-8c8d-4a25-ba5f-f35ad854de3c
+Authorization: Bearer <JWT>
 
 ###
 # Update roster details
 PUT http://localhost:8080/work-locations/79e6e0b0-29f8-4211-b5e7-ee5fe42a64b9/rosters/bff4ccd3-bae4-4c2f-a8bd-fdc703df8c25
 Content-Type: application/json
+Authorization: Bearer <JWT>
 
 {
   "date": "2021-09-15"

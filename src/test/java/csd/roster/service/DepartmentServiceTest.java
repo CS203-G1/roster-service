@@ -35,7 +35,7 @@ public class DepartmentServiceTest {
         Company company = new Company(companyId, "Eppal", null);
 
         UUID departmentId = UUID.randomUUID();
-        Department department = new Department(departmentId, null, "Marketing");
+        Department department = new Department(departmentId, null, null, "Marketing");
 
         when(companyService.getCompanyById(any(UUID.class))).thenReturn(company);
         when(departments.save(any(Department.class))).thenReturn(department);
@@ -68,7 +68,7 @@ public class DepartmentServiceTest {
         Company company = new Company(companyId, "Eppal", null);
 
         UUID departmentId = UUID.randomUUID();
-        Department department = new Department(departmentId, company, "Marketing");
+        Department department = new Department(departmentId, company, null, "Marketing");
 
         when(departments.findById(any(UUID.class))).thenReturn(java.util.Optional.of(department));
 
@@ -84,7 +84,7 @@ public class DepartmentServiceTest {
         Company company = new Company(companyId, "Eppal", null);
 
         UUID departmentId = UUID.randomUUID();
-        Department department = new Department(departmentId, company, "Marketing");
+        Department department = new Department(departmentId, company, null, "Marketing");
 
         when(departments.findByIdAndCompanyId(any(UUID.class),any(UUID.class))).thenReturn(java.util.Optional.of(department));
 
@@ -100,7 +100,7 @@ public class DepartmentServiceTest {
         Company company = new Company(companyId, "Eppal", null);
 
         UUID departmentId = UUID.randomUUID();
-        Department department = new Department(departmentId, company, "Marketing");
+        Department department = new Department(departmentId, company, null, "Marketing");
 
         Exception exception = assertThrows(DepartmentNotFoundException.class,
                 () -> departmentService.getDepartmentByIdAndCompanyId(departmentId, companyId));
