@@ -28,8 +28,8 @@ public class WorkStatisticsController {
         return workStatisticsService.getCurrentWorkStatisticsByCompany(companyId);
     }
 
-    @GetMapping("/companies/{companyId}/work-statistics/employees")
-    public List<Employee> getCurrentEmployeesListByCompany(@PathVariable(value = "companyId") UUID companyId) {
-        return workStatisticsService.getCurrentEmployeesListByCompany(companyId);
+    @GetMapping("/companies/{companyId}/work-statistics/employees/onsite")
+    public List<Employee> getOnsiteEmployeesListByCompany(@PathVariable(value = "companyId") UUID companyId) {
+        return workStatisticsService.getOnsiteEmployeesListByCompany(companyId);
     }
 }
