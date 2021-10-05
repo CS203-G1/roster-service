@@ -32,6 +32,7 @@ public class Employee {
 
     @OneToMany(mappedBy = "employee")
     @JsonIgnore
+    @Transient
     private Set<RosterEmployee> roster_employees;
 
     @ManyToOne

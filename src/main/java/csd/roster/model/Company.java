@@ -26,6 +26,7 @@ public class Company {
 
     @JsonIgnore
     @OneToMany(mappedBy = "company", cascade = CascadeType.ALL)
+    @Transient
     private List<Department> departments;
 
 }
