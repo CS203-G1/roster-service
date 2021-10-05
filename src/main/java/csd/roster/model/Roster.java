@@ -4,14 +4,7 @@ import java.time.LocalDate;
 import java.util.Set;
 import java.util.UUID;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -50,6 +43,7 @@ public class Roster {
     // @JsonManaged Reference means that this is the forward part of reference and will be serialized normally
     // Done to prevent infinite recursion
     // https://www.baeldung.com/jackson-bidirectional-relationships-and-infinite-recursion
-    @JsonManagedReference
+    @JsonIgnore
+    @Transient
     private Set<RosterEmployee> rosterEmployees;
 }

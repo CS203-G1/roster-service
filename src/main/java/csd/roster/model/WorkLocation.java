@@ -36,6 +36,7 @@ public class WorkLocation {
 
     @JsonIgnore
     @OneToMany(mappedBy = "workLocation", cascade = CascadeType.ALL)
+    @Transient
     private List<Roster> rosters;
 
     @Column(name = "name")
