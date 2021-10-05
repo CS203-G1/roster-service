@@ -21,4 +21,7 @@ public interface RosterEmployeeRepository extends JpaRepository<RosterEmployee, 
 
     @Query("select re from RosterEmployee re where re.employee.department.company.id = :id and re.roster.date = :date")
     List<RosterEmployee> findAllRosterEmployeesByCompanyIdAndDate(@Param("id") UUID companyId, @Param("date") LocalDate date);
+
+    @Query("select re from RosterEmployee re where re.employee.department.company.id = :id and re.roster.date = :date and re.roster.workLocation.name <> 'remote'")
+    List<RosterEmployee> findOnsiteRosterEmployeesByCompanyIdAndDate(@Param("id") UUID companyId, @Param("date") LocalDate date);
 }
