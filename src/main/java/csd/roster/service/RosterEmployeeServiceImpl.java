@@ -80,4 +80,9 @@ public class RosterEmployeeServiceImpl implements RosterEmployeeService {
     public List<RosterEmployee> findRemoteRosterEmployeesByCompanyIdAndDate(UUID companyId, LocalDate date) {
         return rosterEmployeeRepository.findRemoteRosterEmployeesByCompanyIdAndDate(companyId, date);
     }
+
+    @Override
+    public List<RosterEmployee> findOnsiteRosterEmployeesByCompanyIdAndDate(UUID companyId, LocalDate date) {
+        return rosterEmployeeRepository.findOnsiteRosterEmployeesByCompanyIdAndDate(companyId, date);
+    }
 }
