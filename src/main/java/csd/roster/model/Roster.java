@@ -39,11 +39,11 @@ public class Roster {
     @JsonIgnore
     private WorkLocation workLocation;
 
-    @OneToMany(mappedBy = "roster")
     // @JsonManaged Reference means that this is the forward part of reference and will be serialized normally
     // Done to prevent infinite recursion
     // https://www.baeldung.com/jackson-bidirectional-relationships-and-infinite-recursion
     @JsonIgnore
     @Transient
+    @OneToMany(mappedBy = "roster", orphanRemoval = true, cascade = CascadeType.ALL)
     private Set<RosterEmployee> rosterEmployees;
 }

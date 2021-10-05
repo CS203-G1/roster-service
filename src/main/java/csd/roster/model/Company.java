@@ -25,7 +25,7 @@ public class Company {
     private String name;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "company", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "company", orphanRemoval = true, cascade = CascadeType.ALL)
     @Transient
     private List<Department> departments;
 

@@ -35,8 +35,8 @@ public class WorkLocation {
     private Department department;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "workLocation", cascade = CascadeType.ALL)
     @Transient
+    @OneToMany(mappedBy = "workLocation", orphanRemoval = true, cascade = CascadeType.ALL)
     private List<Roster> rosters;
 
     @Column(name = "name")
