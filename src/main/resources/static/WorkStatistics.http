@@ -1,0 +1,4 @@
+###
+# Get all rosters by company
+GET http://localhost:8080/companies/efd12781-392b-4c97-b388-8722bd709601/work-statistics
+Authorization: Bearer <JWT>
