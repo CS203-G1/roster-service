@@ -43,7 +43,7 @@ public class Roster {
     // Done to prevent infinite recursion
     // https://www.baeldung.com/jackson-bidirectional-relationships-and-infinite-recursion
     @JsonIgnore
-//    @Transient
+    @Transient
     @OneToMany(mappedBy = "roster", orphanRemoval = true, cascade = CascadeType.ALL)
     private Set<RosterEmployee> rosterEmployees;
 }
