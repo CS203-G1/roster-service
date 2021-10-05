@@ -7,6 +7,7 @@ import csd.roster.model.WorkLocation;
 import csd.roster.response_model.WorkingStatisticResponseModel;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
@@ -15,15 +16,12 @@ import java.util.stream.Collectors;
 @Service
 public class WorkStatisticsServiceImpl implements WorkStatisticsService {
     private CompanyService companyService;
-    private WorkLocationService workLocationService;
-    private RosterService rosterService;
+    private RosterEmployeeService rosterEmployeeService;
 
     public WorkStatisticsServiceImpl(CompanyService companyService,
-                                     WorkLocationService workLocationService,
-                                     RosterService rosterService) {
+                                     RosterEmployeeService rosterEmployeeService) {
         this.companyService = companyService;
-        this.workLocationService = workLocationService;
-        this.rosterService = rosterService;
+        this.rosterEmployeeService = rosterEmployeeService;
     }
 
     @Override
@@ -32,16 +30,14 @@ public class WorkStatisticsServiceImpl implements WorkStatisticsService {
         // TODO: use existsById
         companyService.getCompanyById(companyId);
 
-        Roster remoteRoster = rosterService.getCurrentRemoteRosterByCompany(companyId);
-        Set<RosterEmployee> remoteRosterEmployees = remoteRoster.getRosterEmployees();
-        int remoteEmployeesCount = remoteRosterEmployees.size();
-
-        List<Roster> currentRoster = rosterService.getCurrentRostersByCompany(companyId);
-        Set<RosterEmployee> currentRosterEmployees = currentRoster
-                .stream()
-                .flatMap(roster -> roster.getRosterEmployees().stream())
-                .collect(Collectors.toSet());
+        List<RosterEmployee> currentRosterEmployees = rosterEmployeeService.findAllRosterEmployeesByCompanyIdAndDate(companyId, LocalDate.now());
         int totalWorkingEmployeesCount = currentRosterEmployees.size();
+
+        if (totalWorkingEmployeesCount == 0)
+            return new WorkingStatisticResponseModel(companyId, 0, 0);
+
+        List<RosterEmployee> remoteRosterEmployees = rosterEmployeeService.findRemoteRosterEmployeesByCompanyIdAndDate(companyId, LocalDate.now());
+        int remoteEmployeesCount = remoteRosterEmployees.size();
 
         WorkingStatisticResponseModel workingStatisticResponseModel = new WorkingStatisticResponseModel();
         workingStatisticResponseModel.setCompanyId(companyId);
