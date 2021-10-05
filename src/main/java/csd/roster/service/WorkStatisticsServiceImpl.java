@@ -1,9 +1,6 @@
 package csd.roster.service;
 
-import csd.roster.model.Company;
-import csd.roster.model.Roster;
-import csd.roster.model.RosterEmployee;
-import csd.roster.model.WorkLocation;
+import csd.roster.model.*;
 import csd.roster.response_model.WorkingStatisticResponseModel;
 import org.springframework.stereotype.Service;
 
@@ -45,5 +42,18 @@ public class WorkStatisticsServiceImpl implements WorkStatisticsService {
         workingStatisticResponseModel.setOnsiteCount(totalWorkingEmployeesCount - remoteEmployeesCount);
 
         return workingStatisticResponseModel;
+    }
+
+    @Override
+    public List<Employee> getOnsiteEmployeesListByCompany(UUID companyId) {
+        companyService.getCompanyById(companyId);
+
+        List<RosterEmployee> onsiteRosterEmployees = rosterEmployeeService.findOnsiteRosterEmployeesByCompanyIdAndDate(companyId, LocalDate.now());
+
+        return onsiteRosterEmployees
+                .stream()
+                .map(rosterEmployee -> rosterEmployee.getEmployee())
+                .collect(Collectors.toList());
+
     }
 }
