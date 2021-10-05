@@ -11,5 +11,5 @@ import java.util.UUID;
 public interface WorkStatisticsService {
     WorkingStatisticResponseModel getCurrentWorkStatisticsByCompany(UUID companyId);
 
-    List<Employee> getCurrentEmployeesListByCompany(UUID companyId);
+    List<Employee> getOnsiteEmployeesListByCompany(UUID companyId);
 }
