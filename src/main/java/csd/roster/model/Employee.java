@@ -41,7 +41,7 @@ import lombok.ToString;
 @EqualsAndHashCode
 public class Employee {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+//    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
     private UUID id;
 
