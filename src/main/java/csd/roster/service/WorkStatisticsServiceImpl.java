@@ -5,6 +5,7 @@ import csd.roster.response_model.WorkingStatisticResponseModel;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
@@ -22,29 +23,6 @@ public class WorkStatisticsServiceImpl implements WorkStatisticsService {
     }
 
     @Override
-    public WorkingStatisticResponseModel getCurrentWorkStatisticsByCompany(UUID companyId) {
-        // Confirm that company exists
-        // TODO: use existsById
-        companyService.getCompanyById(companyId);
-
-        List<RosterEmployee> currentRosterEmployees = rosterEmployeeService.findAllRosterEmployeesByCompanyIdAndDate(companyId, LocalDate.now());
-        int totalWorkingEmployeesCount = currentRosterEmployees.size();
-
-        if (totalWorkingEmployeesCount == 0)
-            return new WorkingStatisticResponseModel(companyId, 0, 0);
-
-        List<RosterEmployee> remoteRosterEmployees = rosterEmployeeService.findRemoteRosterEmployeesByCompanyIdAndDate(companyId, LocalDate.now());
-        int remoteEmployeesCount = remoteRosterEmployees.size();
-
-        WorkingStatisticResponseModel workingStatisticResponseModel = new WorkingStatisticResponseModel();
-        workingStatisticResponseModel.setCompanyId(companyId);
-        workingStatisticResponseModel.setRemoteCount(remoteEmployeesCount);
-        workingStatisticResponseModel.setOnsiteCount(totalWorkingEmployeesCount - remoteEmployeesCount);
-
-        return workingStatisticResponseModel;
-    }
-
-    @Override
     public List<Employee> getOnsiteEmployeesListByCompany(UUID companyId) {
         companyService.getCompanyById(companyId);
 
@@ -55,5 +33,38 @@ public class WorkStatisticsServiceImpl implements WorkStatisticsService {
                 .map(rosterEmployee -> rosterEmployee.getEmployee())
                 .collect(Collectors.toList());
 
+    }
+
+    @Override
+    public List<WorkingStatisticResponseModel> getWorkStatisticsByCompanyAndDateRange(UUID companyId, LocalDate startDate, LocalDate endDate) {
+        List<WorkingStatisticResponseModel> statsList = new LinkedList<>();
+        for (LocalDate start = startDate; !start.isAfter(endDate); start = start.plusDays(1)) {
+            statsList.add(getWorkStatisticsByCompanyAndDate(companyId, start));
+        }
+
+        return statsList;
+    }
+
+    @Override
+    public WorkingStatisticResponseModel getWorkStatisticsByCompanyAndDate(UUID companyId, LocalDate date) {
+        // Confirm that company exists
+        // TODO: use existsById
+        companyService.getCompanyById(companyId);
+
+        List<RosterEmployee> currentRosterEmployees = rosterEmployeeService.findAllRosterEmployeesByCompanyIdAndDate(companyId, date);
+        int totalWorkingEmployeesCount = currentRosterEmployees.size();
+
+        if (totalWorkingEmployeesCount == 0)
+            return new WorkingStatisticResponseModel(companyId, 0, 0);
+
+        List<RosterEmployee> remoteRosterEmployees = rosterEmployeeService.findRemoteRosterEmployeesByCompanyIdAndDate(companyId, date);
+        int remoteEmployeesCount = remoteRosterEmployees.size();
+
+        WorkingStatisticResponseModel workingStatisticResponseModel = new WorkingStatisticResponseModel();
+        workingStatisticResponseModel.setCompanyId(companyId);
+        workingStatisticResponseModel.setRemoteCount(remoteEmployeesCount);
+        workingStatisticResponseModel.setOnsiteCount(totalWorkingEmployeesCount - remoteEmployeesCount);
+
+        return workingStatisticResponseModel;
     }
 }
