@@ -14,7 +14,7 @@ import java.util.UUID;
 public interface WorkLocationRepository extends JpaRepository<WorkLocation, UUID> {
     Optional<WorkLocation> findByIdAndDepartmentId(UUID workLocationId, UUID departmentId);
 
-    @Query("select wl from WorkLocation wl where wl.name = 'remote' and wl.id = :id")
+    @Query("select wl from WorkLocation wl where wl.name = 'remote' and wl.department.company.id = :id")
     Optional<WorkLocation> findRemoteWorkLocationByCompanyId(@Param("id") UUID companyId);
 
     @Query("select wl from WorkLocation wl where wl.department.company.id = :id")
