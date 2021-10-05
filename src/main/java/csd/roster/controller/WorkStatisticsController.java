@@ -1,6 +1,7 @@
 package csd.roster.controller;
 
 import csd.roster.exception.ResourceNotFoundException;
+import csd.roster.model.Employee;
 import csd.roster.model.WorkLocation;
 import csd.roster.response_model.WorkingStatisticResponseModel;
 import csd.roster.service.WorkStatisticsService;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -24,5 +26,10 @@ public class WorkStatisticsController {
     @GetMapping("/companies/{companyId}/work-statistics")
     public WorkingStatisticResponseModel getCurrentWorkStatisticsByCompany(@PathVariable(value = "companyId") UUID companyId) {
         return workStatisticsService.getCurrentWorkStatisticsByCompany(companyId);
+    }
+
+    @GetMapping("/companies/{companyId}/work-statistics/employees")
+    public List<Employee> getCurrentEmployeesListByCompany(@PathVariable(value = "companyId") UUID companyId) {
+        return workStatisticsService.getCurrentEmployeesListByCompany(companyId);
     }
 }
