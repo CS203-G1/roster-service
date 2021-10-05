@@ -40,4 +40,9 @@ public class CompanyController {
     public List<Company> getCompanies() {
         return companyService.getAllCompanies();
     }
+
+    @DeleteMapping("/companies/{companyId}")
+    public void delete(UUID companyId) {
+        companyService.deleteCompanyByid(companyId);
+    }
 }
