@@ -20,6 +20,10 @@ public class ScheduledEmployeeLoggingTask {
     public void logEmployeeDetails() {
         // Get all employees
         List<Employee> employees = employeeService.getAllEmployees();
+        
+        for (Employee employee : employees) {
+            employeeLogService.saveEmployeeLog(employee);
+        }
         // Loop through all employees and log one by one asynchronously
     }
 }
