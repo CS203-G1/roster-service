@@ -40,7 +40,7 @@ public class WorkLocationServiceTest {
         Company company = new Company(companyId, "Eppal", null, null);
 
         UUID departmentId = UUID.randomUUID();
-        Department department = new Department(departmentId, company, "Marketing", null);
+        Department department = new Department(departmentId, company, null, "Marketing", null);
 
         WorkLocation workLocation = new WorkLocation(null, null, null, "Eppal Headquarter", "7 Jalan Naga Sari", 40);
 
@@ -62,7 +62,7 @@ public class WorkLocationServiceTest {
         Company company = new Company(companyId, "Eppal", null, null);
 
         UUID departmentId = UUID.randomUUID();
-        Department department = new Department(departmentId, company, "Marketing", null);
+        Department department = new Department(departmentId, company,null, "Marketing", null);
 
         UUID workLocationId = UUID.randomUUID();
         WorkLocation workLocation = new WorkLocation(workLocationId, department, null, "Eppal Headquarter", "7 Jalan Naga Sari", 40);
@@ -102,7 +102,7 @@ public class WorkLocationServiceTest {
         Company company = new Company(companyId, "Eppal", null, null);
 
         UUID departmentId = UUID.randomUUID();
-        Department department = new Department(departmentId, company, "Marketing", null);
+        Department department = new Department(departmentId, company,null, "Marketing", null);
 
         UUID workLocationId = UUID.randomUUID();
         WorkLocation workLocation = new WorkLocation(workLocationId, department, null, "Eppal Headquarter", "7 Jalan Naga Sari", 40);
