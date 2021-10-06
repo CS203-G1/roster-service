@@ -48,4 +48,12 @@ public class EmployeeLog {
 
     @Column(name = "is_in_company")
     private Boolean isInCompany = true;
+
+    public EmployeeLog(Employee employee) {
+        this.employee = employee;
+        this.date = LocalDate.now();
+        this.vaccinationStatus = employee.getVaccinationStatus();
+        this.healthStatus = employee.getHealthStatus();
+        this.isInCompany = employee.getIsInCompany();
+    }
 }
