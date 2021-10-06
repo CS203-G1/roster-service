@@ -3,9 +3,7 @@ package csd.roster.service;
 import java.util.List;
 import java.util.UUID;
 
-import csd.roster.exception.DepartmentNotFoundException;
 import csd.roster.exception.EmployeeNotFoundException;
-import csd.roster.model.Company;
 import csd.roster.model.Department;
 import csd.roster.model.Employee;
 import csd.roster.repository.EmployeeRepository;
@@ -73,6 +71,11 @@ public class EmployeeServiceImpl implements EmployeeService {
         companyService.getCompanyById(companyId);
 
         return employeeRepository.findAllByCompanyId(companyId);
+    }
+
+    @Override
+    public List<Employee> getAllEmployees() {
+        return employeeRepository.findAll();
     }
 }
 
