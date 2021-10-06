@@ -20,7 +20,7 @@ public class RosterNotFoundException extends ResourceNotFoundException {
     }
     
     public RosterNotFoundException(String workLocationId) {
-        super(String.format("Work location %s does not have any rosters", workLocationId));
+        super(String.format("Work location %s does not contain any rosters", workLocationId));
     }
 
     public RosterNotFoundException(WorkLocation workLocation) {

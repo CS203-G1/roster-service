@@ -1,23 +1,29 @@
 package csd.roster.service;
 
-import csd.roster.exception.RosterNotFoundException;
-import csd.roster.model.Roster;
-import csd.roster.model.WorkLocation;
-import csd.roster.repository.RosterRepository;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
-
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.*;
+import csd.roster.exception.RosterNotFoundException;
+import csd.roster.model.Roster;
+import csd.roster.model.WorkLocation;
+import csd.roster.repository.RosterRepository;
 
 @ExtendWith(MockitoExtension.class)
 public class RosterServiceTest {
@@ -82,7 +88,7 @@ public class RosterServiceTest {
         when(rosters.findByWorkLocationId(workLocationId)).thenReturn(workLocation.getRosters());
 
         Exception exception = assertThrows(RosterNotFoundException.class, () -> rosterService.getRosters(workLocationId));
-        String expectedExceptionMessage = String.format("Work location %s does not have any rosters", workLocationId);
+        String expectedExceptionMessage = String.format("Work location %s does not contain any rosters", workLocationId);
 
         assertEquals(expectedExceptionMessage, exception.getMessage());
         verify(rosters, times(1)).findByWorkLocationId(workLocationId);
@@ -98,7 +104,7 @@ public class RosterServiceTest {
         UUID rosterId = UUID.randomUUID();
         Roster roster = new Roster(rosterId, LocalDate.now(), workLocation, null);
 
-        when(rosters.findByIdAndWorkLocationId(rosterId, workLocationId)).thenReturn(java.util.Optional.of(roster));
+        when(rosters.findByIdAndWorkLocationId(rosterId,workLocationId)).thenReturn(Optional.of(roster));
 
         Roster foundRoster = rosterService.getRoster(workLocationId, rosterId);
 
@@ -136,7 +142,7 @@ public class RosterServiceTest {
         UUID rosterId = UUID.randomUUID();
         Roster roster = new Roster(rosterId, LocalDate.now(), workLocation, null);
 
-        when(rosters.findById(rosterId)).thenReturn(java.util.Optional.of(roster));
+        when(rosters.findById(rosterId)).thenReturn(Optional.of(roster));
 
         Roster foundRoster = rosterService.getRoster(rosterId);
 

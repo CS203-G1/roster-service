@@ -1,22 +1,28 @@
 package csd.roster.service;
 
-import csd.roster.exception.DepartmentNotFoundException;
-import csd.roster.model.Company;
-import csd.roster.model.Department;
-import csd.roster.repository.DepartmentRepository;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.UUID;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
-
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.*;
+import csd.roster.exception.DepartmentNotFoundException;
+import csd.roster.model.Company;
+import csd.roster.model.Department;
+import csd.roster.repository.DepartmentRepository;
 
 @ExtendWith(MockitoExtension.class)
 public class DepartmentServiceTest {
@@ -32,10 +38,10 @@ public class DepartmentServiceTest {
     @Test
     public void addDepartment_NewDepartment_ReturnSavedDepartment(){
         UUID companyId = UUID.randomUUID();
-        Company company = new Company(companyId, "Eppal", null);
+        Company company = new Company(companyId, "Eppal", null, new Date());
 
         UUID departmentId = UUID.randomUUID();
-        Department department = new Department(departmentId, null, null, "Marketing");
+        Department department = new Department(departmentId, null, null, "Marketing", new Date());
 
         when(companyService.getCompanyById(any(UUID.class))).thenReturn(company);
         when(departments.save(any(Department.class))).thenReturn(department);
@@ -58,17 +64,15 @@ public class DepartmentServiceTest {
 
         assertNotNull(allDepartments);
         verify(departments, times(1)).findAll();
-
-
     }
 
     @Test
     public void getDepartmentById_DepartmentExists_ReturnFoundDepartment(){
         UUID companyId = UUID.randomUUID();
-        Company company = new Company(companyId, "Eppal", null);
+        Company company = new Company(companyId, "Eppal", null, null);
 
         UUID departmentId = UUID.randomUUID();
-        Department department = new Department(departmentId, company, null, "Marketing");
+        Department department = new Department(departmentId, company, null, "Marketing", new Date());
 
         when(departments.findById(any(UUID.class))).thenReturn(java.util.Optional.of(department));
 
@@ -81,10 +85,10 @@ public class DepartmentServiceTest {
     @Test
     public void getDepartmentByIdAndCompanyId_DepartmentExists_ReturnFoundDepartment(){
         UUID companyId = UUID.randomUUID();
-        Company company = new Company(companyId, "Eppal", null);
+        Company company = new Company(companyId, "Eppal", null, new Date());
 
         UUID departmentId = UUID.randomUUID();
-        Department department = new Department(departmentId, company, null, "Marketing");
+        Department department = new Department(departmentId, company,null,  "Marketing", new Date());
 
         when(departments.findByIdAndCompanyId(any(UUID.class),any(UUID.class))).thenReturn(java.util.Optional.of(department));
 
@@ -97,10 +101,10 @@ public class DepartmentServiceTest {
     @Test
     public void getDepartmentByIdAndCompanyId_DepartmentDoesNotExist_ThrowException(){
         UUID companyId = UUID.randomUUID();
-        Company company = new Company(companyId, "Eppal", null);
+        Company company = new Company(companyId, "Eppal", null, new Date());
 
         UUID departmentId = UUID.randomUUID();
-        Department department = new Department(departmentId, company, null, "Marketing");
+        Department department = new Department(departmentId, company, null, "Marketing", new Date());
 
         Exception exception = assertThrows(DepartmentNotFoundException.class,
                 () -> departmentService.getDepartmentByIdAndCompanyId(departmentId, companyId));

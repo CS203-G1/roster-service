@@ -1,9 +1,8 @@
 package csd.roster.service;
 
-import csd.roster.model.Employee;
-
-import java.util.List;
 import java.util.UUID;
+
+import csd.roster.model.Employee;
 
 public interface EmployeeService {
     Employee addEmployee(UUID departmentId, Employee employee);

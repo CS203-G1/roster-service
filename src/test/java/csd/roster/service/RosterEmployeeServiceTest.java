@@ -1,27 +1,31 @@
 package csd.roster.service;
 
-import csd.roster.enumerator.HealthStatus;
-import csd.roster.enumerator.VaccinationStatus;
-import csd.roster.enumerator.VaccinationBrand;
-import csd.roster.exception.EmployeeNotHealthyException;
-import csd.roster.exception.RosterEmployeeNotFoundException;
-import csd.roster.model.Employee;
-import csd.roster.model.Roster;
-import csd.roster.model.RosterEmployee;
-import csd.roster.repository.RosterEmployeeRepository;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Date;
+import java.util.UUID;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.UUID;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.Mockito.*;
+import csd.roster.enumerator.HealthStatus;
+import csd.roster.enumerator.VaccinationBrand;
+import csd.roster.enumerator.VaccinationStatus;
+import csd.roster.exception.EmployeeNotHealthyException;
+import csd.roster.exception.RosterEmployeeNotFoundException;
+import csd.roster.model.Employee;
+import csd.roster.model.Roster;
+import csd.roster.model.RosterEmployee;
+import csd.roster.repository.RosterEmployeeRepository;
 
 @ExtendWith(MockitoExtension.class)
 public class RosterEmployeeServiceTest {
@@ -46,7 +50,7 @@ public class RosterEmployeeServiceTest {
         VaccinationStatus vaccinationStatus = VaccinationStatus.SECOND_DOSE;
         VaccinationBrand vaccinationBrand = VaccinationBrand.PFIZER;
         HealthStatus healthStatus = HealthStatus.HEALTHY;
-        Employee employee = new Employee(employeeId, null, null, "John Doe", vaccinationStatus, vaccinationBrand, healthStatus);
+        Employee employee = new Employee(employeeId, null, null, "John Doe", vaccinationStatus, vaccinationBrand, healthStatus, new Date(), true);
 
         UUID rosterEmployeeId = UUID.randomUUID();
         LocalDateTime fromTime = LocalDateTime.of(2023, 12, 12, 9,0,0);
@@ -76,7 +80,7 @@ public class RosterEmployeeServiceTest {
         VaccinationStatus vaccinationStatus = VaccinationStatus.SECOND_DOSE;
         VaccinationBrand vaccinationBrand = VaccinationBrand.PFIZER;
         HealthStatus healthStatus = HealthStatus.COVID;
-        Employee employee = new Employee(employeeId, null, null, "John Doe", vaccinationStatus, vaccinationBrand, healthStatus);
+        Employee employee = new Employee(employeeId, null, null, "John Doe", vaccinationStatus, vaccinationBrand, healthStatus, new Date(), true);
 
         UUID rosterEmployeeId = UUID.randomUUID();
         LocalDateTime fromTime = LocalDateTime.of(2023, 12, 12, 9,0,0);
@@ -104,7 +108,7 @@ public class RosterEmployeeServiceTest {
         VaccinationStatus vaccinationStatus = VaccinationStatus.SECOND_DOSE;
         VaccinationBrand vaccinationBrand = VaccinationBrand.PFIZER;
         HealthStatus healthStatus = HealthStatus.COVID;
-        Employee employee = new Employee(employeeId, null, null, "John Doe", vaccinationStatus, vaccinationBrand, healthStatus);
+        Employee employee = new Employee(employeeId, null, null, "John Doe", vaccinationStatus, vaccinationBrand, healthStatus, new Date(), true);
 
         UUID rosterEmployeeId = UUID.randomUUID();
         LocalDateTime fromTime = LocalDateTime.of(2023, 12, 12, 9,0,0);
@@ -128,7 +132,7 @@ public class RosterEmployeeServiceTest {
         VaccinationStatus vaccinationStatus = VaccinationStatus.SECOND_DOSE;
         VaccinationBrand vaccinationBrand = VaccinationBrand.PFIZER;
         HealthStatus healthStatus = HealthStatus.COVID;
-        Employee employee = new Employee(employeeId, null, null, "John Doe", vaccinationStatus, vaccinationBrand, healthStatus);
+        Employee employee = new Employee(employeeId, null, null, "John Doe", vaccinationStatus, vaccinationBrand, healthStatus, new Date(), true);
 
         Exception exception = assertThrows(RosterEmployeeNotFoundException.class, () -> rosterEmployeeService.getRosterEmployee(rosterId,employeeId));
 

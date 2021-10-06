@@ -1,15 +1,19 @@
 
 package csd.roster.model;
 
+import java.util.Date;
 import java.util.Set;
 import java.util.UUID;
 
 import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import org.hibernate.annotations.CreationTimestamp;
+
 import csd.roster.enumerator.HealthStatus;
-import csd.roster.enumerator.VaccinationStatus;
 import csd.roster.enumerator.VaccinationBrand;
+import csd.roster.enumerator.VaccinationStatus;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -57,4 +61,12 @@ public class Employee {
     @Enumerated(EnumType.ORDINAL)
     @Column(name = "health_status")
     private HealthStatus healthStatus;
+
+    @CreationTimestamp
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "created_at")
+    private Date createdAt;
+
+    @Column(name = "is_in_company")
+    private Boolean isInCompany = true;
 }
