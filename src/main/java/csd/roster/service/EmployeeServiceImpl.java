@@ -1,5 +1,6 @@
 package csd.roster.service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
@@ -66,7 +67,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public Iterable<Employee> getAllEmployeesByCompanyId(UUID companyId) {
+    public List<Employee> getAllEmployeesByCompanyId(UUID companyId) {
         // To check if company exists
         companyService.getCompanyById(companyId);
 
@@ -76,6 +77,13 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public List<Employee> getAllEmployees() {
         return employeeRepository.findAll();
+    }
+
+    @Override
+    public List<Employee> getAllEmployeesByCompanyIdBeforeDate(UUID companyId, LocalDate date) {
+        companyService.getCompanyById(companyId);
+
+        return employeeRepository.findAllByCompanyIdBeforeDate(companyId, date);
     }
 }
 
