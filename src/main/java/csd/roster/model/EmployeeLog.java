@@ -48,10 +48,6 @@ public class EmployeeLog {
     private VaccinationStatus vaccinationStatus;
 
     @Enumerated(EnumType.ORDINAL)
-    @Column(name = "vaccination_brand")
-    private VaccinationBrand vaccinationBrand;
-
-    @Enumerated(EnumType.ORDINAL)
     @Column(name = "health_status")
     private HealthStatus healthStatus;
 
