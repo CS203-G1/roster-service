@@ -1,21 +1,27 @@
 package csd.roster.service;
 
-import csd.roster.exception.CompanyNotFoundException;
-import csd.roster.model.Company;
-import csd.roster.repository.CompanyRepository;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.UUID;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
-
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.*;
+import csd.roster.exception.CompanyNotFoundException;
+import csd.roster.model.Company;
+import csd.roster.repository.CompanyRepository;
 
 @ExtendWith(MockitoExtension.class)
 public class CompanyServiceTest {
@@ -29,7 +35,7 @@ public class CompanyServiceTest {
     @Test
     void addCompany_NewCompany_ReturnSavedCompany(){
         UUID id = UUID.randomUUID();
-        Company company = new Company(id, "Eppal", null);
+        Company company = new Company(id, "Eppal", null, new Date());
 
         when(companies.save(any(Company.class))).thenReturn(company);
 
@@ -44,7 +50,7 @@ public class CompanyServiceTest {
     @Test
     void getCompanyById_CompanyExists_ReturnCompany(){
         UUID id = UUID.randomUUID();
-        Company company = new Company(id, "Eppal", null);
+        Company company = new Company(id, "Eppal", null, new Date());
 
         when(companies.findById(any(UUID.class))).thenReturn(java.util.Optional.of(company));
 
