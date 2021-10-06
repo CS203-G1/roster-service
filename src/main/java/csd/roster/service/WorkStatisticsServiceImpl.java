@@ -108,6 +108,7 @@ public class WorkStatisticsServiceImpl implements WorkStatisticsService {
             summaryResponseModel.setEmployeesCountChange(change * 100);
         } else {
             int change_rate = (int) ((double) change / employeesBeforePreviousWeek.size() * 100);
+            summaryResponseModel.setEmployeesCountChange(change_rate);
         }
 
         summaryResponseModel.setEmployeesCount(employees.size());
@@ -124,20 +125,17 @@ public class WorkStatisticsServiceImpl implements WorkStatisticsService {
 
         if (employeesOnLeave.size() == 0) {
             if (change == 0) {
-                // if company doesn't have any employees change just put 0
-                summaryResponseModel.setEmployeesCountChange(change);
+                summaryResponseModel.setLeaveCountChange(change);
             } else {
-                // Example: if now employee size is 0 and last week was 7, change is -700
-                summaryResponseModel.setEmployeesCountChange(change * 100);
+                summaryResponseModel.setLeaveCountChange(change * 100);
             }
         } else if (employeesOnLeavePreviousWeek.size() == 0){
-            // Example: if last week there's 0 employee and today there's 7, change is +700
-            summaryResponseModel.setEmployeesCountChange(change * 100);
+            summaryResponseModel.setLeaveCountChange(change * 100);
         } else {
             int change_rate = (int) ((double) change / employeesOnLeavePreviousWeek.size() * 100);
+            summaryResponseModel.setLeaveCountChange(change_rate);
+
         }
-
-        summaryResponseModel.setEmployeesCount(employeesOnLeave.size());
-
+        summaryResponseModel.setLeaveCount(employeesOnLeave.size());
     }
 }
