@@ -26,6 +26,7 @@ import lombok.ToString;
 @EqualsAndHashCode
 public class EmployeeLog {
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
     private UUID id;
 
