@@ -85,5 +85,12 @@ public class EmployeeServiceImpl implements EmployeeService {
 
         return employeeRepository.findAllByCompanyIdBeforeDate(companyId, date);
     }
+
+    @Override
+    public List<Employee> getEmployeesOnLeaveByCompanyIdAndDate(UUID companyId, LocalDate date) {
+        companyService.getCompanyById(companyId);
+
+        return employeeRepository.findAllOnLeaveByCompanyIdAndDate(companyId, date);
+    }
 }
 
