@@ -1,6 +1,7 @@
 package csd.roster.service;
 
 import csd.roster.model.*;
+import csd.roster.response_model.SummaryResponseModel;
 import csd.roster.response_model.WorkingStatisticResponseModel;
 import org.springframework.stereotype.Service;
 
@@ -15,11 +16,17 @@ import java.util.stream.Collectors;
 public class WorkStatisticsServiceImpl implements WorkStatisticsService {
     private CompanyService companyService;
     private RosterEmployeeService rosterEmployeeService;
+    private EmployeeService employeeService;
+    private EmployeeLogService employeeLogService;
 
     public WorkStatisticsServiceImpl(CompanyService companyService,
-                                     RosterEmployeeService rosterEmployeeService) {
+                                     RosterEmployeeService rosterEmployeeService,
+                                     EmployeeService employeeService,
+                                     EmployeeLogService employeeLogService) {
         this.companyService = companyService;
         this.rosterEmployeeService = rosterEmployeeService;
+        this.employeeService = employeeService;
+        this.employeeLogService = employeeLogService;
     }
 
     @Override
@@ -66,5 +73,10 @@ public class WorkStatisticsServiceImpl implements WorkStatisticsService {
         workingStatisticResponseModel.setOnsiteCount(totalWorkingEmployeesCount - remoteEmployeesCount);
 
         return workingStatisticResponseModel;
+    }
+
+    @Override
+    public SummaryResponseModel getSummaryByCompanyIdAndDate(UUID companyId, LocalDate now) {
+        return null;
     }
 }
