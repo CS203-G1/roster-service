@@ -22,4 +22,6 @@ public interface EmployeeService {
     List<Employee> getAllEmployees();
 
     List<Employee> getAllEmployeesByCompanyIdBeforeDate(UUID companyId, LocalDate date);
+
+    List<Employee> getEmployeesOnLeaveByCompanyIdAndDate(UUID companyId, LocalDate date);
 }
