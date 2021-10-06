@@ -50,7 +50,7 @@ public class EmployeeServiceTest {
         VaccinationStatus vaccinationStatus = VaccinationStatus.NOT_VACCINATED;
         VaccinationBrand vaccinationBrand = null;
         HealthStatus healthStatus = HealthStatus.COVID;
-        Employee employee = new Employee(employeeId, null, null, "John Doe", vaccinationStatus, vaccinationBrand, healthStatus, new Date(), true);
+        Employee employee = new Employee(employeeId, null, null, null, "John Doe", vaccinationStatus, vaccinationBrand, healthStatus, new Date(), true);
 
         when(departmentService.getDepartmentById(any(UUID.class))).thenReturn(department);
         when(employees.save(any(Employee.class))).thenReturn(employee);
@@ -71,7 +71,7 @@ public class EmployeeServiceTest {
         VaccinationStatus vaccinationStatus = VaccinationStatus.NOT_VACCINATED;
         VaccinationBrand vaccinationBrand = null;
         HealthStatus healthStatus = HealthStatus.COVID;
-        Employee employee = new Employee(employeeId, null, null, "John Doe", vaccinationStatus, vaccinationBrand, healthStatus, new Date(), true);
+        Employee employee = new Employee(employeeId, null, null, null, "John Doe", vaccinationStatus, vaccinationBrand, healthStatus, new Date(), true);
 
         when(employees.findById(any(UUID.class))).thenReturn(java.util.Optional.of(employee));
 
@@ -103,7 +103,7 @@ public class EmployeeServiceTest {
         VaccinationStatus vaccinationStatus = VaccinationStatus.NOT_VACCINATED;
         VaccinationBrand vaccinationBrand = null;
         HealthStatus healthStatus = HealthStatus.COVID;
-        Employee employee = new Employee(employeeId, null, department, "John Doe", vaccinationStatus, vaccinationBrand, healthStatus, new Date(), true);
+        Employee employee = new Employee(employeeId, null, department, null, "John Doe", vaccinationStatus, vaccinationBrand, healthStatus, new Date(), true);
 
         when(employees.findByIdAndDepartmentId(any(UUID.class), any(UUID.class))).thenReturn(java.util.Optional.of(employee));
 
