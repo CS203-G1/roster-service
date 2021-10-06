@@ -2,6 +2,7 @@ package csd.roster.service;
 
 import csd.roster.model.Employee;
 import csd.roster.model.RosterEmployee;
+import csd.roster.response_model.SummaryResponseModel;
 import csd.roster.response_model.WorkingStatisticResponseModel;
 import org.apache.tomcat.jni.Local;
 
@@ -16,4 +17,6 @@ public interface WorkStatisticsService {
     List<WorkingStatisticResponseModel> getWorkStatisticsByCompanyAndDateRange(UUID companyId, LocalDate StartDate, LocalDate EndDate);
 
     WorkingStatisticResponseModel getWorkStatisticsByCompanyAndDate(UUID companyId, LocalDate date);
+
+    SummaryResponseModel getDailySummaryByCompany(UUID companyId, LocalDate now);
 }
