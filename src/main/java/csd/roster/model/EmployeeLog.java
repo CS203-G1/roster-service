@@ -1,6 +1,7 @@
 
 package csd.roster.model;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.Set;
 import java.util.UUID;
@@ -33,4 +34,27 @@ public class EmployeeLog {
     @Column(name = "id")
     private UUID id;
 
+    @ManyToOne
+    @JoinColumn(name="employee_id", referencedColumnName = "id")
+    private Employee employee;
+
+    @CreationTimestamp
+    @Temporal(TemporalType.DATE)
+    @Column(name = "created_at")
+    private LocalDate date;
+
+    @Enumerated(EnumType.ORDINAL)
+    @Column(name = "vaccination_status")
+    private VaccinationStatus vaccinationStatus;
+
+    @Enumerated(EnumType.ORDINAL)
+    @Column(name = "vaccination_brand")
+    private VaccinationBrand vaccinationBrand;
+
+    @Enumerated(EnumType.ORDINAL)
+    @Column(name = "health_status")
+    private HealthStatus healthStatus;
+
+    @Column(name = "is_in_company")
+    private Boolean isInCompany = true;
 }
