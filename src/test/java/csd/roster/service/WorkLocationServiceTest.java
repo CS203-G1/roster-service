@@ -1,21 +1,27 @@
 package csd.roster.service;
 
-import csd.roster.exception.WorkLocationNotFoundException;
-import csd.roster.model.Company;
-import csd.roster.model.Department;
-import csd.roster.model.WorkLocation;
-import csd.roster.repository.WorkLocationRepository;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
+import java.util.Optional;
+import java.util.UUID;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.UUID;
-
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.*;
+import csd.roster.exception.WorkLocationNotFoundException;
+import csd.roster.model.Company;
+import csd.roster.model.Department;
+import csd.roster.model.WorkLocation;
+import csd.roster.repository.WorkLocationRepository;
 
 @ExtendWith(MockitoExtension.class)
 public class WorkLocationServiceTest {
@@ -31,10 +37,10 @@ public class WorkLocationServiceTest {
     @Test
     public void addWorkLocation_NewWorkLocation_ReturnSavedWorkLocation(){
         UUID companyId = UUID.randomUUID();
-        Company company = new Company(companyId, "Eppal", null);
+        Company company = new Company(companyId, "Eppal", null, null);
 
         UUID departmentId = UUID.randomUUID();
-        Department department = new Department(departmentId, company, "Marketing");
+        Department department = new Department(departmentId, company, "Marketing", null);
 
         WorkLocation workLocation = new WorkLocation(null, null, "Eppal Headquarter", "7 Jalan Naga Sari", 40, null);
 
@@ -53,10 +59,10 @@ public class WorkLocationServiceTest {
     @Test
     public void get_WorkLocationExists_ReturnFoundWorkLocation(){
         UUID companyId = UUID.randomUUID();
-        Company company = new Company(companyId, "Eppal", null);
+        Company company = new Company(companyId, "Eppal", null, null);
 
         UUID departmentId = UUID.randomUUID();
-        Department department = new Department(departmentId, company, "Marketing");
+        Department department = new Department(departmentId, company, "Marketing", null);
 
         UUID workLocationId = UUID.randomUUID();
         WorkLocation workLocation = new WorkLocation(workLocationId, department, "Eppal Headquarter", "7 Jalan Naga Sari", 40, null);
@@ -93,15 +99,15 @@ public class WorkLocationServiceTest {
     @Test
     public void getWorkLocationById_WorkLocationExists_ReturnFoundWorkLocation(){
         UUID companyId = UUID.randomUUID();
-        Company company = new Company(companyId, "Eppal", null);
+        Company company = new Company(companyId, "Eppal", null, null);
 
         UUID departmentId = UUID.randomUUID();
-        Department department = new Department(departmentId, company, "Marketing");
+        Department department = new Department(departmentId, company, "Marketing", null);
 
         UUID workLocationId = UUID.randomUUID();
         WorkLocation workLocation = new WorkLocation(workLocationId, department, "Eppal Headquarter", "7 Jalan Naga Sari", 40, null);
 
-        when(workLocations.findById(workLocationId)).thenReturn(java.util.Optional.of(workLocation));
+        when(workLocations.findById(workLocationId)).thenReturn(Optional.of(workLocation));
 
         WorkLocation foundWorkLocation = workLocationService.getWorkLocationById(workLocationId);
 
