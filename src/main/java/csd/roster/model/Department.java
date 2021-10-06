@@ -1,6 +1,7 @@
 package csd.roster.model;
 
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 import javax.persistence.Column;
@@ -28,8 +29,8 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode
-public class Department {
-    @javax.persistence.Id
+public class Department implements Serializable {
+    @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name="id")
     private UUID id;
@@ -37,6 +38,11 @@ public class Department {
     @ManyToOne
     @JoinColumn(name="company_id")
     private Company company;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "department", orphanRemoval = true, cascade = CascadeType.ALL)
+    @Transient
+    private List<Employee> employees;
 
     @Column(name="name")
     private String name;

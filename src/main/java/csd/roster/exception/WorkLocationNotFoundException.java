@@ -1,5 +1,7 @@
 package csd.roster.exception;
 
+import csd.roster.model.Company;
+import org.hibernate.jdbc.Work;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
@@ -14,6 +16,10 @@ public class WorkLocationNotFoundException extends ResourceNotFoundException {
                 workLocationId,
                 departmentId,
                 companyId));
+    }
+
+    public WorkLocationNotFoundException(Company company) {
+        super(String.format("Work Location does not exist in company %s", company.getId()));
     }
 
     // Overloaded constructor

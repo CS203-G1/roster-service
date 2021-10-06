@@ -1,8 +1,9 @@
 package csd.roster.service;
 
-import java.util.List;
-import java.util.UUID;
+import java.time.LocalDate;
+import java.util.*;
 
+import csd.roster.model.RosterEmployee;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -67,5 +68,36 @@ public class RosterServiceImpl implements RosterService {
             return rosterRepository.save(oldRoster);
 
         }).orElseThrow(() -> new RosterNotFoundException(rosterId, workLocationId));
+    }
+
+    @Override
+    public Roster getCurrentRosterByWorkLocation(WorkLocation workLocation) {
+        return rosterRepository.findByWorkLocationIdAndDate(workLocation.getId(), LocalDate.now())
+                .orElseThrow(() -> new RosterNotFoundException(workLocation));
+    }
+
+    @Override
+    public Roster getCurrentRemoteRosterByCompany(UUID companyId) {
+
+        // Get the remote work location that belongs to this company
+        WorkLocation remoteWorkLocation = workLocationService.getRemoteWorkLocationByCompanyId(companyId);
+
+        // Get the roster for today for the remote work location
+        return getCurrentRosterByWorkLocation(remoteWorkLocation);
+    }
+
+    @Override
+    public List<Roster> getCurrentRostersByCompany(UUID companyId) {
+
+        List<WorkLocation> workLocations = workLocationService.getWorkLocationsByCompanyId(companyId);
+
+        // Using linked list data structure to have an O(1) of appending the list
+        List<Roster> rosters = new LinkedList<Roster>();
+
+        for (WorkLocation workLocation : workLocations) {
+            rosters.add(getCurrentRosterByWorkLocation(workLocation));
+        }
+
+        return rosters;
     }
 }

@@ -41,17 +41,21 @@ import lombok.ToString;
 @EqualsAndHashCode
 public class Employee {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+//    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
     private UUID id;
 
-    @OneToMany(mappedBy = "employee")
     @JsonIgnore
+    @Transient
+    @OneToMany(mappedBy = "employee", orphanRemoval = true, cascade = CascadeType.ALL)
     private Set<RosterEmployee> roster_employees;
 
-    @OneToOne
+    @ManyToOne
     @JsonIgnore
-    @JoinColumn(name = "department_id")
+    @JoinColumns({
+            @JoinColumn(name="company_id", referencedColumnName="company_id"),
+            @JoinColumn(name="department_id", referencedColumnName="id")
+    })
     private Department department;
 
     @Column(name = "name")
