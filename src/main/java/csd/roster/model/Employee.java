@@ -1,6 +1,7 @@
 
 package csd.roster.model;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.Set;
 import java.util.UUID;
@@ -67,9 +68,8 @@ public class Employee {
     private HealthStatus healthStatus;
 
     @CreationTimestamp
-    @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "created_at")
-    private Date createdAt;
+    private LocalDate createdAt;
 
     @Column(name = "is_in_company")
     private Boolean isInCompany = true;
