@@ -78,8 +78,7 @@ public class WorkStatisticsServiceImpl implements WorkStatisticsService {
         SummaryResponseModel summaryResponseModel = new SummaryResponseModel();
 
         getEmployeesCountStatistics(companyId, summaryResponseModel, date);
-
-
+        getLeaveCountStatistics(companyId, summaryResponseModel, date);
 
         return summaryResponseModel;
     }
@@ -112,5 +111,33 @@ public class WorkStatisticsServiceImpl implements WorkStatisticsService {
         }
 
         summaryResponseModel.setEmployeesCount(employees.size());
+    }
+
+    private void getLeaveCountStatistics(UUID companyId, SummaryResponseModel summaryResponseModel, LocalDate date) {
+        List<Employee> employeesOnLeave = employeeService
+                .getEmployeesOnLeaveByCompanyIdAndDate(companyId, date);
+
+        List<Employee> employeesOnLeavePreviousWeek = employeeService
+                .getEmployeesOnLeaveByCompanyIdAndDate(companyId, date.minusDays(7));
+
+        int change = employeesOnLeave.size() - employeesOnLeavePreviousWeek.size();
+
+        if (employeesOnLeave.size() == 0) {
+            if (change == 0) {
+                // if company doesn't have any employees change just put 0
+                summaryResponseModel.setEmployeesCountChange(change);
+            } else {
+                // Example: if now employee size is 0 and last week was 7, change is -700
+                summaryResponseModel.setEmployeesCountChange(change * 100);
+            }
+        } else if (employeesOnLeavePreviousWeek.size() == 0){
+            // Example: if last week there's 0 employee and today there's 7, change is +700
+            summaryResponseModel.setEmployeesCountChange(change * 100);
+        } else {
+            int change_rate = (int) ((double) change / employeesOnLeavePreviousWeek.size() * 100);
+        }
+
+        summaryResponseModel.setEmployeesCount(employeesOnLeave.size());
+
     }
 }
