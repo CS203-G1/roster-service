@@ -122,20 +122,16 @@ public class WorkStatisticsServiceImpl implements WorkStatisticsService {
     private int getChangeRate(int currentValue, int previousValue) {
         int change = currentValue - previousValue;
 
-        if (currentValue == 0) {
-            if (change == 0) {
-                // if company doesn't have any employees change just put 0
-                return 0;
-            } else {
-                // Example: if now employee size is 0 and last week was 7, change is -700
-                return change * 100;
-            }
-        } else if (previousValue == 0){
+        if (change == 0) {
+            // if company doesn't have any employees change just put 0
+            return 0;
+        }
+        if (currentValue == 0 || previousValue == 0) {
+            // Example: if now employee size is 0 and last week was 7, change is -700
             // Example: if last week there's 0 employee and today there's 7, change is +700
             return change * 100;
-        } else {
-            return (int) ((double) change / previousValue * 100);
-        }
+        } 
+        return (int) ((double) change / previousValue * 100);
     }
 
     private void getEmployeesCountStatistics(UUID companyId, SummaryResponseModel summaryResponseModel, LocalDate date) {
