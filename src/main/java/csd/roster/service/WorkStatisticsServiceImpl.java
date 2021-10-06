@@ -90,7 +90,6 @@ public class WorkStatisticsServiceImpl implements WorkStatisticsService {
         summaryResponseModel.setEmployeesCount(employees.size());
         summaryResponseModel.setEmployeesCountChange(getChangeRate(employees.size(),
                 employeesBeforePreviousWeek.size()));
-//        getEmployeesCountStatistics(companyId, summaryResponseModel, date);
 
         List<Employee> employeesOnLeave = employeeService
                 .getEmployeesOnLeaveByCompanyIdAndDate(companyId, date);
@@ -102,7 +101,13 @@ public class WorkStatisticsServiceImpl implements WorkStatisticsService {
         summaryResponseModel.setLeaveCountChange(getChangeRate(employeesOnLeave.size(),
                 employeesOnLeavePreviousWeek.size()));
 
-//        getLeaveCountStatistics(companyId, summaryResponseModel, date);
+        List<Employee> employeesOnSite = getOnsiteEmployeesListByCompanyAndDate(companyId, LocalDate.now());
+        List<Employee> employeesOnSiteLastWeek = getOnsiteEmployeesListByCompanyAndDate(companyId,
+                LocalDate.now().minusDays(7));
+        
+        summaryResponseModel.setOnsiteCount(employeesOnSite.size());
+        summaryResponseModel.setOnsiteCountChange(getChangeRate(employeesOnSite.size(),
+                employeesOnSiteLastWeek.size()));
 
         return summaryResponseModel;
     }
