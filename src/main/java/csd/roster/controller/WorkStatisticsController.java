@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
@@ -23,13 +24,18 @@ public class WorkStatisticsController {
         this.workStatisticsService = workStatisticsService;
     }
 
-    @GetMapping("/companies/{companyId}/work-statistics")
-    public WorkingStatisticResponseModel getCurrentWorkStatisticsByCompany(@PathVariable(value = "companyId") UUID companyId) {
-        return workStatisticsService.getCurrentWorkStatisticsByCompany(companyId);
+    @GetMapping("/companies/{companyId}/work-statistics/daily")
+    public WorkingStatisticResponseModel getDailyWorkStatisticsByCompany(@PathVariable(value = "companyId") UUID companyId) {
+        return workStatisticsService.getWorkStatisticsByCompanyAndDate(companyId, LocalDate.now());
     }
 
     @GetMapping("/companies/{companyId}/work-statistics/employees/onsite")
     public List<Employee> getOnsiteEmployeesListByCompany(@PathVariable(value = "companyId") UUID companyId) {
         return workStatisticsService.getOnsiteEmployeesListByCompany(companyId);
+    }
+
+    @GetMapping("/companies/{companyId}/work-statistics/weekly")
+    public List<WorkingStatisticResponseModel> getWeeklyWorkStatisticsByCompany(@PathVariable(value = "companyId") UUID companyId) {
+        return workStatisticsService.getWorkStatisticsByCompanyAndDateRange(companyId, LocalDate.now().minusDays(6), LocalDate.now());
     }
 }
