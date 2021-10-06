@@ -12,7 +12,7 @@ import java.util.Set;
 import java.util.UUID;
 
 public interface WorkStatisticsService {
-    List<Employee> getOnsiteEmployeesListByCompany(UUID companyId);
+    List<Employee> getOnsiteEmployeesListByCompanyAndDate(UUID companyId, LocalDate date);
 
     List<WorkingStatisticResponseModel> getWorkStatisticsByCompanyAndDateRange(UUID companyId, LocalDate StartDate, LocalDate EndDate);
 
