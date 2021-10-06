@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
+import csd.roster.enumerator.HealthStatus;
 import csd.roster.exception.EmployeeNotFoundException;
 import csd.roster.model.Department;
 import csd.roster.model.Employee;
@@ -91,6 +92,15 @@ public class EmployeeServiceImpl implements EmployeeService {
         companyService.getCompanyById(companyId);
 
         return employeeRepository.findAllOnLeaveByCompanyIdAndDate(companyId, date);
+    }
+
+    @Override
+    public List<Employee> getEmployeesByCompanyIdAndDateAndHealthStatus(UUID companyId,
+                                                                        LocalDate date,
+                                                                        HealthStatus healthStatus) {
+        companyService.getCompanyById(companyId);
+
+        return employeeRepository.findAllByCompanyIdAndDateAndHealthStatus(companyId, date, healthStatus);
     }
 }
 
