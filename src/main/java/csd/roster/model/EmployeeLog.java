@@ -34,7 +34,6 @@ public class EmployeeLog {
     private Employee employee;
 
     @CreationTimestamp
-    @Temporal(TemporalType.DATE)
     @Column(name = "created_at")
     private LocalDate date;
 
