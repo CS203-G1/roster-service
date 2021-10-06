@@ -30,7 +30,8 @@ public class WorkStatisticsServiceImpl implements WorkStatisticsService {
     public List<Employee> getOnsiteEmployeesListByCompany(UUID companyId) {
         companyService.getCompanyById(companyId);
 
-        List<RosterEmployee> onsiteRosterEmployees = rosterEmployeeService.findOnsiteRosterEmployeesByCompanyIdAndDate(companyId, LocalDate.now());
+        List<RosterEmployee> onsiteRosterEmployees = rosterEmployeeService
+                .findOnsiteRosterEmployeesByCompanyIdAndDate(companyId, LocalDate.now());
 
         return onsiteRosterEmployees
                 .stream()
@@ -77,10 +78,40 @@ public class WorkStatisticsServiceImpl implements WorkStatisticsService {
     public SummaryResponseModel getSummaryByCompanyIdAndDate(UUID companyId, LocalDate date) {
         SummaryResponseModel summaryResponseModel = new SummaryResponseModel();
 
-        getEmployeesCountStatistics(companyId, summaryResponseModel, date);
+        List<Employee> employees = employeeService.getAllEmployeesByCompanyId(companyId);
+
+        // Considering whether to use database call to get employees who were created before certain date
+        // After some research, consensus seems to be that database query is faster
+        // Since EC2 is well integrated with RDS we will just go ahead with querying the database twice
+
+        List<Employee> employeesBeforePreviousWeek =
+                employeeService.getAllEmployeesByCompanyIdBeforeDate(companyId, date.minusDays(7));
+
+        summaryResponseModel.setEmployeesCount(employees.size());
+        summaryResponseModel.setEmployeesCountChange(getChangeRate(employees.size(), employeesBeforePreviousWeek.size()));
+//        getEmployeesCountStatistics(companyId, summaryResponseModel, date);
         getLeaveCountStatistics(companyId, summaryResponseModel, date);
 
         return summaryResponseModel;
+    }
+
+    private int getChangeRate(int currentValue, int previousValue) {
+        int change = currentValue - previousValue;
+
+        if (currentValue == 0) {
+            if (change == 0) {
+                // if company doesn't have any employees change just put 0
+                return 0;
+            } else {
+                // Example: if now employee size is 0 and last week was 7, change is -700
+                return change * 100;
+            }
+        } else if (previousValue == 0){
+            // Example: if last week there's 0 employee and today there's 7, change is +700
+            return change * 100;
+        } else {
+            return (int) ((double) change / previousValue * 100);
+        }
     }
 
     private void getEmployeesCountStatistics(UUID companyId, SummaryResponseModel summaryResponseModel, LocalDate date) {
