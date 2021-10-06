@@ -1,5 +1,6 @@
 package csd.roster.service;
 
+import java.util.List;
 import java.util.UUID;
 
 import csd.roster.model.Employee;
@@ -16,4 +17,6 @@ public interface EmployeeService {
     Employee updateEmployee(UUID departmentId, UUID employeeId, Employee employee);
 
     Iterable<Employee> getAllEmployeesByCompanyId(UUID companyId);
+
+    List<Employee> getAllEmployees();
 }
