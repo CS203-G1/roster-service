@@ -22,4 +22,8 @@ public interface EmployeeRepository extends JpaRepository<Employee, UUID> {
 
     @Query("select e from Employee e where e.department.company.id = :id and e.createdAt <= :date")
     List<Employee> findAllByCompanyIdBeforeDate(@Param("id") UUID companyId, @Param("date") LocalDate date);
+
+    // Assuming that only healthy employees are allowed to be at work
+    @Query("select e from Employee e where e.healthStatus <> csd.roster.enumerator.HealthStatus.HEALTHY")
+    List<Employee> findAllOnLeaveByCompanyIdAndDate(UUID companyId, LocalDate date);
 }
