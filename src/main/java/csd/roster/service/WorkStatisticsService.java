@@ -18,5 +18,5 @@ public interface WorkStatisticsService {
 
     WorkingStatisticResponseModel getWorkStatisticsByCompanyAndDate(UUID companyId, LocalDate date);
 
-    SummaryResponseModel getDailySummaryByCompany(UUID companyId, LocalDate now);
+    SummaryResponseModel getSummaryByCompanyIdAndDate(UUID companyId, LocalDate now);
 }
