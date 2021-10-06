@@ -28,7 +28,7 @@ public class ScheduledEmployeeLoggingTask {
     // this means to execute this command every day at 12.00 noon from monday to friday
     // rationale: office hours usually is from 9 to 5 and the employees status should be updated by 12 nn
     // For develop uncomment line 31 and comment line 32 to log every 5 seconds
-    // @Scheduled(cron = "0/5 * * * * *")
+//    @Scheduled(cron = "0/5 * * * * *")
     @Scheduled(cron = "0 0 12 * * MON-FRI")
     @Async
     public void logEmployeeDetails() {
