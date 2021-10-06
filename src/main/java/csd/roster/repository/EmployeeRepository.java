@@ -1,5 +1,6 @@
 package csd.roster.repository;
 
+import csd.roster.enumerator.HealthStatus;
 import csd.roster.model.Employee;
 import csd.roster.model.WorkLocation;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -24,6 +25,16 @@ public interface EmployeeRepository extends JpaRepository<Employee, UUID> {
     List<Employee> findAllByCompanyIdBeforeDate(@Param("id") UUID companyId, @Param("date") LocalDate date);
 
     // Assuming that only healthy employees are allowed to be at work
-    @Query("select e from Employee e where e.healthStatus <> csd.roster.enumerator.HealthStatus.HEALTHY")
-    List<Employee> findAllOnLeaveByCompanyIdAndDate(UUID companyId, LocalDate date);
+    // TODO: can be more efficient
+    @Query("select e from Employee e where e.department.company.id = :id and " +
+            "e in (select el.employee from EmployeeLog el where el.date = :date and " +
+            "el.healthStatus <> csd.roster.enumerator.HealthStatus.HEALTHY)")
+    List<Employee> findAllOnLeaveByCompanyIdAndDate(@Param("id") UUID companyId, @Param("date") LocalDate date);
+
+    @Query("select e from Employee e where e.department.company.id = :id and " +
+            "e in (select el.employee from EmployeeLog el where el.date = :date and " +
+            "el.healthStatus = :healthStatus)")
+    List<Employee> findAllByCompanyIdAndDateAndHealthStatus(@Param("id") UUID companyId,
+                                                            @Param("date") LocalDate date,
+                                                            @Param("healthStatus") HealthStatus healthStatus);
 }
