@@ -15,6 +15,7 @@ public class ScheduledEmployeeLoggingTask {
 
     @Scheduled
     public void logEmployeeDetails() {
-//
+        // Get all employees
+        // Loop through all employees and log one by one asynchronously
     }
 }
