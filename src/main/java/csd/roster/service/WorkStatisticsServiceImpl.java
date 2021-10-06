@@ -27,11 +27,11 @@ public class WorkStatisticsServiceImpl implements WorkStatisticsService {
     }
 
     @Override
-    public List<Employee> getOnsiteEmployeesListByCompany(UUID companyId) {
+    public List<Employee> getOnsiteEmployeesListByCompanyAndDate(UUID companyId, LocalDate date) {
         companyService.getCompanyById(companyId);
 
         List<RosterEmployee> onsiteRosterEmployees = rosterEmployeeService
-                .findOnsiteRosterEmployeesByCompanyIdAndDate(companyId, LocalDate.now());
+                .findOnsiteRosterEmployeesByCompanyIdAndDate(companyId, date);
 
         return onsiteRosterEmployees
                 .stream()
@@ -88,7 +88,8 @@ public class WorkStatisticsServiceImpl implements WorkStatisticsService {
                 employeeService.getAllEmployeesByCompanyIdBeforeDate(companyId, date.minusDays(7));
 
         summaryResponseModel.setEmployeesCount(employees.size());
-        summaryResponseModel.setEmployeesCountChange(getChangeRate(employees.size(), employeesBeforePreviousWeek.size()));
+        summaryResponseModel.setEmployeesCountChange(getChangeRate(employees.size(),
+                employeesBeforePreviousWeek.size()));
 //        getEmployeesCountStatistics(companyId, summaryResponseModel, date);
 
         List<Employee> employeesOnLeave = employeeService
@@ -98,7 +99,8 @@ public class WorkStatisticsServiceImpl implements WorkStatisticsService {
                 .getEmployeesOnLeaveByCompanyIdAndDate(companyId, date.minusDays(7));
 
         summaryResponseModel.setLeaveCount(employeesOnLeave.size());
-        summaryResponseModel.setLeaveCountChange(getChangeRate(employeesOnLeave.size(), employeesOnLeavePreviousWeek.size()));
+        summaryResponseModel.setLeaveCountChange(getChangeRate(employeesOnLeave.size(),
+                employeesOnLeavePreviousWeek.size()));
 
 //        getLeaveCountStatistics(companyId, summaryResponseModel, date);
 
