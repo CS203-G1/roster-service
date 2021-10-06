@@ -1,5 +1,6 @@
 package csd.roster.service;
 
+import csd.roster.enumerator.HealthStatus;
 import csd.roster.model.*;
 import csd.roster.response_model.SummaryResponseModel;
 import csd.roster.response_model.WorkingStatisticResponseModel;
@@ -78,12 +79,10 @@ public class WorkStatisticsServiceImpl implements WorkStatisticsService {
     public SummaryResponseModel getSummaryByCompanyIdAndDate(UUID companyId, LocalDate date) {
         SummaryResponseModel summaryResponseModel = new SummaryResponseModel();
 
-        List<Employee> employees = employeeService.getAllEmployeesByCompanyId(companyId);
-
         // Considering whether to use database call to get employees who were created before certain date
         // After some research, consensus seems to be that database query is faster
         // Since EC2 is well integrated with RDS we will just go ahead with querying the database twice
-
+        List<Employee> employees = employeeService.getAllEmployeesByCompanyId(companyId);
         List<Employee> employeesBeforePreviousWeek =
                 employeeService.getAllEmployeesByCompanyIdBeforeDate(companyId, date.minusDays(7));
 
@@ -93,7 +92,6 @@ public class WorkStatisticsServiceImpl implements WorkStatisticsService {
 
         List<Employee> employeesOnLeave = employeeService
                 .getEmployeesOnLeaveByCompanyIdAndDate(companyId, date);
-
         List<Employee> employeesOnLeavePreviousWeek = employeeService
                 .getEmployeesOnLeaveByCompanyIdAndDate(companyId, date.minusDays(7));
 
@@ -104,10 +102,19 @@ public class WorkStatisticsServiceImpl implements WorkStatisticsService {
         List<Employee> employeesOnSite = getOnsiteEmployeesListByCompanyAndDate(companyId, LocalDate.now());
         List<Employee> employeesOnSiteLastWeek = getOnsiteEmployeesListByCompanyAndDate(companyId,
                 LocalDate.now().minusDays(7));
-        
+
         summaryResponseModel.setOnsiteCount(employeesOnSite.size());
         summaryResponseModel.setOnsiteCountChange(getChangeRate(employeesOnSite.size(),
                 employeesOnSiteLastWeek.size()));
+
+        List<Employee> employeesWithCovid = employeeService
+                .getEmployeesByCompanyIdAndDateAndHealthStatus(companyId, LocalDate.now(), HealthStatus.COVID);
+        List<Employee> employeesWithCovidPreviousWeek = employeeService
+                .getEmployeesByCompanyIdAndDateAndHealthStatus(companyId, LocalDate.now().minusDays(7), HealthStatus.COVID);
+
+        summaryResponseModel.setOnsiteCount(employeesWithCovid.size());
+        summaryResponseModel.setOnsiteCountChange(getChangeRate(employeesWithCovid.size(),
+                employeesWithCovidPreviousWeek.size()));
 
         return summaryResponseModel;
     }
