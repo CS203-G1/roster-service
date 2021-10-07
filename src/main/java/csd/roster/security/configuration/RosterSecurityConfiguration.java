@@ -51,7 +51,11 @@ public class RosterSecurityConfiguration extends ResourceServerConfigurerAdapter
         http.csrf().disable();
 
         http.authorizeRequests()
+                .antMatchers("/actuator/health").permitAll()
+                .and()
+            .authorizeRequests()
                 .anyRequest().authenticated();
+
     }
 
     // Enabling Cognito Converter
