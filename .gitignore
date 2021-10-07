@@ -31,9 +31,3 @@ build/
 
 ### VS Code ###
 .vscode/
-
-<<<<<<< HEAD
-application.properties
-docker-compose.yml
-=======
->>>>>>> 03f23275a0c402bbddb11e04aa391659a5dbb76c
