@@ -22,7 +22,7 @@ public class WorkLocationServiceImpl implements WorkLocationService {
 
     @Override
     public WorkLocation add(UUID companyId, UUID departmentId, WorkLocation workLocation) {
-        Department department = departmentService.getDepartmentByIdAndCompanyId(companyId, departmentId);
+        Department department = departmentService.getDepartmentByIdAndCompanyId(departmentId, companyId);
 
         workLocation.setDepartment(department);
         return workLocationRepository.save(workLocation);
@@ -42,7 +42,7 @@ public class WorkLocationServiceImpl implements WorkLocationService {
 
     @Override
     public WorkLocation update(UUID companyId, UUID departmentId, UUID workLocationId, WorkLocation newWorkLocation) {
-        Department department = departmentService.getDepartmentByIdAndCompanyId(companyId, departmentId);
+        Department department = departmentService.getDepartmentByIdAndCompanyId(departmentId, companyId);
 
         return workLocationRepository.findByIdAndDepartmentId(workLocationId, departmentId).map(workLocation -> {
             newWorkLocation.setDepartment(department);
@@ -53,7 +53,7 @@ public class WorkLocationServiceImpl implements WorkLocationService {
 
     @Override
     public WorkLocation get(UUID companyId, UUID departmentId, UUID workLocationId) {
-        departmentService.getDepartmentByIdAndCompanyId(companyId, departmentId);
+        departmentService.getDepartmentByIdAndCompanyId(departmentId, companyId);
 
         return workLocationRepository.findByIdAndDepartmentId(workLocationId, departmentId)
                 .orElseThrow(() -> new WorkLocationNotFoundException(departmentId, companyId, workLocationId));
@@ -63,5 +63,16 @@ public class WorkLocationServiceImpl implements WorkLocationService {
     public WorkLocation getWorkLocationById(UUID workLocationId) {
         return workLocationRepository.findById(workLocationId)
                 .orElseThrow(() -> new WorkLocationNotFoundException(workLocationId));
+    }
+
+    @Override
+    public WorkLocation getRemoteWorkLocationByCompanyId(UUID companyId) {
+        return workLocationRepository.findRemoteWorkLocationByCompanyId(companyId)
+                .orElseThrow(() -> new WorkLocationNotFoundException(companyId));
+    }
+
+    @Override
+    public List<WorkLocation> getWorkLocationsByCompanyId(UUID companyId) {
+        return workLocationRepository.findAllByCompanyId(companyId);
     }
 }

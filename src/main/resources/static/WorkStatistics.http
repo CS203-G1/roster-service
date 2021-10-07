@@ -1,0 +1,17 @@
+###
+# Get all rosters by company
+GET http://localhost:8080/companies/14f671b0-511e-43e4-86bb-6828f7a8e12d/work-statistics/daily
+Authorization: Bearer
+
+###
+GET http://localhost:8080/companies/14f671b0-511e-43e4-86bb-6828f7a8e12d/work-statistics/employees/onsite
+Authorization: Bearer
+
+###
+# Get all rosters by company
+GET http://localhost:8080/companies/14f671b0-511e-43e4-86bb-6828f7a8e12d/work-statistics/weekly
+Authorization: Bearer
+
+###
+GET http://localhost:8080/companies/14f671b0-511e-43e4-86bb-6828f7a8e12d/summary/employees
+Authorization: Bearer

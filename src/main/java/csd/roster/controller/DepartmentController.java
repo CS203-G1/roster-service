@@ -35,7 +35,7 @@ public class DepartmentController {
     public ResponseEntity<?> getDepartmentById(@PathVariable (value = "companyId") UUID companyId,
                                         @PathVariable (value = "departmentId") UUID departmentId) {
         try {
-            Department newDepartment = departmentService.getDepartmentByIdAndCompanyId(companyId, departmentId);
+            Department newDepartment = departmentService.getDepartmentByIdAndCompanyId(departmentId, companyId);
             return new ResponseEntity<>(newDepartment, HttpStatus.OK);
         } catch (ResourceNotFoundException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);

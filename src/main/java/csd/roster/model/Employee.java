@@ -1,17 +1,20 @@
 
 package csd.roster.model;
 
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.Set;
 import java.util.UUID;
 
 import javax.persistence.*;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
+import org.hibernate.annotations.CreationTimestamp;
+
 import csd.roster.enumerator.HealthStatus;
+import csd.roster.enumerator.VaccinationBrand;
 import csd.roster.enumerator.VaccinationStatus;
-import csd.roster.enumerator.VaccineBrand;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -28,18 +31,26 @@ import lombok.ToString;
 @EqualsAndHashCode
 public class Employee {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+//    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
     private UUID id;
 
-    @OneToMany(mappedBy = "employee")
     @JsonIgnore
+    @Transient
+    @OneToMany(mappedBy = "employee", orphanRemoval = true, cascade = CascadeType.ALL)
     private Set<RosterEmployee> roster_employees;
 
-    @OneToOne
+    @ManyToOne
     @JsonIgnore
-    @JoinColumn(name = "department_id")
+    @JoinColumns({
+            @JoinColumn(name="company_id", referencedColumnName="company_id"),
+            @JoinColumn(name="department_id", referencedColumnName="id")
+    })
     private Department department;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "employee", orphanRemoval = true, cascade = CascadeType.ALL)
+    private Set<EmployeeLog> employeeLogs;
 
     @Column(name = "name")
     private String name;
@@ -49,10 +60,17 @@ public class Employee {
     private VaccinationStatus vaccinationStatus;
 
     @Enumerated(EnumType.ORDINAL)
-    @Column(name = "vaccine_brand")
-    private VaccineBrand vaccineBrand;
+    @Column(name = "vaccination_brand")
+    private VaccinationBrand vaccinationBrand;
 
     @Enumerated(EnumType.ORDINAL)
     @Column(name = "health_status")
     private HealthStatus healthStatus;
+
+    @CreationTimestamp
+    @Column(name = "created_at")
+    private LocalDate createdAt;
+
+    @Column(name = "is_in_company")
+    private Boolean isInCompany = true;
 }

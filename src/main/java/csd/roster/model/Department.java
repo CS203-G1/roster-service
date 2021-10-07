@@ -1,9 +1,21 @@
 package csd.roster.model;
 
-import lombok.*;
+import java.io.Serializable;
+import java.util.Date;
+import java.util.List;
+import java.util.UUID;
 
 import javax.persistence.*;
-import java.util.UUID;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.annotations.CreationTimestamp;
+
+import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
 @Entity
 @Getter
@@ -12,8 +24,8 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode
-public class Department {
-    @javax.persistence.Id
+public class Department implements Serializable {
+    @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name="id")
     private UUID id;
@@ -22,6 +34,16 @@ public class Department {
     @JoinColumn(name="company_id")
     private Company company;
 
+    @JsonIgnore
+    @OneToMany(mappedBy = "department", orphanRemoval = true, cascade = CascadeType.ALL)
+    @Transient
+    private List<Employee> employees;
+
     @Column(name="name")
     private String name;
+
+    @CreationTimestamp
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "created_at")
+    private Date createdAt;
 }

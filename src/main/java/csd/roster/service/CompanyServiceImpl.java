@@ -40,7 +40,9 @@ public class CompanyServiceImpl implements CompanyService {
     }
 
     @Override
-    public Company deleteCompanyByid(UUID id) {
-        throw new NotYetImplementedException();
+    public void deleteCompanyByid(UUID id) {
+        Company company = getCompanyById(id);
+
+        companyRepository.delete(company);
     }
 }

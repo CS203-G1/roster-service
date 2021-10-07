@@ -1,5 +1,6 @@
 package csd.roster.exception;
 
+import csd.roster.model.WorkLocation;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
@@ -14,7 +15,15 @@ public class RosterNotFoundException extends ResourceNotFoundException {
                 rosterId, workLocationId));
     }
 
-    public RosterNotFoundException(UUID workLocationId) {
+    public RosterNotFoundException(UUID rosterId) {
+        super(String.format("Roster %s does not exist", rosterId));
+    }
+    
+    public RosterNotFoundException(String workLocationId) {
         super(String.format("Work location %s does not contain any rosters", workLocationId));
+    }
+
+    public RosterNotFoundException(WorkLocation workLocation) {
+        super(String.format("Work location %s does not have any rosters", workLocation.getId()));
     }
 }

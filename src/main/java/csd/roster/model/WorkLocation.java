@@ -3,15 +3,7 @@ package csd.roster.model;
 import java.util.List;
 import java.util.UUID;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -36,8 +28,16 @@ public class WorkLocation {
     private UUID id;
 
     @ManyToOne
-    @JoinColumn(name = "department_id")
+    @JoinColumns({
+            @JoinColumn(name = "company_id", referencedColumnName = "company_id"),
+            @JoinColumn(name = "department_id", referencedColumnName = "id")
+    })
     private Department department;
+
+    @JsonIgnore
+    @Transient
+    @OneToMany(mappedBy = "workLocation", orphanRemoval = true, cascade = CascadeType.ALL)
+    private List<Roster> rosters;
 
     @Column(name = "name")
     private String name;
@@ -47,8 +47,4 @@ public class WorkLocation {
 
     @Column(name = "capacity")
     private int capacity;
-
-    @JsonIgnore
-    @OneToMany(mappedBy = "workLocation", cascade = CascadeType.ALL)
-    private List<Roster> rosters;
 }

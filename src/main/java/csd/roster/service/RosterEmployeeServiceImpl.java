@@ -10,6 +10,8 @@ import csd.roster.repository.RosterEmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -67,5 +69,20 @@ public class RosterEmployeeServiceImpl implements RosterEmployeeService {
         rosterEmployee.setToDateTime(newRosterEmployee.getToDateTime());
 
         return rosterEmployeeRepository.save(rosterEmployee);
+    }
+
+    @Override
+    public List<RosterEmployee> findAllRosterEmployeesByCompanyIdAndDate(UUID companyId, LocalDate date) {
+        return rosterEmployeeRepository.findAllRosterEmployeesByCompanyIdAndDate(companyId, date);
+    }
+
+    @Override
+    public List<RosterEmployee> findRemoteRosterEmployeesByCompanyIdAndDate(UUID companyId, LocalDate date) {
+        return rosterEmployeeRepository.findRemoteRosterEmployeesByCompanyIdAndDate(companyId, date);
+    }
+
+    @Override
+    public List<RosterEmployee> findOnsiteRosterEmployeesByCompanyIdAndDate(UUID companyId, LocalDate date) {
+        return rosterEmployeeRepository.findOnsiteRosterEmployeesByCompanyIdAndDate(companyId, date);
     }
 }

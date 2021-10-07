@@ -7,6 +7,9 @@ import javax.persistence.*;
 import javax.validation.constraints.Future;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import csd.roster.annotation.ValidDateTimes;
 import csd.roster.enumerator.HealthStatus;
 import lombok.AllArgsConstructor;
@@ -26,8 +29,8 @@ import org.springframework.format.annotation.DateTimeFormat;
 @EqualsAndHashCode
 // To validate that fromDateTime is before toDateTime
 @ValidDateTimes(fromDateTime = "fromDateTime", toDateTime = "toDateTime")
-@Table(uniqueConstraints = { @UniqueConstraint(name = "UniqueRosterAndEmployee",
-        columnNames = { "roster_id", "employee_id" }) })
+@Table(uniqueConstraints = {@UniqueConstraint(name = "UniqueRosterAndEmployee",
+        columnNames = {"roster_id", "employee_id"})})
 public class RosterEmployee {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -39,12 +42,17 @@ public class RosterEmployee {
     // Reference: https://www.baeldung.com/jpa-many-to-many
 
     @ManyToOne
-    @JoinColumn(name = "roster_id")
+    @JoinColumn(name = "roster_id", referencedColumnName = "id")
+    // @JsonBackReference means that this will be omitted in the serialization
+    // Done to prevent infinite recursion
+    // https://www.baeldung.com/jackson-bidirectional-relationships-and-infinite-recursion
+    @JsonBackReference
     Roster roster;
 
     @ManyToOne
-    @JoinColumn(name = "employee_id")
+    @JoinColumn(name = "employee_id", referencedColumnName = "id")
     Employee employee;
+
 
     // When the roster for this employee starts
     @Column(name = "from_date_time")

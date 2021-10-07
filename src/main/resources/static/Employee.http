@@ -1,26 +1,34 @@
 POST http://localhost:8080/departments/692b1d0e-fe49-4b05-8b01-f79607da7632/employees
 Content-Type: application/json
+Authorization: Bearer <JWT>
 
 {
-  "name": "Employee 1",
+  "name": "Employee 2",
   "vaccinationStatus": "SECOND_DOSE",
-  "vaccineBrand": "PFIZER",
+  "vaccinationBrand": "PFIZER",
   "healthStatus": "HEALTHY"
 }
 
 ###
 PUT http://localhost:8080/departments/692b1d0e-fe49-4b05-8b01-f79607da7632/employees/c1219cbb-5c2e-4f1a-95e3-273a62321aae
 Content-Type: application/json
+Authorization: Bearer <JWT>
 
 {
   "name": "Employee 1",
   "vaccinationStatus": "SECOND_DOSE",
-  "vaccineBrand": "PFIZER",
+  "vaccinationBrand": "PFIZER",
   "healthStatus": "ILL"
 }
 
 ###
 GET http://localhost:8080/departments/692b1d0e-fe49-4b05-8b01-f79607da7632/employees/c1219cbb-5c2e-4f1a-95e3-273a62321aae
+Authorization: Bearer <JWT>
 
 ###
 DELETE http://localhost:8080/departments/692b1d0e-fe49-4b05-8b01-f79607da7632/employees/fe8d9896-cfbe-4b22-97a1-0a37aec50312
+Authorization: Bearer <JWT>
+
+###
+GET http://localhost:8080/companies/efd12781-392b-4c97-b388-8722bd709602/employees
+Authorization: Bearer <JWT>

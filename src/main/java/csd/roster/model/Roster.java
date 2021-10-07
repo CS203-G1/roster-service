@@ -8,6 +8,8 @@ import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -37,7 +39,11 @@ public class Roster {
     @JsonIgnore
     private WorkLocation workLocation;
 
-    @OneToMany(mappedBy = "roster")
+    // @JsonManaged Reference means that this is the forward part of reference and will be serialized normally
+    // Done to prevent infinite recursion
+    // https://www.baeldung.com/jackson-bidirectional-relationships-and-infinite-recursion
     @JsonIgnore
-    private Set<RosterEmployee> roster_employees;
+    @Transient
+    @OneToMany(mappedBy = "roster", orphanRemoval = true, cascade = CascadeType.ALL)
+    private Set<RosterEmployee> rosterEmployees;
 }
