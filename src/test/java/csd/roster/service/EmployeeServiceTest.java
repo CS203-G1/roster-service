@@ -8,8 +8,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import java.time.LocalDate;
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 import org.junit.jupiter.api.Test;
@@ -42,16 +41,16 @@ public class EmployeeServiceTest {
     @Test
     public void addEmployee_NewEmployee_ReturnSavedEmployee(){
         UUID companyId = UUID.randomUUID();
-        Company company = new Company(companyId, "Eppal", null, new Date());
+        Company company = new Company(companyId, "Eppal", null, LocalDateTime.now());
 
         UUID departmentId = UUID.randomUUID();
-        Department department = new Department(departmentId, company, null, "Marketing", new Date());
+        Department department = new Department(departmentId, company, null, "Marketing", LocalDateTime.now());
 
         UUID employeeId = UUID.randomUUID();
         VaccinationStatus vaccinationStatus = VaccinationStatus.NOT_VACCINATED;
         VaccinationBrand vaccinationBrand = null;
         HealthStatus healthStatus = HealthStatus.COVID;
-        Employee employee = new Employee(employeeId, null, null, null, "John Doe", vaccinationStatus, vaccinationBrand, healthStatus, LocalDate.now(), true);
+        Employee employee = new Employee(employeeId, null, null, null, "John Doe", vaccinationStatus, vaccinationBrand, healthStatus, LocalDateTime.now(), true);
 
         when(departmentService.getDepartmentById(any(UUID.class))).thenReturn(department);
         when(employees.save(any(Employee.class))).thenReturn(employee);
@@ -72,7 +71,7 @@ public class EmployeeServiceTest {
         VaccinationStatus vaccinationStatus = VaccinationStatus.NOT_VACCINATED;
         VaccinationBrand vaccinationBrand = null;
         HealthStatus healthStatus = HealthStatus.COVID;
-        Employee employee = new Employee(employeeId, null, null, null, "John Doe", vaccinationStatus, vaccinationBrand, healthStatus, LocalDate.now(), true);
+        Employee employee = new Employee(employeeId, null, null, null, "John Doe", vaccinationStatus, vaccinationBrand, healthStatus, LocalDateTime.now(), true);
 
         when(employees.findById(any(UUID.class))).thenReturn(java.util.Optional.of(employee));
 
@@ -95,16 +94,16 @@ public class EmployeeServiceTest {
     @Test
     public void getEmployeeByDeptIdAndEmpId_EmployeeExists_ReturnEmployee(){
         UUID companyId = UUID.randomUUID();
-        Company company = new Company(companyId, "Eppal", null, new Date());
+        Company company = new Company(companyId, "Eppal", null, LocalDateTime.now());
 
         UUID departmentId = UUID.randomUUID();
-        Department department = new Department(departmentId, company, null, "Marketing", new Date());
+        Department department = new Department(departmentId, company, null, "Marketing", LocalDateTime.now());
 
         UUID employeeId = UUID.randomUUID();
         VaccinationStatus vaccinationStatus = VaccinationStatus.NOT_VACCINATED;
         VaccinationBrand vaccinationBrand = null;
         HealthStatus healthStatus = HealthStatus.COVID;
-        Employee employee = new Employee(employeeId, null, department, null, "John Doe", vaccinationStatus, vaccinationBrand, healthStatus, LocalDate.now(), true);
+        Employee employee = new Employee(employeeId, null, department, null, "John Doe", vaccinationStatus, vaccinationBrand, healthStatus, LocalDateTime.now(), true);
 
         when(employees.findByIdAndDepartmentId(any(UUID.class), any(UUID.class))).thenReturn(java.util.Optional.of(employee));
 

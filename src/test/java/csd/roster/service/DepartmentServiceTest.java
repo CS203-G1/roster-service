@@ -38,10 +38,10 @@ public class DepartmentServiceTest {
     @Test
     public void addDepartment_NewDepartment_ReturnSavedDepartment(){
         UUID companyId = UUID.randomUUID();
-        Company company = new Company(companyId, "Eppal", null, new Date());
+        Company company = new Company(companyId, "Eppal", null, LocalDateTime.now());
 
         UUID departmentId = UUID.randomUUID();
-        Department department = new Department(departmentId, null, null, "Marketing", new Date());
+        Department department = new Department(departmentId, null, null, "Marketing", LocalDateTime.now());
 
         when(companyService.getCompanyById(any(UUID.class))).thenReturn(company);
         when(departments.save(any(Department.class))).thenReturn(department);
@@ -72,7 +72,7 @@ public class DepartmentServiceTest {
         Company company = new Company(companyId, "Eppal", null, null);
 
         UUID departmentId = UUID.randomUUID();
-        Department department = new Department(departmentId, company, null, "Marketing", new Date());
+        Department department = new Department(departmentId, company, null, "Marketing", LocalDateTime.now());
 
         when(departments.findById(any(UUID.class))).thenReturn(java.util.Optional.of(department));
 
@@ -85,10 +85,10 @@ public class DepartmentServiceTest {
     @Test
     public void getDepartmentByIdAndCompanyId_DepartmentExists_ReturnFoundDepartment(){
         UUID companyId = UUID.randomUUID();
-        Company company = new Company(companyId, "Eppal", null, new Date());
+        Company company = new Company(companyId, "Eppal", null, LocalDateTime.now());
 
         UUID departmentId = UUID.randomUUID();
-        Department department = new Department(departmentId, company,null,  "Marketing", new Date());
+        Department department = new Department(departmentId, company,null,  "Marketing", LocalDateTime.now());
 
         when(departments.findByIdAndCompanyId(any(UUID.class),any(UUID.class))).thenReturn(java.util.Optional.of(department));
 
@@ -101,10 +101,10 @@ public class DepartmentServiceTest {
     @Test
     public void getDepartmentByIdAndCompanyId_DepartmentDoesNotExist_ThrowException(){
         UUID companyId = UUID.randomUUID();
-        Company company = new Company(companyId, "Eppal", null, new Date());
+        Company company = new Company(companyId, "Eppal", null, LocalDateTime.now());
 
         UUID departmentId = UUID.randomUUID();
-        Department department = new Department(departmentId, company, null, "Marketing", new Date());
+        Department department = new Department(departmentId, company, null, "Marketing", LocalDateTime.now());
 
         Exception exception = assertThrows(DepartmentNotFoundException.class,
                 () -> departmentService.getDepartmentByIdAndCompanyId(departmentId, companyId));
