@@ -8,6 +8,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -35,7 +36,7 @@ public class CompanyServiceTest {
     @Test
     void addCompany_NewCompany_ReturnSavedCompany(){
         UUID id = UUID.randomUUID();
-        Company company = new Company(id, "Eppal", null, new Date());
+        Company company = new Company(id, "Eppal", null, LocalDateTime.now());
 
         when(companies.save(any(Company.class))).thenReturn(company);
 
@@ -50,7 +51,7 @@ public class CompanyServiceTest {
     @Test
     void getCompanyById_CompanyExists_ReturnCompany(){
         UUID id = UUID.randomUUID();
-        Company company = new Company(id, "Eppal", null, new Date());
+        Company company = new Company(id, "Eppal", null, LocalDateTime.now());
 
         when(companies.findById(any(UUID.class))).thenReturn(java.util.Optional.of(company));
 
