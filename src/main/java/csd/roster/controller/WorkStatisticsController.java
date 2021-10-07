@@ -8,10 +8,17 @@ import csd.roster.response_model.WorkingStatisticResponseModel;
 import csd.roster.service.WorkStatisticsService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.oauth2.provider.OAuth2Authentication;
+import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.security.Principal;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
@@ -43,5 +50,10 @@ public class WorkStatisticsController {
     @GetMapping("/companies/{companyId}/summary/employees")
     public SummaryResponseModel getDailySummaryByCompany(@PathVariable(value = "companyId") UUID companyId) {
         return workStatisticsService.getSummaryByCompanyIdAndDate(companyId, LocalDate.now());
+    }
+
+    @GetMapping("/employers/{employerId}/summary/employees")
+    public SummaryResponseModel getDailySummaryByEmployersCompany(@PathVariable(value = "employerId") UUID employerId) {
+        return workStatisticsService.getSummaryByEmployerIdAndDate(employerId, LocalDate.now());
     }
 }
