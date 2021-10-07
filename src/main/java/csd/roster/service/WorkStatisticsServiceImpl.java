@@ -119,6 +119,13 @@ public class WorkStatisticsServiceImpl implements WorkStatisticsService {
         return summaryResponseModel;
     }
 
+    @Override
+    public SummaryResponseModel getSummaryByEmployerIdAndDate(UUID employerId, LocalDate now) {
+        Employee employee = employeeService.getEmployee(employerId);
+
+        return getSummaryByCompanyIdAndDate(employee.getDepartment().getCompany().getId(), now);
+    }
+
     private int getChangeRate(int currentValue, int previousValue) {
         int change = currentValue - previousValue;
 

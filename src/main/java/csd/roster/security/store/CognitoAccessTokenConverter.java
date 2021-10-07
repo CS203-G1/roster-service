@@ -11,7 +11,7 @@ public class CognitoAccessTokenConverter extends JwtAccessTokenConverter {
     private static final String COGNITO_GROUPS = "cognito:groups";
     private static final String SPRING_AUTHORITIES = "authorities";
     private static final String COGNITO_USERNAME = "username";
-    private static final String SPRING_USER_NAME = "user_name";
+    private static final String SPRING_USER_NAME = "employee_id";
 
     @SuppressWarnings("unchecked")
     @Override
