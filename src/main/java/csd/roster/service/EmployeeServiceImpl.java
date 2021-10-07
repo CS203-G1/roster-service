@@ -1,8 +1,10 @@
 package csd.roster.service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
+import csd.roster.enumerator.HealthStatus;
 import csd.roster.exception.EmployeeNotFoundException;
 import csd.roster.model.Department;
 import csd.roster.model.Employee;
@@ -66,7 +68,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public Iterable<Employee> getAllEmployeesByCompanyId(UUID companyId) {
+    public List<Employee> getAllEmployeesByCompanyId(UUID companyId) {
         // To check if company exists
         companyService.getCompanyById(companyId);
 
@@ -76,6 +78,29 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public List<Employee> getAllEmployees() {
         return employeeRepository.findAll();
+    }
+
+    @Override
+    public List<Employee> getAllEmployeesByCompanyIdBeforeDate(UUID companyId, LocalDate date) {
+        companyService.getCompanyById(companyId);
+
+        return employeeRepository.findAllByCompanyIdBeforeDate(companyId, date);
+    }
+
+    @Override
+    public List<Employee> getEmployeesOnLeaveByCompanyIdAndDate(UUID companyId, LocalDate date) {
+        companyService.getCompanyById(companyId);
+
+        return employeeRepository.findAllOnLeaveByCompanyIdAndDate(companyId, date);
+    }
+
+    @Override
+    public List<Employee> getEmployeesByCompanyIdAndDateAndHealthStatus(UUID companyId,
+                                                                        LocalDate date,
+                                                                        HealthStatus healthStatus) {
+        companyService.getCompanyById(companyId);
+
+        return employeeRepository.findAllByCompanyIdAndDateAndHealthStatus(companyId, date, healthStatus);
     }
 }
 

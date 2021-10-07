@@ -1,8 +1,10 @@
 package csd.roster.service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
+import csd.roster.enumerator.HealthStatus;
 import csd.roster.model.Employee;
 
 public interface EmployeeService {
@@ -16,7 +18,15 @@ public interface EmployeeService {
 
     Employee updateEmployee(UUID departmentId, UUID employeeId, Employee employee);
 
-    Iterable<Employee> getAllEmployeesByCompanyId(UUID companyId);
+    List<Employee> getAllEmployeesByCompanyId(UUID companyId);
 
     List<Employee> getAllEmployees();
+
+    List<Employee> getAllEmployeesByCompanyIdBeforeDate(UUID companyId, LocalDate date);
+
+    List<Employee> getEmployeesOnLeaveByCompanyIdAndDate(UUID companyId, LocalDate date);
+
+    List<Employee> getEmployeesByCompanyIdAndDateAndHealthStatus(UUID companyId,
+                                                                 LocalDate date,
+                                                                 HealthStatus healthStatus);
 }
