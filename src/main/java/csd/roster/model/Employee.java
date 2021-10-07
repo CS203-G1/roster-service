@@ -1,7 +1,6 @@
 
 package csd.roster.model;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Set;
 import java.util.UUID;
@@ -81,7 +80,7 @@ public class Employee {
 
     @CreationTimestamp
     @Column(name = "created_at")
-    private LocalDate createdAt;
+    private LocalDateTime createdAt;
 
     @Column(name = "is_in_company")
     private Boolean isInCompany = true;
