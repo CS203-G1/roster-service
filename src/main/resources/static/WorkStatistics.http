@@ -15,3 +15,11 @@ Authorization: Bearer
 ###
 GET http://localhost:8080/companies/14f671b0-511e-43e4-86bb-6828f7a8e12d/summary/employees
 Authorization: Bearer
+
+###
+GET http://localhost:8080/employers/8cdbf3f5-4cae-4c20-adcd-9ee736c1813c/summary/employees
+Authorization: Bearer
+
+###
+GET http://localhost:8080/message
+Authorization: Bearer 
