@@ -32,7 +32,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     public Employee addEmployee(UUID departmentId, Employee employee) {
         Department department = departmentService.getDepartmentById(departmentId);
         employee.setDepartment(department);
-//        employee.setCompany(department.getCompany());
+        employee.setCompany(department.getCompany());
 
         return employeeRepository.save(employee);
     }
@@ -63,6 +63,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
         return employeeRepository.findByIdAndDepartmentId(employeeId, departmentId).map(oldEmployee -> {
             employee.setDepartment(department);
+            employee.setCompany(department.getCompany());
             employee.setId(employeeId);
             return employeeRepository.save(employee);
         }).orElseThrow(() -> new EmployeeNotFoundException(employeeId));
