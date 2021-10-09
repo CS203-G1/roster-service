@@ -52,12 +52,10 @@ public class Employee {
     private Set<RosterEmployee> roster_employees;
 
     @ManyToOne
-    @JsonIgnore
     @JoinColumn(name="department_id", referencedColumnName="id")
     private Department department;
 
     @ManyToOne
-    @JsonIgnore
     @JoinColumn(name="company_id", referencedColumnName="id")
     private Company company;
 
