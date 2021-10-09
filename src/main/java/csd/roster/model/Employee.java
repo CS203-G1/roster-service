@@ -60,7 +60,7 @@ public class Employee {
     private Department department;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "employee", orphanRemoval = true, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL)
     private Set<EmployeeLog> employeeLogs;
 
     @Column(name = "name")
