@@ -3,6 +3,7 @@ Content-Type: application/json
 Authorization: Bearer <JWT>
 
 {
+  "id": "",
   "name": "Employee 2",
   "vaccinationStatus": "SECOND_DOSE",
   "vaccinationBrand": "PFIZER",
