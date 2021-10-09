@@ -1,6 +1,7 @@
 package csd.roster.service;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -84,7 +85,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     public List<Employee> getAllEmployeesByCompanyIdBeforeDate(UUID companyId, LocalDate date) {
         companyService.getCompanyById(companyId);
 
-        return employeeRepository.findAllByCompanyIdBeforeDate(companyId, date);
+        return employeeRepository.findAllByCompanyIdBeforeDate(companyId, date.atStartOfDay());
     }
 
     @Override
