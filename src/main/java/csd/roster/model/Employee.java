@@ -53,11 +53,13 @@ public class Employee {
 
     @ManyToOne
     @JsonIgnore
-    @JoinColumns({
-            @JoinColumn(name="company_id", referencedColumnName="company_id"),
-            @JoinColumn(name="department_id", referencedColumnName="id")
-    })
+    @JoinColumn(name="department_id", referencedColumnName="id")
     private Department department;
+
+    @ManyToOne
+    @JsonIgnore
+    @JoinColumn(name="company_id", referencedColumnName="company_id")
+    private Company company;
 
     @JsonIgnore
     @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL)
