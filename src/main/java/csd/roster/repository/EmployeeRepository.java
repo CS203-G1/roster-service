@@ -19,20 +19,20 @@ import java.util.UUID;
 public interface EmployeeRepository extends JpaRepository<Employee, UUID> {
     Optional<Employee> findByIdAndDepartmentId(UUID employeeId, UUID departmentId);
 
-    @Query("select e from Employee e where e.department.company.id = :id")
+    @Query("select e from Employee e where e.company.id = :id")
     List<Employee> findAllByCompanyId(@Param("id") UUID companyId);
 
-    @Query("select e from Employee e where e.department.company.id = :id and e.createdAt <= :datetime")
+    @Query("select e from Employee e where e.company.id = :id and e.createdAt <= :datetime")
     List<Employee> findAllByCompanyIdBeforeDate(@Param("id") UUID companyId, @Param("datetime") LocalDateTime datetime);
 
     // Assuming that only healthy employees are allowed to be at work
     // TODO: can be more efficient
-    @Query("select e from Employee e where e.department.company.id = :id and " +
+    @Query("select e from Employee e where e.company.id = :id and " +
             "e in (select el.employee from EmployeeLog el where el.date = :date and " +
             "el.healthStatus <> csd.roster.enumerator.HealthStatus.HEALTHY)")
     List<Employee> findAllOnLeaveByCompanyIdAndDate(@Param("id") UUID companyId, @Param("date") LocalDate date);
 
-    @Query("select e from Employee e where e.department.company.id = :id and " +
+    @Query("select e from Employee e where e.company.id = :id and " +
             "e in (select el.employee from EmployeeLog el where el.date = :date and " +
             "el.healthStatus = :healthStatus)")
     List<Employee> findAllByCompanyIdAndDateAndHealthStatus(@Param("id") UUID companyId,
