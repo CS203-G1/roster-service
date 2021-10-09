@@ -6,6 +6,7 @@ import java.util.UUID;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,6 +19,7 @@ import csd.roster.model.EmployeeVaccination;
 import csd.roster.service.EmployeeVaccinationService;
 
 @RestController
+@PreAuthorize("hasRole('ROLE_EMPLOYER')")
 public class EmployeeVaccinationController {
     private EmployeeVaccinationService employeeVaccinationService;
 
