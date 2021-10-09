@@ -58,7 +58,7 @@ public class Employee {
 
     @ManyToOne
     @JsonIgnore
-    @JoinColumn(name="company_id", referencedColumnName="company_id")
+    @JoinColumn(name="company_id", referencedColumnName="id")
     private Company company;
 
     @JsonIgnore
