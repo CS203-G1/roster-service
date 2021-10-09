@@ -21,6 +21,7 @@ import csd.roster.model.RosterEmployee;
 import csd.roster.service.RosterEmployeeService;
 
 @RestController
+@PreAuthorize("hasRole('ROLE_EMPLOYER')")
 public class RosterEmployeeController {
     private final RosterEmployeeService rosterEmployeeService;
 
