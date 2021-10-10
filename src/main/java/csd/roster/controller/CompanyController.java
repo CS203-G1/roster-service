@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@PreAuthorize("hasRole('ROLE_EMPLOYEE')")
+@PreAuthorize("hasRole('ROLE_EMPLOYER')")
 public class CompanyController {
     private CompanyService companyService;
 
