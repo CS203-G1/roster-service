@@ -52,12 +52,12 @@ public class Employee {
     private Set<RosterEmployee> roster_employees;
 
     @ManyToOne
-    @JsonIgnore
-    @JoinColumns({
-            @JoinColumn(name="company_id", referencedColumnName="company_id"),
-            @JoinColumn(name="department_id", referencedColumnName="id")
-    })
+    @JoinColumn(name="department_id", referencedColumnName="id")
     private Department department;
+
+    @ManyToOne
+    @JoinColumn(name="company_id", referencedColumnName="id")
+    private Company company;
 
     @JsonIgnore
     @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL)

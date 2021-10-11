@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@PreAuthorize("hasRole('ROLE_EMPLOYEE')")
+@PreAuthorize("hasRole('ROLE_EMPLOYER')")
 public class CompanyController {
     private CompanyService companyService;
 
@@ -42,7 +42,7 @@ public class CompanyController {
     }
 
     @DeleteMapping("/companies/{companyId}")
-    public void delete(UUID companyId) {
+    public void delete(@PathVariable UUID companyId) {
         companyService.deleteCompanyByid(companyId);
     }
 }

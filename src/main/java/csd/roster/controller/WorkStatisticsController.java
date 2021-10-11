@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
+@PreAuthorize("hasRole('ROLE_EMPLOYER')")
 public class WorkStatisticsController {
     final private WorkStatisticsService workStatisticsService;
 

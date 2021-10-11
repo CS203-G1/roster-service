@@ -8,6 +8,7 @@ import javax.validation.Valid;
 import csd.roster.model.Employee;
 import csd.roster.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,8 +16,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-
 @RestController
+@PreAuthorize("hasRole('ROLE_EMPLOYER')")
 public class EmployeeController {
     private EmployeeService employeeService;
 
@@ -38,6 +39,7 @@ public class EmployeeController {
         return employeeService.updateEmployee(departmentId, employeeId, employee);
     }
 
+    @PreAuthorize("hasRole('ROLE_EMPLOYEE')")
     @GetMapping("/departments/{departmentId}/employees/{employeeId}")
     public Employee getEmployee (@PathVariable(value = "departmentId") UUID departmentId,
                                     @PathVariable(value = "employeeId") UUID employeeId) {
