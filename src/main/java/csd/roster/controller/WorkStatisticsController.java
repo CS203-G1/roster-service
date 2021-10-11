@@ -42,7 +42,7 @@ public class WorkStatisticsController {
         return workStatisticsService.getSummaryByCompanyIdAndDate(companyId, LocalDate.now());
     }
 
-    @GetMapping("/employers/{employerId}/work-statistics/summary")
+    @GetMapping("/employees/{employerId}/work-statistics/summary")
     public SummaryResponseModel getDailySummaryByEmployersCompany(@PathVariable(value = "employerId") UUID employerId) {
         return workStatisticsService.getSummaryByEmployerIdAndDate(employerId, LocalDate.now());
     }
