@@ -112,8 +112,8 @@ public class WorkStatisticsServiceImpl implements WorkStatisticsService {
         List<Employee> employeesWithCovidPreviousWeek = employeeService
                 .getEmployeesByCompanyIdAndDateAndHealthStatus(companyId, LocalDate.now().minusDays(7), HealthStatus.COVID);
 
-        summaryResponseModel.setOnsiteCount(employeesWithCovid.size());
-        summaryResponseModel.setOnsiteCountChange(getChangeRate(employeesWithCovid.size(),
+        summaryResponseModel.setCovidCount(employeesWithCovid.size());
+        summaryResponseModel.setCovidCountChange(getChangeRate(employeesWithCovid.size(),
                 employeesWithCovidPreviousWeek.size()));
 
         return summaryResponseModel;
