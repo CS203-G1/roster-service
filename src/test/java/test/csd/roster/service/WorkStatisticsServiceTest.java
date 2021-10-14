@@ -1,11 +1,14 @@
 package test.csd.roster.service;
 
+import csd.roster.enumerator.HealthStatus;
 import csd.roster.model.Company;
 import csd.roster.model.Employee;
 import csd.roster.model.Roster;
 import csd.roster.model.RosterEmployee;
+import csd.roster.response_model.SummaryResponseModel;
 import csd.roster.response_model.WorkingStatisticResponseModel;
 import csd.roster.service.*;
+import org.apache.tomcat.jni.Local;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -191,6 +194,76 @@ class WorkStatisticsServiceTest {
 
     @Test
     void getSummaryByCompanyIdAndDate() {
+        UUID companyId = UUID.randomUUID();
+        Company company = new Company();
+        company.setId(companyId);
+
+        Employee employee1 = new Employee();
+        Employee employee2 = new Employee();
+        Employee employee3 = new Employee();
+        Employee employee4 = new Employee();
+        Employee employee5 = new Employee();
+        Employee employee6 = new Employee();
+        Employee employee7 = new Employee();
+
+        // Mocking the various lists of employees
+        List<Employee> employeeList = new ArrayList<>();
+        employeeList.add(employee1);
+        employeeList.add(employee2);
+        employeeList.add(employee3);
+        employeeList.add(employee4);
+        employeeList.add(employee5);
+        employeeList.add(employee6);
+        employeeList.add(employee7);
+
+        List<Employee> employeesOnLeave = new ArrayList<>();
+        employeesOnLeave.add(employee1);
+
+        List<Employee> employeesWithCovid = new ArrayList<>();
+        employeesWithCovid.add(employee2);
+        employeesWithCovid.add(employee3);
+
+        List<RosterEmployee> onsiteEmployees = new ArrayList<>();
+        RosterEmployee rosterEmployee4 = new RosterEmployee();
+        rosterEmployee4.setEmployee(employee4);
+        RosterEmployee rosterEmployee5 = new RosterEmployee();
+        rosterEmployee4.setEmployee(employee5);
+        RosterEmployee rosterEmployee6 = new RosterEmployee();
+        rosterEmployee4.setEmployee(employee6);
+        RosterEmployee rosterEmployee7 = new RosterEmployee();
+        rosterEmployee4.setEmployee(employee7);
+
+        onsiteEmployees.add(rosterEmployee4);
+        onsiteEmployees.add(rosterEmployee5);
+        onsiteEmployees.add(rosterEmployee6);
+        onsiteEmployees.add(rosterEmployee7);
+
+        LocalDate now = LocalDate.now();
+        LocalDate lastWeek = LocalDate.now().minusDays(7);
+
+        when(employeeService.getAllEmployeesByCompanyIdBeforeDate(any(UUID.class), eq(lastWeek))).thenReturn(new ArrayList<Employee>());
+        when(employeeService.getEmployeesOnLeaveByCompanyIdAndDate(any(UUID.class), eq(lastWeek))).thenReturn(new ArrayList<Employee>());
+        when(employeeService.getEmployeesByCompanyIdAndDateAndHealthStatus(any(UUID.class),eq(lastWeek), eq(HealthStatus.COVID))).thenReturn(new ArrayList<Employee>());
+        when(rosterEmployeeService.findOnsiteRosterEmployeesByCompanyIdAndDate(any(UUID.class), eq(lastWeek))).thenReturn(new ArrayList<>());
+
+        when(employeeService.getAllEmployeesByCompanyId(any(UUID.class))).thenReturn(employeeList);
+        when(employeeService.getEmployeesOnLeaveByCompanyIdAndDate(any(UUID.class), eq(now))).thenReturn(employeesOnLeave);
+        when(employeeService.getEmployeesByCompanyIdAndDateAndHealthStatus(any(UUID.class),eq(now), eq(HealthStatus.COVID))).thenReturn(employeesWithCovid);
+        when(rosterEmployeeService.findOnsiteRosterEmployeesByCompanyIdAndDate(any(UUID.class), eq(now))).thenReturn(onsiteEmployees);
+
+        SummaryResponseModel summaryResponseModel = workStatisticsService.getSummaryByCompanyIdAndDate(companyId, now);
+
+        assertEquals(2, summaryResponseModel.getCovidCount());
+        assertEquals(200, summaryResponseModel.getCovidCountChange());
+
+        assertEquals(4, summaryResponseModel.getOnsiteCount());
+        assertEquals(400, summaryResponseModel.getOnsiteCountChange());
+
+        assertEquals(1, summaryResponseModel.getLeaveCount());
+        assertEquals(100, summaryResponseModel.getLeaveCountChange());
+
+        assertEquals(7, summaryResponseModel.getEmployeesCount());
+        assertEquals(700, summaryResponseModel.getEmployeesCountChange());
     }
 
     @Test
