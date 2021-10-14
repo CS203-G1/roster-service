@@ -4,6 +4,7 @@ import csd.roster.model.Company;
 import csd.roster.model.Employee;
 import csd.roster.model.Roster;
 import csd.roster.model.RosterEmployee;
+import csd.roster.response_model.WorkingStatisticResponseModel;
 import csd.roster.service.*;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -81,6 +82,56 @@ class WorkStatisticsServiceTest {
 
     @Test
     void getWorkStatisticsByCompanyAndDate() {
+        UUID companyId = UUID.randomUUID();
+        Company company = new Company();
+        company.setId(companyId);
+
+        // Mocking Remote RosterEmployees
+        List<RosterEmployee> remoteRosterEmployeeList = new ArrayList<RosterEmployee>();
+
+        RosterEmployee rosterEmployee3 = new RosterEmployee();
+        Employee employee3 = new Employee();
+        rosterEmployee3.setEmployee(employee3);
+
+        RosterEmployee rosterEmployee4 = new RosterEmployee();
+        Employee employee4 = new Employee();
+        rosterEmployee4.setEmployee(employee4);
+
+        remoteRosterEmployeeList.add(rosterEmployee3);
+        remoteRosterEmployeeList.add(rosterEmployee4);
+
+
+        // Mocking All RosterEmployees
+        List<RosterEmployee> rosterEmployeeList = new ArrayList<RosterEmployee>();
+
+        RosterEmployee rosterEmployee1 = new RosterEmployee();
+        Employee employee1 = new Employee();
+        rosterEmployee1.setEmployee(employee1);
+
+        RosterEmployee rosterEmployee2 = new RosterEmployee();
+        Employee employee2 = new Employee();
+        rosterEmployee2.setEmployee(employee2);
+
+        rosterEmployeeList.add(rosterEmployee1);
+        rosterEmployeeList.add(rosterEmployee2);
+        rosterEmployeeList.add(rosterEmployee3);
+        rosterEmployeeList.add(rosterEmployee4);
+
+        LocalDate date = LocalDate.now();
+
+        when(companyService.getCompanyById(any(UUID.class))).thenReturn(company);
+        when(rosterEmployeeService.findAllRosterEmployeesByCompanyIdAndDate(any(UUID.class), any(LocalDate.class))).thenReturn(rosterEmployeeList);
+        when(rosterEmployeeService.findRemoteRosterEmployeesByCompanyIdAndDate(any(UUID.class), any(LocalDate.class))).thenReturn(remoteRosterEmployeeList);
+
+        WorkingStatisticResponseModel workingStatisticResponseModel = workStatisticsService.getWorkStatisticsByCompanyAndDate(companyId, date);
+
+        assertEquals(companyId, workingStatisticResponseModel.getCompanyId());
+        assertEquals(2, workingStatisticResponseModel.getOnsiteCount());
+        assertEquals(2, workingStatisticResponseModel.getRemoteCount());
+
+        verify(companyService, times(1)).getCompanyById(companyId);
+        verify(rosterEmployeeService, times(1)).findAllRosterEmployeesByCompanyIdAndDate(companyId, date);
+        verify(rosterEmployeeService, times(1)).findRemoteRosterEmployeesByCompanyIdAndDate(companyId, date);
     }
 
     @Test
