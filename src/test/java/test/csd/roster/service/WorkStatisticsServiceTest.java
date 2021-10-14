@@ -77,11 +77,66 @@ class WorkStatisticsServiceTest {
     }
 
     @Test
-    void getWorkStatisticsByCompanyAndDateRange() {
+    void getWorkStatisticsByCompanyAndDateRange_NoRosterEmployees_returnEmptyWorkStatisticResponseModel() {
+        UUID companyId = UUID.randomUUID();
+        Company company = new Company();
+        company.setId(companyId);
+
+        LocalDate fromDate = LocalDate.ofYearDay(2020,150);
+        LocalDate toDate = LocalDate.ofYearDay(2020,152);
+
+        when(companyService.getCompanyById(any(UUID.class))).thenReturn(company);
+        when(rosterEmployeeService.findAllRosterEmployeesByCompanyIdAndDate(any(UUID.class), any(LocalDate.class))).thenReturn(new ArrayList<RosterEmployee>());
+        // when(rosterEmployeeService.findRemoteRosterEmployeesByCompanyIdAndDate(any(UUID.class), any(LocalDate.class))).thenReturn(new ArrayList<RosterEmployee>());
+
+        List<WorkingStatisticResponseModel> workingStatisticResponseModelList = workStatisticsService.getWorkStatisticsByCompanyAndDateRange(companyId, fromDate, toDate);
+        assertEquals(3, workingStatisticResponseModelList.size());
+        for (WorkingStatisticResponseModel w: workingStatisticResponseModelList) {
+            assertEquals(companyId, w.getCompanyId());
+            assertEquals(0, w.getOnsiteCount());
+            assertEquals(0, w.getRemoteCount());
+        }
+
+        verify(companyService, times(3)).getCompanyById(companyId);
+        verify(rosterEmployeeService, times(3)).findAllRosterEmployeesByCompanyIdAndDate(eq(companyId), any(LocalDate.class));
     }
 
     @Test
-    void getWorkStatisticsByCompanyAndDate() {
+    void getWorkStatisticsByCompanyAndDateRange_OneOnsiteRosterEmployees_returnEmptyWorkStatisticResponseModel() {
+        UUID companyId = UUID.randomUUID();
+        Company company = new Company();
+        company.setId(companyId);
+
+        List<RosterEmployee> rosterEmployeeList = new ArrayList<RosterEmployee>();
+
+        RosterEmployee rosterEmployee1 = new RosterEmployee();
+        Employee employee1 = new Employee();
+        rosterEmployee1.setEmployee(employee1);
+        rosterEmployeeList.add(rosterEmployee1);
+
+        LocalDate fromDate = LocalDate.ofYearDay(2020,150);
+        LocalDate toDate = LocalDate.ofYearDay(2020,152);
+
+        when(companyService.getCompanyById(any(UUID.class))).thenReturn(company);
+        when(rosterEmployeeService.findAllRosterEmployeesByCompanyIdAndDate(any(UUID.class), any(LocalDate.class))).thenReturn(rosterEmployeeList);
+        when(rosterEmployeeService.findRemoteRosterEmployeesByCompanyIdAndDate(any(UUID.class), any(LocalDate.class))).thenReturn(new ArrayList<RosterEmployee>());
+
+        List<WorkingStatisticResponseModel> workingStatisticResponseModelList = workStatisticsService.getWorkStatisticsByCompanyAndDateRange(companyId, fromDate, toDate);
+        assertEquals(3, workingStatisticResponseModelList.size());
+        for (WorkingStatisticResponseModel w: workingStatisticResponseModelList) {
+            assertEquals(companyId, w.getCompanyId());
+            assertEquals(1, w.getOnsiteCount());
+            assertEquals(0, w.getRemoteCount());
+        }
+
+        verify(companyService, times(3)).getCompanyById(companyId);
+        verify(rosterEmployeeService, times(3)).findAllRosterEmployeesByCompanyIdAndDate(eq(companyId), any(LocalDate.class));
+        verify(rosterEmployeeService, times(3)).findRemoteRosterEmployeesByCompanyIdAndDate(eq(companyId), any(LocalDate.class));
+    }
+
+
+    @Test
+    void getWorkStatisticsByCompanyAndDate_returnWorkStatisticResponseModel() {
         UUID companyId = UUID.randomUUID();
         Company company = new Company();
         company.setId(companyId);
