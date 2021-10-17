@@ -1,4 +1,4 @@
-package csd.roster.util;
+package csd.roster.util.interfaces;
 
 public interface AwsCognitoUtil {
 }
