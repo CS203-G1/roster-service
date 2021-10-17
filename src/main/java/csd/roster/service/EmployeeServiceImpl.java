@@ -1,7 +1,6 @@
 package csd.roster.service;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -10,6 +9,9 @@ import csd.roster.exception.EmployeeNotFoundException;
 import csd.roster.model.Department;
 import csd.roster.model.Employee;
 import csd.roster.repository.EmployeeRepository;
+import csd.roster.service.interfaces.CompanyService;
+import csd.roster.service.interfaces.DepartmentService;
+import csd.roster.service.interfaces.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

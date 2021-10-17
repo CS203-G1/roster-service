@@ -3,7 +3,7 @@ package csd.roster.controller;
 import csd.roster.model.Employee;
 import csd.roster.response_model.SummaryResponseModel;
 import csd.roster.response_model.WorkingStatisticResponseModel;
-import csd.roster.service.WorkStatisticsService;
+import csd.roster.service.interfaces.WorkStatisticsService;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;

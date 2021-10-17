@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import csd.roster.model.Roster;
-import csd.roster.service.RosterService;
+import csd.roster.service.interfaces.RosterService;
 
 @RestController
 @PreAuthorize("hasRole('ROLE_EMPLOYER')")

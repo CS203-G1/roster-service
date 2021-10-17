@@ -1,12 +1,11 @@
 package csd.roster.controller;
 
-import java.util.List;
 import java.util.UUID;
 
 import javax.validation.Valid;
 
 import csd.roster.model.Employee;
-import csd.roster.service.EmployeeService;
+import csd.roster.service.interfaces.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
