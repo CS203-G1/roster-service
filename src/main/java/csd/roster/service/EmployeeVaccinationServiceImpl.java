@@ -3,6 +3,8 @@ package csd.roster.service;
 import java.util.List;
 import java.util.UUID;
 
+import csd.roster.service.interfaces.EmployeeService;
+import csd.roster.service.interfaces.EmployeeVaccinationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

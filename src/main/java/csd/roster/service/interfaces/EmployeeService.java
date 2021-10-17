@@ -1,4 +1,4 @@
-package csd.roster.service;
+package csd.roster.service.interfaces;
 
 import java.time.LocalDate;
 import java.util.List;

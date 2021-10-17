@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import csd.roster.model.EmployeeVaccination;
-import csd.roster.service.EmployeeVaccinationService;
+import csd.roster.service.interfaces.EmployeeVaccinationService;
 
 @RestController
 @PreAuthorize("hasRole('ROLE_EMPLOYER')")
