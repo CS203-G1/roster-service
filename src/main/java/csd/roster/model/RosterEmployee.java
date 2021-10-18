@@ -49,6 +49,9 @@ public class RosterEmployee {
     @JoinColumn(name = "employee_id", referencedColumnName = "id")
     Employee employee;
 
+    @Column(name = "is_remote")
+    private boolean isRemote;
+
     // The health status of the employee during the duration of this roster
     @Column(name = "current_health_status")
     private HealthStatus currentHealthStatus;
