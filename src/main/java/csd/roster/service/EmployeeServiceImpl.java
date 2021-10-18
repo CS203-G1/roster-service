@@ -12,6 +12,7 @@ import csd.roster.repository.EmployeeRepository;
 import csd.roster.service.interfaces.CompanyService;
 import csd.roster.service.interfaces.DepartmentService;
 import csd.roster.service.interfaces.EmployeeService;
+import csd.roster.util.AwsCognitoUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,13 +22,17 @@ public class EmployeeServiceImpl implements EmployeeService {
     private DepartmentService departmentService;
     private CompanyService companyService;
 
+    private AwsCognitoUtil awsCognitoUtil;
+
     @Autowired
     public EmployeeServiceImpl(EmployeeRepository employeeRepository,
                                DepartmentService departmentService,
-                               CompanyService companyService) {
+                               CompanyService companyService,
+                               AwsCognitoUtil awsCognitoUtil) {
         this.employeeRepository = employeeRepository;
         this.departmentService = departmentService;
         this.companyService = companyService;
+        this.awsCognitoUtil = awsCognitoUtil;
     }
 
     @Override
