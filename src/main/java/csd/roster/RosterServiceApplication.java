@@ -14,6 +14,7 @@ import org.springframework.web.filter.CorsFilter;
 @SpringBootApplication
 public class RosterServiceApplication {
 
+    // comment for demo
     public static void main(String[] args) {
         SpringApplication.run(RosterServiceApplication.class, args);
     }

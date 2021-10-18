@@ -1,4 +1,4 @@
-package csd.roster.service;
+package csd.roster.service.interfaces;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -9,6 +9,8 @@ import csd.roster.model.Employee;
 
 public interface EmployeeService {
     Employee addEmployee(UUID departmentId, Employee employee);
+
+    Employee addEmployer(UUID departmentId, Employee employee);
 
     Employee getEmployee(UUID departmentId, UUID employeeId);
 

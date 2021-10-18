@@ -3,6 +3,8 @@ package csd.roster.service;
 import java.util.List;
 import java.util.UUID;
 
+import csd.roster.service.interfaces.DepartmentService;
+import csd.roster.service.interfaces.WorkLocationService;
 import org.springframework.stereotype.Service;
 
 import csd.roster.exception.WorkLocationNotFoundException;

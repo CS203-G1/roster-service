@@ -7,6 +7,9 @@ import csd.roster.model.Employee;
 import csd.roster.model.Roster;
 import csd.roster.model.RosterEmployee;
 import csd.roster.repository.RosterEmployeeRepository;
+import csd.roster.service.interfaces.EmployeeService;
+import csd.roster.service.interfaces.RosterEmployeeService;
+import csd.roster.service.interfaces.RosterService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

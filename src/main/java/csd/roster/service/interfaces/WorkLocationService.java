@@ -1,4 +1,4 @@
-package csd.roster.service;
+package csd.roster.service.interfaces;
 
 import java.util.List;
 import java.util.UUID;

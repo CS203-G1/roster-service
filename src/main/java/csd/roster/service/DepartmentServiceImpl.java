@@ -1,10 +1,11 @@
 package csd.roster.service;
 
-import csd.roster.exception.CompanyNotFoundException;
 import csd.roster.exception.DepartmentNotFoundException;
 import csd.roster.model.Company;
 import csd.roster.model.Department;
 import csd.roster.repository.DepartmentRepository;
+import csd.roster.service.interfaces.CompanyService;
+import csd.roster.service.interfaces.DepartmentService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

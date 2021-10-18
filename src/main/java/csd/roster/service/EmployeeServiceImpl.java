@@ -1,7 +1,6 @@
 package csd.roster.service;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -10,7 +9,12 @@ import csd.roster.exception.EmployeeNotFoundException;
 import csd.roster.model.Department;
 import csd.roster.model.Employee;
 import csd.roster.repository.EmployeeRepository;
+import csd.roster.service.interfaces.CompanyService;
+import csd.roster.service.interfaces.DepartmentService;
+import csd.roster.service.interfaces.EmployeeService;
+import csd.roster.util.AwsCognitoUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -19,17 +23,42 @@ public class EmployeeServiceImpl implements EmployeeService {
     private DepartmentService departmentService;
     private CompanyService companyService;
 
+    private AwsCognitoUtil awsCognitoUtil;
+
+    @Value("${aws.cognito.groups.employee}")
+    private String employeeGroup;
+    @Value("${aws.cognito.groups.employer}")
+    private String employerGroup;
+
     @Autowired
     public EmployeeServiceImpl(EmployeeRepository employeeRepository,
                                DepartmentService departmentService,
-                               CompanyService companyService) {
+                               CompanyService companyService,
+                               AwsCognitoUtil awsCognitoUtil) {
         this.employeeRepository = employeeRepository;
         this.departmentService = departmentService;
         this.companyService = companyService;
+        this.awsCognitoUtil = awsCognitoUtil;
     }
 
     @Override
     public Employee addEmployee(UUID departmentId, Employee employee) {
+        awsCognitoUtil.addUserToGroup(employee.getId().toString(), employeeGroup);
+
+        return persistEmployee(departmentId, employee);
+    }
+
+    // Violating DRY because I want to provide two endpoints for Frontend instead of having them to send in a value to
+    // indicate whether the employee is employer or not
+    @Override
+    public Employee addEmployer(UUID departmentId, Employee employee) {
+        awsCognitoUtil.addUserToGroup(employee.getId().toString(), employerGroup);
+
+        return persistEmployee(departmentId, employee);
+    }
+
+    // Logic modularized from addEmployee and addEmployer method
+    private Employee persistEmployee(UUID departmentId, Employee employee) {
         Department department = departmentService.getDepartmentById(departmentId);
         employee.setDepartment(department);
         employee.setCompany(department.getCompany());

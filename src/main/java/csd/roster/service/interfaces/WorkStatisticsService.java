@@ -1,4 +1,4 @@
-package csd.roster.service;
+package csd.roster.service.interfaces;
 
 import csd.roster.model.Employee;
 import csd.roster.model.RosterEmployee;
