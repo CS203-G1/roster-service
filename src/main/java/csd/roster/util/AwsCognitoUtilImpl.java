@@ -6,6 +6,14 @@ import csd.roster.util.interfaces.AwsCognitoUtil;
 import org.springframework.beans.factory.annotation.Value;
 
 public class AwsCognitoUtilImpl implements AwsCognitoUtil {
+    @Value("${aws.cognito.userPoolId}")
+    private String userPoolId;
+
+    @Value("${aws.access-key}")
+    private String accessKey;
+    
+    @Value("${aws.access-secret}")
+    private String secretKey;
 
     @Override
     public AdminAddUserToGroupResult addUserToGroup(String userId, String groupName) {
