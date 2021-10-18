@@ -32,6 +32,7 @@ public class EmployeeController {
         return employeeService.addEmployee(departmentId, employee);
     }
 
+    @PreAuthorize("hasRole('ROLE_SUPER_USER')")
     @PostMapping("/departments/{departmentId}/employers")
     public Employee addEmployer(@PathVariable(value = "departmentId") UUID departmentId,
                                 @Valid @RequestBody Employee employee) {
