@@ -31,6 +31,12 @@ public class EmployeeController {
         return employeeService.addEmployee(departmentId, employee);
     }
 
+    @PostMapping("/departments/{departmentId}/employers")
+    public Employee addEmployer (@PathVariable(value = "departmentId") UUID departmentId,
+                                 @Valid @RequestBody Employee employee) {
+        return employeeService.addEmployer(departmentId, employee);
+    }
+
     @PutMapping("/departments/{departmentId}/employees/{employeeId}")
     public Employee updateEmployee (@PathVariable(value = "departmentId") UUID departmentId,
                                     @PathVariable(value = "employeeId") UUID employeeId,
