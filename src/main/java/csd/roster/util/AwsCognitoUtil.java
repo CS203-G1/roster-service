@@ -14,24 +14,24 @@ import org.springframework.stereotype.Component;
 @Component
 public class AwsCognitoUtil {
     @Value("${aws.cognito.userPoolId}")
-    private static String userPoolId;
+    private String userPoolId;
 
     @Value("${aws.access-key}")
-    private static String accessKey;
+    private String accessKey;
 
     @Value("${aws.access-secret}")
-    private static String secretKey;
+    private String secretKey;
 
-    public static AdminAddUserToGroupResult addUserToGroup(String userId, String groupName) {
+    public AdminAddUserToGroupResult addUserToGroup(String userId, String groupName) {
         AdminAddUserToGroupRequest request = new AdminAddUserToGroupRequest();
 
-        request.setUserPoolId(userPoolId);
+        request.setUserPoolId(this.userPoolId);
         request.setGroupName(groupName);
         request.setUsername(userId);
 
-        AWSCredentials credentials = new BasicAWSCredentials(accessKey, secretKey);
-        AWSCognitoIdentityProvider identityProvider = AWSCognitoIdentityProviderClientBuilder.
-                standard()
+        AWSCredentials credentials = new BasicAWSCredentials(this.accessKey, this.secretKey);
+        AWSCognitoIdentityProvider identityProvider = AWSCognitoIdentityProviderClientBuilder
+                .standard()
                 .withCredentials(new AWSStaticCredentialsProvider(credentials))
                 .build();
 
