@@ -32,6 +32,12 @@ public class EmployeeController {
         return employeeService.addEmployee(departmentId, employee);
     }
 
+    @PostMapping("/work-locations/{workLocationId}/employees/{employeeId}")
+    public Employee addEmployeeToWorkLocation(@PathVariable(value = "workLocationId") UUID workLocationId,
+                                              @PathVariable(value = "employeeId") UUID employeeId) {
+        return employeeService.addEmployeeToWorkLocation(workLocationId, employeeId);
+    }
+
     @PreAuthorize("hasRole('ROLE_SUPER_USER')")
     @PostMapping("/departments/{departmentId}/employers")
     public Employee addEmployer(@PathVariable(value = "departmentId") UUID departmentId,
