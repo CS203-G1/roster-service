@@ -52,6 +52,8 @@ public class EmployeeServiceImpl implements EmployeeService {
         return employeeRepository.save(employee);
     }
 
+    // Violating DRY because I want to provide two endpoints for Frontend instead of having them to send in a value to
+    // indicate whether the employee is employer or not
     @Override
     public Employee addEmployer(UUID departmentId, Employee employee) {
         Department department = departmentService.getDepartmentById(departmentId);
