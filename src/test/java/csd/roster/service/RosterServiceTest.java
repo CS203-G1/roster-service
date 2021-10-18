@@ -42,7 +42,7 @@ public class RosterServiceTest {
         WorkLocation workLocation = new WorkLocation(workLocationId, null, null, null, null, null, 40);
 
         UUID rosterId = UUID.randomUUID();
-        Roster roster = new Roster(rosterId, LocalDate.now(), null, false, null);
+        Roster roster = new Roster(rosterId, LocalDate.now(), null, null, null, null);
 
         when(workLocationService.getWorkLocationById(workLocationId)).thenReturn(workLocation);
         when(rosters.save(any(Roster.class))).thenReturn(roster);
@@ -64,7 +64,7 @@ public class RosterServiceTest {
         WorkLocation workLocation = new WorkLocation(workLocationId, null, allRostersInWorkLocation, null, null, null, 40);
 
         UUID rosterId = UUID.randomUUID();
-        Roster roster = new Roster(rosterId, LocalDate.now(), workLocation, false, null);
+        Roster roster = new Roster(rosterId, LocalDate.now(), workLocation, null, null, null);
 
         allRostersInWorkLocation.add(roster);
 
@@ -102,7 +102,7 @@ public class RosterServiceTest {
         WorkLocation workLocation = new WorkLocation(workLocationId, null, allRostersInWorkLocation, null,null,  null, 40);
 
         UUID rosterId = UUID.randomUUID();
-        Roster roster = new Roster(rosterId, LocalDate.now(), workLocation, false, null);
+        Roster roster = new Roster(rosterId, LocalDate.now(), workLocation, null, null, null);
 
         when(rosters.findByIdAndWorkLocationId(rosterId,workLocationId)).thenReturn(Optional.of(roster));
 
@@ -122,7 +122,7 @@ public class RosterServiceTest {
         WorkLocation workLocation = new WorkLocation(workLocationId, null, allRostersInWorkLocation, null, null, null, 40);
 
         UUID rosterId = UUID.randomUUID();
-        Roster roster = new Roster(rosterId, LocalDate.now(), workLocation, false, null);
+        Roster roster = new Roster(rosterId, LocalDate.now(), workLocation, null, null, null);
 
 
         Exception exception = assertThrows(RosterNotFoundException.class, () -> rosterService.getRoster(workLocationId, rosterId));
@@ -141,7 +141,7 @@ public class RosterServiceTest {
         WorkLocation workLocation = new WorkLocation(workLocationId, null, allRostersInWorkLocation,null,  null, null, 40);
 
         UUID rosterId = UUID.randomUUID();
-        Roster roster = new Roster(rosterId, LocalDate.now(), workLocation,false, null);
+        Roster roster = new Roster(rosterId, LocalDate.now(), workLocation, null, null, null);
 
         when(rosters.findById(rosterId)).thenReturn(Optional.of(roster));
 
@@ -160,7 +160,7 @@ public class RosterServiceTest {
         WorkLocation workLocation = new WorkLocation(workLocationId, null,  allRostersInWorkLocation, null, null, null, 40);
 
         UUID rosterId = UUID.randomUUID();
-        Roster roster = new Roster(rosterId, LocalDate.now(), workLocation, false, null);
+        Roster roster = new Roster(rosterId, LocalDate.now(), workLocation, null, null, null);
 
         Exception exception = assertThrows(RosterNotFoundException.class, () -> rosterService.getRoster(rosterId));
         String expectedExceptionMessage = String.format("Roster %s does not exist", rosterId);
