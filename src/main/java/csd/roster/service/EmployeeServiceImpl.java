@@ -8,11 +8,14 @@ import csd.roster.enumerator.HealthStatus;
 import csd.roster.exception.EmployeeNotFoundException;
 import csd.roster.model.Department;
 import csd.roster.model.Employee;
+import csd.roster.model.WorkLocation;
 import csd.roster.repository.EmployeeRepository;
 import csd.roster.service.interfaces.CompanyService;
 import csd.roster.service.interfaces.DepartmentService;
 import csd.roster.service.interfaces.EmployeeService;
+import csd.roster.service.interfaces.WorkLocationService;
 import csd.roster.util.AwsCognitoUtil;
+import org.hibernate.jdbc.Work;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -22,6 +25,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     private EmployeeRepository employeeRepository;
     private DepartmentService departmentService;
     private CompanyService companyService;
+    private WorkLocationService workLocationService;
 
     private AwsCognitoUtil awsCognitoUtil;
 
@@ -34,10 +38,12 @@ public class EmployeeServiceImpl implements EmployeeService {
     public EmployeeServiceImpl(EmployeeRepository employeeRepository,
                                DepartmentService departmentService,
                                CompanyService companyService,
+                               WorkLocationService workLocationService,
                                AwsCognitoUtil awsCognitoUtil) {
         this.employeeRepository = employeeRepository;
         this.departmentService = departmentService;
         this.companyService = companyService;
+        this.workLocationService = workLocationService;
         this.awsCognitoUtil = awsCognitoUtil;
     }
 
@@ -77,6 +83,15 @@ public class EmployeeServiceImpl implements EmployeeService {
     public Employee getEmployee(UUID employeeId) {
         return employeeRepository.findById(employeeId)
                 .orElseThrow(() -> new EmployeeNotFoundException(employeeId));
+    }
+
+    @Override
+    public Employee addEmployeeToWorkLocation(UUID workLocationId, UUID employeeId) {
+        Employee employee = getEmployee(employeeId);
+        WorkLocation workLocation = workLocationService.getWorkLocationById(workLocationId);
+        employee.setWorkLocation(workLocation);
+
+        return employeeRepository.save(employee);
     }
 
     @Override
