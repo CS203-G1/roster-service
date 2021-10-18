@@ -43,24 +43,25 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public Employee addEmployee(UUID departmentId, Employee employee) {
-        Department department = departmentService.getDepartmentById(departmentId);
-        employee.setDepartment(department);
-        employee.setCompany(department.getCompany());
-
         awsCognitoUtil.addUserToGroup(employee.getId().toString(), employeeGroup);
 
-        return employeeRepository.save(employee);
+        return persistEmployee(departmentId, employee);
     }
 
     // Violating DRY because I want to provide two endpoints for Frontend instead of having them to send in a value to
     // indicate whether the employee is employer or not
     @Override
     public Employee addEmployer(UUID departmentId, Employee employee) {
+        awsCognitoUtil.addUserToGroup(employee.getId().toString(), employerGroup);
+
+        return persistEmployee(departmentId, employee);
+    }
+
+    // Logic modularized from addEmployee and addEmployer method
+    private Employee persistEmployee(UUID departmentId, Employee employee) {
         Department department = departmentService.getDepartmentById(departmentId);
         employee.setDepartment(department);
         employee.setCompany(department.getCompany());
-
-        awsCognitoUtil.addUserToGroup(employee.getId().toString(), employerGroup);
 
         return employeeRepository.save(employee);
     }
