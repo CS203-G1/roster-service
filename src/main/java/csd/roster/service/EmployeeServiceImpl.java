@@ -14,6 +14,7 @@ import csd.roster.service.interfaces.DepartmentService;
 import csd.roster.service.interfaces.EmployeeService;
 import csd.roster.util.AwsCognitoUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -23,6 +24,11 @@ public class EmployeeServiceImpl implements EmployeeService {
     private CompanyService companyService;
 
     private AwsCognitoUtil awsCognitoUtil;
+
+    @Value("${cognito.groups.employee}")
+    private String employeeGroup;
+    @Value("${cognito.groups.employer}")
+    private String employerGroup;
 
     @Autowired
     public EmployeeServiceImpl(EmployeeRepository employeeRepository,
@@ -40,6 +46,8 @@ public class EmployeeServiceImpl implements EmployeeService {
         Department department = departmentService.getDepartmentById(departmentId);
         employee.setDepartment(department);
         employee.setCompany(department.getCompany());
+
+        awsCognitoUtil.addUserToGroup(employee.getId().toString(), employeeGroup);
 
         return employeeRepository.save(employee);
     }
