@@ -27,6 +27,8 @@ import org.springframework.format.annotation.DateTimeFormat;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode
+@Table(uniqueConstraints = {@UniqueConstraint(name = "UniqueRosterAndEmployee",
+        columnNames = {"roster_id", "employee_id"})})
 public class RosterEmployee {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

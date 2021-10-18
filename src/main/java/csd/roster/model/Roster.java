@@ -32,8 +32,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 @EqualsAndHashCode
 // To validate that fromDateTime is before toDateTime
 @ValidDateTimes(fromDateTime = "fromDateTime", toDateTime = "toDateTime")
-@Table(uniqueConstraints = {@UniqueConstraint(name = "UniqueRosterAndEmployee",
-        columnNames = {"roster_id", "employee_id"})})
+
 public class Roster {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
