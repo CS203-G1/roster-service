@@ -11,6 +11,7 @@ import static org.mockito.Mockito.when;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
+import csd.roster.util.AwsCognitoUtil;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -34,6 +35,9 @@ public class EmployeeServiceTest {
 
     @Mock
     DepartmentServiceImpl departmentService;
+
+    @Mock
+    AwsCognitoUtil awsCognitoUtil;
 
     @InjectMocks
     EmployeeServiceImpl employeeService;
