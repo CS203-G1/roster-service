@@ -16,6 +16,8 @@ public interface EmployeeService {
 
     Employee getEmployee(UUID employeeId);
 
+    Employee addEmployeeToWorkLocation(UUID workLocationId, UUID employeeId);
+
     void deleteEmployee(UUID departmentId, UUID employeeId);
 
     Employee updateEmployee(UUID departmentId, UUID employeeId, Employee employee);
