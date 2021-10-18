@@ -10,6 +10,8 @@ import csd.roster.model.Employee;
 public interface EmployeeService {
     Employee addEmployee(UUID departmentId, Employee employee);
 
+    Employee addEmployer(UUID departmentId, Employee employee);
+
     Employee getEmployee(UUID departmentId, UUID employeeId);
 
     Employee getEmployee(UUID employeeId);
