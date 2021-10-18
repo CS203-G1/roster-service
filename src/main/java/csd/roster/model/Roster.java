@@ -39,6 +39,9 @@ public class Roster {
     @JsonIgnore
     private WorkLocation workLocation;
 
+    @Column(name = "is_remote")
+    private boolean isRemote;
+
     // @JsonManaged Reference means that this is the forward part of reference and will be serialized normally
     // Done to prevent infinite recursion
     // https://www.baeldung.com/jackson-bidirectional-relationships-and-infinite-recursion
