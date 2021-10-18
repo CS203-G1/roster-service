@@ -25,9 +25,9 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     private AwsCognitoUtil awsCognitoUtil;
 
-    @Value("${cognito.groups.employee}")
+    @Value("${aws.cognito.groups.employee}")
     private String employeeGroup;
-    @Value("${cognito.groups.employer}")
+    @Value("${aws.cognito.groups.employer}")
     private String employerGroup;
 
     @Autowired
