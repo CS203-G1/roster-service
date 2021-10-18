@@ -61,6 +61,10 @@ public class Employee {
     private Department department;
 
     @ManyToOne
+    @JoinColumn(name="work_loaction_id", referencedColumnName="id")
+    private WorkLocation workLocation;
+
+    @ManyToOne
     @JoinColumn(name="company_id", referencedColumnName="id")
     private Company company;
 
