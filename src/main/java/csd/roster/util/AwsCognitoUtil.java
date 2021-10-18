@@ -3,15 +3,15 @@ package csd.roster.util;
 import com.amazonaws.auth.AWSCredentials;
 import com.amazonaws.auth.AWSStaticCredentialsProvider;
 import com.amazonaws.auth.BasicAWSCredentials;
-import com.amazonaws.client.builder.AwsClientBuilder;
 import com.amazonaws.services.cognitoidp.AWSCognitoIdentityProvider;
-import com.amazonaws.services.cognitoidp.AWSCognitoIdentityProviderClient;
 import com.amazonaws.services.cognitoidp.AWSCognitoIdentityProviderClientBuilder;
 import com.amazonaws.services.cognitoidp.model.AdminAddUserToGroupRequest;
 import com.amazonaws.services.cognitoidp.model.AdminAddUserToGroupResult;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
 // Use static methods and fields since they will never change - think of Singleton Objects
+@Component
 public class AwsCognitoUtil {
     @Value("${aws.cognito.userPoolId}")
     private static String userPoolId;
