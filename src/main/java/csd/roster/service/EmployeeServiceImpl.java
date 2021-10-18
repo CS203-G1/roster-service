@@ -53,6 +53,17 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
+    public Employee addEmployer(UUID departmentId, Employee employee) {
+        Department department = departmentService.getDepartmentById(departmentId);
+        employee.setDepartment(department);
+        employee.setCompany(department.getCompany());
+
+        awsCognitoUtil.addUserToGroup(employee.getId().toString(), employerGroup);
+
+        return employeeRepository.save(employee);
+    }
+
+    @Override
     public Employee getEmployee(UUID departmentId, UUID employeeId) {
         return employeeRepository.findByIdAndDepartmentId(employeeId, departmentId)
                 .orElseThrow(() -> new EmployeeNotFoundException(employeeId));
