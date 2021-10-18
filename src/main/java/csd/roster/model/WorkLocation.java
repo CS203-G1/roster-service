@@ -39,6 +39,11 @@ public class WorkLocation {
     @OneToMany(mappedBy = "workLocation", orphanRemoval = true, cascade = CascadeType.ALL)
     private List<Roster> rosters;
 
+    @JsonIgnore
+    @Transient
+    @OneToMany(mappedBy = "workLocation", orphanRemoval = true, cascade = CascadeType.ALL)
+    private List<Employee> employees;
+
     @Column(name = "name")
     private String name;
 
