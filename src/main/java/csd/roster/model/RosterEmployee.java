@@ -27,10 +27,6 @@ import org.springframework.format.annotation.DateTimeFormat;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode
-// To validate that fromDateTime is before toDateTime
-@ValidDateTimes(fromDateTime = "fromDateTime", toDateTime = "toDateTime")
-@Table(uniqueConstraints = {@UniqueConstraint(name = "UniqueRosterAndEmployee",
-        columnNames = {"roster_id", "employee_id"})})
 public class RosterEmployee {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -52,21 +48,6 @@ public class RosterEmployee {
     @ManyToOne
     @JoinColumn(name = "employee_id", referencedColumnName = "id")
     Employee employee;
-
-
-    // When the roster for this employee starts
-    @Column(name = "from_date_time")
-    @NotNull(message = "FromDateTime must not be blank")
-    @Future
-    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
-    private LocalDateTime fromDateTime;
-
-    // When the roster for this employee ends
-    @Column(name = "to_date_time")
-    @NotNull(message = "ToDateTime must not be blank")
-    @Future
-    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
-    private LocalDateTime toDateTime;
 
     // The health status of the employee during the duration of this roster
     @Column(name = "current_health_status")
