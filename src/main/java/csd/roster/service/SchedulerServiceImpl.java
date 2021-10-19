@@ -1,14 +1,8 @@
 package csd.roster.service;
 
-import csd.roster.exception.EmployeeNotFoundException;
-import csd.roster.exception.WorkLocationNotFoundException;
 import csd.roster.model.Employee;
 import csd.roster.model.Roster;
 import csd.roster.model.RosterEmployee;
-import csd.roster.repository.EmployeeRepository;
-import csd.roster.repository.RosterEmployeeRepository;
-import csd.roster.repository.RosterRepository;
-import csd.roster.repository.WorkLocationRepository;
 import csd.roster.service.interfaces.*;
 import csd.roster.util.Scheduler;
 import org.springframework.beans.factory.annotation.Autowired;
