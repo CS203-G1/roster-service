@@ -26,7 +26,7 @@ public class ScheduledRosterSchedulingTask {
         this.workLocationService = workLocationService;
     }
 
-    @Scheduled(cron = "0/5 * * * * *")
+    @Scheduled(cron = "0 0 12 * * SUN")
     @Async
     public void scheduleRosters() {
         log.debug("Scheduling roster for all work locations now");
