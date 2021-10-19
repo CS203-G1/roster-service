@@ -31,6 +31,11 @@ public class WorkLocationServiceImpl implements WorkLocationService {
     }
 
     @Override
+    public List<WorkLocation> getAllWorkLocations() {
+        return workLocationRepository.findAll();
+    }
+
+    @Override
     public List<WorkLocation> getWorkLocationsFromDepartment(UUID departmentId) {
         return null;
     }
