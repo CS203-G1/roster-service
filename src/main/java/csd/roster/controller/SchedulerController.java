@@ -30,9 +30,16 @@ public class SchedulerController {
     private WorkLocationRepository workLocationRepository;
 
     @Autowired
-    public SchedulerController(Scheduler scheduler, EmployeeRepository employeeRepository) {
+    public SchedulerController(Scheduler scheduler,
+                               EmployeeRepository employeeRepository,
+                               RosterEmployeeRepository rosterEmployeeRepository,
+                               RosterRepository rosterRepository,
+                               WorkLocationRepository workLocationRepository) {
         this.scheduler = scheduler;
         this.employeeRepository = employeeRepository;
+        this.rosterRepository = rosterRepository;
+        this.rosterEmployeeRepository = rosterEmployeeRepository;
+        this.workLocationRepository = workLocationRepository;
     }
 
     @PostMapping("/schedule/{workLocationId}")
