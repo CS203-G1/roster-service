@@ -18,6 +18,13 @@
         <java.version>16</java.version>
     </properties>
     <dependencies>
+        <!-- https://mvnrepository.com/artifact/com.google.ortools/ortools-java -->
+        <dependency>
+            <groupId>com.google.ortools</groupId>
+            <artifactId>ortools-java</artifactId>
+            <version>9.1.9490</version>
+        </dependency>
+
         <!--For JPA Hibernate		-->
         <dependency>
             <groupId>org.postgresql</groupId>
