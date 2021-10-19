@@ -38,7 +38,7 @@ public class SchedulerServiceImpl implements SchedulerService {
     public Map<Integer, List<UUID>> scheduleRoster(UUID workLocationId) throws NoOptimalSolutionException {
         List<UUID> employeeIdList = getEmployeeIdList(workLocationId);
 
-        Map<Integer, List<UUID>> map = scheduler.solve(employeeIdList);
+        Map<Integer, List<UUID>> schedule = scheduler.solve(employeeIdList);
 
         // LocalDate end of week is Sunday
         LocalDate firstDayOfWeek = getFirstDayOfWeek(LocalDate.now()).toInstant()
@@ -46,6 +46,12 @@ public class SchedulerServiceImpl implements SchedulerService {
                 .toLocalDate()
                 .plusDays(7);
 
+        scheduleRoster(firstDayOfWeek, schedule, workLocationId);
+
+        return schedule;
+    }
+
+    private void scheduleRoster(LocalDate firstDayOfWeek, Map<Integer, List<UUID>> schedule, UUID workLocationId) {
         for (int i = 0; i < 5; i++) {
             LocalDate weekday = firstDayOfWeek.plusDays(i);
             Roster roster = new Roster(
@@ -58,12 +64,10 @@ public class SchedulerServiceImpl implements SchedulerService {
 
             rosterService.addRoster(workLocationId, roster);
 
-            List<UUID> employeeIds = map.get(i);
+            List<UUID> employeeIds = schedule.get(i);
 
             scheduleRosterEmployee(roster, employeeIds);
         }
-
-        return map;
     }
 
     private void scheduleRosterEmployee(Roster roster, List<UUID> employeeIds) {
