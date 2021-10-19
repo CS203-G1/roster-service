@@ -10,7 +10,7 @@ import java.util.*;
 import java.util.stream.IntStream;
 
 @Service
-public class Scheduler {
+public class SchedulerUtil {
     public Map<Integer, List<UUID>> solve(List<UUID> employeeList) throws NoOptimalSolutionException{
         Loader.loadNativeLibraries();
         final int numNurses = employeeList.size();
