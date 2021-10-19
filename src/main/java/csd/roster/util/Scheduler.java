@@ -2,6 +2,7 @@ package csd.roster.util;
 
 import com.google.ortools.Loader;
 import com.google.ortools.sat.*;
+import csd.roster.exception.NoOptimalSolutionException;
 import csd.roster.model.Employee;
 import org.springframework.stereotype.Service;
 
@@ -10,7 +11,7 @@ import java.util.stream.IntStream;
 
 @Service
 public class Scheduler {
-    public Map<Integer, List<UUID>> solve(List<UUID> employeeList) {
+    public Map<Integer, List<UUID>> solve(List<UUID> employeeList) throws NoOptimalSolutionException{
         Loader.loadNativeLibraries();
         final int numNurses = employeeList.size();
         final int numDays = 5;
@@ -143,17 +144,10 @@ public class Scheduler {
 
         Map<Integer, List<UUID>> roster_employees = new HashMap<>();
         if (status == CpSolverStatus.OPTIMAL || status == CpSolverStatus.FEASIBLE) {
-            System.out.printf("Solution:%n");
             for (int d : allDays) {
-                System.out.printf("Day %d%n", d);
                 for (int n : allNurses) {
                     for (int s : allShifts) {
                         if (solver.value(shifts[n][d][s]) == 1L) {
-//                            if (shiftRequests[n][d][s] == 1) {
-//                                System.out.printf("  Employee %s works shift %d (requested).%n", employeeList.get(n).getName(), s);
-//                            } else {
-//                                System.out.printf("  Employee %s works shift %d (not requested).%n", employeeList.get(n).getName(), s);
-//                            }
                             List<UUID> li = roster_employees.getOrDefault(d, new LinkedList<UUID>());
                             li.add(employeeList.get(n));
                             roster_employees.put(d, li);
@@ -162,17 +156,9 @@ public class Scheduler {
                 }
             }
             return roster_employees;
-//            System.out.printf("Number of shift requests met = %f (out of %d)%n", solver.objectiveValue(),
-//                    numNurses * minShiftsPerNurse);
         } else {
-            System.out.printf("No optimal solution found !");
-            return null;
+            throw new NoOptimalSolutionException();
         }
-        // Statistics.
-//        System.out.println("Statistics");
-//        System.out.printf("  conflicts: %d%n", solver.numConflicts());
-//        System.out.printf("  branches : %d%n", solver.numBranches());
-//        System.out.printf("  wall time: %f s%n", solver.wallTime());
     }
 
 }
