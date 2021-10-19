@@ -7,6 +7,6 @@ import java.util.UUID;
 public class SchedulerServiceImpl implements SchedulerService {
     @Override
     public void scheduleRoster(UUID workLocationId) {
-        
+
     }
 }
