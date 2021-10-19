@@ -33,7 +33,7 @@ public class ScheduledRosterSchedulingTask {
         // Get all work locations
         List<WorkLocation> workLocations = workLocationService.getAllWorkLocations();
 
-        // Loop through all work locations and schedule each one 
+        // Loop through all work locations and schedule each one
         for (WorkLocation workLocation : workLocations) {
             try {
                 schedulerService.scheduleRoster(workLocation.getId());
