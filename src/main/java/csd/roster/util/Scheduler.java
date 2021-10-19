@@ -5,13 +5,12 @@ import com.google.ortools.sat.*;
 import csd.roster.model.Employee;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.IntStream;
 
 @Service
 public class Scheduler {
-    public void solve(List<Employee> employeeList) {
+    public Map<Integer, List<UUID>> solve(List<Employee> employeeList) {
         Loader.loadNativeLibraries();
         final int numNurses = employeeList.size();
         final int numDays = 5;
@@ -142,6 +141,7 @@ public class Scheduler {
         CpSolver solver = new CpSolver();
         CpSolverStatus status = solver.solve(model);
 
+        Map<Integer, List<UUID>> roster_employees = new HashMap<>();
         if (status == CpSolverStatus.OPTIMAL || status == CpSolverStatus.FEASIBLE) {
             System.out.printf("Solution:%n");
             for (int d : allDays) {
@@ -149,25 +149,30 @@ public class Scheduler {
                 for (int n : allNurses) {
                     for (int s : allShifts) {
                         if (solver.value(shifts[n][d][s]) == 1L) {
-                            if (shiftRequests[n][d][s] == 1) {
-                                System.out.printf("  Employee %s works shift %d (requested).%n", employeeList.get(n).getName(), s);
-                            } else {
-                                System.out.printf("  Employee %s works shift %d (not requested).%n", employeeList.get(n).getName(), s);
-                            }
+//                            if (shiftRequests[n][d][s] == 1) {
+//                                System.out.printf("  Employee %s works shift %d (requested).%n", employeeList.get(n).getName(), s);
+//                            } else {
+//                                System.out.printf("  Employee %s works shift %d (not requested).%n", employeeList.get(n).getName(), s);
+//                            }
+                            List<UUID> li = roster_employees.getOrDefault((Integer) d, new LinkedList<UUID>());
+                            li.add(employeeList.get(n).getId());
+                            roster_employees.put(d, li);
                         }
                     }
                 }
             }
-            System.out.printf("Number of shift requests met = %f (out of %d)%n", solver.objectiveValue(),
-                    numNurses * minShiftsPerNurse);
+            return roster_employees;
+//            System.out.printf("Number of shift requests met = %f (out of %d)%n", solver.objectiveValue(),
+//                    numNurses * minShiftsPerNurse);
         } else {
             System.out.printf("No optimal solution found !");
+            return null;
         }
         // Statistics.
-        System.out.println("Statistics");
-        System.out.printf("  conflicts: %d%n", solver.numConflicts());
-        System.out.printf("  branches : %d%n", solver.numBranches());
-        System.out.printf("  wall time: %f s%n", solver.wallTime());
+//        System.out.println("Statistics");
+//        System.out.printf("  conflicts: %d%n", solver.numConflicts());
+//        System.out.printf("  branches : %d%n", solver.numBranches());
+//        System.out.printf("  wall time: %f s%n", solver.wallTime());
     }
 
 }
