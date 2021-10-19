@@ -92,7 +92,7 @@ public class Scheduler {
                 for (int n : allNurses) {
                     x[n] = shifts[n][d][s];
                 }
-                model.addEquality(LinearExpr.sum(x), 1);
+                model.addEquality(LinearExpr.sum(x), numNurses / 2);
             }
         }
 
