@@ -18,6 +18,7 @@ import static csd.roster.enumerator.HealthStatus.HEALTHY;
 
 @Service
 public class SchedulerServiceImpl implements SchedulerService {
+    // Seems like we need a lot of dependencies
     private SchedulerUtil scheduler;
     private EmployeeService employeeService;
     private RosterService rosterService;
@@ -35,12 +36,8 @@ public class SchedulerServiceImpl implements SchedulerService {
     }
     @Override
     public Map<Integer, List<UUID>> scheduleRoster(UUID workLocationId) throws NoOptimalSolutionException {
-        List<Employee> employeeList = employeeService
-                .getAllEmployeesByWorkLocationIdAndHealthStatus(workLocationId, HEALTHY);
-        List<UUID> employeeIdList = employeeList
-                .stream()
-                .map(e -> e.getId())
-                .collect(Collectors.toList());
+        List<UUID> employeeIdList = getEmployeeIdList(workLocationId);
+
         Map<Integer, List<UUID>> map = scheduler.solve(employeeIdList);
 
         // LocalDate end of week is Sunday
@@ -77,6 +74,15 @@ public class SchedulerServiceImpl implements SchedulerService {
         }
 
         return map;
+    }
+
+    private List<UUID> getEmployeeIdList(UUID workLocationId) {
+        List<Employee> employeeList = employeeService
+                .getAllEmployeesByWorkLocationIdAndHealthStatus(workLocationId, HEALTHY);
+        return employeeList
+                .stream()
+                .map(e -> e.getId())
+                .collect(Collectors.toList());
     }
 
     private Date getFirstDayOfWeek(LocalDate date) {
