@@ -24,7 +24,7 @@ public interface EmployeeService {
 
     List<Employee> getAllEmployeesByCompanyId(UUID companyId);
 
-    List<Employee> getAllEmployeesByWorkLocationId(UUID workLocationId);
+    List<Employee> getAllEmployeesByWorkLocationIdAndHealthStatus(UUID workLocationId, HealthStatus healthStatus);
 
     List<Employee> getAllEmployees();
 
