@@ -24,4 +24,17 @@ public class ScheduledRosterSchedulingTask {
         this.schedulerService = schedulerService;
         this.workLocationService = workLocationService;
     }
+
+    @Scheduled(cron = "0 0 12 * * SUN")
+    @Async
+    public void logEmployeeDetails() {
+        // Get all employees
+        log.debug("Scheduling roster for all work locations now");
+        List<WorkLocation> workLocations = workLocationService.getAllWorkLocations();
+
+        for (WorkLocation workLocation : workLocations) {
+            schedulerService.scheduleRoster(workLocation.getId());
+        }
+        // Loop through all employees and log one by one asynchronously
+    }
 }
