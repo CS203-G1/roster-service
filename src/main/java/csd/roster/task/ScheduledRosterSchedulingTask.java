@@ -1,5 +1,6 @@
 package csd.roster.task;
 
+import csd.roster.exception.NoOptimalSolutionException;
 import csd.roster.model.Employee;
 import csd.roster.model.WorkLocation;
 import csd.roster.service.interfaces.SchedulerService;
@@ -33,7 +34,11 @@ public class ScheduledRosterSchedulingTask {
         List<WorkLocation> workLocations = workLocationService.getAllWorkLocations();
 
         for (WorkLocation workLocation : workLocations) {
-            schedulerService.scheduleRoster(workLocation.getId());
+            try {
+                schedulerService.scheduleRoster(workLocation.getId());
+            } catch (NoOptimalSolutionException e) {
+                log.debug(e.getMessage());
+            }
         }
         // Loop through all employees and log one by one asynchronously
     }
