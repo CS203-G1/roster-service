@@ -27,7 +27,7 @@ public class ScheduledRosterSchedulingTask {
 
     @Scheduled(cron = "0 0 12 * * SUN")
     @Async
-    public void logEmployeeDetails() {
+    public void scheduleRosters() {
         // Get all employees
         log.debug("Scheduling roster for all work locations now");
         List<WorkLocation> workLocations = workLocationService.getAllWorkLocations();
