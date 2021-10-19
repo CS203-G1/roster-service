@@ -122,6 +122,13 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
+    public List<Employee> getAllEmployeesByWorkLocationId(UUID workLocationId) {
+        workLocationService.getWorkLocationById(workLocationId);
+
+        return employeeRepository.findAllByWorkLocationId(workLocationId);
+    }
+
+    @Override
     public List<Employee> getAllEmployees() {
         return employeeRepository.findAll();
     }
