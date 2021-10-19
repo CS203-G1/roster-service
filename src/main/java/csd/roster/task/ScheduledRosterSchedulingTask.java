@@ -25,7 +25,7 @@ public class ScheduledRosterSchedulingTask {
         this.workLocationService = workLocationService;
     }
 
-    @Scheduled(cron = "0 0 12 * * SUN")
+    @Scheduled(cron = "0/5 * * * * *")
     @Async
     public void scheduleRosters() {
         // Get all employees
