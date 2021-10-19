@@ -1,5 +1,6 @@
 package csd.roster.controller;
 
+import csd.roster.exception.EmployeeNotFoundException;
 import csd.roster.exception.WorkLocationNotFoundException;
 import csd.roster.model.Employee;
 import csd.roster.model.Roster;
@@ -20,6 +21,8 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.*;
 import java.util.stream.Collectors;
+
+import static csd.roster.enumerator.HealthStatus.HEALTHY;
 
 @RestController
 public class SchedulerController {
@@ -68,6 +71,21 @@ public class SchedulerController {
                     null);
 
             rosterRepository.save(roster);
+
+            List<UUID> uuidList = map.get(i);
+
+            for (UUID uuid : uuidList) {
+                RosterEmployee rosterEmployee = new RosterEmployee(
+                        null,
+                        roster,
+                        employeeRepository.findById(uuid).orElseThrow(() ->
+                                new EmployeeNotFoundException(uuid)),
+                        false,
+                        HEALTHY
+                );
+
+                rosterEmployeeRepository.save(rosterEmployee);
+            }
         }
 
         return map;
