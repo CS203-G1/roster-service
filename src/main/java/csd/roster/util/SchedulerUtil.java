@@ -11,6 +11,9 @@ import java.util.stream.IntStream;
 
 @Service
 public class SchedulerUtil {
+    // solve method is very long
+    // but this is because we are treating it like an algorithm question
+    // no point defining separate more methods that will take a memory and time overhead
     public Map<Integer, List<UUID>> solve(List<UUID> employeeList) throws NoOptimalSolutionException{
         Loader.loadNativeLibraries();
         final int numNurses = employeeList.size();
