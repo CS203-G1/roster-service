@@ -1,11 +1,11 @@
 package csd.roster.service;
 
-import csd.roster.enumerator.HealthStatus;
+import csd.roster.exception.NoOptimalSolutionException;
 import csd.roster.model.Employee;
 import csd.roster.model.Roster;
 import csd.roster.model.RosterEmployee;
 import csd.roster.service.interfaces.*;
-import csd.roster.util.Scheduler;
+import csd.roster.util.SchedulerUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,13 +18,13 @@ import static csd.roster.enumerator.HealthStatus.HEALTHY;
 
 @Service
 public class SchedulerServiceImpl implements SchedulerService {
-    private Scheduler scheduler;
+    private SchedulerUtil scheduler;
     private EmployeeService employeeService;
     private RosterService rosterService;
     private RosterEmployeeService rosterEmployeeService;
 
     @Autowired
-    public SchedulerServiceImpl(Scheduler scheduler,
+    public SchedulerServiceImpl(SchedulerUtil scheduler,
                                 EmployeeService employeeService,
                                 RosterService rosterService,
                                 RosterEmployeeService rosterEmployeeService) {
@@ -34,7 +34,7 @@ public class SchedulerServiceImpl implements SchedulerService {
         this.rosterEmployeeService = rosterEmployeeService;
     }
     @Override
-    public Map<Integer, List<UUID>> scheduleRoster(UUID workLocationId) {
+    public Map<Integer, List<UUID>> scheduleRoster(UUID workLocationId) throws NoOptimalSolutionException {
         List<Employee> employeeList = employeeService
                 .getAllEmployeesByWorkLocationIdAndHealthStatus(workLocationId, HEALTHY);
         List<UUID> employeeIdList = employeeList
