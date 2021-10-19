@@ -9,7 +9,7 @@ import csd.roster.repository.EmployeeRepository;
 import csd.roster.repository.RosterEmployeeRepository;
 import csd.roster.repository.RosterRepository;
 import csd.roster.repository.WorkLocationRepository;
-import csd.roster.service.interfaces.SchedulerService;
+import csd.roster.service.interfaces.*;
 import csd.roster.util.Scheduler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,31 +24,28 @@ import static csd.roster.enumerator.HealthStatus.HEALTHY;
 @Service
 public class SchedulerServiceImpl implements SchedulerService {
     private Scheduler scheduler;
-    private EmployeeRepository employeeRepository;
-    private RosterRepository rosterRepository;
-    private RosterEmployeeRepository rosterEmployeeRepository;
-    private WorkLocationRepository workLocationRepository;
+    private EmployeeService employeeService;
+    private RosterService rosterService;
+    private RosterEmployeeService rosterEmployeeService;
 
     @Autowired
     public SchedulerServiceImpl(Scheduler scheduler,
-                               EmployeeRepository employeeRepository,
-                               RosterEmployeeRepository rosterEmployeeRepository,
-                               RosterRepository rosterRepository,
-                               WorkLocationRepository workLocationRepository) {
+                                EmployeeService employeeService,
+                                RosterService rosterService,
+                                RosterEmployeeService rosterEmployeeService) {
         this.scheduler = scheduler;
-        this.employeeRepository = employeeRepository;
-        this.rosterRepository = rosterRepository;
-        this.rosterEmployeeRepository = rosterEmployeeRepository;
-        this.workLocationRepository = workLocationRepository;
+        this.employeeService = employeeService;
+        this.rosterService = rosterService;
+        this.rosterEmployeeService = rosterEmployeeService;
     }
     @Override
     public Map<Integer, List<UUID>> scheduleRoster(UUID workLocationId) {
-        List<Employee> li = employeeRepository.findAllByWorkLocationId(workLocationId);
-        List<UUID> li2 = li
+        List<Employee> employeeList = employeeService.getAllEmployeesByWorkLocationId(workLocationId);
+        List<UUID> li2 = employeeList
                 .stream()
                 .map(e -> e.getId())
                 .collect(Collectors.toList());
-        Map<Integer, List<UUID>> map = scheduler.solve(li);
+        Map<Integer, List<UUID>> map = scheduler.solve(employeeList);
 
         // LocalDate end of week is Sunday
         LocalDate firstDayOfWeek = getFirstDayOfWeek(LocalDate.now()).toInstant()
@@ -58,29 +55,28 @@ public class SchedulerServiceImpl implements SchedulerService {
 
         for (int i = 0; i < 5; i++) {
             LocalDate weekday = firstDayOfWeek.plusDays(i);
-            Roster roster = new Roster(null,
+            Roster roster = new Roster(
+                    null,
                     weekday,
-                    workLocationRepository.findById(workLocationId).orElseThrow(() ->
-                            new WorkLocationNotFoundException(workLocationId)),
+                    null,
                     weekday.atTime(9, 0),
                     weekday.atTime(17, 0),
                     null);
 
-            rosterRepository.save(roster);
+            rosterService.addRoster(workLocationId, roster);
 
-            List<UUID> uuidList = map.get(i);
+            List<UUID> employeeIds = map.get(i);
 
-            for (UUID uuid : uuidList) {
+            for (UUID employeeId : employeeIds) {
                 RosterEmployee rosterEmployee = new RosterEmployee(
                         null,
                         roster,
-                        employeeRepository.findById(uuid).orElseThrow(() ->
-                                new EmployeeNotFoundException(uuid)),
+                        null,
                         false,
                         HEALTHY
                 );
 
-                rosterEmployeeRepository.save(rosterEmployee);
+                rosterEmployeeService.addRosterEmployee(roster.getId(), employeeId, rosterEmployee);
             }
         }
 
