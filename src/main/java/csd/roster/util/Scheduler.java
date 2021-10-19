@@ -111,13 +111,9 @@ public class Scheduler {
         // minShiftsPerNurse shifts. If this is not possible, because the total
         // number of shifts is not divisible by the number of nurses, some nurses will
         // be assigned one more shift.
-        int minShiftsPerNurse = (numShifts * numDays) / numNurses;
-        int maxShiftsPerNurse;
-        if ((numShifts * numDays) % numNurses == 0) {
-            maxShiftsPerNurse = minShiftsPerNurse;
-        } else {
-            maxShiftsPerNurse = minShiftsPerNurse + 1;
-        }
+        int minShiftsPerNurse = (int) Math.floor(numShifts / 2);
+        int maxShiftsPerNurse = (int) Math.ceil(numShifts / 2);
+
         for (int n : allNurses) {
             IntVar[] numShiftsWorked = new IntVar[numDays * numShifts];
             for (int d : allDays) {
