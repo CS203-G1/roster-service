@@ -4,15 +4,17 @@ import com.google.ortools.Loader;
 import com.google.ortools.sat.*;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.UUID;
 import java.util.stream.IntStream;
 
 @Service
 public class Scheduler {
-    public void solve() {
+    public void solve(List<UUID> employeeList) {
         Loader.loadNativeLibraries();
-        final int numNurses = 50;
-        final int numDays = 7;
-        final int numShifts = 3;
+        final int numNurses = employeeList.size();
+        final int numDays = 1;
+        final int numShifts = 5;
 
         final int[] allNurses = IntStream.range(0, numNurses).toArray();
         final int[] allDays = IntStream.range(0, numDays).toArray();
@@ -20,6 +22,7 @@ public class Scheduler {
 
         final int[][][] shiftRequests = new int[numNurses][numDays][numShifts];
 
+        // Commented out because shift requests feature will not be up so soon
 //        final int[][][] shiftRequests = new int[][][]{
 //                {
 //                        {0, 0, 1},
