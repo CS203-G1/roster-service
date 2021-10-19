@@ -10,7 +10,7 @@ import java.util.stream.IntStream;
 
 @Service
 public class Scheduler {
-    public Map<Integer, List<UUID>> solve(List<Employee> employeeList) {
+    public Map<Integer, List<UUID>> solve(List<UUID> employeeList) {
         Loader.loadNativeLibraries();
         final int numNurses = employeeList.size();
         final int numDays = 5;
@@ -154,8 +154,8 @@ public class Scheduler {
 //                            } else {
 //                                System.out.printf("  Employee %s works shift %d (not requested).%n", employeeList.get(n).getName(), s);
 //                            }
-                            List<UUID> li = roster_employees.getOrDefault((Integer) d, new LinkedList<UUID>());
-                            li.add(employeeList.get(n).getId());
+                            List<UUID> li = roster_employees.getOrDefault(d, new LinkedList<UUID>());
+                            li.add(employeeList.get(n));
                             roster_employees.put(d, li);
                         }
                     }
