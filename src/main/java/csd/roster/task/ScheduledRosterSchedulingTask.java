@@ -29,10 +29,11 @@ public class ScheduledRosterSchedulingTask {
     @Scheduled(cron = "0/5 * * * * *")
     @Async
     public void scheduleRosters() {
-        // Get all employees
         log.debug("Scheduling roster for all work locations now");
+        // Get all work locations
         List<WorkLocation> workLocations = workLocationService.getAllWorkLocations();
 
+        // Loop through all work locations and schedule each one 
         for (WorkLocation workLocation : workLocations) {
             try {
                 schedulerService.scheduleRoster(workLocation.getId());
@@ -40,6 +41,5 @@ public class ScheduledRosterSchedulingTask {
                 log.debug(e.getMessage());
             }
         }
-        // Loop through all employees and log one by one asynchronously
     }
 }
