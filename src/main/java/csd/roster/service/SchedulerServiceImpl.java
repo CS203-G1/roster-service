@@ -1,5 +1,6 @@
 package csd.roster.service;
 
+import csd.roster.enumerator.HealthStatus;
 import csd.roster.model.Employee;
 import csd.roster.model.Roster;
 import csd.roster.model.RosterEmployee;
@@ -34,7 +35,8 @@ public class SchedulerServiceImpl implements SchedulerService {
     }
     @Override
     public Map<Integer, List<UUID>> scheduleRoster(UUID workLocationId) {
-        List<Employee> employeeList = employeeService.getAllEmployeesByWorkLocationId(workLocationId);
+        List<Employee> employeeList = employeeService
+                .getAllEmployeesByWorkLocationIdAndHealthStatus(workLocationId, HEALTHY);
         List<UUID> employeeIdList = employeeList
                 .stream()
                 .map(e -> e.getId())
