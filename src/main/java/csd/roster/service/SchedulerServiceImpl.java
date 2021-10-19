@@ -35,11 +35,11 @@ public class SchedulerServiceImpl implements SchedulerService {
     @Override
     public Map<Integer, List<UUID>> scheduleRoster(UUID workLocationId) {
         List<Employee> employeeList = employeeService.getAllEmployeesByWorkLocationId(workLocationId);
-        List<UUID> li2 = employeeList
+        List<UUID> employeeIdList = employeeList
                 .stream()
                 .map(e -> e.getId())
                 .collect(Collectors.toList());
-        Map<Integer, List<UUID>> map = scheduler.solve(employeeList);
+        Map<Integer, List<UUID>> map = scheduler.solve(employeeIdList);
 
         // LocalDate end of week is Sunday
         LocalDate firstDayOfWeek = getFirstDayOfWeek(LocalDate.now()).toInstant()
