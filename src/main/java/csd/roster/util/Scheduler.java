@@ -103,7 +103,7 @@ public class Scheduler {
                 for (int s : allShifts) {
                     x[s] = shifts[n][d][s];
                 }
-                model.addLessOrEqual(LinearExpr.sum(x), 1);
+                model.addLessOrEqual(LinearExpr.sum(x), (int) Math.ceil(numShifts / 2));
             }
         }
 
