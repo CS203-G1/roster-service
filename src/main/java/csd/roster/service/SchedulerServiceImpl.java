@@ -60,20 +60,24 @@ public class SchedulerServiceImpl implements SchedulerService {
 
             List<UUID> employeeIds = map.get(i);
 
-            for (UUID employeeId : employeeIds) {
-                RosterEmployee rosterEmployee = new RosterEmployee(
-                        null,
-                        roster,
-                        null,
-                        false,
-                        HEALTHY
-                );
-
-                rosterEmployeeService.addRosterEmployee(roster.getId(), employeeId, rosterEmployee);
-            }
+            scheduleRosterEmployee(roster, employeeIds);
         }
 
         return map;
+    }
+
+    private void scheduleRosterEmployee(Roster roster, List<UUID> employeeIds) {
+        for (UUID employeeId : employeeIds) {
+            RosterEmployee rosterEmployee = new RosterEmployee(
+                    null,
+                    roster,
+                    null,
+                    false,
+                    HEALTHY
+            );
+
+            rosterEmployeeService.addRosterEmployee(roster.getId(), employeeId, rosterEmployee);
+        }
     }
 
     private List<UUID> getEmployeeIdList(UUID workLocationId) {
