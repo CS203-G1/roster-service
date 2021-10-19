@@ -2,6 +2,7 @@ package csd.roster.util;
 
 import com.google.ortools.Loader;
 import com.google.ortools.sat.*;
+import csd.roster.model.Employee;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -10,11 +11,11 @@ import java.util.stream.IntStream;
 
 @Service
 public class Scheduler {
-    public void solve(List<UUID> employeeList) {
+    public void solve(List<Employee> employeeList) {
         Loader.loadNativeLibraries();
         final int numNurses = employeeList.size();
-        final int numDays = 1;
-        final int numShifts = 5;
+        final int numDays = 5;
+        final int numShifts = 1;
 
         final int[] allNurses = IntStream.range(0, numNurses).toArray();
         final int[] allDays = IntStream.range(0, numDays).toArray();
@@ -103,7 +104,7 @@ public class Scheduler {
                 for (int s : allShifts) {
                     x[s] = shifts[n][d][s];
                 }
-                model.addLessOrEqual(LinearExpr.sum(x), (int) Math.ceil(numShifts / 2));
+                model.addLessOrEqual(LinearExpr.sum(x), 1);
             }
         }
 
@@ -112,7 +113,7 @@ public class Scheduler {
         // number of shifts is not divisible by the number of nurses, some nurses will
         // be assigned one more shift.
         int minShiftsPerNurse = (int) Math.floor(numShifts / 2);
-        int maxShiftsPerNurse = (int) Math.ceil(numShifts / 2);
+        int maxShiftsPerNurse = 3;
 
         for (int n : allNurses) {
             IntVar[] numShiftsWorked = new IntVar[numDays * numShifts];
@@ -149,9 +150,9 @@ public class Scheduler {
                     for (int s : allShifts) {
                         if (solver.value(shifts[n][d][s]) == 1L) {
                             if (shiftRequests[n][d][s] == 1) {
-                                System.out.printf("  Nurse %d works shift %d (requested).%n", n, s);
+                                System.out.printf("  Employee %s works shift %d (requested).%n", employeeList.get(n).getName(), s);
                             } else {
-                                System.out.printf("  Nurse %d works shift %d (not requested).%n", n, s);
+                                System.out.printf("  Employee %s works shift %d (not requested).%n", employeeList.get(n).getName(), s);
                             }
                         }
                     }
