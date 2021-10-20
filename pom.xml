@@ -50,6 +50,13 @@
             <artifactId>aws-java-sdk-cognitoidp</artifactId>
             <version>1.12.76</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/com.amazonaws/aws-java-sdk-s3 -->
+        <dependency>
+            <groupId>com.amazonaws</groupId>
+            <artifactId>aws-java-sdk-s3</artifactId>
+            <version>1.12.89</version>
+        </dependency>
+
         <!--  Spring security      -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
