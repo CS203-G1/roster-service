@@ -1,5 +1,6 @@
 package csd.roster.model;
 
+import csd.roster.enumerator.RequestStatus;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -29,4 +30,8 @@ public class Request {
     @CreationTimestamp
     @Column(name = "created_at")
     private LocalDate date;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "request_status")
+    RequestStatus requestStatus;
 }
