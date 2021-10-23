@@ -1,6 +1,7 @@
 package csd.roster.service;
 
 import csd.roster.enumerator.HealthStatus;
+import csd.roster.enumerator.RequestStatus;
 import csd.roster.model.ArtRequest;
 import csd.roster.model.Employee;
 import csd.roster.repository.ArtRequestRepository;
@@ -9,15 +10,17 @@ import csd.roster.service.interfaces.EmployeeService;
 import csd.roster.util.AwsS3Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.parameters.P;
+import org.springframework.security.oauth2.provider.approval.Approval;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.imageio.ImageIO;
-import java.awt.*;
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -56,8 +59,25 @@ public class ArtRequestServiceImpl implements ArtRequestService {
     }
 
     @Override
-    public ArtRequest getArtRequest(UUID id) {
-        return null;
+    public Optional<ArtRequest> getArtRequest(UUID id) {
+        return artRequestRepository.findById(id);
+    }
+
+    @Override
+    public List<ArtRequest> getArtRequestByEmployeeIdAndRequestStatus(UUID employeeId, RequestStatus requestStatus){
+        return artRequestRepository.findAllByEmployeeIdAndRequestStatus(employeeId, requestStatus);
+    }
+
+    @Override
+    public List<ArtRequest> getArtRequestsByCompanyIdAndApprovalStatus(UUID companyId, RequestStatus requestStatus){
+        List<Employee> employees = employeeService.getAllEmployeesByCompanyId(companyId);
+
+        ArrayList<ArtRequest> artRequests = new ArrayList<ArtRequest>();
+        for(Employee employee: employees){
+            List<ArtRequest> employeeRequests = getArtRequestByEmployeeIdAndRequestStatus(employee.getId(), requestStatus);
+            artRequests.addAll(employeeRequests);
+        }
+        return artRequests;
     }
 
     @Override
