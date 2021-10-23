@@ -51,6 +51,11 @@ public class Employee {
     @OneToMany(mappedBy = "employee", orphanRemoval = true, cascade = CascadeType.ALL)
     private Set<RosterEmployee> roster_employees;
 
+    @JsonIgnore
+    @Transient
+    @OneToMany(mappedBy = "employee", orphanRemoval = true, cascade = CascadeType.ALL)
+    private Set<Request> requests;
+
     @ManyToOne
     @JoinColumn(name="department_id", referencedColumnName="id")
     private Department department;
