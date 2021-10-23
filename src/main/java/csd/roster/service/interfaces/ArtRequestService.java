@@ -12,12 +12,13 @@ import java.util.UUID;
 public interface ArtRequestService {
     ArtRequest addArtRequest(UUID employeeId, MultipartFile multipartFile);
 
-    Optional<ArtRequest> getArtRequest(UUID id);
+    ArtRequest getArtRequest(UUID id);
 
     List<ArtRequest> getArtRequestByEmployeeIdAndRequestStatus(UUID employeeId, RequestStatus requestStatus);
 
     List<ArtRequest> getArtRequestsByCompanyIdAndApprovalStatus(UUID companyId, RequestStatus requestStatus);
 
-    ArtRequest reviewArtRequest(UUID id, HealthStatus healthStatus);
+    ArtRequest reviewArtRequest(UUID id, HealthStatus healthStatus, RequestStatus requestStatus);
+
 
 }

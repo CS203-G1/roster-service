@@ -1,6 +1,8 @@
 package csd.roster.controller;
 
+import csd.roster.enumerator.HealthStatus;
 import csd.roster.enumerator.RequestStatus;
+import csd.roster.holder.ArtRequestReviewHolder;
 import csd.roster.model.ArtRequest;
 import csd.roster.service.ArtRequestServiceImpl;
 import csd.roster.service.interfaces.ArtRequestService;
@@ -33,5 +35,11 @@ public class ArtRequestController {
     @GetMapping("/companies/{companyId}/requests/art-request/{requestStatus}")
     public List<ArtRequest> getArtRequestsByCompanyAndRequestStatus(@PathVariable(value = "companyId") UUID companyId, @PathVariable(value = "requestStatus")RequestStatus requestStatus){
         return artRequestService.getArtRequestsByCompanyIdAndApprovalStatus(companyId,requestStatus);
+    }
+
+    @PutMapping("/requests/art-request/{artRequestId}")
+    public ArtRequest reviewArtRequest(@PathVariable(value = "artRequestId") UUID artRequestId,
+                                       @RequestBody ArtRequestReviewHolder artRequestReviewHolder){
+        return artRequestService.reviewArtRequest(artRequestId, artRequestReviewHolder.getHealthStatus(), artRequestReviewHolder.getRequestStatus());
     }
 }
