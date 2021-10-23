@@ -2,6 +2,8 @@ package csd.roster.service;
 
 import csd.roster.enumerator.HealthStatus;
 import csd.roster.enumerator.RequestStatus;
+import csd.roster.exception.ArtRequestNotFoundException;
+import csd.roster.exception.EmployeeNotFoundException;
 import csd.roster.model.ArtRequest;
 import csd.roster.model.Employee;
 import csd.roster.repository.ArtRequestRepository;
@@ -59,8 +61,9 @@ public class ArtRequestServiceImpl implements ArtRequestService {
     }
 
     @Override
-    public Optional<ArtRequest> getArtRequest(UUID id) {
-        return artRequestRepository.findById(id);
+    public ArtRequest getArtRequest(UUID id) {
+        return artRequestRepository.findById(id)
+                .orElseThrow(() -> new ArtRequestNotFoundException(id));
     }
 
     @Override
@@ -81,8 +84,11 @@ public class ArtRequestServiceImpl implements ArtRequestService {
     }
 
     @Override
-    public ArtRequest reviewArtRequest(UUID id, HealthStatus healthStatus) {
-        return null;
+    public ArtRequest reviewArtRequest(UUID id, HealthStatus healthStatus, RequestStatus requestStatus) {
+        ArtRequest artRequest = getArtRequest(id);
+        artRequest.setHealthStatus(healthStatus);
+        artRequest.setRequestStatus(requestStatus);
+        return artRequestRepository.save(artRequest);
     }
 
     private void convertMultipartFileToFile(MultipartFile multipartFile, File file) {
