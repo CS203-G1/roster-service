@@ -2,6 +2,7 @@ package csd.roster.model;
 
 import csd.roster.enumerator.RequestStatus;
 import lombok.*;
+import org.codehaus.jackson.annotate.JsonIgnore;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
@@ -23,6 +24,7 @@ public class Request {
     @Column(name = "id")
     private UUID id;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name="employee_id", referencedColumnName = "id")
     private Employee employee;
