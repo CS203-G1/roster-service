@@ -68,6 +68,8 @@ public class ArtRequestServiceImpl implements ArtRequestService {
 
     @Override
     public List<ArtRequest> getArtRequestByEmployeeIdAndRequestStatus(UUID employeeId, RequestStatus requestStatus){
+        employeeService.getEmployee(employeeId);
+
         return artRequestRepository.findAllByEmployeeIdAndRequestStatus(employeeId, requestStatus);
     }
 
@@ -88,6 +90,11 @@ public class ArtRequestServiceImpl implements ArtRequestService {
         ArtRequest artRequest = getArtRequest(id);
         artRequest.setHealthStatus(healthStatus);
         artRequest.setRequestStatus(requestStatus);
+        if(requestStatus == RequestStatus.APPROVED){
+            Employee employee = artRequest.getEmployee();
+            employee.setHealthStatus(healthStatus);
+            employeeService.updateEmployee(employee.getDepartment().getId(), employee.getId(), employee);
+        }
         return artRequestRepository.save(artRequest);
     }
 
