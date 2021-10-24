@@ -32,13 +32,15 @@ public class ArtRequestController {
 
     @PreAuthorize("hasRole('ROLE_EMPLOYER')")
     @GetMapping("/employees/{employeeId}/requests/art-request/{requestStatus}")
-    public List<ArtRequest> getArtRequestsByEmployeeAndRequestStatus(@PathVariable(value = "employeeId") UUID employeeId, @PathVariable(value = "requestStatus")RequestStatus requestStatus){
+    public List<ArtRequest> getArtRequestsByEmployeeAndRequestStatus(@PathVariable(value = "employeeId") UUID employeeId,
+                                                                     @PathVariable(value = "requestStatus")RequestStatus requestStatus){
         return artRequestService.getArtRequestByEmployeeIdAndRequestStatus(employeeId,requestStatus);
     }
 
     @PreAuthorize("hasRole('ROLE_EMPLOYER')")
     @GetMapping("/companies/{companyId}/requests/art-request/{requestStatus}")
-    public List<ArtRequest> getArtRequestsByCompanyAndRequestStatus(@PathVariable(value = "companyId") UUID companyId, @PathVariable(value = "requestStatus")RequestStatus requestStatus){
+    public List<ArtRequest> getArtRequestsByCompanyAndRequestStatus(@PathVariable(value = "companyId") UUID companyId,
+                                                                    @PathVariable(value = "requestStatus")RequestStatus requestStatus){
         return artRequestService.getArtRequestsByCompanyIdAndApprovalStatus(companyId,requestStatus);
     }
 
