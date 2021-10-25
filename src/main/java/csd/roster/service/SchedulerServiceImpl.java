@@ -65,6 +65,10 @@ public class SchedulerServiceImpl implements SchedulerService {
             rosterService.addRoster(workLocationId, roster);
 
             List<UUID> employeeIds = schedule.get(i);
+            List<UUID> allEmployeeIds = employeeService
+                    .getAllEmployeesByWorkLocationIdAndHealthStatus(workLocationId, HEALTHY)
+                    .stream()
+                    .map(e -> e.getId()).collect(Collectors.toList());
 
             scheduleRosterEmployee(roster, employeeIds);
         }
