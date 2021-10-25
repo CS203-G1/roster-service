@@ -65,7 +65,8 @@ public class RosterServiceImpl implements RosterService {
     @Override
     public Roster updateRoster(UUID workLocationId, UUID rosterId, Roster roster) {
         return rosterRepository.findByIdAndWorkLocationId(rosterId, workLocationId).map(oldRoster -> {
-            oldRoster.setDate(roster.getDate());
+            oldRoster.setFromDateTime(roster.getFromDateTime());
+            oldRoster.setToDateTime(roster.getToDateTime());
             return rosterRepository.save(oldRoster);
 
         }).orElseThrow(() -> new RosterNotFoundException(rosterId, workLocationId));
