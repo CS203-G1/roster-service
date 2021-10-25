@@ -5,5 +5,5 @@ import java.util.Map;
 import java.util.UUID;
 
 public interface SchedulerService {
-    Map<Integer, List<UUID>> scheduleRoster(UUID workLocationId);
+    Map<Integer, Set<UUID>> scheduleRoster(UUID workLocationId);
 }
