@@ -16,12 +16,12 @@ import java.util.UUID;
 public interface RosterEmployeeRepository extends JpaRepository<RosterEmployee, UUID> {
     Optional<RosterEmployee> findByRosterIdAndEmployeeId(UUID rosterId, UUID employeeId);
 
-    @Query("select re from RosterEmployee re where re.employee.company.id = :id and re.roster.date = :date and re.roster.workLocation.name = 'remote'")
+    @Query("select re from RosterEmployee re where re.employee.company.id = :id and re.roster.date = :date and re.isRemote = true")
     List<RosterEmployee> findRemoteRosterEmployeesByCompanyIdAndDate(@Param("id") UUID companyId, @Param("date") LocalDate date);
 
     @Query("select re from RosterEmployee re where re.employee.company.id = :id and re.roster.date = :date")
     List<RosterEmployee> findAllRosterEmployeesByCompanyIdAndDate(@Param("id") UUID companyId, @Param("date") LocalDate date);
 
-    @Query("select re from RosterEmployee re where re.employee.company.id = :id and re.roster.date = :date and re.roster.workLocation.name <> 'remote'")
+    @Query("select re from RosterEmployee re where re.employee.company.id = :id and re.roster.date = :date and re.isRemote = false")
     List<RosterEmployee> findOnsiteRosterEmployeesByCompanyIdAndDate(@Param("id") UUID companyId, @Param("date") LocalDate date);
 }
