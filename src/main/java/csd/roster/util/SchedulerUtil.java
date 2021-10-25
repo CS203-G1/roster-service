@@ -14,7 +14,7 @@ public class SchedulerUtil {
     // solve method is very long
     // but this is because we are treating it like an algorithm question
     // no point defining separate more methods that will take a memory and time overhead
-    public Map<Integer, List<UUID>> solve(List<UUID> employeeList) throws NoOptimalSolutionException{
+    public Map<Integer, Set<UUID>> solve(List<UUID> employeeList) throws NoOptimalSolutionException{
         Loader.loadNativeLibraries();
         final int numNurses = employeeList.size();
         final int numDays = 5;
@@ -145,15 +145,15 @@ public class SchedulerUtil {
         CpSolver solver = new CpSolver();
         CpSolverStatus status = solver.solve(model);
 
-        Map<Integer, List<UUID>> roster_employees = new HashMap<>();
+        Map<Integer, Set<UUID>> roster_employees = new HashMap<>();
         if (status == CpSolverStatus.OPTIMAL || status == CpSolverStatus.FEASIBLE) {
             for (int d : allDays) {
                 for (int n : allNurses) {
                     for (int s : allShifts) {
                         if (solver.value(shifts[n][d][s]) == 1L) {
-                            List<UUID> li = roster_employees.getOrDefault(d, new LinkedList<UUID>());
-                            li.add(employeeList.get(n));
-                            roster_employees.put(d, li);
+                            Set<UUID> set = roster_employees.getOrDefault(d, new HashSet<UUID>());
+                            set.add(employeeList.get(n));
+                            roster_employees.put(d, set);
                         }
                     }
                 }
