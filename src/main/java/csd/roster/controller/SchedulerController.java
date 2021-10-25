@@ -18,7 +18,7 @@ public class SchedulerController {
     }
 
     @PostMapping("/schedule/{workLocationId}")
-    public Map<Integer, List<UUID>> schedule(@PathVariable(value = "workLocationId") UUID workLocationId) {
+    public Map<Integer, Set<UUID>> schedule(@PathVariable(value = "workLocationId") UUID workLocationId) {
         return schedulerService.scheduleRoster(workLocationId);
     }
 }
