@@ -35,10 +35,10 @@ public class SchedulerServiceImpl implements SchedulerService {
         this.rosterEmployeeService = rosterEmployeeService;
     }
     @Override
-    public Map<Integer, List<UUID>> scheduleRoster(UUID workLocationId) throws NoOptimalSolutionException {
+    public Map<Integer, Set<UUID>> scheduleRoster(UUID workLocationId) throws NoOptimalSolutionException {
         List<UUID> employeeIdList = getEmployeeIdList(workLocationId);
 
-        Map<Integer, List<UUID>> schedule = scheduler.solve(employeeIdList);
+        Map<Integer, Set<UUID>> schedule = scheduler.solve(employeeIdList);
 
         // LocalDate end of week is Sunday
         LocalDate firstDayOfWeek = getFirstDayOfWeek(LocalDate.now()).toInstant()
@@ -51,7 +51,7 @@ public class SchedulerServiceImpl implements SchedulerService {
         return schedule;
     }
 
-    private void scheduleRoster(LocalDate firstDayOfWeek, Map<Integer, List<UUID>> schedule, UUID workLocationId) {
+    private void scheduleRoster(LocalDate firstDayOfWeek, Map<Integer, Set<UUID>> schedule, UUID workLocationId) {
         for (int i = 0; i < 5; i++) {
             LocalDate weekday = firstDayOfWeek.plusDays(i);
             Roster roster = new Roster(
@@ -64,23 +64,25 @@ public class SchedulerServiceImpl implements SchedulerService {
 
             rosterService.addRoster(workLocationId, roster);
 
-            List<UUID> employeeIds = schedule.get(i);
+            Set<UUID> onsiteEmployeeIds = schedule.get(i);
             List<UUID> allEmployeeIds = employeeService
                     .getAllEmployeesByWorkLocationIdAndHealthStatus(workLocationId, HEALTHY)
                     .stream()
                     .map(e -> e.getId()).collect(Collectors.toList());
 
-            scheduleRosterEmployee(roster, employeeIds);
+            scheduleRosterEmployee(roster, onsiteEmployeeIds, allEmployeeIds);
         }
     }
 
-    private void scheduleRosterEmployee(Roster roster, List<UUID> employeeIds) {
-        for (UUID employeeId : employeeIds) {
+    private void scheduleRosterEmployee(Roster roster, Set<UUID> onsiteEmployeeIds, List<UUID> allEmployeeIds) {
+        for (UUID employeeId : allEmployeeIds) {
             RosterEmployee rosterEmployee = new RosterEmployee(
                     null,
                     roster,
                     null,
-                    false,
+                    // negate this expression because if onsiteEmployeeIds contains the employeeId
+                    // it would be false
+                    !onsiteEmployeeIds.contains(employeeId),
                     HEALTHY
             );
 
