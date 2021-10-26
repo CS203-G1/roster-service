@@ -52,8 +52,11 @@ public class SchedulerServiceImpl implements SchedulerService {
     }
 
     private void scheduleRoster(LocalDate firstDayOfWeek, Map<Integer, Set<UUID>> schedule, UUID workLocationId) {
+        // After we get the firstDayOfWeek, we iterate Monday through Friday
         for (int i = 0; i < 5; i++) {
             LocalDate weekday = firstDayOfWeek.plusDays(i);
+
+            // Create a roster based on the weekday
             Roster roster = new Roster(
                     null,
                     weekday,
@@ -64,7 +67,10 @@ public class SchedulerServiceImpl implements SchedulerService {
 
             rosterService.addRoster(workLocationId, roster);
 
+            // Get the employees who are supposed to work on site for the day
             Set<UUID> onsiteEmployeeIds = schedule.get(i);
+
+            // Get all employees who are supposed to work regardless of remote or onsite    
             List<UUID> allEmployeeIds = employeeService
                     .getAllEmployeesByWorkLocationIdAndHealthStatus(workLocationId, HEALTHY)
                     .stream()
