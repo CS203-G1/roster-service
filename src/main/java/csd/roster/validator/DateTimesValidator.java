@@ -1,6 +1,7 @@
 package csd.roster.validator;
 
 import csd.roster.annotation.ValidDateTimes;
+import csd.roster.model.Roster;
 import csd.roster.model.RosterEmployee;
 import org.springframework.beans.BeanWrapperImpl;
 
@@ -10,7 +11,7 @@ import java.time.LocalDateTime;
 
 // Custom Validator to validate whether fromDateTime is before toDateTime
 // reference: https://www.baeldung.com/spring-mvc-custom-validator
-public class DateTimesValidator implements ConstraintValidator<ValidDateTimes, RosterEmployee> {
+public class DateTimesValidator implements ConstraintValidator<ValidDateTimes, Roster> {
 
     private String fromDateTimeFieldName;
     private String toDateTimeFieldName;
@@ -22,14 +23,14 @@ public class DateTimesValidator implements ConstraintValidator<ValidDateTimes, R
     }
 
     @Override
-    public boolean isValid(RosterEmployee rosterEmployee, ConstraintValidatorContext constraintValidatorContext) {
+    public boolean isValid(Roster roster, ConstraintValidatorContext constraintValidatorContext) {
         // What I am doing here is to get the value of rosterEmployee.fromDateTime and convert it to a LocalDateTime
         // object
         // reference: https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/beans/BeanWrapperImpl.html
-        final LocalDateTime fromDateTime = (LocalDateTime) new BeanWrapperImpl(rosterEmployee)
+        final LocalDateTime fromDateTime = (LocalDateTime) new BeanWrapperImpl(roster)
                 .getPropertyValue(fromDateTimeFieldName);
         // Same as fromDateTime
-        final LocalDateTime toDateTime = (LocalDateTime) new BeanWrapperImpl(rosterEmployee)
+        final LocalDateTime toDateTime = (LocalDateTime) new BeanWrapperImpl(roster)
                 .getPropertyValue(toDateTimeFieldName);
 
         // return whether fromDatetime is before toDateTime

@@ -22,6 +22,10 @@ public interface EmployeeRepository extends JpaRepository<Employee, UUID> {
     @Query("select e from Employee e where e.company.id = :id")
     List<Employee> findAllByCompanyId(@Param("id") UUID companyId);
 
+    @Query("select e from Employee e where e.workLocation.id = :id and e.healthStatus = :healthStatus")
+    List<Employee> findAllByWorkLocationIdAndHealthStatus(@Param("id") UUID workLocationId,
+                                                          @Param("healthStatus") HealthStatus healthStatus);
+
     @Query("select e from Employee e where e.company.id = :id and e.createdAt <= :datetime")
     List<Employee> findAllByCompanyIdBeforeDate(@Param("id") UUID companyId, @Param("datetime") LocalDateTime datetime);
 
