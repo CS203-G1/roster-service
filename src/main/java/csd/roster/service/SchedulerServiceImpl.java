@@ -52,6 +52,12 @@ public class SchedulerServiceImpl implements SchedulerService {
     }
 
     private void scheduleRoster(LocalDate firstDayOfWeek, Map<Integer, Set<UUID>> schedule, UUID workLocationId) {
+        // Get all employees who are supposed to work regardless of remote or onsite
+        List<UUID> allEmployeeIds = employeeService
+                .getAllEmployeesByWorkLocationIdAndHealthStatus(workLocationId, HEALTHY)
+                .stream()
+                .map(e -> e.getId()).collect(Collectors.toList());
+
         // After we get the firstDayOfWeek, we iterate Monday through Friday
         for (int i = 0; i < 5; i++) {
             LocalDate weekday = firstDayOfWeek.plusDays(i);
@@ -69,12 +75,6 @@ public class SchedulerServiceImpl implements SchedulerService {
 
             // Get the employees who are supposed to work on site for the day
             Set<UUID> onsiteEmployeeIds = schedule.get(i);
-
-            // Get all employees who are supposed to work regardless of remote or onsite    
-            List<UUID> allEmployeeIds = employeeService
-                    .getAllEmployeesByWorkLocationIdAndHealthStatus(workLocationId, HEALTHY)
-                    .stream()
-                    .map(e -> e.getId()).collect(Collectors.toList());
 
             scheduleRosterEmployee(roster, onsiteEmployeeIds, allEmployeeIds);
         }
