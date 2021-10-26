@@ -14,17 +14,17 @@ public class SchedulerUtil {
     // solve method is very long
     // but this is because we are treating it like an algorithm question
     // no point defining separate more methods that will take a memory and time overhead
-    public Map<Integer, List<UUID>> solve(List<UUID> employeeList) throws NoOptimalSolutionException{
+    public Map<Integer, Set<UUID>> solve(List<UUID> employeeList) throws NoOptimalSolutionException{
         Loader.loadNativeLibraries();
-        final int numNurses = employeeList.size();
+        final int numEmployees = employeeList.size();
         final int numDays = 5;
         final int numShifts = 1;
 
-        final int[] allNurses = IntStream.range(0, numNurses).toArray();
+        final int[] allEmployees = IntStream.range(0, numEmployees).toArray();
         final int[] allDays = IntStream.range(0, numDays).toArray();
         final int[] allShifts = IntStream.range(0, numShifts).toArray();
 
-        final int[][][] shiftRequests = new int[numNurses][numDays][numShifts];
+        final int[][][] shiftRequests = new int[numEmployees][numDays][numShifts];
 
         // Commented out because shift requests feature will not be up so soon
 //        final int[][][] shiftRequests = new int[][][]{
@@ -80,8 +80,8 @@ public class SchedulerUtil {
 
         // Creates shift variables.
         // shifts[(n, d, s)]: nurse 'n' works shift 's' on day 'd'.
-        IntVar[][][] shifts = new IntVar[numNurses][numDays][numShifts];
-        for (int n : allNurses) {
+        IntVar[][][] shifts = new IntVar[numEmployees][numDays][numShifts];
+        for (int n : allEmployees) {
             for (int d : allDays) {
                 for (int s : allShifts) {
                     shifts[n][d][s] = model.newBoolVar("shifts_n" + n + "d" + d + "s" + s);
@@ -92,16 +92,16 @@ public class SchedulerUtil {
         // Each shift is assigned to exactly one nurse in the schedule period.
         for (int d : allDays) {
             for (int s : allShifts) {
-                IntVar[] x = new IntVar[numNurses];
-                for (int n : allNurses) {
+                IntVar[] x = new IntVar[numEmployees];
+                for (int n : allEmployees) {
                     x[n] = shifts[n][d][s];
                 }
-                model.addEquality(LinearExpr.sum(x), numNurses / 2);
+                model.addEquality(LinearExpr.sum(x), numEmployees / 2);
             }
         }
 
         // Each nurse works at most one shift per day.
-        for (int n : allNurses) {
+        for (int n : allEmployees) {
             for (int d : allDays) {
                 IntVar[] x = new IntVar[numShifts];
                 for (int s : allShifts) {
@@ -118,7 +118,7 @@ public class SchedulerUtil {
         int minShiftsPerNurse = (int) Math.floor(numShifts / 2);
         int maxShiftsPerNurse = 3;
 
-        for (int n : allNurses) {
+        for (int n : allEmployees) {
             IntVar[] numShiftsWorked = new IntVar[numDays * numShifts];
             for (int d : allDays) {
                 for (int s : allShifts) {
@@ -129,9 +129,9 @@ public class SchedulerUtil {
                     LinearExpr.sum(numShiftsWorked), minShiftsPerNurse, maxShiftsPerNurse);
         }
 
-        IntVar[] flatShifts = new IntVar[numNurses * numDays * numShifts];
-        int[] flatShiftRequests = new int[numNurses * numDays * numShifts];
-        for (int n : allNurses) {
+        IntVar[] flatShifts = new IntVar[numEmployees * numDays * numShifts];
+        int[] flatShiftRequests = new int[numEmployees * numDays * numShifts];
+        for (int n : allEmployees) {
             for (int d : allDays) {
                 for (int s : allShifts) {
                     flatShifts[n * numDays * numShifts + d * numShifts + s] = shifts[n][d][s];
@@ -145,15 +145,15 @@ public class SchedulerUtil {
         CpSolver solver = new CpSolver();
         CpSolverStatus status = solver.solve(model);
 
-        Map<Integer, List<UUID>> roster_employees = new HashMap<>();
+        Map<Integer, Set<UUID>> roster_employees = new HashMap<>();
         if (status == CpSolverStatus.OPTIMAL || status == CpSolverStatus.FEASIBLE) {
             for (int d : allDays) {
-                for (int n : allNurses) {
+                for (int n : allEmployees) {
                     for (int s : allShifts) {
                         if (solver.value(shifts[n][d][s]) == 1L) {
-                            List<UUID> li = roster_employees.getOrDefault(d, new LinkedList<UUID>());
-                            li.add(employeeList.get(n));
-                            roster_employees.put(d, li);
+                            Set<UUID> set = roster_employees.getOrDefault(d, new HashSet<UUID>());
+                            set.add(employeeList.get(n));
+                            roster_employees.put(d, set);
                         }
                     }
                 }
