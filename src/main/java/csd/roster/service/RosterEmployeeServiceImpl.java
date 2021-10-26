@@ -68,8 +68,8 @@ public class RosterEmployeeServiceImpl implements RosterEmployeeService {
 
         // Different from the usual updates because we only want to allow the frontend request to be able to
         // update from date time and to date time
-        rosterEmployee.setFromDateTime(newRosterEmployee.getFromDateTime());
-        rosterEmployee.setToDateTime(newRosterEmployee.getToDateTime());
+//        rosterEmployee.setFromDateTime(newRosterEmployee.getFromDateTime());
+//        rosterEmployee.setToDateTime(newRosterEmployee.getToDateTime());
 
         return rosterEmployeeRepository.save(rosterEmployee);
     }

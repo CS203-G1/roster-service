@@ -43,13 +43,12 @@ public class RosterEmployeeServiceTest {
     @Test
     public void addRosterEmployee_ValidRosterEmployee_ReturnSavedRosterEmployee(){
         UUID rosterId = UUID.randomUUID();
-        Roster roster = new Roster(rosterId, LocalDate.now(), null, null);
+        Roster roster = new Roster(rosterId, LocalDate.now(), null, null, null, null);
 
         UUID employeeId = UUID.randomUUID();
         VaccinationStatus vaccinationStatus = VaccinationStatus.SECOND_DOSE;
         VaccinationBrand vaccinationBrand = VaccinationBrand.PFIZER;
-        HealthStatus healthStatus = HealthStatus.HEALTHY;
-        Employee employee = new Employee();
+        HealthStatus healthStatus = HealthStatus.HEALTHY;        Employee employee = new Employee();
         employee.setId(employeeId);
         employee.setVaccinationStatus(vaccinationStatus);
         employee.setVaccinationBrand(vaccinationBrand);
@@ -58,7 +57,7 @@ public class RosterEmployeeServiceTest {
         UUID rosterEmployeeId = UUID.randomUUID();
         LocalDateTime fromTime = LocalDateTime.of(2023, 12, 12, 9,0,0);
         LocalDateTime toTime = LocalDateTime.of(2023, 12, 12, 17,0,0);
-        RosterEmployee rosterEmployee = new RosterEmployee(rosterEmployeeId, null, null, fromTime, toTime, null);
+        RosterEmployee rosterEmployee = new RosterEmployee(rosterEmployeeId, null, null, false, null);
 
         when(employeeService.getEmployee(employeeId)).thenReturn(employee);
         when(rosterService.getRoster(rosterId)).thenReturn(roster);
@@ -77,7 +76,7 @@ public class RosterEmployeeServiceTest {
     @Test
     public void addRosterEmployee_UnhealthyEmployee_ReturnSavedRosterEmployee(){
         UUID rosterId = UUID.randomUUID();
-        Roster roster = new Roster(rosterId, LocalDate.now(), null, null);
+        Roster roster = new Roster(rosterId, LocalDate.now(), null, null, null, null);
 
         UUID employeeId = UUID.randomUUID();
         VaccinationStatus vaccinationStatus = VaccinationStatus.SECOND_DOSE;
@@ -92,7 +91,7 @@ public class RosterEmployeeServiceTest {
         UUID rosterEmployeeId = UUID.randomUUID();
         LocalDateTime fromTime = LocalDateTime.of(2023, 12, 12, 9,0,0);
         LocalDateTime toTime = LocalDateTime.of(2023, 12, 12, 17,0,0);
-        RosterEmployee rosterEmployee = new RosterEmployee(rosterEmployeeId, null, null, fromTime, toTime, null);
+        RosterEmployee rosterEmployee = new RosterEmployee(rosterEmployeeId, null, null, false, null);
 
         when(employeeService.getEmployee(employeeId)).thenReturn(employee);
         when(rosterService.getRoster(rosterId)).thenReturn(roster);
@@ -109,7 +108,7 @@ public class RosterEmployeeServiceTest {
     @Test
     public void getRosterEmployee_RosterEmployeeExists_ReturnFoundRosterEmployee(){
         UUID rosterId = UUID.randomUUID();
-        Roster roster = new Roster(rosterId, LocalDate.now(), null, null);
+        Roster roster = new Roster(rosterId, LocalDate.now(), null, null, null, null);
 
         UUID employeeId = UUID.randomUUID();
         VaccinationStatus vaccinationStatus = VaccinationStatus.SECOND_DOSE;
@@ -120,11 +119,10 @@ public class RosterEmployeeServiceTest {
         employee.setVaccinationStatus(vaccinationStatus);
         employee.setVaccinationBrand(vaccinationBrand);
         employee.setHealthStatus(healthStatus);
-
         UUID rosterEmployeeId = UUID.randomUUID();
         LocalDateTime fromTime = LocalDateTime.of(2023, 12, 12, 9,0,0);
         LocalDateTime toTime = LocalDateTime.of(2023, 12, 12, 17,0,0);
-        RosterEmployee rosterEmployee = new RosterEmployee(rosterEmployeeId, roster, employee,fromTime, toTime, null);
+        RosterEmployee rosterEmployee = new RosterEmployee(rosterEmployeeId, roster, employee, false, null);
 
         when(rosterEmployees.findByRosterIdAndEmployeeId(rosterId, employeeId)).thenReturn(java.util.Optional.of(rosterEmployee));
 
@@ -137,7 +135,7 @@ public class RosterEmployeeServiceTest {
     @Test
     public void getRosterEmployee_RosterEmployeeDoesNotExist_ThrowException(){
         UUID rosterId = UUID.randomUUID();
-        Roster roster = new Roster(rosterId, LocalDate.now(), null, null);
+        Roster roster = new Roster(rosterId, LocalDate.now(), null, null, null, null);
 
         UUID employeeId = UUID.randomUUID();
         VaccinationStatus vaccinationStatus = VaccinationStatus.SECOND_DOSE;
