@@ -2,8 +2,7 @@ package csd.roster.util;
 
 import com.google.ortools.Loader;
 import com.google.ortools.sat.*;
-import csd.roster.exception.NoOptimalSolutionException;
-import csd.roster.model.Employee;
+import csd.roster.exception.exceptions.NoOptimalSolutionException;
 import org.springframework.stereotype.Service;
 
 import java.util.*;

@@ -1,11 +1,8 @@
 package csd.roster.controller;
 
-import csd.roster.exception.ResourceNotFoundException;
 import csd.roster.model.Company;
 import csd.roster.service.interfaces.CompanyService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,12 +25,8 @@ public class CompanyController {
     }
 
     @GetMapping("/companies/{id}")
-    public ResponseEntity<?> getCompanyById(@PathVariable UUID id) {
-        try {
-            return new ResponseEntity<>(companyService.getCompanyById(id), HttpStatus.OK);
-        } catch (ResourceNotFoundException e) {
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
-        }
+    public Company getCompanyById(@PathVariable UUID id) {
+        return companyService.getCompanyById(id);
     }
 
     @GetMapping("/companies")

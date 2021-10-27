@@ -10,7 +10,6 @@ import static org.mockito.Mockito.when;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -20,7 +19,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import csd.roster.exception.CompanyNotFoundException;
+import csd.roster.exception.exceptions.CompanyNotFoundException;
 import csd.roster.model.Company;
 import csd.roster.repository.CompanyRepository;
 

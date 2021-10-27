@@ -1,6 +1,6 @@
 package csd.roster.service;
 
-import csd.roster.exception.DepartmentNotFoundException;
+import csd.roster.exception.exceptions.DepartmentNotFoundException;
 import csd.roster.model.Company;
 import csd.roster.model.Department;
 import csd.roster.repository.DepartmentRepository;

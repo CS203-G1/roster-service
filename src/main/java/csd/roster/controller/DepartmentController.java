@@ -1,6 +1,6 @@
 package csd.roster.controller;
 
-import csd.roster.exception.ResourceNotFoundException;
+import csd.roster.exception.exceptions.ResourceNotFoundException;
 import csd.roster.model.Department;
 import csd.roster.service.interfaces.DepartmentService;
 import org.springframework.beans.factory.annotation.Autowired;
