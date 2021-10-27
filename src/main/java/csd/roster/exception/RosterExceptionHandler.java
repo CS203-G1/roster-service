@@ -21,4 +21,13 @@ public class RosterExceptionHandler {
                 .status(HttpStatus.NOT_FOUND)
                 .body(errorMessage);
     }
+
+    @ExceptionHandler({ NoOptimalSolutionException.class })
+    public final void handleNoOptimalSolutionException(Exception ex, WebRequest request) {
+        String errorMessage = ex.getMessage();
+
+        logger.warn(errorMessage);
+        
+        // Need send email here
+    }
 }
