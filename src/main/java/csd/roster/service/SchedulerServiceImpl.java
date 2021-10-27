@@ -1,6 +1,6 @@
 package csd.roster.service;
 
-import csd.roster.exception.NoOptimalSolutionException;
+import csd.roster.exception.exceptions.NoOptimalSolutionException;
 import csd.roster.model.Employee;
 import csd.roster.model.Roster;
 import csd.roster.model.RosterEmployee;

@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.UUID;
 
 import csd.roster.enumerator.HealthStatus;
-import csd.roster.exception.EmployeeNotFoundException;
+import csd.roster.exception.exceptions.EmployeeNotFoundException;
 import csd.roster.model.Department;
 import csd.roster.model.Employee;
 import csd.roster.model.WorkLocation;
@@ -15,7 +15,6 @@ import csd.roster.service.interfaces.DepartmentService;
 import csd.roster.service.interfaces.EmployeeService;
 import csd.roster.service.interfaces.WorkLocationService;
 import csd.roster.util.AwsCognitoUtil;
-import org.hibernate.jdbc.Work;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;

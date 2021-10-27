@@ -1,7 +1,7 @@
 package csd.roster.model;
 
 import csd.roster.enumerator.HealthStatus;
-import csd.roster.exception.EmployeeNotFoundException;
+import csd.roster.exception.exceptions.EmployeeNotFoundException;
 import lombok.*;
 
 import javax.persistence.Column;

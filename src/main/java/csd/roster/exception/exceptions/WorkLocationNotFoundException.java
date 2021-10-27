@@ -1,7 +1,7 @@
-package csd.roster.exception;
+package csd.roster.exception.exceptions;
 
+import csd.roster.exception.exceptions.ResourceNotFoundException;
 import csd.roster.model.Company;
-import org.hibernate.jdbc.Work;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 

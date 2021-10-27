@@ -21,7 +21,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import csd.roster.enumerator.HealthStatus;
 import csd.roster.enumerator.VaccinationBrand;
 import csd.roster.enumerator.VaccinationStatus;
-import csd.roster.exception.EmployeeNotFoundException;
+import csd.roster.exception.exceptions.EmployeeNotFoundException;
 import csd.roster.model.Company;
 import csd.roster.model.Department;
 import csd.roster.model.Employee;

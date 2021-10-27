@@ -20,7 +20,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import csd.roster.exception.RosterNotFoundException;
+import csd.roster.exception.exceptions.RosterNotFoundException;
 import csd.roster.model.Roster;
 import csd.roster.model.WorkLocation;
 import csd.roster.repository.RosterRepository;
