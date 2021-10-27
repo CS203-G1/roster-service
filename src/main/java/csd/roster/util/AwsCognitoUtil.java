@@ -37,4 +37,8 @@ public class AwsCognitoUtil {
 
         return identityProvider.adminAddUserToGroup(request);
     }
+
+    public void createUser() {
+
+    }
 }
