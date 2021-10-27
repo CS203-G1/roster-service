@@ -1,5 +1,6 @@
 package csd.roster.controller;
 
+import csd.roster.exception.CompanyNotFoundException;
 import csd.roster.exception.ResourceNotFoundException;
 import csd.roster.model.Company;
 import csd.roster.service.interfaces.CompanyService;
@@ -28,12 +29,8 @@ public class CompanyController {
     }
 
     @GetMapping("/companies/{id}")
-    public ResponseEntity<?> getCompanyById(@PathVariable UUID id) {
-        try {
-            return new ResponseEntity<>(companyService.getCompanyById(id), HttpStatus.OK);
-        } catch (ResourceNotFoundException e) {
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
-        }
+    public Company getCompanyById(@PathVariable UUID id) {
+        return companyService.getCompanyById(id);
     }
 
     @GetMapping("/companies")
