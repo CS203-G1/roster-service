@@ -10,7 +10,7 @@ import org.springframework.web.context.request.WebRequest;
 @ControllerAdvice
 public class RosterExceptionHandler {
     @ExceptionHandler({ ResourceNotFoundException.class })
-    public final ResponseEntity handleException(Exception ex, WebRequest request) {
+    public final ResponseEntity handleNotFoundException(Exception ex, WebRequest request) {
         String errorMessage = ex.getMessage();
         return new ResponseEntity(HttpStatus.NOT_FOUND)
                 .status(HttpStatus.NOT_FOUND)
