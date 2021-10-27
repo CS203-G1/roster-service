@@ -30,7 +30,7 @@ public class CompanyServiceImpl implements CompanyService {
     }
 
     @Override
-    public Company getCompanyById(UUID id) {
+    public Company getCompanyById(UUID id) throws CompanyNotFoundException {
         return companyRepository.findById(id).orElseThrow(() -> new CompanyNotFoundException(id));
     }
 
@@ -40,7 +40,7 @@ public class CompanyServiceImpl implements CompanyService {
     }
 
     @Override
-    public void deleteCompanyByid(UUID id) {
+    public void deleteCompanyByid(UUID id) throws CompanyNotFoundException {
         Company company = getCompanyById(id);
 
         companyRepository.delete(company);
