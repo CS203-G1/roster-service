@@ -1,8 +1,8 @@
 package csd.roster.service;
 
 import csd.roster.enumerator.HealthStatus;
-import csd.roster.exception.EmployeeNotHealthyException;
-import csd.roster.exception.RosterEmployeeNotFoundException;
+import csd.roster.exception.exceptions.EmployeeNotHealthyException;
+import csd.roster.exception.exceptions.RosterEmployeeNotFoundException;
 import csd.roster.model.Employee;
 import csd.roster.model.Roster;
 import csd.roster.model.RosterEmployee;

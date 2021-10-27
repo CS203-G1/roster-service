@@ -1,4 +1,4 @@
-package csd.roster.exception;
+package csd.roster.exception.exceptions;
 
 import csd.roster.model.Employee;
 

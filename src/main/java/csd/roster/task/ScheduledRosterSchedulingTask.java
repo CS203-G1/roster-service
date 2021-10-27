@@ -1,7 +1,6 @@
 package csd.roster.task;
 
-import csd.roster.exception.NoOptimalSolutionException;
-import csd.roster.model.Employee;
+import csd.roster.exception.exceptions.NoOptimalSolutionException;
 import csd.roster.model.WorkLocation;
 import csd.roster.service.interfaces.SchedulerService;
 import csd.roster.service.interfaces.WorkLocationService;

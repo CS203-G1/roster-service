@@ -1,6 +1,6 @@
 package csd.roster.service;
 
-import csd.roster.exception.CompanyNotFoundException;
+import csd.roster.exception.exceptions.CompanyNotFoundException;
 import csd.roster.model.Company;
 import csd.roster.repository.CompanyRepository;
 import csd.roster.service.interfaces.CompanyService;

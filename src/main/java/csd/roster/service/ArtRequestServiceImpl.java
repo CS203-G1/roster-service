@@ -2,8 +2,7 @@ package csd.roster.service;
 
 import csd.roster.enumerator.HealthStatus;
 import csd.roster.enumerator.RequestStatus;
-import csd.roster.exception.ArtRequestNotFoundException;
-import csd.roster.exception.EmployeeNotFoundException;
+import csd.roster.exception.exceptions.ArtRequestNotFoundException;
 import csd.roster.model.ArtRequest;
 import csd.roster.model.Employee;
 import csd.roster.repository.ArtRequestRepository;
@@ -12,8 +11,6 @@ import csd.roster.service.interfaces.EmployeeService;
 import csd.roster.util.AwsS3Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.core.parameters.P;
-import org.springframework.security.oauth2.provider.approval.Approval;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -22,7 +19,6 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 @Service

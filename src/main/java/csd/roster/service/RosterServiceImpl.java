@@ -8,7 +8,7 @@ import csd.roster.service.interfaces.WorkLocationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import csd.roster.exception.RosterNotFoundException;
+import csd.roster.exception.exceptions.RosterNotFoundException;
 import csd.roster.model.Roster;
 import csd.roster.model.WorkLocation;
 import csd.roster.repository.RosterRepository;
