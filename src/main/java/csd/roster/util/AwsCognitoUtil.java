@@ -13,6 +13,7 @@ import csd.roster.model.Employee;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+import wiremock.org.apache.commons.lang3.RandomStringUtils;
 
 import java.util.UUID;
 
@@ -59,7 +60,7 @@ public class AwsCognitoUtil {
 
         adminCreateUserRequest.addClientMetadataEntry("email", employee.getEmail());
         adminCreateUserRequest.setUserPoolId(this.userPoolId);
-        adminCreateUserRequest.setTemporaryPassword(employee.getPassword());
+        adminCreateUserRequest.setTemporaryPassword(RandomStringUtils.randomAlphanumeric(10));
         // Cognito requires the username to be email but later on the result username is a uuid
         adminCreateUserRequest.setUsername(employee.getEmail());
 
