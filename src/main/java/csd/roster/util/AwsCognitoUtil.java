@@ -23,18 +23,21 @@ public class AwsCognitoUtil {
 
     private AWSCognitoIdentityProvider identityProvider;
 
+    public AwsCognitoUtil() {
+        AWSCredentials credentials = new BasicAWSCredentials(this.accessKey, this.secretKey);
+
+        this.identityProvider = AWSCognitoIdentityProviderClientBuilder
+                .standard()
+                .withCredentials(new AWSStaticCredentialsProvider(credentials))
+                .build();
+    }
+
     public AdminAddUserToGroupResult addUserToGroup(String userId, String groupName) {
         AdminAddUserToGroupRequest request = new AdminAddUserToGroupRequest();
 
         request.setUserPoolId(this.userPoolId);
         request.setGroupName(groupName);
         request.setUsername(userId);
-
-        AWSCredentials credentials = new BasicAWSCredentials(this.accessKey, this.secretKey);
-        AWSCognitoIdentityProvider identityProvider = AWSCognitoIdentityProviderClientBuilder
-                .standard()
-                .withCredentials(new AWSStaticCredentialsProvider(credentials))
-                .build();
 
         return identityProvider.adminAddUserToGroup(request);
     }
