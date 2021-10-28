@@ -8,6 +8,8 @@ import com.amazonaws.services.cognitoidp.AWSCognitoIdentityProviderClientBuilder
 import com.amazonaws.services.cognitoidp.model.AdminAddUserToGroupRequest;
 import com.amazonaws.services.cognitoidp.model.AdminAddUserToGroupResult;
 import com.amazonaws.services.cognitoidp.model.AdminCreateUserRequest;
+import csd.roster.model.Employee;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -24,7 +26,14 @@ public class AwsCognitoUtil {
 
     private AWSCognitoIdentityProvider identityProvider;
 
-    public AwsCognitoUtil() {
+    @Autowired
+    public AwsCognitoUtil(@Value("${aws.cognito.userPoolId}") String userPoolId,
+                          @Value("${aws.access-key}") String accessKey,
+                          @Value("${aws.access-secret}") String secretKey) {
+        this.userPoolId = userPoolId;
+        this.accessKey = accessKey;
+        this.secretKey = secretKey;
+
         AWSCredentials credentials = new BasicAWSCredentials(this.accessKey, this.secretKey);
 
         this.identityProvider = AWSCognitoIdentityProviderClientBuilder
@@ -43,6 +52,12 @@ public class AwsCognitoUtil {
         return identityProvider.adminAddUserToGroup(adminAddUserToGroupRequest);
     }
 
-    public void createUser() {
+    public void createUser(Employee employee) {
+        AdminCreateUserRequest adminCreateUserRequest = new AdminCreateUserRequest();
+
+        adminCreateUserRequest.addClientMetadataEntry("email", employee.getEmail());
+        adminCreateUserRequest.addClientMetadataEntry("password", employee.getPassword());
+
+
     }
 }
