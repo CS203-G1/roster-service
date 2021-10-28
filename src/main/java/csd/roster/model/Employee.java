@@ -77,11 +77,7 @@ public class Employee {
 
     @Column(name = "email")
     private String email;
-
-    // Transient because we cannot store the password for security reason
-    @Transient
-    private String password;
-
+    
     @Enumerated(EnumType.ORDINAL)
     @Column(name = "vaccination_status")
     private VaccinationStatus vaccinationStatus;
