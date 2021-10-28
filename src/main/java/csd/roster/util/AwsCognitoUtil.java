@@ -15,13 +15,10 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class AwsCognitoUtil {
-    @Value("${aws.cognito.userPoolId}")
     private String userPoolId;
 
-    @Value("${aws.access-key}")
     private String accessKey;
 
-    @Value("${aws.access-secret}")
     private String secretKey;
 
     private AWSCognitoIdentityProvider identityProvider;
