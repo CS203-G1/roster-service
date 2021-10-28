@@ -48,6 +48,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public Employee addEmployee(UUID departmentId, Employee employee) {
+        employee = awsCognitoUtil.createUser(employee);
+
         awsCognitoUtil.addUserToGroup(employee.getId().toString(), employeeGroup);
 
         return persistEmployee(departmentId, employee);
