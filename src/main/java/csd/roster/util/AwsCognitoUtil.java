@@ -5,10 +5,7 @@ import com.amazonaws.auth.AWSStaticCredentialsProvider;
 import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.services.cognitoidp.AWSCognitoIdentityProvider;
 import com.amazonaws.services.cognitoidp.AWSCognitoIdentityProviderClientBuilder;
-import com.amazonaws.services.cognitoidp.model.AdminAddUserToGroupRequest;
-import com.amazonaws.services.cognitoidp.model.AdminAddUserToGroupResult;
-import com.amazonaws.services.cognitoidp.model.AdminCreateUserRequest;
-import com.amazonaws.services.cognitoidp.model.AdminCreateUserResult;
+import com.amazonaws.services.cognitoidp.model.*;
 import csd.roster.model.Employee;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -73,5 +70,16 @@ public class AwsCognitoUtil {
         employee.setId(UUID.fromString(adminCreateUserResult.getUser().getUsername()));
 
         return employee;
+    }
+
+    public String getEmployeeCognitoStatus(UUID employeeId) {
+        AdminGetUserRequest adminGetUserRequest = new AdminGetUserRequest();
+
+        adminGetUserRequest.setUsername(String.valueOf(employeeId));
+        adminGetUserRequest.setUserPoolId(this.userPoolId);
+
+        AdminGetUserResult adminGetUserResult = identityProvider.adminGetUser(adminGetUserRequest);
+
+        return adminGetUserResult.getUserStatus();
     }
 }
