@@ -10,7 +10,6 @@ import com.amazonaws.services.cognitoidp.model.AdminAddUserToGroupResult;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
-// Use static methods and fields since they will never change - think of Singleton Objects
 @Component
 public class AwsCognitoUtil {
     @Value("${aws.cognito.userPoolId}")
@@ -21,6 +20,8 @@ public class AwsCognitoUtil {
 
     @Value("${aws.access-secret}")
     private String secretKey;
+
+    private AWSCognitoIdentityProvider identityProvider;
 
     public AdminAddUserToGroupResult addUserToGroup(String userId, String groupName) {
         AdminAddUserToGroupRequest request = new AdminAddUserToGroupRequest();
