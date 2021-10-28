@@ -158,5 +158,11 @@ public class EmployeeServiceImpl implements EmployeeService {
 
         return employeeRepository.findAllByCompanyIdAndDateAndHealthStatus(companyId, date, healthStatus);
     }
+
+    public String getEmployeeCognitoStatus(UUID employeeId) {
+        getEmployee(employeeId);
+
+        return awsCognitoUtil.getEmployeeCognitoStatus(employeeId);
+    }
 }
 
