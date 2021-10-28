@@ -1,9 +1,9 @@
-POST http://localhost:8080/departments/692b1d0e-fe49-4b05-8b01-f79607da7632/employees
+POST http://localhost:8080/departments/49c13ace-ca48-44bb-a9e9-8e3c330862db/employees
 Content-Type: application/json
 Authorization: Bearer <JWT>
 
 {
-  "id": "",
+  "email": "bingyu.yap.2020@smu.edu.sg",
   "name": "Employee 2",
   "vaccinationStatus": "SECOND_DOSE",
   "vaccinationBrand": "PFIZER",
@@ -13,7 +13,7 @@ Authorization: Bearer <JWT>
 ###
 POST http://localhost:8080/work-locations/692b1d0e-fe49-4b05-8b01-f79607da7632/employees/3885b9ed-947c-4c71-b18f-d624c5e1413a
 Content-Type: application/json
-Authorization: Bearer eyJraWQiOiJESCtSN05oekRDXC9tKzNDbVhKRXM0M08zRDdNR0o3dnQ4ZDAxelVsQmZUND0iLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI4Y2RiZjNmNS00Y2FlLTRjMjAtYWRjZC05ZWU3MzZjMTgxM2MiLCJjb2duaXRvOmdyb3VwcyI6WyJST0xFX0VNUExPWUVFIiwiUk9MRV9FTVBMT1lFUiJdLCJpc3MiOiJodHRwczpcL1wvY29nbml0by1pZHAuYXAtc291dGhlYXN0LTEuYW1hem9uYXdzLmNvbVwvYXAtc291dGhlYXN0LTFfcFpvSXc5a2lOIiwiY2xpZW50X2lkIjoiNHM4dG90ZmlvdmxrNzgydWo5OGNqZGpncDAiLCJvcmlnaW5fanRpIjoiYjViOWNhZGYtNDUzMC00NTA0LThlNGQtNTgwZTkwMzk2ZTJiIiwiZXZlbnRfaWQiOiI0YmQ4NzczZC1hN2IwLTQwNmEtYmQwNi0wOTM4MDc3YzE4ZDAiLCJ0b2tlbl91c2UiOiJhY2Nlc3MiLCJzY29wZSI6ImF3cy5jb2duaXRvLnNpZ25pbi51c2VyLmFkbWluIiwiYXV0aF90aW1lIjoxNjM0NTI3NjQzLCJleHAiOjE2MzQ1MzEyNDMsImlhdCI6MTYzNDUyNzY0MywianRpIjoiOWRmMTdlYWQtZTFkZS00Njc0LWEyNmYtNmNjNDhhYTUzMmFiIiwidXNlcm5hbWUiOiI4Y2RiZjNmNS00Y2FlLTRjMjAtYWRjZC05ZWU3MzZjMTgxM2MifQ.j1tRHojNcc4RXs43ACP_bufJzW89KFZh2BAPuC2BWXUfqeaLKci66iWb7HtN1JXqdTXC1L_whkIy4qVy3YUi-qnBTJKXpR_W9jH57PSBtv_oUiZRqumrhRmwY8x0wpaS__pkIyWjDrk2D758-Q5voLb9VT-UmTRyXKBQ80wwPULUoTW7Wh_XZXffnTbS7zXklcjjw6LMpdm1pzb3rpOTcL4FeuEPl4XVQD8trE-cOfIVYODY-Tl_VQbUNyn5UH_TYSgVgC4sKJZ2BatGTSSKuqIAkDv170X1ZVte6mxJM_v8IhQqVg5i8vE9Ki0HjPBLZrG8Ey1FuGnTO8gtGURIQA
+Authorization: Bearer <JWT>
 
 ###
 PUT http://localhost:8080/departments/692b1d0e-fe49-4b05-8b01-f79607da7632/employees/c1219cbb-5c2e-4f1a-95e3-273a62321aae
@@ -37,4 +37,8 @@ Authorization: Bearer <JWT>
 
 ###
 GET http://localhost:8080/companies/efd12781-392b-4c97-b388-8722bd709602/employees
+Authorization: Bearer <JWT>
+
+###
+GET http://localhost:8080/employees/450e5b9d-1cf3-44fd-b97c-1346f62537ee/cognito-status
 Authorization: Bearer <JWT>
