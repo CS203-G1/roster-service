@@ -57,6 +57,8 @@ public class EmployeeServiceImpl implements EmployeeService {
     // indicate whether the employee is employer or not
     @Override
     public Employee addEmployer(UUID departmentId, Employee employee) {
+        employee = awsCognitoUtil.createUser(employee);
+
         awsCognitoUtil.addUserToGroup(employee.getId().toString(), employerGroup);
 
         return persistEmployee(departmentId, employee);
