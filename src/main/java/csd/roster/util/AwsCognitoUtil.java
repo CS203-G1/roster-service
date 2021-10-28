@@ -53,7 +53,7 @@ public class AwsCognitoUtil {
         return identityProvider.adminAddUserToGroup(adminAddUserToGroupRequest);
     }
 
-    public void createUser(Employee employee) {
+    public Employee createUser(Employee employee) {
         // AdminCreateUserRequest: https://docs.aws.amazon.com/AWSJavaSDK/latest/javadoc/com/amazonaws/services/cognitoidp/model/AdminCreateUserRequest.html
         AdminCreateUserRequest adminCreateUserRequest = new AdminCreateUserRequest();
 
@@ -65,6 +65,10 @@ public class AwsCognitoUtil {
         AdminCreateUserResult adminCreateUserResult = identityProvider.adminCreateUser(adminCreateUserRequest);
 
         // UserType reference: https://docs.aws.amazon.com/AWSJavaSDK/latest/javadoc/com/amazonaws/services/cognitoidp/model/UserType.html
+        // Note that we learnt to not modify parameter variables
+        // But we have to get the username (UUID) from Cognito to be persisted in the database
         employee.setId(UUID.fromString(adminCreateUserResult.getUser().getUsername()));
+
+        return employee;
     }
 }
