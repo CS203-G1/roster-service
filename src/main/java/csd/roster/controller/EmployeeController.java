@@ -72,4 +72,9 @@ public class EmployeeController {
     public Iterable<Employee> getEmployeesByCompanyId(@PathVariable(value = "companyId") UUID companyId) {
         return employeeService.getAllEmployeesByCompanyId(companyId);
     }
+
+    @GetMapping("/employees/{employeeId}/cognito-status")
+    public String getEmployeeCognitoStaus(@PathVariable(value = "employeeId") UUID employeeId) {
+        return employeeService.getEmployeeCognitoStatus(employeeId);
+    }
 }
