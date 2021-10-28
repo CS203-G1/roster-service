@@ -58,7 +58,8 @@ public class AwsCognitoUtil {
         AdminCreateUserRequest adminCreateUserRequest = new AdminCreateUserRequest();
 
         adminCreateUserRequest.addClientMetadataEntry("email", employee.getEmail());
-        adminCreateUserRequest.addClientMetadataEntry("password", employee.getPassword());
+        adminCreateUserRequest.setUserPoolId(this.userPoolId);
+        adminCreateUserRequest.setTemporaryPassword(employee.getPassword());
 
 
         // AdminCreateUserResult: https://docs.aws.amazon.com/AWSJavaSDK/latest/javadoc/com/amazonaws/services/cognitoidp/model/AdminCreateUserResult.html
