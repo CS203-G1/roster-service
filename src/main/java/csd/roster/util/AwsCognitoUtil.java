@@ -7,6 +7,7 @@ import com.amazonaws.services.cognitoidp.AWSCognitoIdentityProvider;
 import com.amazonaws.services.cognitoidp.AWSCognitoIdentityProviderClientBuilder;
 import com.amazonaws.services.cognitoidp.model.AdminAddUserToGroupRequest;
 import com.amazonaws.services.cognitoidp.model.AdminAddUserToGroupResult;
+import com.amazonaws.services.cognitoidp.model.AdminCreateUserRequest;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -33,16 +34,15 @@ public class AwsCognitoUtil {
     }
 
     public AdminAddUserToGroupResult addUserToGroup(String userId, String groupName) {
-        AdminAddUserToGroupRequest request = new AdminAddUserToGroupRequest();
+        AdminAddUserToGroupRequest adminAddUserToGroupRequest = new AdminAddUserToGroupRequest();
 
-        request.setUserPoolId(this.userPoolId);
-        request.setGroupName(groupName);
-        request.setUsername(userId);
+        adminAddUserToGroupRequest.setUserPoolId(this.userPoolId);
+        adminAddUserToGroupRequest.setGroupName(groupName);
+        adminAddUserToGroupRequest.setUsername(userId);
 
-        return identityProvider.adminAddUserToGroup(request);
+        return identityProvider.adminAddUserToGroup(adminAddUserToGroupRequest);
     }
 
     public void createUser() {
-
     }
 }
