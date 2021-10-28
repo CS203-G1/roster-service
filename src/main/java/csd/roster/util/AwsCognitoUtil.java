@@ -60,7 +60,8 @@ public class AwsCognitoUtil {
         adminCreateUserRequest.addClientMetadataEntry("email", employee.getEmail());
         adminCreateUserRequest.setUserPoolId(this.userPoolId);
         adminCreateUserRequest.setTemporaryPassword(employee.getPassword());
-
+        // Cognito requires the username to be email but later on the result username is a uuid
+        adminCreateUserRequest.setUsername(employee.getEmail());
 
         // AdminCreateUserResult: https://docs.aws.amazon.com/AWSJavaSDK/latest/javadoc/com/amazonaws/services/cognitoidp/model/AdminCreateUserResult.html
         AdminCreateUserResult adminCreateUserResult = identityProvider.adminCreateUser(adminCreateUserRequest);
