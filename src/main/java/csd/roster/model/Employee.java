@@ -75,6 +75,9 @@ public class Employee {
     @Column(name = "name")
     private String name;
 
+    @Column(name = "email")
+    private String email;
+
     @Enumerated(EnumType.ORDINAL)
     @Column(name = "vaccination_status")
     private VaccinationStatus vaccinationStatus;
