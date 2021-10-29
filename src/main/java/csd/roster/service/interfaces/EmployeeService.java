@@ -35,4 +35,6 @@ public interface EmployeeService {
     List<Employee> getEmployeesByCompanyIdAndDateAndHealthStatus(UUID companyId,
                                                                  LocalDate date,
                                                                  HealthStatus healthStatus);
+
+    String getEmployeeCognitoStatus(UUID employeeId);
 }

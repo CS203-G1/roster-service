@@ -48,6 +48,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public Employee addEmployee(UUID departmentId, Employee employee) {
+        employee = awsCognitoUtil.createUser(employee);
+
         awsCognitoUtil.addUserToGroup(employee.getId().toString(), employeeGroup);
 
         return persistEmployee(departmentId, employee);
@@ -57,6 +59,8 @@ public class EmployeeServiceImpl implements EmployeeService {
     // indicate whether the employee is employer or not
     @Override
     public Employee addEmployer(UUID departmentId, Employee employee) {
+        employee = awsCognitoUtil.createUser(employee);
+
         awsCognitoUtil.addUserToGroup(employee.getId().toString(), employerGroup);
 
         return persistEmployee(departmentId, employee);
@@ -153,6 +157,12 @@ public class EmployeeServiceImpl implements EmployeeService {
         companyService.getCompanyById(companyId);
 
         return employeeRepository.findAllByCompanyIdAndDateAndHealthStatus(companyId, date, healthStatus);
+    }
+
+    public String getEmployeeCognitoStatus(UUID employeeId) {
+        getEmployee(employeeId);
+
+        return awsCognitoUtil.getEmployeeCognitoStatus(employeeId);
     }
 }
 

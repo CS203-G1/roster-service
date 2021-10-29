@@ -29,6 +29,9 @@ public class EmployeeController {
     @PostMapping("/departments/{departmentId}/employees")
     public Employee addEmployee(@PathVariable(value = "departmentId") UUID departmentId,
                                 @Valid @RequestBody Employee employee) {
+        // Employee throws a id is null error because we are not passing in a UUID anymore
+        // This is just a placeholder value to prevent the error
+        // Actual UUID will be from Cognito
         return employeeService.addEmployee(departmentId, employee);
     }
 
@@ -68,5 +71,10 @@ public class EmployeeController {
     @GetMapping("companies/{companyId}/employees")
     public Iterable<Employee> getEmployeesByCompanyId(@PathVariable(value = "companyId") UUID companyId) {
         return employeeService.getAllEmployeesByCompanyId(companyId);
+    }
+
+    @GetMapping("/employees/{employeeId}/cognito-status")
+    public String getEmployeeCognitoStaus(@PathVariable(value = "employeeId") UUID employeeId) {
+        return employeeService.getEmployeeCognitoStatus(employeeId);
     }
 }

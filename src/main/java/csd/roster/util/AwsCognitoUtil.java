@@ -5,36 +5,86 @@ import com.amazonaws.auth.AWSStaticCredentialsProvider;
 import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.services.cognitoidp.AWSCognitoIdentityProvider;
 import com.amazonaws.services.cognitoidp.AWSCognitoIdentityProviderClientBuilder;
-import com.amazonaws.services.cognitoidp.model.AdminAddUserToGroupRequest;
-import com.amazonaws.services.cognitoidp.model.AdminAddUserToGroupResult;
+import com.amazonaws.services.cognitoidp.model.*;
+import csd.roster.model.Employee;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+import wiremock.org.apache.commons.lang3.RandomStringUtils;
 
-// Use static methods and fields since they will never change - think of Singleton Objects
+import java.util.UUID;
+
 @Component
 public class AwsCognitoUtil {
-    @Value("${aws.cognito.userPoolId}")
     private String userPoolId;
 
-    @Value("${aws.access-key}")
     private String accessKey;
 
-    @Value("${aws.access-secret}")
     private String secretKey;
 
-    public AdminAddUserToGroupResult addUserToGroup(String userId, String groupName) {
-        AdminAddUserToGroupRequest request = new AdminAddUserToGroupRequest();
+    private String awsRegion;
 
-        request.setUserPoolId(this.userPoolId);
-        request.setGroupName(groupName);
-        request.setUsername(userId);
+    // AWSCognitoIdentityProvider: https://docs.aws.amazon.com/AWSJavaSDK/latest/javadoc/com/amazonaws/services/cognitoidp/AWSCognitoIdentityProvider.html
+    private AWSCognitoIdentityProvider identityProvider;
+
+    @Autowired
+    public AwsCognitoUtil(@Value("${aws.cognito.userPoolId}") String userPoolId,
+                          @Value("${aws.access-key}") String accessKey,
+                          @Value("${aws.access-secret}") String secretKey,
+                          @Value("${aws.default-region") String awsRegion) {
+        this.userPoolId = userPoolId;
+        this.accessKey = accessKey;
+        this.secretKey = secretKey;
+        this.awsRegion = awsRegion;
 
         AWSCredentials credentials = new BasicAWSCredentials(this.accessKey, this.secretKey);
-        AWSCognitoIdentityProvider identityProvider = AWSCognitoIdentityProviderClientBuilder
+
+        this.identityProvider = AWSCognitoIdentityProviderClientBuilder
                 .standard()
+                .withRegion(this.awsRegion)
                 .withCredentials(new AWSStaticCredentialsProvider(credentials))
                 .build();
+    }
 
-        return identityProvider.adminAddUserToGroup(request);
+    public AdminAddUserToGroupResult addUserToGroup(String userId, String groupName) {
+        AdminAddUserToGroupRequest adminAddUserToGroupRequest = new AdminAddUserToGroupRequest();
+
+        adminAddUserToGroupRequest.setUserPoolId(this.userPoolId);
+        adminAddUserToGroupRequest.setGroupName(groupName);
+        adminAddUserToGroupRequest.setUsername(userId);
+
+        return identityProvider.adminAddUserToGroup(adminAddUserToGroupRequest);
+    }
+
+    public Employee createUser(Employee employee) {
+        // AdminCreateUserRequest: https://docs.aws.amazon.com/AWSJavaSDK/latest/javadoc/com/amazonaws/services/cognitoidp/model/AdminCreateUserRequest.html
+        AdminCreateUserRequest adminCreateUserRequest = new AdminCreateUserRequest();
+
+        adminCreateUserRequest.addClientMetadataEntry("email", employee.getEmail());
+        adminCreateUserRequest.setUserPoolId(this.userPoolId);
+        adminCreateUserRequest.setTemporaryPassword(RandomStringUtils.randomAlphanumeric(10));
+        // Cognito requires the username to be email but later on the result username is a uuid
+        adminCreateUserRequest.setUsername(employee.getEmail());
+
+        // AdminCreateUserResult: https://docs.aws.amazon.com/AWSJavaSDK/latest/javadoc/com/amazonaws/services/cognitoidp/model/AdminCreateUserResult.html
+        AdminCreateUserResult adminCreateUserResult = identityProvider.adminCreateUser(adminCreateUserRequest);
+
+        // UserType reference: https://docs.aws.amazon.com/AWSJavaSDK/latest/javadoc/com/amazonaws/services/cognitoidp/model/UserType.html
+        // Note that we learnt to not modify parameter variables
+        // But we have to get the username (UUID) from Cognito to be persisted in the database
+        employee.setId(UUID.fromString(adminCreateUserResult.getUser().getUsername()));
+
+        return employee;
+    }
+
+    public String getEmployeeCognitoStatus(UUID employeeId) {
+        AdminGetUserRequest adminGetUserRequest = new AdminGetUserRequest();
+
+        adminGetUserRequest.setUsername(String.valueOf(employeeId));
+        adminGetUserRequest.setUserPoolId(this.userPoolId);
+
+        AdminGetUserResult adminGetUserResult = identityProvider.adminGetUser(adminGetUserRequest);
+
+        return adminGetUserResult.getUserStatus();
     }
 }
