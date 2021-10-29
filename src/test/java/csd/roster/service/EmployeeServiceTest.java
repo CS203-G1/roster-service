@@ -70,6 +70,7 @@ public class EmployeeServiceTest {
 
         when(departmentService.getDepartmentById(any(UUID.class))).thenReturn(department);
         when(employees.save(any(Employee.class))).thenReturn(employee);
+        when(awsCognitoUtil.createUser(any(Employee.class))).thenReturn(employee);
 
         Employee savedEmployee = employeeService.addEmployee(departmentId, employee);
 
