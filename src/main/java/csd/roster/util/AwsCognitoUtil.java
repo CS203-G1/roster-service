@@ -22,21 +22,26 @@ public class AwsCognitoUtil {
 
     private String secretKey;
 
+    private String awsRegion;
+
     // AWSCognitoIdentityProvider: https://docs.aws.amazon.com/AWSJavaSDK/latest/javadoc/com/amazonaws/services/cognitoidp/AWSCognitoIdentityProvider.html
     private AWSCognitoIdentityProvider identityProvider;
 
     @Autowired
     public AwsCognitoUtil(@Value("${aws.cognito.userPoolId}") String userPoolId,
                           @Value("${aws.access-key}") String accessKey,
-                          @Value("${aws.access-secret}") String secretKey) {
+                          @Value("${aws.access-secret}") String secretKey,
+                          @Value("${aws.default-region") String awsRegion) {
         this.userPoolId = userPoolId;
         this.accessKey = accessKey;
         this.secretKey = secretKey;
+        this.awsRegion = awsRegion;
 
         AWSCredentials credentials = new BasicAWSCredentials(this.accessKey, this.secretKey);
 
         this.identityProvider = AWSCognitoIdentityProviderClientBuilder
                 .standard()
+                .withRegion(this.awsRegion)
                 .withCredentials(new AWSStaticCredentialsProvider(credentials))
                 .build();
     }
