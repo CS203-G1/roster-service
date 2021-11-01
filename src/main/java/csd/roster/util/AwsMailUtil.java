@@ -3,7 +3,9 @@ package csd.roster.util;
 import com.amazonaws.auth.AWSStaticCredentialsProvider;
 import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.services.simpleemail.AmazonSimpleEmailService;
+import com.amazonaws.services.simpleemail.AmazonSimpleEmailServiceClient;
 import com.amazonaws.services.simpleemail.AmazonSimpleEmailServiceClientBuilder;
+import com.amazonaws.services.simpleemail.model.VerifyEmailIdentityRequest;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -26,6 +28,15 @@ public class AwsMailUtil {
     public AmazonSimpleEmailService getAmazonSimpleEmailService() {
         return AmazonSimpleEmailServiceClientBuilder.standard().withCredentials(awsCredentials())
                 .withRegion("ap-southeast-1").build();
+    }
+
+    public void addEmailToPool(String email) {
+        AmazonSimpleEmailServiceClient amazonSimpleEmailServiceClient = new AmazonSimpleEmailServiceClient();
+        
+        VerifyEmailIdentityRequest verifyEmailIdentityRequest = new VerifyEmailIdentityRequest();
+        verifyEmailIdentityRequest.setEmailAddress(email);
+        
+        amazonSimpleEmailServiceClient.verifyEmailIdentity(verifyEmailIdentityRequest);
     }
 
 }

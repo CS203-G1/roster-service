@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import csd.roster.service.interfaces.EmailService;
+import csd.roster.services.service.interfaces.EmailService;
 
 @RestController
 public class EmailController {

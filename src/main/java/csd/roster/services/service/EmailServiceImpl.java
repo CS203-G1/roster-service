@@ -1,4 +1,4 @@
-package csd.roster.service;
+package csd.roster.services.service;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -26,7 +26,7 @@ import org.springframework.stereotype.Service;
 import org.thymeleaf.context.Context;
 import org.thymeleaf.spring5.SpringTemplateEngine;
 
-import csd.roster.service.interfaces.EmailService;
+import csd.roster.services.service.interfaces.EmailService;
 
 @Service
 public class EmailServiceImpl implements EmailService {
@@ -34,7 +34,7 @@ public class EmailServiceImpl implements EmailService {
     private SpringTemplateEngine springTemplateEngine;
 
     @Autowired
-    public EmailServiceImpl(AmazonSimpleEmailService amazonSimpleEmailService, SpringTemplateEngine springTemplateEngine) {
+    public EmailServiceImpl(AmazonSimpleEmailService amazonSimpleEmailService, SpringTemplateEngine springTemplateEngine, EmailService emailService) {
         this.amazonSimpleEmailService = amazonSimpleEmailService;
         this.springTemplateEngine = springTemplateEngine;
     }
