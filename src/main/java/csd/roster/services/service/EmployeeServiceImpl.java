@@ -16,6 +16,7 @@ import csd.roster.model.WorkLocation;
 import csd.roster.repository.EmployeeRepository;
 import csd.roster.service.interfaces.CompanyService;
 import csd.roster.service.interfaces.DepartmentService;
+import csd.roster.service.interfaces.EmailService;
 import csd.roster.service.interfaces.EmployeeService;
 import csd.roster.service.interfaces.WorkLocationService;
 import csd.roster.util.AwsCognitoUtil;
@@ -42,22 +43,28 @@ public class EmployeeServiceImpl implements EmployeeService {
                                CompanyService companyService,
                                WorkLocationService workLocationService,
                                AwsCognitoUtil awsCognitoUtil,
-                               AwsMailUtil awsMailUtil) {
+                               EmailService emailService) {
         this.employeeRepository = employeeRepository;
         this.departmentService = departmentService;
         this.companyService = companyService;
         this.workLocationService = workLocationService;
         this.awsCognitoUtil = awsCognitoUtil;
-        this.awsMailUtil = awsMailUtil;
+        this.emailService = emailService;
     }
 
     @Override
     public Employee addEmployee(final UUID departmentId, final Employee employee) {
         Employee createdEmployee = awsCognitoUtil.createUser(employee);
         awsCognitoUtil.addUserToGroup(employee.getId().toString(), employeeGroup);
+<<<<<<< HEAD:src/main/java/csd/roster/services/service/EmployeeServiceImpl.java
         awsMailUtil.addEmailToPool(employee.getEmail());
         
         return persistEmployee(departmentId, createdEmployee);
+=======
+        emailService.addEmailToPool(employee.getEmail());
+
+        return persistEmployee(departmentId, employee);
+>>>>>>> 430f936 (Add AWS SES verification for emails):src/main/java/csd/roster/service/EmployeeServiceImpl.java
     }
 
     // Violating DRY because I want to provide two endpoints for Frontend instead of having them to send in a value to
@@ -66,7 +73,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     public Employee addEmployer(final UUID departmentId, final Employee employee) {
         Employee createdEmployee = awsCognitoUtil.createUser(employee);
         awsCognitoUtil.addUserToGroup(employee.getId().toString(), employerGroup);
-        awsMailUtil.addEmailToPool(employee.getEmail());
+        emailService.addEmailToPool(employee.getEmail());
 
         return persistEmployee(departmentId, createdEmployee);
     }

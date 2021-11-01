@@ -19,6 +19,7 @@ import com.amazonaws.services.simpleemail.AmazonSimpleEmailService;
 import com.amazonaws.services.simpleemail.model.MessageRejectedException;
 import com.amazonaws.services.simpleemail.model.RawMessage;
 import com.amazonaws.services.simpleemail.model.SendRawEmailRequest;
+import com.amazonaws.services.simpleemail.model.VerifyEmailIdentityRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
@@ -34,7 +35,7 @@ public class EmailServiceImpl implements EmailService {
     private SpringTemplateEngine springTemplateEngine;
 
     @Autowired
-    public EmailServiceImpl(AmazonSimpleEmailService amazonSimpleEmailService, SpringTemplateEngine springTemplateEngine, EmailService emailService) {
+    public EmailServiceImpl(AmazonSimpleEmailService amazonSimpleEmailService, SpringTemplateEngine springTemplateEngine) {
         this.amazonSimpleEmailService = amazonSimpleEmailService;
         this.springTemplateEngine = springTemplateEngine;
     }
@@ -48,7 +49,6 @@ public class EmailServiceImpl implements EmailService {
         // Creation of hashmap to store dynamic variables in email
         Map<String, Object> variables = new HashMap<>();
         context.setVariables(variables);
-        
 
         try {
             mimeMessage.setSubject(subject);
@@ -80,4 +80,11 @@ public class EmailServiceImpl implements EmailService {
         }
     }
 
+    @Override
+    public void addEmailToPool(String email) {
+        VerifyEmailIdentityRequest verifyEmailIdentityRequest = new VerifyEmailIdentityRequest();
+        verifyEmailIdentityRequest.setEmailAddress(email);
+        
+        amazonSimpleEmailService.verifyEmailIdentity(verifyEmailIdentityRequest);
+    }
 }
