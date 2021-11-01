@@ -34,7 +34,7 @@ public class EmailServiceImpl implements EmailService {
     private SpringTemplateEngine springTemplateEngine;
 
     @Autowired
-    public EmailServiceImpl(AmazonSimpleEmailService amazonSimpleEmailService, SpringTemplateEngine springTemplateEngine) {
+    public EmailServiceImpl(AmazonSimpleEmailService amazonSimpleEmailService, SpringTemplateEngine springTemplateEngine, EmailService emailService) {
         this.amazonSimpleEmailService = amazonSimpleEmailService;
         this.springTemplateEngine = springTemplateEngine;
     }
