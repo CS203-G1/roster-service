@@ -16,6 +16,7 @@ import csd.roster.model.WorkLocation;
 import csd.roster.repository.EmployeeRepository;
 import csd.roster.service.interfaces.CompanyService;
 import csd.roster.service.interfaces.DepartmentService;
+import csd.roster.service.interfaces.EmailService;
 import csd.roster.service.interfaces.EmployeeService;
 import csd.roster.service.interfaces.WorkLocationService;
 import csd.roster.util.AwsCognitoUtil;
@@ -27,8 +28,8 @@ public class EmployeeServiceImpl implements EmployeeService {
     private DepartmentService departmentService;
     private CompanyService companyService;
     private WorkLocationService workLocationService;
+    private EmailService emailService;
 
-    private AwsMailUtil awsMailUtil;
     private AwsCognitoUtil awsCognitoUtil;
 
     @Value("${aws.cognito.groups.employee}")
@@ -42,13 +43,13 @@ public class EmployeeServiceImpl implements EmployeeService {
                                CompanyService companyService,
                                WorkLocationService workLocationService,
                                AwsCognitoUtil awsCognitoUtil,
-                               AwsMailUtil awsMailUtil) {
+                               EmailService emailService) {
         this.employeeRepository = employeeRepository;
         this.departmentService = departmentService;
         this.companyService = companyService;
         this.workLocationService = workLocationService;
         this.awsCognitoUtil = awsCognitoUtil;
-        this.awsMailUtil = awsMailUtil;
+        this.emailService = emailService;
     }
 
     @Override
@@ -56,7 +57,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         employee = awsCognitoUtil.createUser(employee);
 
         awsCognitoUtil.addUserToGroup(employee.getId().toString(), employeeGroup);
-        awsMailUtil.addEmailToPool(employee.getEmail());
+        emailService.addEmailToPool(employee.getEmail());
 
         return persistEmployee(departmentId, employee);
     }
@@ -68,7 +69,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         employee = awsCognitoUtil.createUser(employee);
 
         awsCognitoUtil.addUserToGroup(employee.getId().toString(), employerGroup);
-        awsMailUtil.addEmailToPool(employee.getEmail());
+        emailService.addEmailToPool(employee.getEmail());
 
         return persistEmployee(departmentId, employee);
     }
