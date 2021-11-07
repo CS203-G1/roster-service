@@ -1,4 +1,4 @@
-package test.csd.roster.service;
+package csd.roster.service;
 
 import csd.roster.enumerator.HealthStatus;
 import csd.roster.model.*;
