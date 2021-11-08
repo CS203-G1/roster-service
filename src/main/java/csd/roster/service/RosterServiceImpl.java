@@ -3,6 +3,8 @@ package csd.roster.service;
 import java.time.LocalDate;
 import java.util.*;
 
+import csd.roster.model.Employee;
+import csd.roster.service.interfaces.EmployeeService;
 import csd.roster.service.interfaces.RosterService;
 import csd.roster.service.interfaces.WorkLocationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,11 +19,15 @@ import csd.roster.repository.RosterRepository;
 public class RosterServiceImpl implements RosterService {
     private RosterRepository rosterRepository;
     private WorkLocationService workLocationService;
+    private EmployeeService employeeService;
 
     @Autowired
-    public RosterServiceImpl(RosterRepository rosterRepository, WorkLocationService workLocationService) {
+    public RosterServiceImpl(RosterRepository rosterRepository,
+                             WorkLocationService workLocationService,
+                             EmployeeService employeeService) {
         this.rosterRepository = rosterRepository;
         this.workLocationService = workLocationService;
+        this.employeeService = employeeService;
     }
 
     @Override
@@ -90,7 +96,6 @@ public class RosterServiceImpl implements RosterService {
 
     @Override
     public List<Roster> getCurrentRostersByCompany(UUID companyId) {
-
         List<WorkLocation> workLocations = workLocationService.getWorkLocationsByCompanyId(companyId);
 
         // Using linked list data structure to have an O(1) of appending the list
@@ -103,6 +108,20 @@ public class RosterServiceImpl implements RosterService {
         return rosters;
     }
 
-    public Roster getRosterByWorkLocationAndEmployerIdAndDate(UUID workLocation, UUID employerId, LocalDate date) {
+    @Override
+    public List<Roster> getRostersByEmployerIdAndDate(UUID employerId, LocalDate date) {
+        Employee employer = employeeService.getEmployee(employerId);
+
+        List<WorkLocation> workLocations = workLocationService
+                .getWorkLocationsByCompanyId(employer.getCompany().getId());
+
+        List<Roster> rosters = new LinkedList<Roster>();
+
+        for (WorkLocation workLocation : workLocations) {
+            rosters.add(rosterRepository.findByWorkLocationIdAndDate(workLocation.getId(), date)
+                    .orElseThrow(() -> new RosterNotFoundException(workLocation)));
+        }
+
+        return rosters;
     }
 }
