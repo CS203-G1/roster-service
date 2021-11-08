@@ -28,5 +28,7 @@ public interface RosterService {
 
     List<Roster> getCurrentRostersByCompany(UUID companyId);
 
-    Roster getRosterByWorkLocationAndEmployerIdAndDate(UUID workLocation, UUID employerId, LocalDate date);
+    List<Roster> getRostersByEmployerIdAndDate(UUID employerId, LocalDate date);
+
+    List<Roster> getWeeklyRostersByEmployeeId(UUID employeeId);
 }
