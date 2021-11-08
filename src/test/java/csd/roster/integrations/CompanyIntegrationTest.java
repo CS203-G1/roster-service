@@ -54,7 +54,7 @@ public class CompanyIntegrationTest {
     }
 
     @Test
-    public void getCompany_CompanyExists_ReturnFoundCompany(){
+    public void getCompanyById_CompanyExists_ReturnFoundCompany(){
         try {
             // Return first Company in the database
             Company firstCompany = companyRepository.findAll().get(0);
@@ -76,7 +76,7 @@ public class CompanyIntegrationTest {
     }
 
     @Test
-    public void getCompany_CompanyDoesNotExist_Return404() {
+    public void getCompanyById_CompanyDoesNotExist_Return404() {
         try {
             URI uri = new URI(baseUrl + port + "/companies/" + UUID.randomUUID());
 
@@ -95,7 +95,7 @@ public class CompanyIntegrationTest {
     }
 
     @Test
-    public void getCompany_NoPermissions_Return401(){
+    public void getCompanyById_NoPermissions_Return401(){
         try {
             URI uri = new URI(baseUrl + port + "/companies/" + UUID.randomUUID());
             ResponseEntity<Company> result = restTemplate.getForEntity(uri, Company.class);
