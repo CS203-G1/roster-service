@@ -31,7 +31,7 @@ public class AwsCognitoUtil {
     public AwsCognitoUtil(@Value("${aws.cognito.userPoolId}") String userPoolId,
                           @Value("${aws.access-key}") String accessKey,
                           @Value("${aws.access-secret}") String secretKey,
-                          @Value("${aws.default-region") String awsRegion) {
+                          @Value("${aws.default-region}") String awsRegion) {
         this.userPoolId = userPoolId;
         this.accessKey = accessKey;
         this.secretKey = secretKey;
