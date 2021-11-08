@@ -102,4 +102,7 @@ public class RosterServiceImpl implements RosterService {
 
         return rosters;
     }
+
+    public Roster getRosterByWorkLocationAndEmployerIdAndDate(UUID workLocation, UUID employerId, LocalDate date) {
+    }
 }
