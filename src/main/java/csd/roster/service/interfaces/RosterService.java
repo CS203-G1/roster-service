@@ -1,5 +1,6 @@
 package csd.roster.service.interfaces;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
@@ -26,4 +27,6 @@ public interface RosterService {
     Roster getCurrentRemoteRosterByCompany(UUID companyId);
 
     List<Roster> getCurrentRostersByCompany(UUID companyId);
+
+    Roster getRosterByWorkLocationAndEmployerIdAndDate(UUID workLocation, UUID employerId, LocalDate date);
 }
