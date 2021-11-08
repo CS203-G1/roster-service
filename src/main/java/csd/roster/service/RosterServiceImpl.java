@@ -1,12 +1,14 @@
 package csd.roster.service;
 
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.*;
 
 import csd.roster.model.Employee;
 import csd.roster.service.interfaces.EmployeeService;
 import csd.roster.service.interfaces.RosterService;
 import csd.roster.service.interfaces.WorkLocationService;
+import csd.roster.util.CalendarUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -120,6 +122,26 @@ public class RosterServiceImpl implements RosterService {
         for (WorkLocation workLocation : workLocations) {
             rosters.add(rosterRepository.findByWorkLocationIdAndDate(workLocation.getId(), date)
                     .orElseThrow(() -> new RosterNotFoundException(workLocation)));
+        }
+
+        return rosters;
+    }
+
+    @Override
+    public List<Roster> getWeeklyRostersByEmployeeId(UUID employeeId) {
+        Employee employer = employeeService.getEmployee(employeeId);
+
+        LocalDate firstDayOfWeek = CalendarUtil.getFirstDayOfWeek(LocalDate.now()).toInstant()
+                .atZone(ZoneId.systemDefault())
+                .toLocalDate();
+
+        List<Roster> rosters = new LinkedList<Roster>();
+
+        for (int i = 0; i < 5; i++) {
+            LocalDate weekday = firstDayOfWeek.plusDays(i);
+
+            rosters.add(rosterRepository.findByEmployeeIdAndDate(employeeId, weekday)
+                    .orElseThrow(() -> new RosterNotFoundException(employer.getWorkLocation())));
         }
 
         return rosters;
