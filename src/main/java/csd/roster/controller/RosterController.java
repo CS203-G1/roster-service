@@ -1,5 +1,6 @@
 package csd.roster.controller;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
@@ -56,5 +57,17 @@ public class RosterController {
                             @PathVariable(value = "rosterId") UUID rosterId,
                             @Valid @RequestBody Roster roster) {
         return rosterService.updateRoster(workLocationId, rosterId, roster);
+    }
+
+    @GetMapping("/employers/{employerId}/rosters/date/{date}")
+    public List<Roster> getRostersByEmployerIdAndDate(@PathVariable(value = "employerId")UUID employerId,
+                                                      @PathVariable(value = "date")LocalDate date) {
+        return rosterService.getRostersByEmployerIdAndDate(employerId, date);
+    }
+
+    @GetMapping("/employee/{employeeId}/rosters/weekly")
+    public List<Roster> getWeeklyRostersByEmployeeIdAndDate(@PathVariable(value = "employeeId")UUID employeeId,
+                                                      @PathVariable(value = "date")LocalDate date) {
+        return rosterService.getWeeklyRostersByEmployeeId(employeeId);
     }
 }
