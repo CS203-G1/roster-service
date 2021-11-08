@@ -17,4 +17,6 @@ public interface RosterRepository extends JpaRepository<Roster, UUID> {
     List<Roster> findByWorkLocationId(UUID workLocationId);
 
     Optional<Roster> findByWorkLocationIdAndDate(UUID workLocationId, LocalDate now);
+
+    Optional<Roster> findByEmployeeIdAndDate(UUID employee, LocalDate date);
 }
