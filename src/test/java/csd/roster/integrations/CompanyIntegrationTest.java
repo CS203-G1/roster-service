@@ -61,7 +61,7 @@ public class CompanyIntegrationTest {
             URI uri = new URI(baseUrl + port + "/companies/" + firstCompany.getId());
 
             // Passing Cognito jwt token into headers
-            String accessToken = "eyJraWQiOiJESCtSN05oekRDXC9tKzNDbVhKRXM0M08zRDdNR0o3dnQ4ZDAxelVsQmZUND0iLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiI4Y2RiZjNmNS00Y2FlLTRjMjAtYWRjZC05ZWU3MzZjMTgxM2MiLCJjb2duaXRvOmdyb3VwcyI6WyJST0xFX0VNUExPWUVFIiwiUk9MRV9TVVBFUl9VU0VSIiwiUk9MRV9FTVBMT1lFUiJdLCJpc3MiOiJodHRwczpcL1wvY29nbml0by1pZHAuYXAtc291dGhlYXN0LTEuYW1hem9uYXdzLmNvbVwvYXAtc291dGhlYXN0LTFfcFpvSXc5a2lOIiwiY2xpZW50X2lkIjoiNHM4dG90ZmlvdmxrNzgydWo5OGNqZGpncDAiLCJvcmlnaW5fanRpIjoiZGJkMTExMTMtNThiZS00MWFhLTgyMzktMzZjZjU2N2UxY2IwIiwiZXZlbnRfaWQiOiI3ZTMwNDYzMS04M2EyLTRlZWEtYjJmYi1hZmIwZDIxY2VmZTgiLCJ0b2tlbl91c2UiOiJhY2Nlc3MiLCJzY29wZSI6ImF3cy5jb2duaXRvLnNpZ25pbi51c2VyLmFkbWluIiwiYXV0aF90aW1lIjoxNjM2Mzc5NDY2LCJleHAiOjE2MzYzODMwNjYsImlhdCI6MTYzNjM3OTQ2NiwianRpIjoiMGZkZGI4YTYtZGZmMy00ZDZiLWFiNWEtZjRjNzMxMTdjODkwIiwidXNlcm5hbWUiOiI4Y2RiZjNmNS00Y2FlLTRjMjAtYWRjZC05ZWU3MzZjMTgxM2MifQ.CnVtt3islh9EtJUwQD1aOQDEhK0N5liiKGGLGOiQPhgIfvCKuYgMmdI3mBa43lNo1KbQkvsNkhKUkrf58Rw5YV9wLGIneUpoDlA9orCaOB4g5MKKYe5Ca12I54h3yM7vNCLHXoMFKn0QTMXmXekPaL3NOvLhCMneW-WRHCV6Jbcz35kJm93QHYFYB7NwoibDP12yhj8uYulYGfNp3JBRX1VjkVb2jSEt_rx836MnMDd3g5mE2jCwY9k-fRDcCCmufpNttKMouXfSB8qiReb836kxPPglsotFUqZO-91ywK19wghZeEDOfIDZ4ssMqsKZf9rqrBDMCMf3IXUrWZTsQg";
+            String accessToken = "";
             HttpHeaders headers = new HttpHeaders();
             headers.set("Authorization", "Bearer "+accessToken);
 
@@ -75,5 +75,35 @@ public class CompanyIntegrationTest {
 
     }
 
+    @Test
+    public void getCompany_CompanyDoesNotExist_Return404() {
+        try {
+            URI uri = new URI(baseUrl + port + "/companies/" + UUID.randomUUID());
+
+            // Passing Cognito jwt token into headers
+            String accessToken = "";
+            HttpHeaders headers = new HttpHeaders();
+            headers.set("Authorization", "Bearer " + accessToken);
+
+            HttpEntity<String> entity = new HttpEntity<String>("parameters", headers);
+            ResponseEntity<String> result = restTemplate.exchange(uri, HttpMethod.GET, entity, String.class);
+
+            assertEquals(404, result.getStatusCode().value());
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void getCompany_NoPermissions_Return401(){
+        try {
+            URI uri = new URI(baseUrl + port + "/companies/" + UUID.randomUUID());
+            ResponseEntity<Company> result = restTemplate.getForEntity(uri, Company.class);
+
+            assertEquals(401, result.getStatusCode().value());
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
+    }
 
 }
