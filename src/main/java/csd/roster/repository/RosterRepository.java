@@ -31,4 +31,7 @@ public interface RosterRepository extends JpaRepository<Roster, UUID> {
 
     @Query("select e from Employee e where e in (select re.employee from RosterEmployee re where re.roster.id = :id)")
     List<Employee> findEmployeesByRosterId(@Param("id") UUID rosterId);
+
+    @Query("select e from Employee e where e in (select re.employee from RosterEmployee re where re.roster.id = :id and re.isRemote = false)")
+    List<Employee> findOnsiteEmployeesByRosterId(@Param("id") UUID rosterId);
 }
