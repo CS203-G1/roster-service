@@ -22,12 +22,12 @@ public class EmployeeController {
     private final EmployeeService employeeService;
 
     @Autowired
-    public EmployeeController(EmployeeService employeeService) {
+    public EmployeeController(final EmployeeService employeeService) {
         this.employeeService = employeeService;
     }
 
     @PostMapping("/departments/{departmentId}/employees")
-    public Employee addEmployee(@PathVariable(value = "departmentId") UUID departmentId,
+    public Employee addEmployee(@PathVariable(value = "departmentId") final UUID departmentId,
                                 @Valid @RequestBody Employee employee) {
         // Employee throws a id is null error because we are not passing in a UUID anymore
         // This is just a placeholder value to prevent the error
