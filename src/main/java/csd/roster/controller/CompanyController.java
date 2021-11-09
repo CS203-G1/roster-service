@@ -20,12 +20,12 @@ public class CompanyController {
     }
 
     @PostMapping("/companies")
-    public Company addCompany(@RequestBody Company company) {
+    public Company addCompany(@RequestBody final Company company) {
         return companyService.addCompany(company);
     }
 
     @GetMapping("/companies/{id}")
-    public Company getCompanyById(@PathVariable UUID id) {
+    public Company getCompanyById(@PathVariable final UUID id) {
         return companyService.getCompanyById(id);
     }
 
@@ -35,7 +35,7 @@ public class CompanyController {
     }
 
     @DeleteMapping("/companies/{companyId}")
-    public void delete(@PathVariable UUID companyId) {
+    public void delete(@PathVariable final UUID companyId) {
         companyService.deleteCompanyByid(companyId);
     }
 }
