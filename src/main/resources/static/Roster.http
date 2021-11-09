@@ -11,6 +11,12 @@ Content-Type: application/json
 Authorization: Bearer <JWT>
 
 ###
+# Get Roster and the employees using employer id and date
+GET http://localhost:8080/employers/8cdbf3f5-4cae-4c20-adcd-9ee736c1813c/rosters/date/2021-11-03
+Content-Type: application/json
+Authorization: Bearer <JWT>
+
+###
 # Add roster
 POST http://localhost:8080/work-locations/79e6e0b0-29f8-4211-b5e7-ee5fe42a64b9/rosters
 Content-Type: application/json
