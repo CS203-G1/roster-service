@@ -17,7 +17,7 @@ import java.util.UUID;
 @PreAuthorize("hasRole('ROLE_EMPLOYER')")
 @RestController
 public class ArtRequestController {
-    private ArtRequestService artRequestService;
+    private final ArtRequestService artRequestService;
 
     @Autowired
     public ArtRequestController(ArtRequestServiceImpl artRequestService){
