@@ -28,7 +28,6 @@ public class EmployeeServiceImpl implements EmployeeService {
     private final DepartmentService departmentService;
     private final CompanyService companyService;
     private final WorkLocationService workLocationService;
-    private AwsMailUtil awsMailUtil;
     private AwsCognitoUtil awsCognitoUtil;
     private EmailService emailService;
 
