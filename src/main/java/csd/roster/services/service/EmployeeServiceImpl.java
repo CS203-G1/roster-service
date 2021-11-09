@@ -30,6 +30,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     private final WorkLocationService workLocationService;
     private AwsMailUtil awsMailUtil;
     private AwsCognitoUtil awsCognitoUtil;
+    private EmailService emailService;
 
 
     @Value("${aws.cognito.groups.employee}")
@@ -55,13 +56,10 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public Employee addEmployee(final UUID departmentId, final Employee employee) {
         Employee createdEmployee = awsCognitoUtil.createUser(employee);
-        awsCognitoUtil.addUserToGroup(employee.getId().toString(), employeeGroup);
-        awsMailUtil.addEmailToPool(employee.getEmail());
-        
-        return persistEmployee(departmentId, createdEmployee);
-        emailService.addEmailToPool(employee.getEmail());
+        awsCognitoUtil.addUserToGroup(createdEmployee.getId().toString(), employeeGroup);
+        emailService.addEmailToPool(createdEmployee.getEmail());
 
-        return persistEmployee(departmentId, employee);
+        return persistEmployee(departmentId, createdEmployee);
     }
 
     // Violating DRY because I want to provide two endpoints for Frontend instead of having them to send in a value to
@@ -69,8 +67,8 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public Employee addEmployer(final UUID departmentId, final Employee employee) {
         Employee createdEmployee = awsCognitoUtil.createUser(employee);
-        awsCognitoUtil.addUserToGroup(employee.getId().toString(), employerGroup);
-        emailService.addEmailToPool(employee.getEmail());
+        awsCognitoUtil.addUserToGroup(createdEmployee.getId().toString(), employerGroup);
+        emailService.addEmailToPool(createdEmployee.getEmail());
 
         return persistEmployee(departmentId, createdEmployee);
     }
