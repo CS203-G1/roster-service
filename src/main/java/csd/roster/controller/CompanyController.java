@@ -12,7 +12,7 @@ import java.util.UUID;
 @RestController
 @PreAuthorize("hasRole('ROLE_EMPLOYER')")
 public class CompanyController {
-    private CompanyService companyService;
+    private final CompanyService companyService;
 
     @Autowired
     public CompanyController(CompanyService companyService) {
