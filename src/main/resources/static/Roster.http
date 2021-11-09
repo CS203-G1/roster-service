@@ -18,7 +18,7 @@ Authorization: Bearer <JWT>
 
 ###
 # Get weekly roster for a particular employee
-GET http://localhost:8080/employee/8cdbf3f5-4cae-4c20-adcd-9ee736c1813c/rosters/weekly
+GET http://localhost:8080/employees/8cdbf3f5-4cae-4c20-adcd-9ee736c1813c/rosters/weekly
 Content-Type: application/json
 Authorization: Bearer <JWT>
 
