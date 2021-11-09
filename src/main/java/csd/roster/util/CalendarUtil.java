@@ -5,7 +5,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 public class CalendarUtil {
-    public static Date getFirstDayOfWeek(LocalDate date) {
+    public static Date getFirstDayOfWeek(final LocalDate date) {
         Calendar calendar = Calendar.getInstance();
         calendar.setFirstDayOfWeek(Calendar.MONDAY);
         calendar.setTime(java.sql.Date.valueOf(date));

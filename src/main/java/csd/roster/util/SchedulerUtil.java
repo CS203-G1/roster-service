@@ -13,7 +13,7 @@ public class SchedulerUtil {
     // solve method is very long
     // but this is because we are treating it like an algorithm question
     // no point defining separate more methods that will take a memory and time overhead
-    public Map<Integer, Set<UUID>> solve(List<UUID> employeeList) throws NoOptimalSolutionException{
+    public Map<Integer, Set<UUID>> solve(final List<UUID> employeeList) throws NoOptimalSolutionException{
         Loader.loadNativeLibraries();
         final int numEmployees = employeeList.size();
         final int numDays = 5;

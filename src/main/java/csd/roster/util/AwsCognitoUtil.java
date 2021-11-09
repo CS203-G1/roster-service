@@ -16,16 +16,16 @@ import java.util.UUID;
 
 @Component
 public class AwsCognitoUtil {
-    private String userPoolId;
+    private final String userPoolId;
 
-    private String accessKey;
+    private final String accessKey;
 
-    private String secretKey;
+    private final String secretKey;
 
-    private String awsRegion;
+    private final String awsRegion;
 
     // AWSCognitoIdentityProvider: https://docs.aws.amazon.com/AWSJavaSDK/latest/javadoc/com/amazonaws/services/cognitoidp/AWSCognitoIdentityProvider.html
-    private AWSCognitoIdentityProvider identityProvider;
+    private final AWSCognitoIdentityProvider identityProvider;
 
     @Autowired
     public AwsCognitoUtil(@Value("${aws.cognito.userPoolId}") String userPoolId,
@@ -46,7 +46,8 @@ public class AwsCognitoUtil {
                 .build();
     }
 
-    public AdminAddUserToGroupResult addUserToGroup(String userId, String groupName) {
+    public AdminAddUserToGroupResult addUserToGroup(final String userId,
+                                                    final String groupName) {
         AdminAddUserToGroupRequest adminAddUserToGroupRequest = new AdminAddUserToGroupRequest();
 
         adminAddUserToGroupRequest.setUserPoolId(this.userPoolId);
@@ -56,7 +57,7 @@ public class AwsCognitoUtil {
         return identityProvider.adminAddUserToGroup(adminAddUserToGroupRequest);
     }
 
-    public Employee createUser(Employee employee) {
+    public Employee createUser(final Employee employee) {
         // AdminCreateUserRequest: https://docs.aws.amazon.com/AWSJavaSDK/latest/javadoc/com/amazonaws/services/cognitoidp/model/AdminCreateUserRequest.html
         AdminCreateUserRequest adminCreateUserRequest = new AdminCreateUserRequest();
 
@@ -77,7 +78,7 @@ public class AwsCognitoUtil {
         return employee;
     }
 
-    public String getEmployeeCognitoStatus(UUID employeeId) {
+    public String getEmployeeCognitoStatus(final UUID employeeId) {
         AdminGetUserRequest adminGetUserRequest = new AdminGetUserRequest();
 
         adminGetUserRequest.setUsername(String.valueOf(employeeId));
