@@ -64,13 +64,11 @@ public class SchedulerServiceImpl implements SchedulerService {
             LocalDate weekday = firstDayOfWeek.plusDays(i);
 
             // Create a roster based on the weekday
-            Roster roster = new Roster(
-                    null,
-                    weekday,
-                    null,
-                    weekday.atTime(9, 0),
-                    weekday.atTime(17, 0),
-                    null);
+            Roster roster = new Roster();
+
+            roster.setDate(weekday);
+            roster.setFromDateTime(weekday.atTime(9, 0));
+            roster.setToDateTime(weekday.atTime(17, 0));
 
             rosterService.addRoster(workLocationId, roster);
 
