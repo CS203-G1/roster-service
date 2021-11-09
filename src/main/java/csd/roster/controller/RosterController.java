@@ -24,7 +24,7 @@ import csd.roster.service.interfaces.RosterService;
 @RestController
 @PreAuthorize("hasRole('ROLE_EMPLOYER')")
 public class RosterController {
-    private RosterService rosterService;
+    private final RosterService rosterService;
 
     @Autowired
     public RosterController(RosterService rosterService) {
@@ -32,43 +32,45 @@ public class RosterController {
     }
 
     @GetMapping("/work-locations/{workLocationId}/rosters/{rosterId}")
-    public Roster getRoster(@PathVariable(value = "workLocationId") UUID workLocationId,
-                            @PathVariable(value = "rosterId") UUID rosterId) {
+    public Roster getRoster(@PathVariable(value = "workLocationId") final UUID workLocationId,
+                            @PathVariable(value = "rosterId") final UUID rosterId) {
         return rosterService.getRoster(workLocationId, rosterId);
     }
 
     @GetMapping("/work-locations/{workLocationId}/rosters")
-    public List<Roster> getRosters(@PathVariable(value = "workLocationId") UUID workLocationId) {
+    public List<Roster> getRosters(@PathVariable(value = "workLocationId") final UUID workLocationId) {
         return rosterService.getRosters(workLocationId);
     }
 
     @PostMapping("/work-locations/{workLocationId}/rosters")
-    public Roster addRoster(@PathVariable(value = "workLocationId") UUID workLocationId,
-                            @Valid @RequestBody Roster roster) {
+    public Roster addRoster(@PathVariable(value = "workLocationId") final UUID workLocationId,
+                            @Valid @RequestBody final Roster roster) {
         return rosterService.addRoster(workLocationId, roster);
     }
 
     @DeleteMapping("/work-locations/{workLocationId}/rosters/{rosterId}")
-    public void deleteRoster(@PathVariable(value = "workLocationId") UUID workLocationId,
-                            @PathVariable(value = "rosterId") UUID rosterId) {
+    public void deleteRoster(@PathVariable(value = "workLocationId") final UUID workLocationId,
+                            @PathVariable(value = "rosterId") final UUID rosterId) {
         rosterService.deleteRoster(workLocationId, rosterId);
     }
 
     @PutMapping("/work-locations/{workLocationId}/rosters/{rosterId}")
-    public Roster updateRoster(@PathVariable(value = "workLocationId") UUID workLocationId,
-                            @PathVariable(value = "rosterId") UUID rosterId,
-                            @Valid @RequestBody Roster roster) {
+    public Roster updateRoster(@PathVariable(value = "workLocationId") final UUID workLocationId,
+                            @PathVariable(value = "rosterId") final UUID rosterId,
+                            @Valid @RequestBody final Roster roster) {
         return rosterService.updateRoster(workLocationId, rosterId, roster);
     }
 
     @GetMapping("/employers/{employerId}/rosters/date/{date}")
-    public List<RosterResponseModel> getRostersByEmployerIdAndDate(@PathVariable(value = "employerId") UUID employerId,
-                                                                   @PathVariable(value = "date")  @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date) {
+    public List<RosterResponseModel> getRostersByEmployerIdAndDate(@PathVariable(value = "employerId") final UUID employerId,
+                                                                   @PathVariable(value = "date")
+                                                                   @DateTimeFormat(pattern = "yyyy-MM-dd") final LocalDate date) {
         return rosterService.getRostersByEmployerIdAndDate(employerId, date);
     }
 
+    @PreAuthorize("hasRole('ROLE_EMPLOYEE')")
     @GetMapping("/employees/{employeeId}/rosters/weekly")
-    public List<Roster> getWeeklyRostersByEmployeeId(@PathVariable(value = "employeeId")UUID employeeId) {
+    public List<Roster> getWeeklyRostersByEmployeeId(@PathVariable(value = "employeeId") final UUID employeeId) {
         return rosterService.getWeeklyRostersByEmployeeId(employeeId);
     }
 }
