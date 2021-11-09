@@ -16,8 +16,8 @@ import java.util.List;
 @EnableScheduling
 public class ScheduledEmployeeLoggingTask {
     private static final Logger log = LoggerFactory.getLogger(ScheduledEmployeeLoggingTask.class);
-    private EmployeeService employeeService;
-    private EmployeeLogService employeeLogService;
+    private final EmployeeService employeeService;
+    private final EmployeeLogService employeeLogService;
 
     public ScheduledEmployeeLoggingTask(EmployeeService employeeService, EmployeeLogService employeeLogService) {
         this.employeeService = employeeService;
