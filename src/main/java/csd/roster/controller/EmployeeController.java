@@ -36,45 +36,45 @@ public class EmployeeController {
     }
 
     @PostMapping("/work-locations/{workLocationId}/employees/{employeeId}")
-    public Employee addEmployeeToWorkLocation(@PathVariable(value = "workLocationId") UUID workLocationId,
-                                              @PathVariable(value = "employeeId") UUID employeeId) {
+    public Employee addEmployeeToWorkLocation(@PathVariable(value = "workLocationId") final UUID workLocationId,
+                                              @PathVariable(value = "employeeId") final UUID employeeId) {
         return employeeService.addEmployeeToWorkLocation(workLocationId, employeeId);
     }
 
     @PreAuthorize("hasRole('ROLE_SUPER_USER')")
     @PostMapping("/departments/{departmentId}/employers")
-    public Employee addEmployer(@PathVariable(value = "departmentId") UUID departmentId,
-                                @Valid @RequestBody Employee employee) {
+    public Employee addEmployer(@PathVariable(value = "departmentId") final UUID departmentId,
+                                @Valid @RequestBody final Employee employee) {
         return employeeService.addEmployer(departmentId, employee);
     }
 
     @PutMapping("/departments/{departmentId}/employees/{employeeId}")
-    public Employee updateEmployee(@PathVariable(value = "departmentId") UUID departmentId,
-                                   @PathVariable(value = "employeeId") UUID employeeId,
-                                   @Valid @RequestBody Employee employee) {
+    public Employee updateEmployee(@PathVariable(value = "departmentId") final UUID departmentId,
+                                   @PathVariable(value = "employeeId") final UUID employeeId,
+                                   @Valid @RequestBody final Employee employee) {
         return employeeService.updateEmployee(departmentId, employeeId, employee);
     }
 
     @PreAuthorize("hasRole('ROLE_EMPLOYEE')")
     @GetMapping("/departments/{departmentId}/employees/{employeeId}")
-    public Employee getEmployee(@PathVariable(value = "departmentId") UUID departmentId,
-                                @PathVariable(value = "employeeId") UUID employeeId) {
+    public Employee getEmployee(@PathVariable(value = "departmentId") final UUID departmentId,
+                                @PathVariable(value = "employeeId") final UUID employeeId) {
         return employeeService.getEmployee(departmentId, employeeId);
     }
 
     @DeleteMapping("/departments/{departmentId}/employees/{employeeId}")
-    public void deleteEmployee(@PathVariable(value = "departmentId") UUID departmentId,
-                               @PathVariable(value = "employeeId") UUID employeeId) {
+    public void deleteEmployee(@PathVariable(value = "departmentId") final UUID departmentId,
+                               @PathVariable(value = "employeeId") final UUID employeeId) {
         employeeService.deleteEmployee(departmentId, employeeId);
     }
 
     @GetMapping("companies/{companyId}/employees")
-    public Iterable<Employee> getEmployeesByCompanyId(@PathVariable(value = "companyId") UUID companyId) {
+    public Iterable<Employee> getEmployeesByCompanyId(@PathVariable(value = "companyId") final UUID companyId) {
         return employeeService.getAllEmployeesByCompanyId(companyId);
     }
 
     @GetMapping("/employees/{employeeId}/cognito-status")
-    public String getEmployeeCognitoStaus(@PathVariable(value = "employeeId") UUID employeeId) {
+    public String getEmployeeCognitoStaus(@PathVariable(value = "employeeId") final UUID employeeId) {
         return employeeService.getEmployeeCognitoStatus(employeeId);
     }
 }
