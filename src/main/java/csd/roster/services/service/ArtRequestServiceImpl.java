@@ -7,6 +7,7 @@ import csd.roster.domain.model.ArtRequest;
 import csd.roster.domain.model.Employee;
 import csd.roster.repo.repository.ArtRequestRepository;
 import csd.roster.services.service.interfaces.ArtRequestService;
+import csd.roster.services.service.interfaces.EmailService;
 import csd.roster.services.service.interfaces.EmployeeService;
 import csd.roster.repo.util.AwsS3Util;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +28,13 @@ public class ArtRequestServiceImpl implements ArtRequestService {
 
     private final EmployeeService employeeService;
 
+    private final EmailService emailService;
+
     private final AwsS3Util awsS3Util;
+
+    private final String fromEmail = "cs201newnormal@gmail.com";
+    private final String rejectedSubject = "Your COVID ART Results";
+    private final String rejectedTopic = "rejectedART";
 
     @Value(value = "${aws.s3-bucket}")
     private String s3bucket;
@@ -36,16 +43,19 @@ public class ArtRequestServiceImpl implements ArtRequestService {
     public ArtRequestServiceImpl(
             ArtRequestRepository artRequestRepository,
             EmployeeService employeeService,
-            AwsS3Util awsS3Util) {
+            AwsS3Util awsS3Util,
+            EmailService emailService
+    ) {
         this.artRequestRepository = artRequestRepository;
         this.employeeService = employeeService;
         this.awsS3Util = awsS3Util;
+        this.emailService = emailService;
     }
 
     @Override
     public ArtRequest addArtRequest(final UUID employeeId, final MultipartFile multipartFile) {
         Employee employee = employeeService.getEmployee(employeeId);
-        ArtRequest artRequest= new ArtRequest();
+        ArtRequest artRequest = new ArtRequest();
         artRequest.setEmployee(employee);
         try {
             File file = File.createTempFile("art_request", ".jpg");
@@ -67,7 +77,7 @@ public class ArtRequestServiceImpl implements ArtRequestService {
 
     @Override
     public List<ArtRequest> getArtRequestByEmployeeIdAndRequestStatus(final UUID employeeId,
-                                                                      final RequestStatus requestStatus){
+                                                                      final RequestStatus requestStatus) {
         employeeService.getEmployee(employeeId);
 
         return artRequestRepository.findAllByEmployeeIdAndRequestStatus(employeeId, requestStatus);
@@ -75,11 +85,11 @@ public class ArtRequestServiceImpl implements ArtRequestService {
 
     @Override
     public List<ArtRequest> getArtRequestsByCompanyIdAndApprovalStatus(final UUID companyId,
-                                                                       final RequestStatus requestStatus){
+                                                                       final RequestStatus requestStatus) {
         List<Employee> employees = employeeService.getAllEmployeesByCompanyId(companyId);
 
         ArrayList<ArtRequest> artRequests = new ArrayList<ArtRequest>();
-        for(Employee employee: employees){
+        for (Employee employee : employees) {
             List<ArtRequest> employeeRequests = getArtRequestByEmployeeIdAndRequestStatus(employee.getId(), requestStatus);
             artRequests.addAll(employeeRequests);
         }
@@ -93,10 +103,16 @@ public class ArtRequestServiceImpl implements ArtRequestService {
         ArtRequest artRequest = getArtRequest(id);
         artRequest.setHealthStatus(healthStatus);
         artRequest.setRequestStatus(requestStatus);
-        if(requestStatus == RequestStatus.APPROVED){
-            Employee employee = artRequest.getEmployee();
+        Employee employee = artRequest.getEmployee();
+        if (requestStatus == RequestStatus.APPROVED) {
             employee.setHealthStatus(healthStatus);
             employeeService.updateEmployee(employee.getDepartment().getId(), employee.getId(), employee);
+        } else if (requestStatus == RequestStatus.REJECTED) {
+            emailService.sendEmail(fromEmail,
+                    employee.getCompany().getName(),
+                    employee.getEmail(),
+                    rejectedSubject,
+                    rejectedTopic);
         }
         return artRequestRepository.save(artRequest);
     }
