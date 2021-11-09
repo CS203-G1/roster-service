@@ -23,8 +23,8 @@ public class DepartmentController {
     }
 
     @PostMapping("/companies/{companyId}/departments")
-    public ResponseEntity<?> addDepartment(@PathVariable (value = "companyId") UUID companyId,
-                                    @RequestBody Department department) {
+    public ResponseEntity<?> addDepartment(@PathVariable (value = "companyId") final UUID companyId,
+                                    @RequestBody final Department department) {
         try {
             Department newDepartment = departmentService.add(companyId, department);
             return new ResponseEntity<>(newDepartment, HttpStatus.OK);
@@ -34,8 +34,8 @@ public class DepartmentController {
     }
 
     @GetMapping("/companies/{companyId}/departments/{departmentId}")
-    public ResponseEntity<?> getDepartmentById(@PathVariable (value = "companyId") UUID companyId,
-                                        @PathVariable (value = "departmentId") UUID departmentId) {
+    public ResponseEntity<?> getDepartmentById(@PathVariable (value = "companyId") final UUID companyId,
+                                        @PathVariable (value = "departmentId") final UUID departmentId) {
         try {
             Department newDepartment = departmentService.getDepartmentByIdAndCompanyId(departmentId, companyId);
             return new ResponseEntity<>(newDepartment, HttpStatus.OK);
@@ -50,9 +50,9 @@ public class DepartmentController {
     }
 
     @PutMapping("/companies/{companyId}/departments/{departmentId}")
-    public ResponseEntity<?> updateDepartment(@PathVariable (value = "companyId") UUID companyId,
-                                       @PathVariable (value = "departmentId") UUID departmentId,
-                                       @RequestBody Department department) {
+    public ResponseEntity<?> updateDepartment(@PathVariable (value = "companyId") final UUID companyId,
+                                       @PathVariable (value = "departmentId") final UUID departmentId,
+                                       @RequestBody final Department department) {
         try {
             Department updatedDepartment = departmentService.update(companyId, departmentId, department);
             return new ResponseEntity<>(updatedDepartment, HttpStatus.OK);
@@ -62,8 +62,8 @@ public class DepartmentController {
     }
 
     @DeleteMapping("/companies/{companyId}/departments/{departmentId}")
-    public ResponseEntity<?> deleteDepartment(@PathVariable (value = "companyId") UUID companyId,
-                                       @PathVariable (value = "departmentId") UUID departmentId) {
+    public ResponseEntity<?> deleteDepartment(@PathVariable (value = "companyId") final UUID companyId,
+                                       @PathVariable (value = "departmentId") final UUID departmentId) {
 
         try {
             departmentService.delete(companyId, departmentId);
