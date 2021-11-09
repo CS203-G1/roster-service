@@ -20,34 +20,35 @@ public class ArtRequestController {
     private final ArtRequestService artRequestService;
 
     @Autowired
-    public ArtRequestController(ArtRequestServiceImpl artRequestService){
+    public ArtRequestController(ArtRequestServiceImpl artRequestService) {
         this.artRequestService = artRequestService;
     }
 
     @PreAuthorize("hasRole('ROLE_EMPLOYEE')")
     @PostMapping("/employees/{employeeId}/requests/art-request")
-    public ArtRequest addArtRequest(@PathVariable(value = "employeeId") UUID employeeId, @RequestParam("file") MultipartFile multipartFile){
+    public ArtRequest addArtRequest(@PathVariable(value = "employeeId") final UUID employeeId,
+                                    @RequestParam("file") final MultipartFile multipartFile) {
         return artRequestService.addArtRequest(employeeId, multipartFile);
     }
 
     @PreAuthorize("hasRole('ROLE_EMPLOYER')")
     @GetMapping("/employees/{employeeId}/requests/art-request/{requestStatus}")
-    public List<ArtRequest> getArtRequestsByEmployeeAndRequestStatus(@PathVariable(value = "employeeId") UUID employeeId,
-                                                                     @PathVariable(value = "requestStatus")RequestStatus requestStatus){
-        return artRequestService.getArtRequestByEmployeeIdAndRequestStatus(employeeId,requestStatus);
+    public List<ArtRequest> getArtRequestsByEmployeeAndRequestStatus(@PathVariable(value = "employeeId") final UUID employeeId,
+                                                                     @PathVariable(value = "requestStatus") final RequestStatus requestStatus) {
+        return artRequestService.getArtRequestByEmployeeIdAndRequestStatus(employeeId, requestStatus);
     }
 
     @PreAuthorize("hasRole('ROLE_EMPLOYER')")
     @GetMapping("/companies/{companyId}/requests/art-request/{requestStatus}")
-    public List<ArtRequest> getArtRequestsByCompanyAndRequestStatus(@PathVariable(value = "companyId") UUID companyId,
-                                                                    @PathVariable(value = "requestStatus")RequestStatus requestStatus){
-        return artRequestService.getArtRequestsByCompanyIdAndApprovalStatus(companyId,requestStatus);
+    public List<ArtRequest> getArtRequestsByCompanyAndRequestStatus(@PathVariable(value = "companyId") final UUID companyId,
+                                                                    @PathVariable(value = "requestStatus") final RequestStatus requestStatus) {
+        return artRequestService.getArtRequestsByCompanyIdAndApprovalStatus(companyId, requestStatus);
     }
 
     @PreAuthorize("hasRole('ROLE_EMPLOYER')")
     @PutMapping("/requests/art-request/{artRequestId}")
-    public ArtRequest reviewArtRequest(@PathVariable(value = "artRequestId") UUID artRequestId,
-                                       @RequestBody ArtRequestReviewHolder artRequestReviewHolder){
+    public ArtRequest reviewArtRequest(@PathVariable(value = "artRequestId") final UUID artRequestId,
+                                       @RequestBody final ArtRequestReviewHolder artRequestReviewHolder) {
         return artRequestService.reviewArtRequest(artRequestId, artRequestReviewHolder.getHealthStatus(), artRequestReviewHolder.getRequestStatus());
     }
 }
