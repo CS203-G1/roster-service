@@ -150,7 +150,9 @@ public class RosterServiceImpl implements RosterService {
         for (int i = 0; i < 5; i++) {
             LocalDate weekday = firstDayOfWeek.plusDays(i);
 
-            rosters.add(rosterRepository.findByEmployeeIdAndDate(employeeId, weekday).get(0));
+            List<Roster> roster = rosterRepository.findByEmployeeIdAndDate(employeeId, weekday);
+
+            rosters.add(roster.isEmpty() ? null : roster.get(0));
         }
 
         return rosters;
