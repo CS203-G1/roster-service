@@ -8,27 +8,36 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import csd.roster.domain.enumerator.HealthStatus;
-import csd.roster.domain.exception.exceptions.EmployeeNotFoundException;
-import csd.roster.domain.model.Department;
-import csd.roster.domain.model.Employee;
-import csd.roster.domain.model.WorkLocation;
-import csd.roster.repo.repository.EmployeeRepository;
-import csd.roster.services.service.interfaces.CompanyService;
-import csd.roster.services.service.interfaces.DepartmentService;
-import csd.roster.services.service.interfaces.EmailService;
-import csd.roster.services.service.interfaces.EmployeeService;
-import csd.roster.services.service.interfaces.WorkLocationService;
-import csd.roster.repo.util.AwsCognitoUtil;
+import csd.roster.enumerator.HealthStatus;
+import csd.roster.exception.exceptions.EmployeeNotFoundException;
+import csd.roster.model.Department;
+import csd.roster.model.Employee;
+import csd.roster.model.WorkLocation;
+import csd.roster.repository.EmployeeRepository;
+import csd.roster.service.interfaces.CompanyService;
+import csd.roster.service.interfaces.DepartmentService;
+import csd.roster.service.interfaces.EmailService;
+import csd.roster.service.interfaces.EmployeeService;
+import csd.roster.service.interfaces.WorkLocationService;
+import csd.roster.util.AwsCognitoUtil;
 import csd.roster.util.AwsMailUtil;
 
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
+<<<<<<< HEAD:src/main/java/csd/roster/services/service/EmployeeServiceImpl.java
     private final EmployeeRepository employeeRepository;
     private final DepartmentService departmentService;
     private final CompanyService companyService;
     private final WorkLocationService workLocationService;
     private AwsMailUtil awsMailUtil;
+=======
+    private EmployeeRepository employeeRepository;
+    private DepartmentService departmentService;
+    private CompanyService companyService;
+    private WorkLocationService workLocationService;
+    private EmailService emailService;
+
+>>>>>>> c490c8a84f675ac459a390af412c1a71e2120d3a:src/main/java/csd/roster/service/EmployeeServiceImpl.java
     private AwsCognitoUtil awsCognitoUtil;
 
 
@@ -56,12 +65,18 @@ public class EmployeeServiceImpl implements EmployeeService {
     public Employee addEmployee(final UUID departmentId, final Employee employee) {
         Employee createdEmployee = awsCognitoUtil.createUser(employee);
         awsCognitoUtil.addUserToGroup(employee.getId().toString(), employeeGroup);
+<<<<<<< HEAD:src/main/java/csd/roster/services/service/EmployeeServiceImpl.java
+<<<<<<< HEAD:src/main/java/csd/roster/services/service/EmployeeServiceImpl.java
         awsMailUtil.addEmailToPool(employee.getEmail());
         
         return persistEmployee(departmentId, createdEmployee);
+=======
+=======
+>>>>>>> c490c8a84f675ac459a390af412c1a71e2120d3a:src/main/java/csd/roster/service/EmployeeServiceImpl.java
         emailService.addEmailToPool(employee.getEmail());
 
         return persistEmployee(departmentId, employee);
+>>>>>>> 430f936 (Add AWS SES verification for emails):src/main/java/csd/roster/service/EmployeeServiceImpl.java
     }
 
     // Violating DRY because I want to provide two endpoints for Frontend instead of having them to send in a value to
