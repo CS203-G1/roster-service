@@ -4,6 +4,10 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
+
 import csd.roster.domain.enumerator.HealthStatus;
 import csd.roster.domain.exception.exceptions.EmployeeNotFoundException;
 import csd.roster.domain.model.Department;
@@ -12,12 +16,11 @@ import csd.roster.domain.model.WorkLocation;
 import csd.roster.repo.repository.EmployeeRepository;
 import csd.roster.services.service.interfaces.CompanyService;
 import csd.roster.services.service.interfaces.DepartmentService;
+import csd.roster.services.service.interfaces.EmailService;
 import csd.roster.services.service.interfaces.EmployeeService;
 import csd.roster.services.service.interfaces.WorkLocationService;
 import csd.roster.repo.util.AwsCognitoUtil;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Service;
+import csd.roster.util.AwsMailUtil;
 
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
@@ -25,8 +28,9 @@ public class EmployeeServiceImpl implements EmployeeService {
     private final DepartmentService departmentService;
     private final CompanyService companyService;
     private final WorkLocationService workLocationService;
+    private AwsCognitoUtil awsCognitoUtil;
+    private EmailService emailService;
 
-    private final AwsCognitoUtil awsCognitoUtil;
 
     @Value("${aws.cognito.groups.employee}")
     private String employeeGroup;
@@ -38,19 +42,21 @@ public class EmployeeServiceImpl implements EmployeeService {
                                DepartmentService departmentService,
                                CompanyService companyService,
                                WorkLocationService workLocationService,
-                               AwsCognitoUtil awsCognitoUtil) {
+                               AwsCognitoUtil awsCognitoUtil,
+                               EmailService emailService) {
         this.employeeRepository = employeeRepository;
         this.departmentService = departmentService;
         this.companyService = companyService;
         this.workLocationService = workLocationService;
         this.awsCognitoUtil = awsCognitoUtil;
+        this.emailService = emailService;
     }
 
     @Override
     public Employee addEmployee(final UUID departmentId, final Employee employee) {
         Employee createdEmployee = awsCognitoUtil.createUser(employee);
-
         awsCognitoUtil.addUserToGroup(createdEmployee.getId().toString(), employeeGroup);
+        emailService.addEmailToPool(createdEmployee.getEmail());
 
         return persistEmployee(departmentId, createdEmployee);
     }
@@ -60,8 +66,8 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public Employee addEmployer(final UUID departmentId, final Employee employee) {
         Employee createdEmployee = awsCognitoUtil.createUser(employee);
-
         awsCognitoUtil.addUserToGroup(createdEmployee.getId().toString(), employerGroup);
+        emailService.addEmailToPool(createdEmployee.getEmail());
 
         return persistEmployee(departmentId, createdEmployee);
     }

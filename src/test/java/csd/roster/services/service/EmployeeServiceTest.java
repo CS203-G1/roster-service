@@ -12,6 +12,7 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 import csd.roster.repo.util.AwsCognitoUtil;
+import csd.roster.services.service.interfaces.EmailService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -38,6 +39,9 @@ public class EmployeeServiceTest {
 
     @Mock
     AwsCognitoUtil awsCognitoUtil;
+
+    @Mock
+    EmailService emailService;
 
     @InjectMocks
     EmployeeServiceImpl employeeService;
