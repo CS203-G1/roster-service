@@ -21,7 +21,7 @@ import csd.roster.service.interfaces.EmployeeVaccinationService;
 @RestController
 @PreAuthorize("hasRole('ROLE_EMPLOYER')")
 public class EmployeeVaccinationController {
-    private EmployeeVaccinationService employeeVaccinationService;
+    private final EmployeeVaccinationService employeeVaccinationService;
 
     @Autowired
     public EmployeeVaccinationController(EmployeeVaccinationService employeeVaccinationService) {
@@ -29,32 +29,32 @@ public class EmployeeVaccinationController {
     }
 
     @GetMapping("/employees/{employeeId}/employee-vaccinations/{employeeVaccinationId}")
-    public EmployeeVaccination getEmployeeVaccination(@PathVariable(value = "employeeId") UUID employeeId,
-                            @PathVariable(value = "employeeVaccinationId") UUID employeeVaccinationId) {
+    public EmployeeVaccination getEmployeeVaccination(@PathVariable(value = "employeeId") final UUID employeeId,
+                            @PathVariable(value = "employeeVaccinationId") final UUID employeeVaccinationId) {
         return employeeVaccinationService.getEmployeeVaccination(employeeId, employeeVaccinationId);
     }
 
     @GetMapping("/employees/{employeeId}/employee-vaccinations")
-    public List<EmployeeVaccination> getEmployeeVaccinations(@PathVariable(value = "employeeId") UUID employeeId) {
+    public List<EmployeeVaccination> getEmployeeVaccinations(@PathVariable(value = "employeeId") final UUID employeeId) {
         return employeeVaccinationService.getEmployeeVaccinations(employeeId);
     }
 
     @PostMapping("/employees/{employeeId}/employee-vaccinations")
-    public EmployeeVaccination addEmployeeVaccination(@PathVariable(value = "employeeId") UUID employeeId,
-                            @Valid @RequestBody EmployeeVaccination employeeVaccination) {
+    public EmployeeVaccination addEmployeeVaccination(@PathVariable(value = "employeeId") final UUID employeeId,
+                            @Valid @RequestBody final EmployeeVaccination employeeVaccination) {
         return employeeVaccinationService.addEmployeeVaccination(employeeId, employeeVaccination);
     }
 
     @PutMapping("/employees/{employeeId}/employee-vaccinations/{employeeVaccinationId}")
-    public EmployeeVaccination updateEmployeeVaccination(@PathVariable(value = "employeeId") UUID employeeId,
-                            @PathVariable(value = "employeeVaccinationId") UUID employeeVaccinationId,
+    public EmployeeVaccination updateEmployeeVaccination(@PathVariable(value = "employeeId") final UUID employeeId,
+                            @PathVariable(value = "employeeVaccinationId") final UUID employeeVaccinationId,
                             @Valid @RequestBody EmployeeVaccination employeeVaccination) {
         return employeeVaccinationService.updateEmployeeVaccination(employeeId, employeeVaccinationId, employeeVaccination);
     }
 
     @DeleteMapping("/employees/{employeeId}/employee-vaccinations/{employeeVaccinationId}")
-    public void deleteEmployeeVaccination(@PathVariable(value = "employeeId") UUID employeeId,
-                            @PathVariable(value = "employeeVaccinationId") UUID employeeVaccinationId) {
+    public void deleteEmployeeVaccination(@PathVariable(value = "employeeId") final UUID employeeId,
+                            @PathVariable(value = "employeeVaccinationId") final UUID employeeVaccinationId) {
         employeeVaccinationService.deleteEmployeeVaccination(employeeId, employeeVaccinationId);
     }
 }
