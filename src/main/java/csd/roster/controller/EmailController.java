@@ -16,6 +16,11 @@ public class EmailController {
     
     @GetMapping("/email")
     public void sendMessage() {
-        emailService.sendEmail("cs201newnormal@gmail.com", "CS201", "cs201newnormal@gmail.com", "test");
+        emailService.sendEmail(
+                "cs201newnormal@gmail.com",
+                "CS201",
+                "cs201newnormal@gmail.com",
+                "test",
+                "test");
     }
 }
