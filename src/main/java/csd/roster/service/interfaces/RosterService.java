@@ -8,6 +8,7 @@ import java.util.UUID;
 import csd.roster.model.Roster;
 import csd.roster.model.RosterEmployee;
 import csd.roster.model.WorkLocation;
+import csd.roster.response_model.RosterResponseModel;
 
 public interface RosterService {
     Roster addRoster(UUID workLocationId, Roster roster);
@@ -28,7 +29,7 @@ public interface RosterService {
 
     List<Roster> getCurrentRostersByCompany(UUID companyId);
 
-    List<Roster> getRostersByEmployerIdAndDate(UUID employerId, LocalDate date);
+    List<RosterResponseModel>  getRostersByEmployerIdAndDate(UUID employerId, LocalDate date);
 
     List<Roster> getWeeklyRostersByEmployeeId(UUID employeeId);
 }
