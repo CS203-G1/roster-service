@@ -30,24 +30,24 @@ public class RosterEmployeeController {
     // employees
     @PreAuthorize("hasRole('ROLE_EMPLOYER')")
     @PostMapping("/rosters/{rosterId}/employees/{employeeId}")
-    public RosterEmployee addRosterEmployee(@PathVariable(value = "rosterId") UUID rosterId,
-                            @PathVariable(value = "employeeId") UUID employeeId,
+    public RosterEmployee addRosterEmployee(@PathVariable(value = "rosterId") final UUID rosterId,
+                            @PathVariable(value = "employeeId") final UUID employeeId,
                             @Valid @RequestBody RosterEmployee rosterEmployee) {
         return rosterEmployeeService.addRosterEmployee(rosterId, employeeId, rosterEmployee);
     }
 
     @PreAuthorize("hasRole('ROLE_EMPLOYER')")
     @DeleteMapping("/rosters/{rosterId}/employees/{employeeId}")
-    public void deleteRosterEmployee(@PathVariable(value = "rosterId") UUID rosterId,
-                                            @PathVariable(value = "employeeId") UUID employeeId) {
+    public void deleteRosterEmployee(@PathVariable(value = "rosterId") final UUID rosterId,
+                                            @PathVariable(value = "employeeId") final UUID employeeId) {
         rosterEmployeeService.removeRosterEmployee(rosterId, employeeId);
     }
 
     @PreAuthorize("hasRole('ROLE_EMPLOYER')")
     @PutMapping("/rosters/{rosterId}/employees/{employeeId}")
-    public RosterEmployee updateRosterEmployee(@PathVariable(value = "rosterId") UUID rosterId,
-                                            @PathVariable(value = "employeeId") UUID employeeId,
-                                            @Valid @RequestBody RosterEmployee rosterEmployee) {
+    public RosterEmployee updateRosterEmployee(@PathVariable(value = "rosterId") final UUID rosterId,
+                                            @PathVariable(value = "employeeId") final UUID employeeId,
+                                            @Valid @RequestBody final RosterEmployee rosterEmployee) {
         return rosterEmployeeService.updateRosterEmployee(rosterId, employeeId, rosterEmployee);
     }
 }
