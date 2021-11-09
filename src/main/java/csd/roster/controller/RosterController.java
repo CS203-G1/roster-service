@@ -68,7 +68,7 @@ public class RosterController {
     }
 
     @GetMapping("/employee/{employeeId}/rosters/weekly")
-    public List<Roster> getWeeklyRostersByEmployeeIdAndDate(@PathVariable(value = "employeeId")UUID employeeId) {
+    public List<Roster> getWeeklyRostersByEmployeeId(@PathVariable(value = "employeeId")UUID employeeId) {
         return rosterService.getWeeklyRostersByEmployeeId(employeeId);
     }
 }
