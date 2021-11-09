@@ -129,7 +129,7 @@ public class RosterServiceImpl implements RosterService {
         for (Roster roster : rosters) {
             RosterResponseModel rosterResponseModel = new RosterResponseModel(roster, null);
 
-            rosterResponseModel.setEmployees(rosterRepository.findEmployeesByRosterId(roster.getId()));
+            rosterResponseModel.setEmployees(rosterRepository.findOnsiteEmployeesByRosterId(roster.getId()));
 
             rosterResponseModels.add(rosterResponseModel);
         }
