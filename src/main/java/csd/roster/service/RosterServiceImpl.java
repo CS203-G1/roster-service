@@ -5,6 +5,7 @@ import java.time.ZoneId;
 import java.util.*;
 
 import csd.roster.model.Employee;
+import csd.roster.response_model.RosterResponseModel;
 import csd.roster.service.interfaces.EmployeeService;
 import csd.roster.service.interfaces.RosterService;
 import csd.roster.service.interfaces.WorkLocationService;
@@ -111,7 +112,7 @@ public class RosterServiceImpl implements RosterService {
     }
 
     @Override
-    public List<Roster> getRostersByEmployerIdAndDate(UUID employerId, LocalDate date) {
+    public List<RosterResponseModel> getRostersByEmployerIdAndDate(UUID employerId, LocalDate date) {
         Employee employer = employeeService.getEmployee(employerId);
 
         List<WorkLocation> workLocations = workLocationService
@@ -124,7 +125,16 @@ public class RosterServiceImpl implements RosterService {
                     .orElseThrow(() -> new RosterNotFoundException(workLocation)));
         }
 
-        return rosters;
+        List<RosterResponseModel> rosterResponseModels = new LinkedList<>();
+        for (Roster roster : rosters) {
+            RosterResponseModel rosterResponseModel = new RosterResponseModel(roster, null);
+
+            rosterResponseModel.setEmployees(rosterRepository.findEmployeesByRosterId(roster.getId()));
+
+            rosterResponseModels.add(rosterResponseModel);
+        }
+
+        return rosterResponseModels;
     }
 
     @Override
@@ -140,8 +150,7 @@ public class RosterServiceImpl implements RosterService {
         for (int i = 0; i < 5; i++) {
             LocalDate weekday = firstDayOfWeek.plusDays(i);
 
-            rosters.add(rosterRepository.findByEmployeeIdAndDate(employeeId, weekday)
-                    .orElseThrow(() -> new RosterNotFoundException(employer.getWorkLocation())));
+            rosters.add(rosterRepository.findByEmployeeIdAndDate(employeeId, weekday).get(0));
         }
 
         return rosters;
