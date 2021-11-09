@@ -13,14 +13,14 @@ import java.util.UUID;
 @Service
 public class CompanyServiceImpl implements CompanyService {
 
-    private CompanyRepository companyRepository;
+    private final CompanyRepository companyRepository;
 
     public CompanyServiceImpl(CompanyRepository companyRepository) {
         this.companyRepository = companyRepository;
     }
 
     @Override
-    public Company addCompany(Company company) {
+    public Company addCompany(final Company company) {
         return companyRepository.save(company);
     }
 
@@ -30,17 +30,17 @@ public class CompanyServiceImpl implements CompanyService {
     }
 
     @Override
-    public Company getCompanyById(UUID id) throws CompanyNotFoundException {
+    public Company getCompanyById(final UUID id) throws CompanyNotFoundException {
         return companyRepository.findById(id).orElseThrow(() -> new CompanyNotFoundException(id));
     }
 
     @Override
-    public Company updateCompanyByid(UUID id, Company company) {
-        throw new NotYetImplementedException();
+    public Company updateCompanyByid(final UUID id, final Company company) {
+        return null;
     }
 
     @Override
-    public void deleteCompanyByid(UUID id) throws CompanyNotFoundException {
+    public void deleteCompanyByid(final UUID id) throws CompanyNotFoundException {
         Company company = getCompanyById(id);
 
         companyRepository.delete(company);

@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 @EnableAsync
 @Service
 public class EmployeeLogServiceImpl implements EmployeeLogService {
-    private EmployeeLogRepository employeeLogRepository;
+    private final EmployeeLogRepository employeeLogRepository;
 
     @Autowired
     public EmployeeLogServiceImpl(EmployeeLogRepository employeeLogRepository) {
@@ -22,7 +22,7 @@ public class EmployeeLogServiceImpl implements EmployeeLogService {
     @Override
     @Async
     // We can do this asynchronously since each employee is not interfering with another
-    public EmployeeLog saveEmployeeLog(Employee employee) {
+    public EmployeeLog saveEmployeeLog(final Employee employee) {
         return employeeLogRepository.save(new EmployeeLog(employee));
     }
 }

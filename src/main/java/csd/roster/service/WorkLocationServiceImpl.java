@@ -14,16 +14,19 @@ import csd.roster.repository.WorkLocationRepository;
 
 @Service
 public class WorkLocationServiceImpl implements WorkLocationService {
-    final private WorkLocationRepository workLocationRepository;
-    final private DepartmentService departmentService;
+    private final WorkLocationRepository workLocationRepository;
+    private final DepartmentService departmentService;
 
-    public WorkLocationServiceImpl(WorkLocationRepository workLocationRepository, DepartmentService departmentService) {
+    public WorkLocationServiceImpl(final WorkLocationRepository workLocationRepository,
+                                   final DepartmentService departmentService) {
         this.workLocationRepository = workLocationRepository;
         this.departmentService = departmentService;
     }
 
     @Override
-    public WorkLocation add(UUID companyId, UUID departmentId, WorkLocation workLocation) {
+    public WorkLocation add(final UUID companyId,
+                            final UUID departmentId,
+                            final WorkLocation workLocation) {
         Department department = departmentService.getDepartmentByIdAndCompanyId(departmentId, companyId);
 
         workLocation.setDepartment(department);
@@ -36,19 +39,22 @@ public class WorkLocationServiceImpl implements WorkLocationService {
     }
 
     @Override
-    public List<WorkLocation> getWorkLocationsFromDepartment(UUID departmentId) {
+    public List<WorkLocation> getWorkLocationsFromDepartment(final UUID departmentId) {
         return null;
     }
 
     @Override
-    public void delete(UUID companyId, UUID departmentId, UUID workLocationId) {
+    public void delete(final UUID companyId, final UUID departmentId, final UUID workLocationId) {
         WorkLocation workLocation = get(companyId, departmentId, workLocationId);
 
         workLocationRepository.delete(workLocation);
     }
 
     @Override
-    public WorkLocation update(UUID companyId, UUID departmentId, UUID workLocationId, WorkLocation newWorkLocation) {
+    public WorkLocation update(final UUID companyId,
+                               final UUID departmentId,
+                               final UUID workLocationId,
+                               final WorkLocation newWorkLocation) {
         Department department = departmentService.getDepartmentByIdAndCompanyId(departmentId, companyId);
 
         return workLocationRepository.findByIdAndDepartmentId(workLocationId, departmentId).map(workLocation -> {
@@ -59,7 +65,9 @@ public class WorkLocationServiceImpl implements WorkLocationService {
     }
 
     @Override
-    public WorkLocation get(UUID companyId, UUID departmentId, UUID workLocationId) {
+    public WorkLocation get(final UUID companyId,
+                            final UUID departmentId,
+                            final UUID workLocationId) {
         departmentService.getDepartmentByIdAndCompanyId(departmentId, companyId);
 
         return workLocationRepository.findByIdAndDepartmentId(workLocationId, departmentId)
@@ -67,19 +75,19 @@ public class WorkLocationServiceImpl implements WorkLocationService {
     }
 
     @Override
-    public WorkLocation getWorkLocationById(UUID workLocationId) {
+    public WorkLocation getWorkLocationById(final UUID workLocationId) {
         return workLocationRepository.findById(workLocationId)
                 .orElseThrow(() -> new WorkLocationNotFoundException(workLocationId));
     }
 
     @Override
-    public WorkLocation getRemoteWorkLocationByCompanyId(UUID companyId) {
+    public WorkLocation getRemoteWorkLocationByCompanyId(final UUID companyId) {
         return workLocationRepository.findRemoteWorkLocationByCompanyId(companyId)
                 .orElseThrow(() -> new WorkLocationNotFoundException(companyId));
     }
 
     @Override
-    public List<WorkLocation> getWorkLocationsByCompanyId(UUID companyId) {
+    public List<WorkLocation> getWorkLocationsByCompanyId(final UUID companyId) {
         return workLocationRepository.findAllByCompanyId(companyId);
     }
 }

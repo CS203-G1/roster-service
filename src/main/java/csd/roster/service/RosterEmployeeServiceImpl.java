@@ -33,7 +33,9 @@ public class RosterEmployeeServiceImpl implements RosterEmployeeService {
     }
 
     @Override
-    public RosterEmployee addRosterEmployee(UUID rosterId, UUID employeeId, RosterEmployee rosterEmployee) {
+    public RosterEmployee addRosterEmployee(final UUID rosterId,
+                                            final UUID employeeId,
+                                            final RosterEmployee rosterEmployee) {
         Roster roster = rosterService.getRoster(rosterId);
         Employee employee = employeeService.getEmployee(employeeId);
 
@@ -50,42 +52,46 @@ public class RosterEmployeeServiceImpl implements RosterEmployeeService {
     }
 
     @Override
-    public RosterEmployee getRosterEmployee(UUID rosterId, UUID employeeId) {
+    public RosterEmployee getRosterEmployee(final UUID rosterId, final UUID employeeId) {
         return rosterEmployeeRepository.findByRosterIdAndEmployeeId(rosterId, employeeId)
                 .orElseThrow(() -> new RosterEmployeeNotFoundException(rosterId, employeeId));
     }
 
     @Override
-    public void removeRosterEmployee(UUID rosterId, UUID employeeId) {
+    public void removeRosterEmployee(final UUID rosterId, final UUID employeeId) {
         RosterEmployee rosterEmployee = getRosterEmployee(rosterId, employeeId);
 
         rosterEmployeeRepository.delete(rosterEmployee);
     }
 
     @Override
-    public RosterEmployee updateRosterEmployee(UUID rosterId, UUID employeeId, RosterEmployee newRosterEmployee) {
+    public RosterEmployee updateRosterEmployee(final UUID rosterId,
+                                               final UUID employeeId,
+                                               final RosterEmployee newRosterEmployee) {
         RosterEmployee rosterEmployee = getRosterEmployee(rosterId, employeeId);
 
         // Different from the usual updates because we only want to allow the frontend request to be able to
         // update from date time and to date time
-        // TODO Fix logic due to model change
         rosterEmployee.setRemote(newRosterEmployee.isRemote());
 
         return rosterEmployeeRepository.save(rosterEmployee);
     }
 
     @Override
-    public List<RosterEmployee> findAllRosterEmployeesByCompanyIdAndDate(UUID companyId, LocalDate date) {
+    public List<RosterEmployee> findAllRosterEmployeesByCompanyIdAndDate(final UUID companyId,
+                                                                         final LocalDate date) {
         return rosterEmployeeRepository.findAllRosterEmployeesByCompanyIdAndDate(companyId, date);
     }
 
     @Override
-    public List<RosterEmployee> findRemoteRosterEmployeesByCompanyIdAndDate(UUID companyId, LocalDate date) {
+    public List<RosterEmployee> findRemoteRosterEmployeesByCompanyIdAndDate(final UUID companyId,
+                                                                            final LocalDate date) {
         return rosterEmployeeRepository.findRemoteRosterEmployeesByCompanyIdAndDate(companyId, date);
     }
 
     @Override
-    public List<RosterEmployee> findOnsiteRosterEmployeesByCompanyIdAndDate(UUID companyId, LocalDate date) {
+    public List<RosterEmployee> findOnsiteRosterEmployeesByCompanyIdAndDate(final UUID companyId,
+                                                                            final LocalDate date) {
         return rosterEmployeeRepository.findOnsiteRosterEmployeesByCompanyIdAndDate(companyId, date);
     }
 }

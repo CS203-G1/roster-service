@@ -23,24 +23,27 @@ import java.util.UUID;
 
 @Service
 public class ArtRequestServiceImpl implements ArtRequestService {
-    private ArtRequestRepository artRequestRepository;
+    private final ArtRequestRepository artRequestRepository;
 
-    private EmployeeService employeeService;
+    private final EmployeeService employeeService;
 
-    private AwsS3Util awsS3Util;
+    private final AwsS3Util awsS3Util;
 
     @Value(value = "${aws.s3-bucket}")
     private String s3bucket;
 
     @Autowired
-    public ArtRequestServiceImpl(ArtRequestRepository artRequestRepository, EmployeeService employeeService, AwsS3Util awsS3Util) {
+    public ArtRequestServiceImpl(
+            ArtRequestRepository artRequestRepository,
+            EmployeeService employeeService,
+            AwsS3Util awsS3Util) {
         this.artRequestRepository = artRequestRepository;
         this.employeeService = employeeService;
         this.awsS3Util = awsS3Util;
     }
 
     @Override
-    public ArtRequest addArtRequest(UUID employeeId, MultipartFile multipartFile) {
+    public ArtRequest addArtRequest(final UUID employeeId, final MultipartFile multipartFile) {
         Employee employee = employeeService.getEmployee(employeeId);
         ArtRequest artRequest= new ArtRequest();
         artRequest.setEmployee(employee);
@@ -57,20 +60,22 @@ public class ArtRequestServiceImpl implements ArtRequestService {
     }
 
     @Override
-    public ArtRequest getArtRequest(UUID id) {
+    public ArtRequest getArtRequest(final UUID id) {
         return artRequestRepository.findById(id)
                 .orElseThrow(() -> new ArtRequestNotFoundException(id));
     }
 
     @Override
-    public List<ArtRequest> getArtRequestByEmployeeIdAndRequestStatus(UUID employeeId, RequestStatus requestStatus){
+    public List<ArtRequest> getArtRequestByEmployeeIdAndRequestStatus(final UUID employeeId,
+                                                                      final RequestStatus requestStatus){
         employeeService.getEmployee(employeeId);
 
         return artRequestRepository.findAllByEmployeeIdAndRequestStatus(employeeId, requestStatus);
     }
 
     @Override
-    public List<ArtRequest> getArtRequestsByCompanyIdAndApprovalStatus(UUID companyId, RequestStatus requestStatus){
+    public List<ArtRequest> getArtRequestsByCompanyIdAndApprovalStatus(final UUID companyId,
+                                                                       final RequestStatus requestStatus){
         List<Employee> employees = employeeService.getAllEmployeesByCompanyId(companyId);
 
         ArrayList<ArtRequest> artRequests = new ArrayList<ArtRequest>();
@@ -82,7 +87,9 @@ public class ArtRequestServiceImpl implements ArtRequestService {
     }
 
     @Override
-    public ArtRequest reviewArtRequest(UUID id, HealthStatus healthStatus, RequestStatus requestStatus) {
+    public ArtRequest reviewArtRequest(final UUID id,
+                                       final HealthStatus healthStatus,
+                                       final RequestStatus requestStatus) {
         ArtRequest artRequest = getArtRequest(id);
         artRequest.setHealthStatus(healthStatus);
         artRequest.setRequestStatus(requestStatus);
@@ -94,7 +101,8 @@ public class ArtRequestServiceImpl implements ArtRequestService {
         return artRequestRepository.save(artRequest);
     }
 
-    private void convertMultipartFileToFile(MultipartFile multipartFile, File file) {
+    private void convertMultipartFileToFile(final MultipartFile multipartFile,
+                                            final File file) {
         try {
             multipartFile.transferTo(file);
         } catch (IOException e) {

@@ -20,9 +20,9 @@ import csd.roster.repository.RosterRepository;
 
 @Service
 public class RosterServiceImpl implements RosterService {
-    private RosterRepository rosterRepository;
-    private WorkLocationService workLocationService;
-    private EmployeeService employeeService;
+    private final RosterRepository rosterRepository;
+    private final WorkLocationService workLocationService;
+    private final EmployeeService employeeService;
 
     @Autowired
     public RosterServiceImpl(RosterRepository rosterRepository,
@@ -34,7 +34,7 @@ public class RosterServiceImpl implements RosterService {
     }
 
     @Override
-    public Roster addRoster(UUID workLocationId, Roster roster) {
+    public Roster addRoster(final UUID workLocationId, final Roster roster) {
         WorkLocation workLocation = workLocationService.getWorkLocationById(workLocationId);
         roster.setWorkLocation(workLocation);
 
@@ -42,7 +42,7 @@ public class RosterServiceImpl implements RosterService {
     }
 
     @Override
-    public List<Roster> getRosters(UUID workLocationId) {
+    public List<Roster> getRosters(final UUID workLocationId) {
         List<Roster> rosters = rosterRepository.findByWorkLocationId(workLocationId);
 
         if (rosters.isEmpty()) {
@@ -52,27 +52,27 @@ public class RosterServiceImpl implements RosterService {
     }
 
     @Override
-    public Roster getRoster(UUID workLocationId, UUID rosterId) {
+    public Roster getRoster(final UUID workLocationId, final UUID rosterId) {
         return rosterRepository.findByIdAndWorkLocationId(rosterId, workLocationId)
                 .orElseThrow(() -> new RosterNotFoundException(rosterId, workLocationId));
     }
 
     // This is added and meant to be used in RosterEmployeeService
     @Override
-    public Roster getRoster(UUID rosterId) {
+    public Roster getRoster(final UUID rosterId) {
         return rosterRepository.findById(rosterId)
                 .orElseThrow(() -> new RosterNotFoundException(rosterId));
     }
 
     @Override
-    public void deleteRoster(UUID workLocationId, UUID rosterId) {
+    public void deleteRoster(final UUID workLocationId, final UUID rosterId) {
         Roster roster = getRoster(workLocationId, rosterId);
 
         rosterRepository.delete(roster);
     }
 
     @Override
-    public Roster updateRoster(UUID workLocationId, UUID rosterId, Roster roster) {
+    public Roster updateRoster(final UUID workLocationId, final UUID rosterId, final Roster roster) {
         return rosterRepository.findByIdAndWorkLocationId(rosterId, workLocationId).map(oldRoster -> {
             oldRoster.setFromDateTime(roster.getFromDateTime());
             oldRoster.setToDateTime(roster.getToDateTime());
@@ -82,13 +82,13 @@ public class RosterServiceImpl implements RosterService {
     }
 
     @Override
-    public Roster getCurrentRosterByWorkLocation(WorkLocation workLocation) {
+    public Roster getCurrentRosterByWorkLocation(final WorkLocation workLocation) {
         return rosterRepository.findByWorkLocationIdAndDate(workLocation.getId(), LocalDate.now())
                 .orElseThrow(() -> new RosterNotFoundException(workLocation));
     }
 
     @Override
-    public Roster getCurrentRemoteRosterByCompany(UUID companyId) {
+    public Roster getCurrentRemoteRosterByCompany(final UUID companyId) {
 
         // Get the remote work location that belongs to this company
         WorkLocation remoteWorkLocation = workLocationService.getRemoteWorkLocationByCompanyId(companyId);
@@ -98,7 +98,7 @@ public class RosterServiceImpl implements RosterService {
     }
 
     @Override
-    public List<Roster> getCurrentRostersByCompany(UUID companyId) {
+    public List<Roster> getCurrentRostersByCompany(final UUID companyId) {
         List<WorkLocation> workLocations = workLocationService.getWorkLocationsByCompanyId(companyId);
 
         // Using linked list data structure to have an O(1) of appending the list
@@ -112,7 +112,7 @@ public class RosterServiceImpl implements RosterService {
     }
 
     @Override
-    public List<RosterResponseModel> getRostersByEmployerIdAndDate(UUID employerId, LocalDate date) {
+    public List<RosterResponseModel> getRostersByEmployerIdAndDate(final UUID employerId, final LocalDate date) {
         Employee employer = employeeService.getEmployee(employerId);
 
         List<WorkLocation> workLocations = workLocationService
@@ -138,7 +138,7 @@ public class RosterServiceImpl implements RosterService {
     }
 
     @Override
-    public List<Roster> getWeeklyRostersByEmployeeId(UUID employeeId) {
+    public List<Roster> getWeeklyRostersByEmployeeId(final UUID employeeId) {
         Employee employer = employeeService.getEmployee(employeeId);
 
         LocalDate firstDayOfWeek = CalendarUtil.getFirstDayOfWeek(LocalDate.now()).toInstant()

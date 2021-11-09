@@ -14,8 +14,8 @@ import java.util.UUID;
 @Service
 public class DepartmentServiceImpl implements DepartmentService {
 
-    private DepartmentRepository departmentRepository;
-    private CompanyService companyService;
+    private final DepartmentRepository departmentRepository;
+    private final CompanyService companyService;
 
     public DepartmentServiceImpl(DepartmentRepository departmentRepository, CompanyService companyService) {
         this.departmentRepository = departmentRepository;
@@ -23,7 +23,7 @@ public class DepartmentServiceImpl implements DepartmentService {
     }
 
     @Override
-    public Department add(UUID companyId, Department department) {
+    public Department add(final UUID companyId, final Department department) {
         Company company = companyService.getCompanyById(companyId);
 
         department.setCompany(company);
@@ -36,7 +36,7 @@ public class DepartmentServiceImpl implements DepartmentService {
     }
 
     @Override
-    public Department getDepartmentByIdAndCompanyId(UUID departmentId, UUID companyId) {
+    public Department getDepartmentByIdAndCompanyId(final UUID departmentId, final UUID companyId) {
         companyService.getCompanyById(companyId);
 
         return departmentRepository.findByIdAndCompanyId(departmentId, companyId)
@@ -44,13 +44,13 @@ public class DepartmentServiceImpl implements DepartmentService {
     }
 
     @Override
-    public Department getDepartmentById(UUID departmentId) {
+    public Department getDepartmentById(final UUID departmentId) {
         return departmentRepository.findById(departmentId)
                 .orElseThrow(() -> new DepartmentNotFoundException(departmentId));
     }
 
     @Override
-    public void delete(UUID companyId, UUID departmentId) {
+    public void delete(final UUID companyId, final UUID departmentId) {
         // Using getDepartmentByIdAndCompanyId for DRY purposes
         Department department = getDepartmentByIdAndCompanyId(departmentId, companyId);
 
@@ -58,7 +58,7 @@ public class DepartmentServiceImpl implements DepartmentService {
     }
 
     @Override
-    public Department update(UUID companyId, UUID departmentId, Department department) {
+    public Department update(final UUID companyId, final UUID departmentId, final Department department) {
         // Notice here we are using repeated code as getDepartmentByIdAndCompanyId
         // The rational is that we need to get the company object so we can pass it in the params of setCompany
 

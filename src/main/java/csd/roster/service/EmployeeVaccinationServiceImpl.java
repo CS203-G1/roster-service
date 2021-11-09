@@ -15,8 +15,8 @@ import csd.roster.repository.EmployeeVaccinationRepository;
 
 @Service
 public class EmployeeVaccinationServiceImpl implements EmployeeVaccinationService {
-    private EmployeeVaccinationRepository employeeVaccinationRepository;
-    private EmployeeService employeeService;
+    private final EmployeeVaccinationRepository employeeVaccinationRepository;
+    private final EmployeeService employeeService;
 
     @Autowired
     public EmployeeVaccinationServiceImpl(EmployeeVaccinationRepository employeeVaccinationRepository, EmployeeService employeeService) {
@@ -25,7 +25,8 @@ public class EmployeeVaccinationServiceImpl implements EmployeeVaccinationServic
     }
 
     @Override
-    public EmployeeVaccination addEmployeeVaccination(UUID employeeId, EmployeeVaccination employeeVaccination) {
+    public EmployeeVaccination addEmployeeVaccination(final UUID employeeId,
+                                                      final EmployeeVaccination employeeVaccination) {
         Employee employee = employeeService.getEmployee(employeeId);
         employeeVaccination.setEmployee(employee);
 
@@ -33,7 +34,7 @@ public class EmployeeVaccinationServiceImpl implements EmployeeVaccinationServic
     }
 
     @Override
-    public List<EmployeeVaccination> getEmployeeVaccinations(UUID employeeId) {
+    public List<EmployeeVaccination> getEmployeeVaccinations(final UUID employeeId) {
         List<EmployeeVaccination> employeeVaccination = employeeVaccinationRepository.findByEmployeeId(employeeId);
 
         if (employeeVaccination.isEmpty()) {
@@ -43,13 +44,16 @@ public class EmployeeVaccinationServiceImpl implements EmployeeVaccinationServic
     }
 
     @Override
-    public EmployeeVaccination getEmployeeVaccination(UUID employeeId, UUID employeeVaccinationId) {
+    public EmployeeVaccination getEmployeeVaccination(final UUID employeeId,
+                                                      final UUID employeeVaccinationId) {
         return employeeVaccinationRepository.findByIdAndEmployeeId(employeeVaccinationId, employeeId)
                 .orElseThrow(() -> new EmployeeVaccinationNotFoundException(employeeVaccinationId, employeeId));
     }
 
     @Override
-    public EmployeeVaccination updateEmployeeVaccination(UUID employeeId, UUID employeeVaccinationId, EmployeeVaccination employeeVaccination) {
+    public EmployeeVaccination updateEmployeeVaccination(final UUID employeeId,
+                                                         final UUID employeeVaccinationId,
+                                                         final EmployeeVaccination employeeVaccination) {
         return employeeVaccinationRepository.findByIdAndEmployeeId(employeeVaccinationId, employeeId).map(oldEmployeeVaccination -> {
             oldEmployeeVaccination.setVaccinationBrand(employeeVaccination.getVaccinationBrand());
             oldEmployeeVaccination.setVaccinationCount(employeeVaccination.getVaccinationCount());
@@ -61,7 +65,8 @@ public class EmployeeVaccinationServiceImpl implements EmployeeVaccinationServic
     }
 
     @Override
-    public void deleteEmployeeVaccination(UUID employeeId, UUID employeeVaccinationId) {
+    public void deleteEmployeeVaccination(final UUID employeeId,
+                                          final UUID employeeVaccinationId) {
         EmployeeVaccination employeeVaccination = getEmployeeVaccination(employeeId, employeeVaccinationId);
 
         employeeVaccinationRepository.delete(employeeVaccination);

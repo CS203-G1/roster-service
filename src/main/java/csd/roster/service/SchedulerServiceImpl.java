@@ -20,10 +20,10 @@ import static csd.roster.enumerator.HealthStatus.HEALTHY;
 @Service
 public class SchedulerServiceImpl implements SchedulerService {
     // Seems like we need a lot of dependencies
-    private SchedulerUtil scheduler;
-    private EmployeeService employeeService;
-    private RosterService rosterService;
-    private RosterEmployeeService rosterEmployeeService;
+    private final SchedulerUtil scheduler;
+    private final EmployeeService employeeService;
+    private final RosterService rosterService;
+    private final RosterEmployeeService rosterEmployeeService;
 
     @Autowired
     public SchedulerServiceImpl(SchedulerUtil scheduler,
@@ -36,7 +36,7 @@ public class SchedulerServiceImpl implements SchedulerService {
         this.rosterEmployeeService = rosterEmployeeService;
     }
     @Override
-    public Map<Integer, Set<UUID>> scheduleRoster(UUID workLocationId) throws NoOptimalSolutionException {
+    public Map<Integer, Set<UUID>> scheduleRoster(final UUID workLocationId) throws NoOptimalSolutionException {
         List<UUID> employeeIdList = getEmployeeIdList(workLocationId);
 
         Map<Integer, Set<UUID>> schedule = scheduler.solve(employeeIdList);
@@ -52,7 +52,9 @@ public class SchedulerServiceImpl implements SchedulerService {
         return schedule;
     }
 
-    private void scheduleRoster(LocalDate firstDayOfWeek, Map<Integer, Set<UUID>> schedule, UUID workLocationId) {
+    private void scheduleRoster(final LocalDate firstDayOfWeek,
+                                final Map<Integer, Set<UUID>> schedule,
+                                final UUID workLocationId) {
         // Get all employees who are supposed to work regardless of remote or onsite
         List<UUID> allEmployeeIds = employeeService
                 .getAllEmployeesByWorkLocationIdAndHealthStatus(workLocationId, HEALTHY)
@@ -79,7 +81,9 @@ public class SchedulerServiceImpl implements SchedulerService {
         }
     }
 
-    private void scheduleRosterEmployee(Roster roster, Set<UUID> onsiteEmployeeIds, List<UUID> allEmployeeIds) {
+    private void scheduleRosterEmployee(final Roster roster,
+                                        final Set<UUID> onsiteEmployeeIds,
+                                        final List<UUID> allEmployeeIds) {
         for (UUID employeeId : allEmployeeIds) {
             RosterEmployee rosterEmployee = new RosterEmployee(
                     null,
@@ -95,7 +99,7 @@ public class SchedulerServiceImpl implements SchedulerService {
         }
     }
 
-    private List<UUID> getEmployeeIdList(UUID workLocationId) {
+    private List<UUID> getEmployeeIdList(final UUID workLocationId) {
         List<Employee> employeeList = employeeService
                 .getAllEmployeesByWorkLocationIdAndHealthStatus(workLocationId, HEALTHY);
         return employeeList

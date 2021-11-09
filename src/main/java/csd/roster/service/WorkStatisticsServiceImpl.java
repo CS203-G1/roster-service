@@ -13,10 +13,10 @@ import java.util.stream.Collectors;
 
 @Service
 public class WorkStatisticsServiceImpl implements WorkStatisticsService {
-    private CompanyService companyService;
-    private RosterEmployeeService rosterEmployeeService;
-    private EmployeeService employeeService;
-    private EmployeeLogService employeeLogService;
+    private final CompanyService companyService;
+    private final RosterEmployeeService rosterEmployeeService;
+    private final EmployeeService employeeService;
+    private final EmployeeLogService employeeLogService;
 
     public WorkStatisticsServiceImpl(CompanyService companyService,
                                      RosterEmployeeService rosterEmployeeService,
@@ -29,7 +29,8 @@ public class WorkStatisticsServiceImpl implements WorkStatisticsService {
     }
 
     @Override
-    public List<Employee> getOnsiteEmployeesListByCompanyAndDate(UUID companyId, LocalDate date) {
+    public List<Employee> getOnsiteEmployeesListByCompanyAndDate(final UUID companyId,
+                                                                 final LocalDate date) {
         companyService.getCompanyById(companyId);
 
         List<RosterEmployee> onsiteRosterEmployees = rosterEmployeeService
@@ -43,7 +44,9 @@ public class WorkStatisticsServiceImpl implements WorkStatisticsService {
     }
 
     @Override
-    public List<WorkingStatisticResponseModel> getWorkStatisticsByCompanyAndDateRange(UUID companyId, LocalDate startDate, LocalDate endDate) {
+    public List<WorkingStatisticResponseModel> getWorkStatisticsByCompanyAndDateRange(final UUID companyId,
+                                                                                      final LocalDate startDate,
+                                                                                      final LocalDate endDate) {
         List<WorkingStatisticResponseModel> statsList = new LinkedList<>();
         for (LocalDate start = startDate; !start.isAfter(endDate); start = start.plusDays(1)) {
             statsList.add(getWorkStatisticsByCompanyAndDate(companyId, start));
@@ -53,7 +56,8 @@ public class WorkStatisticsServiceImpl implements WorkStatisticsService {
     }
 
     @Override
-    public WorkingStatisticResponseModel getWorkStatisticsByCompanyAndDate(UUID companyId, LocalDate date) {
+    public WorkingStatisticResponseModel getWorkStatisticsByCompanyAndDate(final UUID companyId,
+                                                                           final LocalDate date) {
         // Confirm that company exists
         // TODO: use existsById
         companyService.getCompanyById(companyId);
@@ -77,7 +81,8 @@ public class WorkStatisticsServiceImpl implements WorkStatisticsService {
 
     // TODO: Logic flaw where there might be employees who leave - consider logging them instead
     @Override
-    public SummaryResponseModel getSummaryByCompanyIdAndDate(UUID companyId, LocalDate date) {
+    public SummaryResponseModel getSummaryByCompanyIdAndDate(final UUID companyId,
+                                                             final LocalDate date) {
         SummaryResponseModel summaryResponseModel = new SummaryResponseModel();
 
         // Considering whether to use database call to get employees who were created before certain date
@@ -121,7 +126,8 @@ public class WorkStatisticsServiceImpl implements WorkStatisticsService {
     }
 
     @Override
-    public SummaryResponseModel getSummaryByEmployerIdAndDate(UUID employerId, LocalDate now) {
+    public SummaryResponseModel getSummaryByEmployerIdAndDate(final UUID employerId,
+                                                              final LocalDate now) {
         Employee employee = employeeService.getEmployee(employerId);
 
         return getSummaryByCompanyIdAndDate(employee.getDepartment().getCompany().getId(), now);
@@ -142,7 +148,9 @@ public class WorkStatisticsServiceImpl implements WorkStatisticsService {
         return (int) ((double) change / previousValue * 100);
     }
 
-    private void getEmployeesCountStatistics(UUID companyId, SummaryResponseModel summaryResponseModel, LocalDate date) {
+    private void getEmployeesCountStatistics(final UUID companyId,
+                                             final SummaryResponseModel summaryResponseModel,
+                                             final LocalDate date) {
         List<Employee> employees = employeeService.getAllEmployeesByCompanyId(companyId);
 
         // Considering whether to use database call to get employees who were created before certain date
@@ -173,7 +181,9 @@ public class WorkStatisticsServiceImpl implements WorkStatisticsService {
         summaryResponseModel.setEmployeesCount(employees.size());
     }
 
-    private void getLeaveCountStatistics(UUID companyId, SummaryResponseModel summaryResponseModel, LocalDate date) {
+    private void getLeaveCountStatistics(final UUID companyId,
+                                         final SummaryResponseModel summaryResponseModel,
+                                         final LocalDate date) {
         List<Employee> employeesOnLeave = employeeService
                 .getEmployeesOnLeaveByCompanyIdAndDate(companyId, date);
 

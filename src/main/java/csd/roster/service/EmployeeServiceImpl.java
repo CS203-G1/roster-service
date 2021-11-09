@@ -21,12 +21,12 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
-    private EmployeeRepository employeeRepository;
-    private DepartmentService departmentService;
-    private CompanyService companyService;
-    private WorkLocationService workLocationService;
+    private final EmployeeRepository employeeRepository;
+    private final DepartmentService departmentService;
+    private final CompanyService companyService;
+    private final WorkLocationService workLocationService;
 
-    private AwsCognitoUtil awsCognitoUtil;
+    private final AwsCognitoUtil awsCognitoUtil;
 
     @Value("${aws.cognito.groups.employee}")
     private String employeeGroup;
@@ -47,27 +47,27 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public Employee addEmployee(UUID departmentId, Employee employee) {
-        employee = awsCognitoUtil.createUser(employee);
+    public Employee addEmployee(final UUID departmentId, final Employee employee) {
+        Employee createdEmployee = awsCognitoUtil.createUser(employee);
 
-        awsCognitoUtil.addUserToGroup(employee.getId().toString(), employeeGroup);
+        awsCognitoUtil.addUserToGroup(createdEmployee.getId().toString(), employeeGroup);
 
-        return persistEmployee(departmentId, employee);
+        return persistEmployee(departmentId, createdEmployee);
     }
 
     // Violating DRY because I want to provide two endpoints for Frontend instead of having them to send in a value to
     // indicate whether the employee is employer or not
     @Override
-    public Employee addEmployer(UUID departmentId, Employee employee) {
-        employee = awsCognitoUtil.createUser(employee);
+    public Employee addEmployer(final UUID departmentId, final Employee employee) {
+        Employee createdEmployee = awsCognitoUtil.createUser(employee);
 
-        awsCognitoUtil.addUserToGroup(employee.getId().toString(), employerGroup);
+        awsCognitoUtil.addUserToGroup(createdEmployee.getId().toString(), employerGroup);
 
-        return persistEmployee(departmentId, employee);
+        return persistEmployee(departmentId, createdEmployee);
     }
 
     // Logic modularized from addEmployee and addEmployer method
-    private Employee persistEmployee(UUID departmentId, Employee employee) {
+    private Employee persistEmployee(final UUID departmentId, final Employee employee) {
         Department department = departmentService.getDepartmentById(departmentId);
         employee.setDepartment(department);
         employee.setCompany(department.getCompany());
@@ -76,20 +76,20 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public Employee getEmployee(UUID departmentId, UUID employeeId) {
+    public Employee getEmployee(final UUID departmentId, final UUID employeeId) {
         return employeeRepository.findByIdAndDepartmentId(employeeId, departmentId)
                 .orElseThrow(() -> new EmployeeNotFoundException(employeeId));
     }
 
     // This is added and meant to be used in RosterEmployeeService
     @Override
-    public Employee getEmployee(UUID employeeId) {
+    public Employee getEmployee(final UUID employeeId) {
         return employeeRepository.findById(employeeId)
                 .orElseThrow(() -> new EmployeeNotFoundException(employeeId));
     }
 
     @Override
-    public Employee addEmployeeToWorkLocation(UUID workLocationId, UUID employeeId) {
+    public Employee addEmployeeToWorkLocation(final UUID workLocationId, final UUID employeeId) {
         Employee employee = getEmployee(employeeId);
         WorkLocation workLocation = workLocationService.getWorkLocationById(workLocationId);
         employee.setWorkLocation(workLocation);
@@ -98,14 +98,14 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public void deleteEmployee(UUID departmentId, UUID employeeId) {
+    public void deleteEmployee(final UUID departmentId, final UUID employeeId) {
         Employee employee = getEmployee(departmentId, employeeId);
 
         employeeRepository.delete(employee);
     }
 
     @Override
-    public Employee updateEmployee(UUID departmentId, UUID employeeId, Employee employee) {
+    public Employee updateEmployee(final UUID departmentId, final UUID employeeId, final Employee employee) {
         Department department = departmentService.getDepartmentById(departmentId);
 
         return employeeRepository.findByIdAndDepartmentId(employeeId, departmentId).map(oldEmployee -> {
@@ -117,7 +117,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public List<Employee> getAllEmployeesByCompanyId(UUID companyId) {
+    public List<Employee> getAllEmployeesByCompanyId(final UUID companyId) {
         // To check if company exists
         companyService.getCompanyById(companyId);
 
@@ -125,7 +125,8 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public List<Employee> getAllEmployeesByWorkLocationIdAndHealthStatus(UUID workLocationId, HealthStatus healthStatus) {
+    public List<Employee> getAllEmployeesByWorkLocationIdAndHealthStatus(final UUID workLocationId,
+                                                                         final HealthStatus healthStatus) {
         workLocationService.getWorkLocationById(workLocationId);
 
         return employeeRepository.findAllByWorkLocationIdAndHealthStatus(workLocationId, healthStatus);
@@ -137,29 +138,29 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public List<Employee> getAllEmployeesByCompanyIdBeforeDate(UUID companyId, LocalDate date) {
+    public List<Employee> getAllEmployeesByCompanyIdBeforeDate(final UUID companyId, final LocalDate date) {
         companyService.getCompanyById(companyId);
 
         return employeeRepository.findAllByCompanyIdBeforeDate(companyId, date.atStartOfDay());
     }
 
     @Override
-    public List<Employee> getEmployeesOnLeaveByCompanyIdAndDate(UUID companyId, LocalDate date) {
+    public List<Employee> getEmployeesOnLeaveByCompanyIdAndDate(final UUID companyId, final LocalDate date) {
         companyService.getCompanyById(companyId);
 
         return employeeRepository.findAllOnLeaveByCompanyIdAndDate(companyId, date);
     }
 
     @Override
-    public List<Employee> getEmployeesByCompanyIdAndDateAndHealthStatus(UUID companyId,
-                                                                        LocalDate date,
-                                                                        HealthStatus healthStatus) {
+    public List<Employee> getEmployeesByCompanyIdAndDateAndHealthStatus(final UUID companyId,
+                                                                        final LocalDate date,
+                                                                        final HealthStatus healthStatus) {
         companyService.getCompanyById(companyId);
 
         return employeeRepository.findAllByCompanyIdAndDateAndHealthStatus(companyId, date, healthStatus);
     }
 
-    public String getEmployeeCognitoStatus(UUID employeeId) {
+    public String getEmployeeCognitoStatus(final UUID employeeId) {
         getEmployee(employeeId);
 
         return awsCognitoUtil.getEmployeeCognitoStatus(employeeId);
