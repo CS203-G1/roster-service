@@ -1,11 +1,10 @@
 package csd.roster.controller;
 
-import csd.roster.enumerator.HealthStatus;
-import csd.roster.enumerator.RequestStatus;
-import csd.roster.holder.ArtRequestReviewHolder;
-import csd.roster.model.ArtRequest;
-import csd.roster.service.ArtRequestServiceImpl;
-import csd.roster.service.interfaces.ArtRequestService;
+import csd.roster.domain.enumerator.RequestStatus;
+import csd.roster.domain.holder.ArtRequestReviewHolder;
+import csd.roster.domain.model.ArtRequest;
+import csd.roster.services.service.ArtRequestServiceImpl;
+import csd.roster.services.service.interfaces.ArtRequestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;

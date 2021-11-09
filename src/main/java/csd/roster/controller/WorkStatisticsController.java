@@ -1,9 +1,9 @@
 package csd.roster.controller;
 
-import csd.roster.model.Employee;
-import csd.roster.response_model.SummaryResponseModel;
-import csd.roster.response_model.WorkingStatisticResponseModel;
-import csd.roster.service.interfaces.WorkStatisticsService;
+import csd.roster.domain.model.Employee;
+import csd.roster.domain.response_model.SummaryResponseModel;
+import csd.roster.domain.response_model.WorkingStatisticResponseModel;
+import csd.roster.services.service.interfaces.WorkStatisticsService;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
