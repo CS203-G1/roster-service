@@ -41,7 +41,7 @@ public class EmailServiceImpl implements EmailService {
     }
 
     @Async
-    public void sendEmail(String fromEmail, String companyName, String recipient, String subject) {
+    public void sendEmail(String fromEmail, String companyName, String recipient, String subject, String topic) {
         Session session = Session.getInstance(new Properties(System.getProperties()));
         MimeMessage mimeMessage = new MimeMessage(session);
         Context context = new Context();
@@ -59,7 +59,14 @@ public class EmailServiceImpl implements EmailService {
             MimeMultipart messageBody = new MimeMultipart("alternative");
             MimeBodyPart wrap = new MimeBodyPart();
             MimeBodyPart htmlPart = new MimeBodyPart();
-            htmlPart.setContent(springTemplateEngine.process("emailTemplate", context), "text/html; charset=UTF-8");
+
+            String template = "emailTemplate";
+
+            if (topic == "rejectedART") {
+                template = "rejectedARTEmailTemplate";
+            }
+
+            htmlPart.setContent(springTemplateEngine.process(template, context), "text/html; charset=UTF-8");
             messageBody.addBodyPart(htmlPart);
             wrap.setContent(messageBody);
 
