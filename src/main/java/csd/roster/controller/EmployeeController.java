@@ -4,8 +4,8 @@ import java.util.UUID;
 
 import javax.validation.Valid;
 
-import csd.roster.model.Employee;
-import csd.roster.service.interfaces.EmployeeService;
+import csd.roster.domain.model.Employee;
+import csd.roster.services.service.interfaces.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;

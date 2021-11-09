@@ -6,7 +6,7 @@ import java.util.UUID;
 
 import javax.validation.Valid;
 
-import csd.roster.response_model.RosterResponseModel;
+import csd.roster.domain.response_model.RosterResponseModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -18,8 +18,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import csd.roster.model.Roster;
-import csd.roster.service.interfaces.RosterService;
+import csd.roster.domain.model.Roster;
+import csd.roster.services.service.interfaces.RosterService;
 
 @RestController
 @PreAuthorize("hasRole('ROLE_EMPLOYER')")
