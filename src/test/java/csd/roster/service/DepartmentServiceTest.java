@@ -41,7 +41,7 @@ public class DepartmentServiceTest {
         Company company = new Company(companyId, "Eppal", null, LocalDateTime.now());
 
         UUID departmentId = UUID.randomUUID();
-        Department department = new Department(departmentId, null, null, "Marketing", LocalDateTime.now());
+        Department department = new Department(departmentId, null, null, null, "Marketing", LocalDateTime.now());
 
         when(companyService.getCompanyById(any(UUID.class))).thenReturn(company);
         when(departments.save(any(Department.class))).thenReturn(department);
@@ -72,7 +72,7 @@ public class DepartmentServiceTest {
         Company company = new Company(companyId, "Eppal", null, null);
 
         UUID departmentId = UUID.randomUUID();
-        Department department = new Department(departmentId, company, null, "Marketing", LocalDateTime.now());
+        Department department = new Department(departmentId, company, null, null, "Marketing", LocalDateTime.now());
 
         when(departments.findById(any(UUID.class))).thenReturn(java.util.Optional.of(department));
 
@@ -88,7 +88,7 @@ public class DepartmentServiceTest {
         Company company = new Company(companyId, "Eppal", null, LocalDateTime.now());
 
         UUID departmentId = UUID.randomUUID();
-        Department department = new Department(departmentId, company,null,  "Marketing", LocalDateTime.now());
+        Department department = new Department(departmentId, company,null, null, "Marketing", LocalDateTime.now());
 
         when(departments.findByIdAndCompanyId(any(UUID.class),any(UUID.class))).thenReturn(java.util.Optional.of(department));
 
@@ -104,7 +104,7 @@ public class DepartmentServiceTest {
         Company company = new Company(companyId, "Eppal", null, LocalDateTime.now());
 
         UUID departmentId = UUID.randomUUID();
-        Department department = new Department(departmentId, company, null, "Marketing", LocalDateTime.now());
+        Department department = new Department(departmentId, company, null, null, "Marketing", LocalDateTime.now());
 
         Exception exception = assertThrows(DepartmentNotFoundException.class,
                 () -> departmentService.getDepartmentByIdAndCompanyId(departmentId, companyId));
