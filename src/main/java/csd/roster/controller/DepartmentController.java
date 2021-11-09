@@ -15,7 +15,7 @@ import java.util.UUID;
 @RestController
 @PreAuthorize("hasRole('ROLE_EMPLOYER')")
 public class DepartmentController {
-    private DepartmentService departmentService;
+    private final DepartmentService departmentService;
 
     @Autowired
     public DepartmentController(DepartmentService departmentService) {
