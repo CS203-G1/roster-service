@@ -6,7 +6,9 @@ import java.util.UUID;
 
 import javax.validation.Valid;
 
+import csd.roster.response_model.RosterResponseModel;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -60,8 +62,8 @@ public class RosterController {
     }
 
     @GetMapping("/employers/{employerId}/rosters/date/{date}")
-    public List<Roster> getRostersByEmployerIdAndDate(@PathVariable(value = "employerId")UUID employerId,
-                                                      @PathVariable(value = "date")LocalDate date) {
+    public List<RosterResponseModel> getRostersByEmployerIdAndDate(@PathVariable(value = "employerId") UUID employerId,
+                                                                   @PathVariable(value = "date")  @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date) {
         return rosterService.getRostersByEmployerIdAndDate(employerId, date);
     }
 
