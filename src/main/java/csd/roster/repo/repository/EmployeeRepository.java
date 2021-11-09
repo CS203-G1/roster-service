@@ -31,7 +31,7 @@ public interface EmployeeRepository extends JpaRepository<Employee, UUID> {
     // TODO: can be more efficient
     @Query("select e from Employee e where e.company.id = :id and " +
             "e in (select el.employee from EmployeeLog el where el.date = :date and " +
-            "el.healthStatus <> csd.roster.enumerator.HealthStatus.HEALTHY)")
+            "el.healthStatus <> csd.roster.domain.enumerator.HealthStatus.HEALTHY)")
     List<Employee> findAllOnLeaveByCompanyIdAndDate(@Param("id") UUID companyId, @Param("date") LocalDate date);
 
     @Query("select e from Employee e where e.company.id = :id and " +
