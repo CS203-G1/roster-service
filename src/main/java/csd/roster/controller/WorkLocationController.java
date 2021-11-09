@@ -14,7 +14,7 @@ import java.util.UUID;
 @RestController
 @PreAuthorize("hasRole('ROLE_EMPLOYER')")
 public class WorkLocationController {
-    final private WorkLocationService workLocationService;
+    private final WorkLocationService workLocationService;
 
     @Autowired
     public WorkLocationController(WorkLocationService workLocationService) {
@@ -22,16 +22,16 @@ public class WorkLocationController {
     }
 
     @PostMapping("/companies/{companyId}/departments/{departmentId}/work-locations")
-    public WorkLocation addWorkLocation(@PathVariable (value = "companyId") UUID companyId,
-                                           @PathVariable (value = "departmentId") UUID departmentId,
-                                           @RequestBody WorkLocation workLocation) {
+    public WorkLocation addWorkLocation(@PathVariable (value = "companyId") final UUID companyId,
+                                           @PathVariable (value = "departmentId") final UUID departmentId,
+                                           @RequestBody final WorkLocation workLocation) {
         return workLocationService.add(companyId, departmentId, workLocation);
     }
 
     @GetMapping("/companies/{companyId}/departments/{departmentId}/work-locations/{workLocationId}")
-    public ResponseEntity<?> getWorkLocation(@PathVariable (value = "companyId") UUID companyId,
-                                             @PathVariable (value = "departmentId") UUID departmentId,
-                                           @PathVariable (value = "workLocationId") UUID workLocationId) {
+    public ResponseEntity<?> getWorkLocation(@PathVariable (value = "companyId") final UUID companyId,
+                                             @PathVariable (value = "departmentId") final UUID departmentId,
+                                           @PathVariable (value = "workLocationId") final UUID workLocationId) {
         try {
             WorkLocation workLocation = workLocationService.get(companyId, departmentId, workLocationId);
             return new ResponseEntity<>(workLocation, HttpStatus.OK);
@@ -41,15 +41,15 @@ public class WorkLocationController {
     }
 
     @GetMapping("/work-locations/{workLocationId}")
-    public WorkLocation getWorkLocation(@PathVariable (value = "workLocationId") UUID workLocationId) {
+    public WorkLocation getWorkLocation(@PathVariable (value = "workLocationId") final UUID workLocationId) {
         return workLocationService.getWorkLocationById(workLocationId);
     }
 
     @PutMapping("/companies/{companyId}/departments/{departmentId}/work-locations/{workLocationId}")
-    public ResponseEntity<?> updateWorkLocation(@PathVariable (value = "companyId") UUID companyId,
-                                             @PathVariable (value = "departmentId") UUID departmentId,
-                                             @PathVariable (value = "workLocationId") UUID workLocationId,
-                                                @RequestBody WorkLocation newWorkLocation) {
+    public ResponseEntity<?> updateWorkLocation(@PathVariable (value = "companyId") final UUID companyId,
+                                             @PathVariable (value = "departmentId") final UUID departmentId,
+                                             @PathVariable (value = "workLocationId") final UUID workLocationId,
+                                                @RequestBody final WorkLocation newWorkLocation) {
         try {
             WorkLocation workLocation = workLocationService.update(companyId, departmentId, workLocationId, newWorkLocation);
             return new ResponseEntity<>(workLocation, HttpStatus.OK);
@@ -59,9 +59,9 @@ public class WorkLocationController {
     }
 
     @DeleteMapping("/companies/{companyId}/departments/{departmentId}/work-locations/{workLocationId}")
-    public ResponseEntity<?> updateWorkLocation(@PathVariable (value = "companyId") UUID companyId,
-                                                @PathVariable (value = "departmentId") UUID departmentId,
-                                                @PathVariable (value = "workLocationId") UUID workLocationId) {
+    public ResponseEntity<?> updateWorkLocation(@PathVariable (value = "companyId") final UUID companyId,
+                                                @PathVariable (value = "departmentId") final UUID departmentId,
+                                                @PathVariable (value = "workLocationId") final UUID workLocationId) {
         try {
             workLocationService.delete(companyId, departmentId, workLocationId);
             return new ResponseEntity<>(null, HttpStatus.OK);

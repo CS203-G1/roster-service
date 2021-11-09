@@ -10,7 +10,7 @@ import java.util.*;
 
 @RestController
 public class SchedulerController {
-    private SchedulerService schedulerService;
+    private final SchedulerService schedulerService;
 
     @Autowired
     public SchedulerController(SchedulerService schedulerService) {
@@ -18,7 +18,7 @@ public class SchedulerController {
     }
 
     @PostMapping("/schedule/{workLocationId}")
-    public Map<Integer, Set<UUID>> schedule(@PathVariable(value = "workLocationId") UUID workLocationId) {
+    public Map<Integer, Set<UUID>> schedule(@PathVariable(value = "workLocationId") final UUID workLocationId) {
         return schedulerService.scheduleRoster(workLocationId);
     }
 }
