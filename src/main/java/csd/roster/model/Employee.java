@@ -57,18 +57,22 @@ public class Employee {
     private Set<Request> requests;
 
     @ManyToOne
+    @JsonIgnore
     @JoinColumn(name="department_id", referencedColumnName="id")
     private Department department;
 
     @ManyToOne
+    @JsonIgnore
     @JoinColumn(name="work_location_id", referencedColumnName="id")
     private WorkLocation workLocation;
 
     @ManyToOne
+    @JsonIgnore
     @JoinColumn(name="company_id", referencedColumnName="id")
     private Company company;
 
     @JsonIgnore
+    @Transient
     @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL)
     private Set<EmployeeLog> employeeLogs;
 

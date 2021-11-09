@@ -26,6 +26,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import org.hibernate.jdbc.Work;
 
 @Entity
 @Getter
@@ -48,6 +49,11 @@ public class Department implements Serializable {
     @OneToMany(mappedBy = "department", orphanRemoval = true, cascade = CascadeType.ALL)
     @Transient
     private List<Employee> employees;
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "department", orphanRemoval = true, cascade = CascadeType.ALL)
+    @Transient
+    private List<WorkLocation> workLocations;
 
     @Column(name="name")
     private String name;

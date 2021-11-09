@@ -1,10 +1,15 @@
 package csd.roster.service;
 
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.*;
 
+import csd.roster.model.Employee;
+import csd.roster.response_model.RosterResponseModel;
+import csd.roster.service.interfaces.EmployeeService;
 import csd.roster.service.interfaces.RosterService;
 import csd.roster.service.interfaces.WorkLocationService;
+import csd.roster.util.CalendarUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,11 +22,15 @@ import csd.roster.repository.RosterRepository;
 public class RosterServiceImpl implements RosterService {
     private RosterRepository rosterRepository;
     private WorkLocationService workLocationService;
+    private EmployeeService employeeService;
 
     @Autowired
-    public RosterServiceImpl(RosterRepository rosterRepository, WorkLocationService workLocationService) {
+    public RosterServiceImpl(RosterRepository rosterRepository,
+                             WorkLocationService workLocationService,
+                             EmployeeService employeeService) {
         this.rosterRepository = rosterRepository;
         this.workLocationService = workLocationService;
+        this.employeeService = employeeService;
     }
 
     @Override
@@ -90,7 +99,6 @@ public class RosterServiceImpl implements RosterService {
 
     @Override
     public List<Roster> getCurrentRostersByCompany(UUID companyId) {
-
         List<WorkLocation> workLocations = workLocationService.getWorkLocationsByCompanyId(companyId);
 
         // Using linked list data structure to have an O(1) of appending the list
@@ -98,6 +106,53 @@ public class RosterServiceImpl implements RosterService {
 
         for (WorkLocation workLocation : workLocations) {
             rosters.add(getCurrentRosterByWorkLocation(workLocation));
+        }
+
+        return rosters;
+    }
+
+    @Override
+    public List<RosterResponseModel> getRostersByEmployerIdAndDate(UUID employerId, LocalDate date) {
+        Employee employer = employeeService.getEmployee(employerId);
+
+        List<WorkLocation> workLocations = workLocationService
+                .getWorkLocationsByCompanyId(employer.getCompany().getId());
+
+        List<Roster> rosters = new LinkedList<Roster>();
+
+        for (WorkLocation workLocation : workLocations) {
+            rosters.add(rosterRepository.findByWorkLocationIdAndDate(workLocation.getId(), date)
+                    .orElseThrow(() -> new RosterNotFoundException(workLocation)));
+        }
+
+        List<RosterResponseModel> rosterResponseModels = new LinkedList<>();
+        for (Roster roster : rosters) {
+            RosterResponseModel rosterResponseModel = new RosterResponseModel(roster, null);
+
+            rosterResponseModel.setEmployees(rosterRepository.findOnsiteEmployeesByRosterId(roster.getId()));
+
+            rosterResponseModels.add(rosterResponseModel);
+        }
+
+        return rosterResponseModels;
+    }
+
+    @Override
+    public List<Roster> getWeeklyRostersByEmployeeId(UUID employeeId) {
+        Employee employer = employeeService.getEmployee(employeeId);
+
+        LocalDate firstDayOfWeek = CalendarUtil.getFirstDayOfWeek(LocalDate.now()).toInstant()
+                .atZone(ZoneId.systemDefault())
+                .toLocalDate();
+
+        List<Roster> rosters = new LinkedList<Roster>();
+
+        for (int i = 0; i < 5; i++) {
+            LocalDate weekday = firstDayOfWeek.plusDays(i);
+
+            List<Roster> roster = rosterRepository.findByEmployeeIdAndDate(employeeId, weekday);
+
+            rosters.add(roster.isEmpty() ? null : roster.get(0));
         }
 
         return rosters;

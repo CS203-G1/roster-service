@@ -1,11 +1,14 @@
 package csd.roster.controller;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
 import javax.validation.Valid;
 
+import csd.roster.response_model.RosterResponseModel;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -56,5 +59,16 @@ public class RosterController {
                             @PathVariable(value = "rosterId") UUID rosterId,
                             @Valid @RequestBody Roster roster) {
         return rosterService.updateRoster(workLocationId, rosterId, roster);
+    }
+
+    @GetMapping("/employers/{employerId}/rosters/date/{date}")
+    public List<RosterResponseModel> getRostersByEmployerIdAndDate(@PathVariable(value = "employerId") UUID employerId,
+                                                                   @PathVariable(value = "date")  @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate date) {
+        return rosterService.getRostersByEmployerIdAndDate(employerId, date);
+    }
+
+    @GetMapping("/employee/{employeeId}/rosters/weekly")
+    public List<Roster> getWeeklyRostersByEmployeeId(@PathVariable(value = "employeeId")UUID employeeId) {
+        return rosterService.getWeeklyRostersByEmployeeId(employeeId);
     }
 }

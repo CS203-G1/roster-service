@@ -5,6 +5,7 @@ import csd.roster.model.Employee;
 import csd.roster.model.Roster;
 import csd.roster.model.RosterEmployee;
 import csd.roster.service.interfaces.*;
+import csd.roster.util.CalendarUtil;
 import csd.roster.util.SchedulerUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -41,7 +42,7 @@ public class SchedulerServiceImpl implements SchedulerService {
         Map<Integer, Set<UUID>> schedule = scheduler.solve(employeeIdList);
 
         // LocalDate end of week is Sunday
-        LocalDate firstDayOfWeek = getFirstDayOfWeek(LocalDate.now()).toInstant()
+        LocalDate firstDayOfWeek = CalendarUtil.getFirstDayOfWeek(LocalDate.now()).toInstant()
                 .atZone(ZoneId.systemDefault())
                 .toLocalDate()
                 .plusDays(7);
@@ -63,13 +64,11 @@ public class SchedulerServiceImpl implements SchedulerService {
             LocalDate weekday = firstDayOfWeek.plusDays(i);
 
             // Create a roster based on the weekday
-            Roster roster = new Roster(
-                    null,
-                    weekday,
-                    null,
-                    weekday.atTime(9, 0),
-                    weekday.atTime(17, 0),
-                    null);
+            Roster roster = new Roster();
+
+            roster.setDate(weekday);
+            roster.setFromDateTime(weekday.atTime(9, 0));
+            roster.setToDateTime(weekday.atTime(17, 0));
 
             rosterService.addRoster(workLocationId, roster);
 
@@ -103,16 +102,5 @@ public class SchedulerServiceImpl implements SchedulerService {
                 .stream()
                 .map(e -> e.getId())
                 .collect(Collectors.toList());
-    }
-
-    private Date getFirstDayOfWeek(LocalDate date) {
-        Calendar calendar = Calendar.getInstance();
-        calendar.setFirstDayOfWeek(Calendar.MONDAY);
-        calendar.setTime(java.sql.Date.valueOf(date));
-        calendar.set(Calendar.DAY_OF_WEEK, calendar.getFirstDayOfWeek());
-        calendar.set(Calendar.HOUR_OF_DAY, 0);
-        calendar.set(Calendar.MINUTE, 0);
-        calendar.set(Calendar.SECOND, 0);
-        return calendar.getTime();
     }
 }

@@ -48,7 +48,7 @@ public class EmployeeServiceTest {
         Company company = new Company(companyId, "Eppal", null, LocalDateTime.now());
 
         UUID departmentId = UUID.randomUUID();
-        Department department = new Department(departmentId, company, null, "Marketing", LocalDateTime.now());
+        Department department = new Department(departmentId, company, null, null, "Marketing", LocalDateTime.now());
 
         UUID employeeId = UUID.randomUUID();
         VaccinationStatus vaccinationStatus = VaccinationStatus.NOT_VACCINATED;
@@ -110,7 +110,7 @@ public class EmployeeServiceTest {
         Company company = new Company(companyId, "Eppal", null, LocalDateTime.now());
 
         UUID departmentId = UUID.randomUUID();
-        Department department = new Department(departmentId, company, null, "Marketing", LocalDateTime.now());
+        Department department = new Department(departmentId, company, null, null, "Marketing", LocalDateTime.now());
 
         UUID employeeId = UUID.randomUUID();
         VaccinationStatus vaccinationStatus = VaccinationStatus.NOT_VACCINATED;
