@@ -132,19 +132,35 @@ public class CompanyIntegrationTest {
     @Test
     public void deleteCompany_companyExists_Return200(){
         try {
-            URI uri = new URI(baseUrl + port + "/companies/");
-            Company company = new Company();
-            company.setName("New Company 1");
+            Company firstCompany = companyRepository.findAll().get(0);
+            URI uri = new URI(baseUrl + port + "/companies/" + firstCompany.getId());
 
             // Passing Cognito jwt token into headers
             HttpHeaders headers = new HttpHeaders();
             headers.set("Authorization", "Bearer " + this.accessToken);
 
-            HttpEntity<Company> entity = new HttpEntity<Company>(company, headers);
-            ResponseEntity<Company> result = restTemplate.exchange(uri, HttpMethod.POST, entity, Company.class);
+            HttpEntity<String> entity = new HttpEntity<String>("parameters", headers);
+            ResponseEntity<Company> result = restTemplate.exchange(uri, HttpMethod.DELETE, entity, Company.class);
 
             assertEquals(200, result.getStatusCode().value());
-            assertEquals("New Company 1", result.getBody().getName());
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void deleteCompany_companyDoesNotExist_Return404(){
+        try {
+            URI uri = new URI(baseUrl + port + "/companies/" + UUID.randomUUID());
+
+            // Passing Cognito jwt token into headers
+            HttpHeaders headers = new HttpHeaders();
+            headers.set("Authorization", "Bearer " + this.accessToken);
+
+            HttpEntity<String> entity = new HttpEntity<String>("parameters", headers);
+            ResponseEntity<String> result = restTemplate.exchange(uri, HttpMethod.DELETE, entity, String.class);
+
+            assertEquals(404, result.getStatusCode().value());
         } catch (URISyntaxException e) {
             e.printStackTrace();
         }
