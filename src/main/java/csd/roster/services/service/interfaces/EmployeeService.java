@@ -37,4 +37,6 @@ public interface EmployeeService {
                                                                  HealthStatus healthStatus);
 
     String getEmployeeCognitoStatus(UUID employeeId);
+
+    List<Employee> getAllEmployeesByWorkLocationId(final UUID workLocationId);
 }
