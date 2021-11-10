@@ -11,6 +11,8 @@ import csd.roster.repo.repository.RosterEmployeeRepository;
 import csd.roster.services.service.interfaces.EmployeeService;
 import csd.roster.services.service.interfaces.RosterEmployeeService;
 import csd.roster.services.service.interfaces.RosterService;
+import csd.roster.services.service.interfaces.WorkLocationService;
+import org.hibernate.jdbc.Work;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -40,7 +42,7 @@ public class RosterEmployeeServiceImpl implements RosterEmployeeService {
         Roster roster = rosterService.getRoster(rosterId);
         Employee employee = employeeService.getEmployee(employeeId);
 
-        List<RosterEmployee> allRosterEmployees = rosterEmployeeRepository.findAllByRosterId(rosterId);
+        List<Employee> allRosterEmployees = employeeService.getAllEmployeesByWorkLocationId(roster.getWorkLocation().getId());
         List<RosterEmployee> onsiteRosterEmployees = rosterEmployeeRepository.findAllOnsiteByRosterId(rosterId);
 
         int maximumOnsiteCount = (int) (allRosterEmployees.size() * 0.50);
