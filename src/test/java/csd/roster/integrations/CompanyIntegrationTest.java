@@ -166,4 +166,56 @@ public class CompanyIntegrationTest {
         }
     }
 
+    @Test
+    public void addCompany_getCompany_deleteCompany_newCompany_Return200() throws URISyntaxException {
+        // Add new Company
+        Company savedCompany = null;
+        {
+            URI uri = new URI(baseUrl + port + "/companies/");
+            Company company = new Company();
+            company.setName("New Company 1");
+
+            // Passing Cognito jwt token into headers
+            HttpHeaders headers = new HttpHeaders();
+            headers.set("Authorization", "Bearer " + this.accessToken);
+
+            HttpEntity<Company> entity = new HttpEntity<Company>(company, headers);
+            ResponseEntity<Company> result = restTemplate.exchange(uri, HttpMethod.POST, entity, Company.class);
+
+            assertEquals(200, result.getStatusCode().value());
+            assertEquals("New Company 1", result.getBody().getName());
+
+            savedCompany = result.getBody();
+        }
+
+        // Get Company
+        {
+            URI uri = new URI(baseUrl + port + "/companies/" + savedCompany.getId());
+
+            // Passing Cognito jwt token into headers
+            HttpHeaders headers = new HttpHeaders();
+            headers.set("Authorization", "Bearer " + this.accessToken);
+
+            HttpEntity<String> entity = new HttpEntity<String>("parameters",headers);
+            ResponseEntity<Company> result = restTemplate.exchange(uri, HttpMethod.GET, entity, Company.class);
+
+            assertEquals(200, result.getStatusCode().value());
+            assertEquals("New Company 1", result.getBody().getName());
+        }
+
+        //Delete Company
+        {
+            URI uri = new URI(baseUrl + port + "/companies/" + savedCompany.getId());
+
+            // Passing Cognito jwt token into headers
+            HttpHeaders headers = new HttpHeaders();
+            headers.set("Authorization", "Bearer " + this.accessToken);
+
+            HttpEntity<String> entity = new HttpEntity<String>("parameters", headers);
+            ResponseEntity<Company> result = restTemplate.exchange(uri, HttpMethod.DELETE, entity, Company.class);
+
+            assertEquals(200, result.getStatusCode().value());
+        }
+    }
+
 }
