@@ -2,8 +2,6 @@ package csd.roster.services.service;
 
 import csd.roster.domain.enumerator.HealthStatus;
 import csd.roster.domain.exception.exceptions.EmployeeNotHealthyException;
-import csd.roster.domain.exception.exceptions.RosterEmployeeNotFoundException;
-import csd.roster.domain.exception.exceptions.RuleViolatedException;
 import csd.roster.model.Employee;
 import csd.roster.model.Roster;
 import csd.roster.model.RosterEmployee;
