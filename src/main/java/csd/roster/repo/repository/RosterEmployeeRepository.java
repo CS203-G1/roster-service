@@ -13,7 +13,8 @@ import java.util.UUID;
 
 @Repository
 public interface RosterEmployeeRepository extends JpaRepository<RosterEmployee, UUID> {
-    Optional<RosterEmployee> findByRosterIdAndEmployeeId(UUID rosterId, UUID employeeId);
+    @Query("select re from RosterEmployee re where re.roster.id = :rosterId and re.employee.id = :employeeId")
+    List<RosterEmployee> findByRosterIdAndEmployeeId(@Param("rosterId") UUID rosterId, @Param("employeeId") UUID employeeId);
 
     @Query("select re from RosterEmployee re where re.roster.id = :id")
     List<RosterEmployee> findAllByRosterId(@Param("id") UUID rosterId);

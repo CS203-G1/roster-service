@@ -64,15 +64,16 @@ public class RosterEmployeeServiceImpl implements RosterEmployeeService {
 
     @Override
     public RosterEmployee getRosterEmployee(final UUID rosterId, final UUID employeeId) {
-        return rosterEmployeeRepository.findByRosterIdAndEmployeeId(rosterId, employeeId)
-                .orElseThrow(() -> new RosterEmployeeNotFoundException(rosterId, employeeId));
+        return rosterEmployeeRepository.findByRosterIdAndEmployeeId(rosterId, employeeId).get(0);
     }
 
     @Override
     public void removeRosterEmployee(final UUID rosterId, final UUID employeeId) {
         RosterEmployee rosterEmployee = getRosterEmployee(rosterId, employeeId);
 
-        rosterEmployeeRepository.delete(rosterEmployee);
+        rosterEmployee.setRemote(true);
+
+        rosterEmployeeRepository.save(rosterEmployee);
     }
 
     @Override
