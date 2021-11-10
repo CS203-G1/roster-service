@@ -1,7 +1,7 @@
 package csd.roster.repo.validator;
 
 import csd.roster.domain.annotation.ValidDateTimes;
-import csd.roster.domain.model.Roster;
+import csd.roster.model.Roster;
 import org.springframework.beans.BeanWrapperImpl;
 
 import javax.validation.ConstraintValidator;

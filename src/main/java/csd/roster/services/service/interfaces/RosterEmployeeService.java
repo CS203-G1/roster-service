@@ -1,6 +1,6 @@
 package csd.roster.services.service.interfaces;
 
-import csd.roster.domain.model.RosterEmployee;
+import csd.roster.model.RosterEmployee;
 
 import java.time.LocalDate;
 import java.util.List;

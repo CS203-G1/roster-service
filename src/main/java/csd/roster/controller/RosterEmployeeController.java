@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import csd.roster.domain.model.RosterEmployee;
+import csd.roster.model.RosterEmployee;
 import csd.roster.services.service.interfaces.RosterEmployeeService;
 
 @RestController
@@ -28,12 +28,10 @@ public class RosterEmployeeController {
 
     // Note that you can actually define this on the controller layer but viewing RosterEmployee is allowed for
     // employees
-    @PreAuthorize("hasRole('ROLE_EMPLOYER')")
     @PostMapping("/rosters/{rosterId}/employees/{employeeId}")
     public RosterEmployee addRosterEmployee(@PathVariable(value = "rosterId") final UUID rosterId,
-                            @PathVariable(value = "employeeId") final UUID employeeId,
-                            @Valid @RequestBody RosterEmployee rosterEmployee) {
-        return rosterEmployeeService.addRosterEmployee(rosterId, employeeId, rosterEmployee);
+                            @PathVariable(value = "employeeId") final UUID employeeId) {
+        return rosterEmployeeService.addRosterEmployee(rosterId, employeeId, new RosterEmployee());
     }
 
     @PreAuthorize("hasRole('ROLE_EMPLOYER')")

@@ -21,8 +21,8 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import csd.roster.domain.exception.exceptions.RosterNotFoundException;
-import csd.roster.domain.model.Roster;
-import csd.roster.domain.model.WorkLocation;
+import csd.roster.model.Roster;
+import csd.roster.model.WorkLocation;
 import csd.roster.repo.repository.RosterRepository;
 
 @ExtendWith(MockitoExtension.class)

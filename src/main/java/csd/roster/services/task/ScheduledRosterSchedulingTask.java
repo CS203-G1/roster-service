@@ -1,7 +1,7 @@
 package csd.roster.services.task;
 
 import csd.roster.domain.exception.exceptions.NoOptimalSolutionException;
-import csd.roster.domain.model.WorkLocation;
+import csd.roster.model.WorkLocation;
 import csd.roster.services.service.interfaces.SchedulerService;
 import csd.roster.services.service.interfaces.WorkLocationService;
 import org.slf4j.Logger;

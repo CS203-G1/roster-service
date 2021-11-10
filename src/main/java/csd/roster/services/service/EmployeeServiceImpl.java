@@ -10,9 +10,9 @@ import org.springframework.stereotype.Service;
 
 import csd.roster.domain.enumerator.HealthStatus;
 import csd.roster.domain.exception.exceptions.EmployeeNotFoundException;
-import csd.roster.domain.model.Department;
-import csd.roster.domain.model.Employee;
-import csd.roster.domain.model.WorkLocation;
+import csd.roster.model.Department;
+import csd.roster.model.Employee;
+import csd.roster.model.WorkLocation;
 import csd.roster.repo.repository.EmployeeRepository;
 import csd.roster.services.service.interfaces.CompanyService;
 import csd.roster.services.service.interfaces.DepartmentService;
@@ -20,7 +20,6 @@ import csd.roster.services.service.interfaces.EmailService;
 import csd.roster.services.service.interfaces.EmployeeService;
 import csd.roster.services.service.interfaces.WorkLocationService;
 import csd.roster.repo.util.AwsCognitoUtil;
-import csd.roster.util.AwsMailUtil;
 
 @Service
 public class EmployeeServiceImpl implements EmployeeService {

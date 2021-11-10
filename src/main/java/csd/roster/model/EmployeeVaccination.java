@@ -1,4 +1,4 @@
-package csd.roster.domain.model;
+package csd.roster.model;
 
 import java.util.Date;
 import java.util.UUID;

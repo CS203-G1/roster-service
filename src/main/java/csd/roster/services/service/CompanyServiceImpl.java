@@ -1,7 +1,7 @@
 package csd.roster.services.service;
 
 import csd.roster.domain.exception.exceptions.CompanyNotFoundException;
-import csd.roster.domain.model.Company;
+import csd.roster.model.Company;
 import csd.roster.repo.repository.CompanyRepository;
 import csd.roster.services.service.interfaces.CompanyService;
 import org.springframework.stereotype.Service;

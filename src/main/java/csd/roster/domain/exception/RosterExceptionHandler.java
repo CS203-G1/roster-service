@@ -2,6 +2,7 @@ package csd.roster.domain.exception;
 
 import csd.roster.domain.exception.exceptions.NoOptimalSolutionException;
 import csd.roster.domain.exception.exceptions.ResourceNotFoundException;
+import csd.roster.domain.exception.exceptions.RuleViolatedException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -29,5 +30,16 @@ public class RosterExceptionHandler {
         logger.warn(errorMessage);
         
         // Need send email here
+    }
+
+    @ExceptionHandler({ RuleViolatedException.class })
+    public final ResponseEntity handleRuleViolatedException(Exception ex, WebRequest request) {
+        String errorMessage = ex.getMessage();
+
+        logger.warn(errorMessage);
+
+        return new ResponseEntity(HttpStatus.UNPROCESSABLE_ENTITY)
+                .status(HttpStatus.UNPROCESSABLE_ENTITY)
+                .body(errorMessage);
     }
 }

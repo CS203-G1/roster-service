@@ -1,6 +1,6 @@
 package csd.roster.controller;
 
-import csd.roster.domain.model.Company;
+import csd.roster.model.Company;
 import csd.roster.services.service.interfaces.CompanyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;

@@ -4,9 +4,9 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
-import csd.roster.domain.model.Roster;
-import csd.roster.domain.model.WorkLocation;
-import csd.roster.domain.response_model.RosterResponseModel;
+import csd.roster.model.Roster;
+import csd.roster.model.WorkLocation;
+import csd.roster.response_model.RosterResponseModel;
 
 public interface RosterService {
     Roster addRoster(UUID workLocationId, Roster roster);

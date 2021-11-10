@@ -1,4 +1,4 @@
-package csd.roster.domain.model;
+package csd.roster.model;
 
 import csd.roster.domain.enumerator.RequestStatus;
 import lombok.*;

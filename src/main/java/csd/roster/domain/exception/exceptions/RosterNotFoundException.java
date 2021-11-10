@@ -1,6 +1,6 @@
 package csd.roster.domain.exception.exceptions;
 
-import csd.roster.domain.model.WorkLocation;
+import csd.roster.model.WorkLocation;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 

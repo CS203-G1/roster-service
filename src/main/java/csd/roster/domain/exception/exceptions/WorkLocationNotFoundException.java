@@ -1,6 +1,6 @@
 package csd.roster.domain.exception.exceptions;
 
-import csd.roster.domain.model.Company;
+import csd.roster.model.Company;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 

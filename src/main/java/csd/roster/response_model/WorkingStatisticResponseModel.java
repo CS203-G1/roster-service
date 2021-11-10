@@ -1,4 +1,4 @@
-package csd.roster.domain.response_model;
+package csd.roster.response_model;
 
 import lombok.*;
 

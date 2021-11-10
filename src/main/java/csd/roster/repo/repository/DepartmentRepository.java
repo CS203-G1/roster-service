@@ -1,6 +1,6 @@
 package csd.roster.repo.repository;
 
-import csd.roster.domain.model.Department;
+import csd.roster.model.Department;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

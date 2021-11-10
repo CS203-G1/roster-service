@@ -1,9 +1,9 @@
 package test.csd.roster.service;
 
 import csd.roster.domain.enumerator.HealthStatus;
-import csd.roster.domain.model.*;
-import csd.roster.domain.response_model.SummaryResponseModel;
-import csd.roster.domain.response_model.WorkingStatisticResponseModel;
+import csd.roster.model.*;
+import csd.roster.response_model.SummaryResponseModel;
+import csd.roster.response_model.WorkingStatisticResponseModel;
 import csd.roster.services.service.*;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

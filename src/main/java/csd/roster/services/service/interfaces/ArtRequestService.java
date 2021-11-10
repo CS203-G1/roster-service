@@ -2,7 +2,7 @@ package csd.roster.services.service.interfaces;
 
 import csd.roster.domain.enumerator.HealthStatus;
 import csd.roster.domain.enumerator.RequestStatus;
-import csd.roster.domain.model.ArtRequest;
+import csd.roster.model.ArtRequest;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;

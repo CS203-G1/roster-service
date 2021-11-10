@@ -1,4 +1,4 @@
-package csd.roster.util;
+package csd.roster.repo.util;
 
 import com.amazonaws.auth.AWSStaticCredentialsProvider;
 import com.amazonaws.auth.BasicAWSCredentials;

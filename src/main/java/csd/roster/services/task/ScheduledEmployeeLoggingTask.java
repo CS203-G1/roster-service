@@ -1,6 +1,6 @@
 package csd.roster.services.task;
 
-import csd.roster.domain.model.Employee;
+import csd.roster.model.Employee;
 import csd.roster.services.service.interfaces.EmployeeLogService;
 import csd.roster.services.service.interfaces.EmployeeService;
 import org.slf4j.Logger;

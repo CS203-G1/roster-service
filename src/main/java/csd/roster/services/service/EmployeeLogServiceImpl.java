@@ -1,7 +1,7 @@
 package csd.roster.services.service;
 
-import csd.roster.domain.model.Employee;
-import csd.roster.domain.model.EmployeeLog;
+import csd.roster.model.Employee;
+import csd.roster.model.EmployeeLog;
 import csd.roster.repo.repository.EmployeeLogRepository;
 import csd.roster.services.service.interfaces.EmployeeLogService;
 import org.springframework.beans.factory.annotation.Autowired;

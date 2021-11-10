@@ -1,5 +1,4 @@
-
-package csd.roster.domain.model;
+package csd.roster.model;
 
 import java.time.LocalDateTime;
 import java.util.Set;
