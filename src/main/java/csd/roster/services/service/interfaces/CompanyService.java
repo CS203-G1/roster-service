@@ -1,6 +1,6 @@
 package csd.roster.services.service.interfaces;
 
-import csd.roster.model.Company;
+import csd.roster.domain.model.Company;
 
 import java.util.List;
 import java.util.UUID;

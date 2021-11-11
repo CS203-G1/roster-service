@@ -3,7 +3,7 @@ package csd.roster.services.service.interfaces;
 import java.util.List;
 import java.util.UUID;
 
-import csd.roster.model.EmployeeVaccination;
+import csd.roster.domain.model.EmployeeVaccination;
 
 public interface EmployeeVaccinationService {
     EmployeeVaccination addEmployeeVaccination(UUID employeeId, EmployeeVaccination employeeVaccination);

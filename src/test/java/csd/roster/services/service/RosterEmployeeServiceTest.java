@@ -9,9 +9,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import csd.roster.model.Employee;
-import csd.roster.model.Roster;
-import csd.roster.model.RosterEmployee;
 import csd.roster.repo.repository.RosterEmployeeRepository;
 
 @ExtendWith(MockitoExtension.class)

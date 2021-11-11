@@ -23,9 +23,9 @@ import csd.roster.domain.enumerator.HealthStatus;
 import csd.roster.domain.enumerator.VaccinationBrand;
 import csd.roster.domain.enumerator.VaccinationStatus;
 import csd.roster.domain.exception.exceptions.EmployeeNotFoundException;
-import csd.roster.model.Company;
-import csd.roster.model.Department;
-import csd.roster.model.Employee;
+import csd.roster.domain.model.Company;
+import csd.roster.domain.model.Department;
+import csd.roster.domain.model.Employee;
 import csd.roster.repo.repository.EmployeeRepository;
 
 @ExtendWith(MockitoExtension.class)

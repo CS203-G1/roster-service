@@ -1,7 +1,7 @@
 package csd.roster.repo.repository;
 
 import csd.roster.domain.enumerator.RequestStatus;
-import csd.roster.model.ArtRequest;
+import csd.roster.domain.model.ArtRequest;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

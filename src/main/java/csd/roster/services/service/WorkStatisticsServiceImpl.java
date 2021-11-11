@@ -1,7 +1,7 @@
 package csd.roster.services.service;
 
 import csd.roster.domain.enumerator.HealthStatus;
-import csd.roster.model.*;
+import csd.roster.domain.model.*;
 import csd.roster.response_model.SummaryResponseModel;
 import csd.roster.response_model.WorkingStatisticResponseModel;
 import csd.roster.services.service.interfaces.*;

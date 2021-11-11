@@ -20,7 +20,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import csd.roster.domain.exception.exceptions.CompanyNotFoundException;
-import csd.roster.model.Company;
+import csd.roster.domain.model.Company;
 import csd.roster.repo.repository.CompanyRepository;
 
 @ExtendWith(MockitoExtension.class)

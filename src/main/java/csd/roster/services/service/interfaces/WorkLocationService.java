@@ -3,7 +3,7 @@ package csd.roster.services.service.interfaces;
 import java.util.List;
 import java.util.UUID;
 
-import csd.roster.model.WorkLocation;
+import csd.roster.domain.model.WorkLocation;
 
 public interface WorkLocationService {
     WorkLocation add(UUID companyId, UUID departmentId, WorkLocation workLocation);

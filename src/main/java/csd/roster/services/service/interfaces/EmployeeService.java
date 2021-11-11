@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.UUID;
 
 import csd.roster.domain.enumerator.HealthStatus;
-import csd.roster.model.Employee;
+import csd.roster.domain.model.Employee;
 
 public interface EmployeeService {
     Employee addEmployee(UUID departmentId, Employee employee);

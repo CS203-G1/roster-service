@@ -1,7 +1,7 @@
 package csd.roster.response_model;
 
-import csd.roster.model.Employee;
-import csd.roster.model.Roster;
+import csd.roster.domain.model.Employee;
+import csd.roster.domain.model.Roster;
 import lombok.*;
 
 import java.util.List;

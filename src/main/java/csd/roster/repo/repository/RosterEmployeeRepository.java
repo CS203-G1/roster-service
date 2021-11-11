@@ -1,6 +1,6 @@
 package csd.roster.repo.repository;
 
-import csd.roster.model.RosterEmployee;
+import csd.roster.domain.model.RosterEmployee;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

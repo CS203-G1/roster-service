@@ -1,9 +1,9 @@
 package csd.roster.services.service;
 
 import csd.roster.domain.exception.exceptions.NoOptimalSolutionException;
-import csd.roster.model.Employee;
-import csd.roster.model.Roster;
-import csd.roster.model.RosterEmployee;
+import csd.roster.domain.model.Employee;
+import csd.roster.domain.model.Roster;
+import csd.roster.domain.model.RosterEmployee;
 import csd.roster.services.service.interfaces.*;
 import csd.roster.repo.util.CalendarUtil;
 import csd.roster.repo.util.SchedulerUtil;

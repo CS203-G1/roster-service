@@ -4,7 +4,7 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.*;
 
-import csd.roster.model.Employee;
+import csd.roster.domain.model.Employee;
 import csd.roster.response_model.RosterResponseModel;
 import csd.roster.services.service.interfaces.EmployeeService;
 import csd.roster.services.service.interfaces.RosterService;
@@ -14,8 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import csd.roster.domain.exception.exceptions.RosterNotFoundException;
-import csd.roster.model.Roster;
-import csd.roster.model.WorkLocation;
+import csd.roster.domain.model.Roster;
+import csd.roster.domain.model.WorkLocation;
 import csd.roster.repo.repository.RosterRepository;
 
 @Service

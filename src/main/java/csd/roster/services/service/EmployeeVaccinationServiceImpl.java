@@ -9,8 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import csd.roster.domain.exception.exceptions.EmployeeVaccinationNotFoundException;
-import csd.roster.model.Employee;
-import csd.roster.model.EmployeeVaccination;
+import csd.roster.domain.model.Employee;
+import csd.roster.domain.model.EmployeeVaccination;
 import csd.roster.repo.repository.EmployeeVaccinationRepository;
 
 @Service

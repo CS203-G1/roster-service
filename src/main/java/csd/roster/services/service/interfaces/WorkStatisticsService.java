@@ -1,6 +1,6 @@
 package csd.roster.services.service.interfaces;
 
-import csd.roster.model.Employee;
+import csd.roster.domain.model.Employee;
 import csd.roster.response_model.SummaryResponseModel;
 import csd.roster.response_model.WorkingStatisticResponseModel;
 
