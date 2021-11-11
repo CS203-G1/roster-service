@@ -62,7 +62,7 @@ public class EmailServiceImpl implements EmailService {
 
             String template = "emailTemplate";
 
-            if (topic == "rejectedART") {
+            if (topic.equals("rejectedART")) {
                 template = "rejectedARTEmailTemplate";
             }
 
