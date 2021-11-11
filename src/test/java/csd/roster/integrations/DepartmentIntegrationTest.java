@@ -213,4 +213,60 @@ public class DepartmentIntegrationTest {
         assertEquals(200, result.getStatusCode().value());
     }
 
+    @Test
+    public void deleteCompany_CompanyDoesNotExist_Return404() throws URISyntaxException {
+        UUID companyId = UUID.randomUUID();
+        Department department = new Department();
+        department.setId(UUID.randomUUID());
+        URI uri = new URI(baseUrl + port + "/companies/" + companyId + "/departments/" + department.getId());
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Authorization", "Bearer " + this.accessToken);
+
+        HttpEntity<Department> entity = new HttpEntity<Department>(department, headers);
+        ResponseEntity<String> result = restTemplate.exchange(uri, HttpMethod.DELETE, entity, String.class);
+
+        CompanyNotFoundException e = new CompanyNotFoundException(companyId);
+
+        assertEquals(e.getMessage(), result.getBody());
+        assertEquals(404, result.getStatusCode().value());
+    }
+
+    @Test
+    public void deleteCompany_DepartmentDoesNotExist_Return404() throws URISyntaxException {
+        Company company = companyRepository.findAll().get(0);
+        Department department = new Department();
+        department.setId(UUID.randomUUID());
+        URI uri = new URI(baseUrl + port + "/companies/" + company.getId() + "/departments/" + department.getId());
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Authorization", "Bearer " + this.accessToken);
+
+        HttpEntity<Department> entity = new HttpEntity<Department>(department, headers);
+        ResponseEntity<String> result = restTemplate.exchange(uri, HttpMethod.DELETE, entity, String.class);
+
+        DepartmentNotFoundException e = new DepartmentNotFoundException(department.getId(),company.getId());
+
+        assertEquals( e.getMessage(), result.getBody());
+        assertEquals(404, result.getStatusCode().value());
+    }
+
+    @Test
+    public void deleteCompany_DepartmentDeleted_Return200() throws URISyntaxException {
+        Company company = companyRepository.findAll().get(0);
+        Department department = departmentRepository.findAll().get(0);
+        department.setName("Updated Department");
+        URI uri = new URI(baseUrl + port + "/companies/" + company.getId() + "/departments/" + department.getId());
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Authorization", "Bearer " + this.accessToken);
+
+        HttpEntity<Department> entity = new HttpEntity<Department>(department, headers);
+        ResponseEntity<String> result = restTemplate.exchange(uri, HttpMethod.DELETE, entity, String.class);
+
+
+        assertEquals(0, departmentRepository.findAll().size());
+        assertEquals(200, result.getStatusCode().value());
+    }
+
 }
