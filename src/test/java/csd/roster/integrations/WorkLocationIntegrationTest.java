@@ -53,6 +53,7 @@ public class WorkLocationIntegrationTest {
     private WorkLocationRepository workLocationRepository;
 
     private String accessToken = "";
+    
     @BeforeEach
     public void setUp(){
         Company company = new Company();
@@ -155,6 +156,68 @@ public class WorkLocationIntegrationTest {
 
 
         assertEquals(workLocation, result.getBody());
+        assertEquals(200, result.getStatusCode().value());
+    }
+
+    @Test
+    public void addWorkLocation_CompanyDoesNotExist_Return404() throws URISyntaxException {
+        Company company = new Company();
+        company.setId(UUID.randomUUID());
+        Department department = new Department();
+        department.setId(UUID.randomUUID());
+        WorkLocation workLocation = new WorkLocation();
+        workLocation.setId(UUID.randomUUID());
+        URI uri = new URI(baseUrl + port + "/companies/" + company.getId() + "/departments/" + department.getId() + "/work-locations/" );
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Authorization", "Bearer " + this.accessToken);
+
+        HttpEntity<WorkLocation> entity = new HttpEntity<WorkLocation>(workLocation, headers);
+        ResponseEntity<String> result = restTemplate.exchange(uri, HttpMethod.POST, entity, String.class);
+
+        CompanyNotFoundException e = new CompanyNotFoundException(company.getId());
+
+        assertEquals(e.getMessage(), result.getBody());
+        assertEquals(404, result.getStatusCode().value());
+    }
+
+    @Test
+    public void addWorkLocation_DepartmentDoesNotExist_Return404() throws URISyntaxException {
+        Company company = companyRepository.findAll().get(0);
+        Department department = new Department();
+        department.setId(UUID.randomUUID());
+        WorkLocation workLocation = new WorkLocation();
+        workLocation.setId(UUID.randomUUID());
+        URI uri = new URI(baseUrl + port + "/companies/" + company.getId() + "/departments/" + department.getId() + "/work-locations/");
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Authorization", "Bearer " + this.accessToken);
+
+        HttpEntity<WorkLocation> entity = new HttpEntity<WorkLocation>(workLocation, headers);
+        ResponseEntity<String> result = restTemplate.exchange(uri, HttpMethod.POST, entity, String.class);
+
+        DepartmentNotFoundException e = new DepartmentNotFoundException(department.getId(),company.getId());
+
+        assertEquals( e.getMessage(), result.getBody());
+        assertEquals(404, result.getStatusCode().value());
+    }
+
+    @Test
+    public void addWorkLocation_WorkLocationAdded_Return200() throws URISyntaxException {
+        Company company = companyRepository.findAll().get(0);
+        Department department = departmentRepository.findAll().get(0);
+        WorkLocation workLocation = new WorkLocation();
+        workLocation.setName("Added Department 1");
+        URI uri = new URI(baseUrl + port + "/companies/" + company.getId() + "/departments/" + department.getId() + "/work-locations/");
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Authorization", "Bearer " + this.accessToken);
+
+        HttpEntity<WorkLocation> entity = new HttpEntity<WorkLocation>(workLocation, headers);
+        ResponseEntity<WorkLocation> result = restTemplate.exchange(uri, HttpMethod.POST, entity, WorkLocation.class);
+
+
+        assertEquals(workLocation.getName(), result.getBody().getName());
         assertEquals(200, result.getStatusCode().value());
     }
 }
