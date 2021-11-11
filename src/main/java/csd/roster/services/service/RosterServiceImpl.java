@@ -5,7 +5,7 @@ import java.time.ZoneId;
 import java.util.*;
 
 import csd.roster.domain.model.Employee;
-import csd.roster.response_model.RosterResponseModel;
+import csd.roster.domain.response_model.RosterResponseModel;
 import csd.roster.services.service.interfaces.EmployeeService;
 import csd.roster.services.service.interfaces.RosterService;
 import csd.roster.services.service.interfaces.WorkLocationService;

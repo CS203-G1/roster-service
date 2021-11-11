@@ -1,8 +1,8 @@
 package csd.roster.services.service.interfaces;
 
 import csd.roster.domain.model.Employee;
-import csd.roster.response_model.SummaryResponseModel;
-import csd.roster.response_model.WorkingStatisticResponseModel;
+import csd.roster.domain.response_model.SummaryResponseModel;
+import csd.roster.domain.response_model.WorkingStatisticResponseModel;
 
 import java.time.LocalDate;
 import java.util.List;

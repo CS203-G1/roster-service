@@ -6,7 +6,7 @@ import java.util.UUID;
 
 import csd.roster.domain.model.Roster;
 import csd.roster.domain.model.WorkLocation;
-import csd.roster.response_model.RosterResponseModel;
+import csd.roster.domain.response_model.RosterResponseModel;
 
 public interface RosterService {
     Roster addRoster(UUID workLocationId, Roster roster);

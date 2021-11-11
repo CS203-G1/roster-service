@@ -6,7 +6,7 @@ import java.util.UUID;
 
 import javax.validation.Valid;
 
-import csd.roster.response_model.RosterResponseModel;
+import csd.roster.domain.response_model.RosterResponseModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.access.prepost.PreAuthorize;
