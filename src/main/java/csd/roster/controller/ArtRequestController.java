@@ -1,7 +1,7 @@
 package csd.roster.controller;
 
 import csd.roster.domain.enumerator.RequestStatus;
-import csd.roster.holder.ArtRequestReviewHolder;
+import csd.roster.domain.holder.ArtRequestReviewHolder;
 import csd.roster.domain.model.ArtRequest;
 import csd.roster.services.service.ArtRequestServiceImpl;
 import csd.roster.services.service.interfaces.ArtRequestService;
