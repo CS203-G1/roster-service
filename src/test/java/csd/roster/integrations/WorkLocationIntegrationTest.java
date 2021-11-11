@@ -53,7 +53,7 @@ public class WorkLocationIntegrationTest {
     private WorkLocationRepository workLocationRepository;
 
     private String accessToken = "";
-    
+
     @BeforeEach
     public void setUp(){
         Company company = new Company();
@@ -303,6 +303,91 @@ public class WorkLocationIntegrationTest {
 
 
         assertEquals("Updated Work Location", result.getBody().getName());
+        assertEquals(200, result.getStatusCode().value());
+    }
+
+    @Test
+    public void deleteWorkLocation_CompanyDoesNotExist_Return404() throws URISyntaxException {
+        Company company = new Company();
+        company.setId(UUID.randomUUID());
+        Department department = new Department();
+        department.setId(UUID.randomUUID());
+        WorkLocation workLocation = new WorkLocation();
+        workLocation.setId(UUID.randomUUID());
+        workLocation.setName("Updated Work Location");
+        URI uri = new URI(baseUrl + port + "/companies/" + company.getId() + "/departments/" + department.getId() + "/work-locations/" + workLocation.getId());
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Authorization", "Bearer " + this.accessToken);
+
+        HttpEntity<String> entity = new HttpEntity<String>("parameters", headers);
+        ResponseEntity<String> result = restTemplate.exchange(uri, HttpMethod.DELETE, entity, String.class);
+
+        CompanyNotFoundException e = new CompanyNotFoundException(company.getId());
+
+        assertEquals(e.getMessage(), result.getBody());
+        assertEquals(404, result.getStatusCode().value());
+    }
+
+    @Test
+    public void deleteWorkLocation_DepartmentDoesNotExist_Return404() throws URISyntaxException {
+        Company company = companyRepository.findAll().get(0);
+        Department department = new Department();
+        department.setId(UUID.randomUUID());
+        WorkLocation workLocation = new WorkLocation();
+        workLocation.setId(UUID.randomUUID());
+        workLocation.setName("Updated Work Location");
+        URI uri = new URI(baseUrl + port + "/companies/" + company.getId() + "/departments/" + department.getId() + "/work-locations/" + workLocation.getId());
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Authorization", "Bearer " + this.accessToken);
+
+        HttpEntity<String> entity = new HttpEntity<String>("parameters", headers);
+        ResponseEntity<String> result = restTemplate.exchange(uri, HttpMethod.DELETE, entity, String.class);
+
+        DepartmentNotFoundException e = new DepartmentNotFoundException(department.getId(),company.getId());
+
+        assertEquals( e.getMessage(), result.getBody());
+        assertEquals(404, result.getStatusCode().value());
+    }
+
+    @Test
+    public void deleteWorkLocation_WorkLocationDoesNotExist_Return404() throws URISyntaxException {
+        Company company = companyRepository.findAll().get(0);
+        Department department = departmentRepository.findAll().get(0);
+        WorkLocation workLocation = new WorkLocation();
+        workLocation.setId(UUID.randomUUID());
+        workLocation.setName("Updated Work Location");
+        URI uri = new URI(baseUrl + port + "/companies/" + company.getId() + "/departments/" + department.getId() + "/work-locations/" + workLocation.getId());
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Authorization", "Bearer " + this.accessToken);
+
+        HttpEntity<String> entity = new HttpEntity<String>("parameters", headers);
+        ResponseEntity<String> result = restTemplate.exchange(uri, HttpMethod.DELETE, entity, String.class);
+
+        WorkLocationNotFoundException e = new WorkLocationNotFoundException(department.getId(), company.getId(), workLocation.getId());
+
+        assertEquals( e.getMessage(), result.getBody());
+        assertEquals(404, result.getStatusCode().value());
+    }
+
+    @Test
+    public void deleteWorkLocation_WorkLocationExists_Return200() throws URISyntaxException {
+        Company company = companyRepository.findAll().get(0);
+        Department department = departmentRepository.findAll().get(0);
+        WorkLocation workLocation = workLocationRepository.findAll().get(0);
+        workLocation.setName("Updated Work Location");
+        URI uri = new URI(baseUrl + port + "/companies/" + company.getId() + "/departments/" + department.getId() + "/work-locations/" + workLocation.getId());
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Authorization", "Bearer " + this.accessToken);
+
+        HttpEntity<String> entity = new HttpEntity<String>("parameters", headers);
+        ResponseEntity<WorkLocation> result = restTemplate.exchange(uri, HttpMethod.DELETE, entity, WorkLocation.class);
+
+
+        assertEquals(0, workLocationRepository.findAll().size());
         assertEquals(200, result.getStatusCode().value());
     }
 }
