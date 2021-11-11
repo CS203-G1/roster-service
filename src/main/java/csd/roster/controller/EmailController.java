@@ -7,7 +7,7 @@ import csd.roster.services.service.interfaces.EmailService;
 
 @RestController
 public class EmailController {
-    private EmailService emailService;
+    private final EmailService emailService;
 
     @Autowired
     public EmailController(EmailService emailService) {

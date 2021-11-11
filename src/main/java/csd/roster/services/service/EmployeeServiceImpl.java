@@ -27,8 +27,8 @@ public class EmployeeServiceImpl implements EmployeeService {
     private final DepartmentService departmentService;
     private final CompanyService companyService;
     private final WorkLocationService workLocationService;
-    private AwsCognitoUtil awsCognitoUtil;
-    private EmailService emailService;
+    private final AwsCognitoUtil awsCognitoUtil;
+    private final EmailService emailService;
 
 
     @Value("${aws.cognito.groups.employee}")

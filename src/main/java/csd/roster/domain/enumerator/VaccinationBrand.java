@@ -6,5 +6,5 @@ public enum VaccinationBrand {
 
     // Note that Pfizer-BioNTech/Cominarty is represented by PFIZER
     // BBIBP-CorV is represented by BBIBP
-    PFIZER, MODERNA, CORONA_VAC, BBIBP;
+    PFIZER, MODERNA, CORONA_VAC, BBIBP
 }

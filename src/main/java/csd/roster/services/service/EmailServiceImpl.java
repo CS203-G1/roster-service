@@ -31,8 +31,8 @@ import csd.roster.services.service.interfaces.EmailService;
 
 @Service
 public class EmailServiceImpl implements EmailService {
-    private AmazonSimpleEmailService amazonSimpleEmailService;
-    private SpringTemplateEngine springTemplateEngine;
+    private final AmazonSimpleEmailService amazonSimpleEmailService;
+    private final SpringTemplateEngine springTemplateEngine;
 
     @Autowired
     public EmailServiceImpl(AmazonSimpleEmailService amazonSimpleEmailService, SpringTemplateEngine springTemplateEngine) {

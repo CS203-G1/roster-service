@@ -14,5 +14,5 @@ import java.util.UUID;
 public interface ArtRequestRepository extends JpaRepository<ArtRequest, UUID> {
 
     @Query("select ar from ArtRequest ar where ar.employee.id = :employeeId and ar.requestStatus = :requestStatus")
-    public List<ArtRequest> findAllByEmployeeIdAndRequestStatus(@Param("employeeId") UUID employeeId, @Param("requestStatus") RequestStatus requestStatus);
+    List<ArtRequest> findAllByEmployeeIdAndRequestStatus(@Param("employeeId") UUID employeeId, @Param("requestStatus") RequestStatus requestStatus);
 }
