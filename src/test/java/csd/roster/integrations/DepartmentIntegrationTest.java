@@ -46,7 +46,7 @@ public class DepartmentIntegrationTest {
     private DepartmentRepository departmentRepository;
 
     private String accessToken = "";
-    
+
     @BeforeEach
     public void setUp(){
         Company company = new Company();
@@ -77,7 +77,7 @@ public class DepartmentIntegrationTest {
 
         CompanyNotFoundException e = new CompanyNotFoundException(companyId);
 
-        assertEquals(result.getBody(), e.getMessage());
+        assertEquals(e.getMessage(), result.getBody());
         assertEquals(404, result.getStatusCode().value());
     }
 
@@ -95,7 +95,7 @@ public class DepartmentIntegrationTest {
 
         DepartmentNotFoundException e = new DepartmentNotFoundException(departmentId,firstCompany.getId());
 
-        assertEquals(result.getBody(), e.getMessage());
+        assertEquals( e.getMessage(), result.getBody());
         assertEquals(404, result.getStatusCode().value());
     }
 
@@ -113,6 +113,46 @@ public class DepartmentIntegrationTest {
 
 
         assertEquals(firstDepartment, result.getBody());
+        assertEquals(200, result.getStatusCode().value());
+    }
+
+    @Test
+    public void addDepartment_CompanyDoesNotExist_Return404() throws URISyntaxException {
+        UUID companyId = UUID.randomUUID();
+        Department department = new Department();
+
+        URI uri = new URI(baseUrl + port + "/companies/" + companyId + "/departments/");
+
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Authorization", "Bearer " + this.accessToken);
+
+        HttpEntity<Department> entity = new HttpEntity<>(department, headers);
+        ResponseEntity<String> result = restTemplate.exchange(uri, HttpMethod.POST, entity, String.class);
+
+        CompanyNotFoundException e = new CompanyNotFoundException(companyId);
+
+        assertEquals(result.getBody(), e.getMessage());
+        assertEquals(404, result.getStatusCode().value());
+    }
+
+    @Test
+    public void addDepartment_DepartmentAdded_Return200() throws URISyntaxException {
+        Company firstCompany = companyRepository.findAll().get(0);
+        Department department = new Department();
+        department.setName("Added Department");
+
+        URI uri = new URI(baseUrl + port + "/companies/" + firstCompany.getId() + "/departments/");
+
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Authorization", "Bearer " + this.accessToken);
+
+        HttpEntity<Department> entity = new HttpEntity<>(department, headers);
+        ResponseEntity<Department> result = restTemplate.exchange(uri, HttpMethod.POST, entity, Department.class);
+
+
+        assertEquals(department.getName(), result.getBody().getName());
         assertEquals(200, result.getStatusCode().value());
     }
 
