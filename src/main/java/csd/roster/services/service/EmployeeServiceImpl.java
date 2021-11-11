@@ -10,9 +10,9 @@ import org.springframework.stereotype.Service;
 
 import csd.roster.domain.enumerator.HealthStatus;
 import csd.roster.domain.exception.exceptions.EmployeeNotFoundException;
-import csd.roster.model.Department;
-import csd.roster.model.Employee;
-import csd.roster.model.WorkLocation;
+import csd.roster.domain.model.Department;
+import csd.roster.domain.model.Employee;
+import csd.roster.domain.model.WorkLocation;
 import csd.roster.repo.repository.EmployeeRepository;
 import csd.roster.services.service.interfaces.CompanyService;
 import csd.roster.services.service.interfaces.DepartmentService;
@@ -27,8 +27,8 @@ public class EmployeeServiceImpl implements EmployeeService {
     private final DepartmentService departmentService;
     private final CompanyService companyService;
     private final WorkLocationService workLocationService;
-    private AwsCognitoUtil awsCognitoUtil;
-    private EmailService emailService;
+    private final AwsCognitoUtil awsCognitoUtil;
+    private final EmailService emailService;
 
 
     @Value("${aws.cognito.groups.employee}")

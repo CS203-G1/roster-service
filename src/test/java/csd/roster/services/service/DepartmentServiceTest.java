@@ -20,8 +20,8 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import csd.roster.domain.exception.exceptions.DepartmentNotFoundException;
-import csd.roster.model.Company;
-import csd.roster.model.Department;
+import csd.roster.domain.model.Company;
+import csd.roster.domain.model.Department;
 import csd.roster.repo.repository.DepartmentRepository;
 
 @ExtendWith(MockitoExtension.class)

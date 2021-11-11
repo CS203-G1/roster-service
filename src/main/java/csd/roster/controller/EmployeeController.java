@@ -4,7 +4,7 @@ import java.util.UUID;
 
 import javax.validation.Valid;
 
-import csd.roster.model.Employee;
+import csd.roster.domain.model.Employee;
 import csd.roster.services.service.interfaces.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;

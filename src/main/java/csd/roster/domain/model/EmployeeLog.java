@@ -1,5 +1,5 @@
 
-package csd.roster.model;
+package csd.roster.domain.model;
 
 import java.time.LocalDate;
 import java.util.UUID;

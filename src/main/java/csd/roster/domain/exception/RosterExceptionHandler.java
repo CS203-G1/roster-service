@@ -13,7 +13,7 @@ import org.springframework.web.context.request.WebRequest;
 
 @ControllerAdvice
 public class RosterExceptionHandler {
-    Logger logger = LoggerFactory.getLogger(RosterExceptionHandler.class);
+    final Logger logger = LoggerFactory.getLogger(RosterExceptionHandler.class);
 
     @ExceptionHandler({ ResourceNotFoundException.class })
     public final ResponseEntity handleNotFoundException(Exception ex, WebRequest request) {

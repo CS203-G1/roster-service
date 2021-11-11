@@ -18,9 +18,9 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import csd.roster.domain.exception.exceptions.WorkLocationNotFoundException;
-import csd.roster.model.Company;
-import csd.roster.model.Department;
-import csd.roster.model.WorkLocation;
+import csd.roster.domain.model.Company;
+import csd.roster.domain.model.Department;
+import csd.roster.domain.model.WorkLocation;
 import csd.roster.repo.repository.WorkLocationRepository;
 
 @ExtendWith(MockitoExtension.class)

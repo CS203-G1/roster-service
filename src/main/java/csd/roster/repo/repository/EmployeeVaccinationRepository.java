@@ -7,7 +7,7 @@ import java.util.UUID;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import csd.roster.model.EmployeeVaccination;
+import csd.roster.domain.model.EmployeeVaccination;
 
 @Repository
 public interface EmployeeVaccinationRepository extends JpaRepository<EmployeeVaccination, UUID> {

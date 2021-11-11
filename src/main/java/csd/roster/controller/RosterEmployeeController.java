@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import csd.roster.model.RosterEmployee;
+import csd.roster.domain.model.RosterEmployee;
 import csd.roster.services.service.interfaces.RosterEmployeeService;
 
 @RestController

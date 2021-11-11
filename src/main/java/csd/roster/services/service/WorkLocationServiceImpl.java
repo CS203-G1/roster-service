@@ -8,8 +8,8 @@ import csd.roster.services.service.interfaces.WorkLocationService;
 import org.springframework.stereotype.Service;
 
 import csd.roster.domain.exception.exceptions.WorkLocationNotFoundException;
-import csd.roster.model.Department;
-import csd.roster.model.WorkLocation;
+import csd.roster.domain.model.Department;
+import csd.roster.domain.model.WorkLocation;
 import csd.roster.repo.repository.WorkLocationRepository;
 
 @Service

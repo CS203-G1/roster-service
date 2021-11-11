@@ -1,29 +1,10 @@
 package csd.roster.services.service;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.UUID;
-
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import csd.roster.domain.enumerator.HealthStatus;
-import csd.roster.domain.enumerator.VaccinationBrand;
-import csd.roster.domain.enumerator.VaccinationStatus;
-import csd.roster.domain.exception.exceptions.EmployeeNotHealthyException;
-import csd.roster.domain.exception.exceptions.RosterEmployeeNotFoundException;
-import csd.roster.model.Employee;
-import csd.roster.model.Roster;
-import csd.roster.model.RosterEmployee;
 import csd.roster.repo.repository.RosterEmployeeRepository;
 
 @ExtendWith(MockitoExtension.class)

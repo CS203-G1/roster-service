@@ -1,12 +1,12 @@
 package csd.roster.repo.repository;
 
-import csd.roster.model.Employee;
+import csd.roster.domain.model.Employee;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import csd.roster.model.Roster;
+import csd.roster.domain.model.Roster;
 
 import java.time.LocalDate;
 import java.util.List;

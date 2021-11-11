@@ -2,17 +2,14 @@ package csd.roster.services.service;
 
 import csd.roster.domain.enumerator.HealthStatus;
 import csd.roster.domain.exception.exceptions.EmployeeNotHealthyException;
-import csd.roster.domain.exception.exceptions.RosterEmployeeNotFoundException;
 import csd.roster.domain.exception.exceptions.RuleViolatedException;
-import csd.roster.model.Employee;
-import csd.roster.model.Roster;
-import csd.roster.model.RosterEmployee;
+import csd.roster.domain.model.Employee;
+import csd.roster.domain.model.Roster;
+import csd.roster.domain.model.RosterEmployee;
 import csd.roster.repo.repository.RosterEmployeeRepository;
 import csd.roster.services.service.interfaces.EmployeeService;
 import csd.roster.services.service.interfaces.RosterEmployeeService;
 import csd.roster.services.service.interfaces.RosterService;
-import csd.roster.services.service.interfaces.WorkLocationService;
-import org.hibernate.jdbc.Work;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

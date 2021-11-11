@@ -1,4 +1,4 @@
-package csd.roster.holder;
+package csd.roster.domain.holder;
 
 import csd.roster.domain.enumerator.HealthStatus;
 import csd.roster.domain.enumerator.RequestStatus;

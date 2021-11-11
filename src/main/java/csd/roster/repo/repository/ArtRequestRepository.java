@@ -1,7 +1,7 @@
 package csd.roster.repo.repository;
 
 import csd.roster.domain.enumerator.RequestStatus;
-import csd.roster.model.ArtRequest;
+import csd.roster.domain.model.ArtRequest;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -14,5 +14,5 @@ import java.util.UUID;
 public interface ArtRequestRepository extends JpaRepository<ArtRequest, UUID> {
 
     @Query("select ar from ArtRequest ar where ar.employee.id = :employeeId and ar.requestStatus = :requestStatus")
-    public List<ArtRequest> findAllByEmployeeIdAndRequestStatus(@Param("employeeId") UUID employeeId, @Param("requestStatus") RequestStatus requestStatus);
+    List<ArtRequest> findAllByEmployeeIdAndRequestStatus(@Param("employeeId") UUID employeeId, @Param("requestStatus") RequestStatus requestStatus);
 }
