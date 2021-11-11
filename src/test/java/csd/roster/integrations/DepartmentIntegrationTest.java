@@ -102,8 +102,8 @@ public class DepartmentIntegrationTest {
     @Test
     public void getDepartment_DepartmentExists_Return200() throws URISyntaxException {
         Company company = companyRepository.findAll().get(0);
-        Department firstDepartment = departmentRepository.findAll().get(0);
-        URI uri = new URI(baseUrl + port + "/companies/" + company.getId() + "/departments/" + firstDepartment.getId());
+        Department department = departmentRepository.findAll().get(0);
+        URI uri = new URI(baseUrl + port + "/companies/" + company.getId() + "/departments/" + department.getId());
 
         HttpHeaders headers = new HttpHeaders();
         headers.set("Authorization", "Bearer " + this.accessToken);
@@ -112,7 +112,7 @@ public class DepartmentIntegrationTest {
         ResponseEntity<Department> result = restTemplate.exchange(uri, HttpMethod.GET, entity, Department.class);
 
 
-        assertEquals(firstDepartment, result.getBody());
+        assertEquals(department, result.getBody());
         assertEquals(200, result.getStatusCode().value());
     }
 
