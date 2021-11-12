@@ -18,6 +18,8 @@ import java.util.UUID;
 public class AwsCognitoUtil {
     private final String userPoolId;
 
+    private final String clientId;
+
     private final String accessKey;
 
     private final String secretKey;
@@ -34,6 +36,7 @@ public class AwsCognitoUtil {
                           @Value("${aws.access-secret}") String secretKey,
                           @Value("${aws.default-region}") String awsRegion) {
         this.userPoolId = userPoolId;
+        this.clientId = clientId;
         this.accessKey = accessKey;
         this.secretKey = secretKey;
         this.awsRegion = awsRegion;
@@ -94,5 +97,8 @@ public class AwsCognitoUtil {
     // strictly for integration testing
     public String authenticateAndGetToken(final String username, final String password) {
         AdminInitiateAuthRequest adminInitiateAuthRequest = new AdminInitiateAuthRequest();
+
+        adminInitiateAuthRequest.setAuthFlow(AuthFlowType.ADMIN_NO_SRP_AUTH);
+        adminInitiateAuthRequest.setClientId(this.clientId);
     }
 }
