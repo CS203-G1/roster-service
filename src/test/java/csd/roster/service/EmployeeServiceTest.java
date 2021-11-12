@@ -48,9 +48,15 @@ public class EmployeeServiceTest {
 
         UUID employeeId = UUID.randomUUID();
         VaccinationStatus vaccinationStatus = VaccinationStatus.NOT_VACCINATED;
-        VaccinationBrand vaccinationBrand = null;
+        VaccinationBrand vaccinationBrand = VaccinationBrand.PFIZER;
         HealthStatus healthStatus = HealthStatus.COVID;
-        Employee employee = new Employee(employeeId, null, null, "John Doe", vaccinationStatus, vaccinationBrand, healthStatus, new Date(), true);
+        Employee employee = new Employee();
+        employee.setId(employeeId);
+        employee.setDepartment(department);
+        employee.setVaccinationStatus(vaccinationStatus);
+        employee.setVaccinationBrand(vaccinationBrand);
+        employee.setHealthStatus(healthStatus);
+
 
         when(departmentService.getDepartmentById(any(UUID.class))).thenReturn(department);
         when(employees.save(any(Employee.class))).thenReturn(employee);
@@ -71,7 +77,11 @@ public class EmployeeServiceTest {
         VaccinationStatus vaccinationStatus = VaccinationStatus.NOT_VACCINATED;
         VaccinationBrand vaccinationBrand = null;
         HealthStatus healthStatus = HealthStatus.COVID;
-        Employee employee = new Employee(employeeId, null, null, "John Doe", vaccinationStatus, vaccinationBrand, healthStatus, new Date(), true);
+        Employee employee = new Employee();
+        employee.setId(employeeId);
+        employee.setVaccinationStatus(vaccinationStatus);
+        employee.setVaccinationBrand(vaccinationBrand);
+        employee.setHealthStatus(healthStatus);
 
         when(employees.findById(any(UUID.class))).thenReturn(java.util.Optional.of(employee));
 
@@ -103,7 +113,12 @@ public class EmployeeServiceTest {
         VaccinationStatus vaccinationStatus = VaccinationStatus.NOT_VACCINATED;
         VaccinationBrand vaccinationBrand = null;
         HealthStatus healthStatus = HealthStatus.COVID;
-        Employee employee = new Employee(employeeId, null, department, "John Doe", vaccinationStatus, vaccinationBrand, healthStatus, new Date(), true);
+        Employee employee = new Employee();
+        employee.setId(employeeId);
+        employee.setDepartment(department);
+        employee.setVaccinationStatus(vaccinationStatus);
+        employee.setVaccinationBrand(vaccinationBrand);
+        employee.setHealthStatus(healthStatus);
 
         when(employees.findByIdAndDepartmentId(any(UUID.class), any(UUID.class))).thenReturn(java.util.Optional.of(employee));
 
