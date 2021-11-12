@@ -81,6 +81,7 @@ public class EmployeeServiceTest {
         VaccinationStatus vaccinationStatus = VaccinationStatus.NOT_VACCINATED;
         VaccinationBrand vaccinationBrand = null;
         HealthStatus healthStatus = HealthStatus.COVID;
+
         Employee employee = new Employee();
         employee.setId(employeeId);
         employee.setVaccinationStatus(vaccinationStatus);
