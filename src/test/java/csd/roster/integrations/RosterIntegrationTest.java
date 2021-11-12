@@ -223,4 +223,123 @@ public class RosterIntegrationTest {
 
         assertEquals(200, result.getStatusCode().value());
     }
+
+    @Test
+    public void updateRoster_WorkLocationDoesNotExist_Return404() throws URISyntaxException {
+        WorkLocation workLocation = new WorkLocation();
+        workLocation.setId(UUID.randomUUID());
+        Roster roster = new Roster();
+        roster.setId(UUID.randomUUID());
+        roster.setDate(LocalDate.now().plusDays(1));
+        roster.setFromDateTime(LocalDateTime.of(LocalDate.now().plusDays(1), LocalTime.MIN));
+        roster.setToDateTime(LocalDateTime.of(LocalDate.now().plusDays(1), LocalTime.MAX));
+        URI uri = new URI(baseUrl + port + "/work-locations/" + workLocation.getId() + "/rosters/" + roster.getId());
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Authorization", "Bearer " + this.accessToken);
+
+        HttpEntity<Roster> entity = new HttpEntity<Roster>(roster, headers);
+        ResponseEntity<String> result = restTemplate.exchange(uri, HttpMethod.PUT, entity, String.class);
+
+        WorkLocationNotFoundException e = new WorkLocationNotFoundException(workLocation.getId());
+
+        assertEquals(e.getMessage(), result.getBody());
+        assertEquals(404, result.getStatusCode().value());
+    }
+
+    @Test
+    public void updateRoster_RosterDoesNotExist_Return404() throws URISyntaxException {
+        WorkLocation workLocation = workLocationRepository.findAll().get(0);
+        Roster roster = new Roster();
+        roster.setId(UUID.randomUUID());
+        roster.setDate(LocalDate.now().plusDays(1));
+        roster.setFromDateTime(LocalDateTime.of(LocalDate.now().plusDays(1), LocalTime.MIN));
+        roster.setToDateTime(LocalDateTime.of(LocalDate.now().plusDays(1), LocalTime.MAX));
+        URI uri = new URI(baseUrl + port + "/work-locations/" + workLocation.getId() + "/rosters/" + roster.getId());
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Authorization", "Bearer " + this.accessToken);
+
+        HttpEntity<Roster> entity = new HttpEntity<Roster>(roster, headers);
+        ResponseEntity<String> result = restTemplate.exchange(uri, HttpMethod.PUT, entity, String.class);
+
+        RosterNotFoundException e = new RosterNotFoundException(roster.getId(), workLocation.getId());
+
+        assertEquals(e.getMessage(), result.getBody());
+        assertEquals(404, result.getStatusCode().value());
+    }
+
+    @Test
+    public void updateRoster_RosterDoesExists_Return200() throws URISyntaxException {
+        WorkLocation workLocation = workLocationRepository.findAll().get(0);
+        Roster roster = rosterRepository.findAll().get(0);
+        roster.setFromDateTime(roster.getFromDateTime().plusHours(1));
+        URI uri = new URI(baseUrl + port + "/work-locations/" + workLocation.getId() + "/rosters/" + roster.getId());
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Authorization", "Bearer " + this.accessToken);
+
+        HttpEntity<Roster> entity = new HttpEntity<Roster>(roster, headers);
+        ResponseEntity<Roster> result = restTemplate.exchange(uri, HttpMethod.PUT, entity, Roster.class);
+
+        RosterNotFoundException e = new RosterNotFoundException(roster.getId(), workLocation.getId());
+
+        assertEquals(roster.getFromDateTime(), result.getBody().getFromDateTime());
+        assertEquals(200, result.getStatusCode().value());
+    }
+
+    @Test
+    public void deleteRoster_WorkLocationDoesNotExist_Return404() throws URISyntaxException {
+        WorkLocation workLocation = new WorkLocation();
+        workLocation.setId(UUID.randomUUID());
+        Roster roster = new Roster();
+        roster.setId(UUID.randomUUID());
+        URI uri = new URI(baseUrl + port + "/work-locations/" + workLocation.getId() + "/rosters/" + roster.getId());
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Authorization", "Bearer " + this.accessToken);
+
+        HttpEntity<String> entity = new HttpEntity<String>("parameters", headers);
+        ResponseEntity<String> result = restTemplate.exchange(uri, HttpMethod.DELETE, entity, String.class);
+
+        WorkLocationNotFoundException e = new WorkLocationNotFoundException(workLocation.getId());
+
+        assertEquals(e.getMessage(), result.getBody());
+        assertEquals(404, result.getStatusCode().value());
+    }
+
+    @Test
+    public void deleteRoster_RosterDoesNotExist_Return404() throws URISyntaxException {
+        WorkLocation workLocation = workLocationRepository.findAll().get(0);
+        Roster roster = new Roster();
+        roster.setId(UUID.randomUUID());
+        URI uri = new URI(baseUrl + port + "/work-locations/" + workLocation.getId() + "/rosters/" + roster.getId());
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Authorization", "Bearer " + this.accessToken);
+
+        HttpEntity<String> entity = new HttpEntity<String>("parameters", headers);
+        ResponseEntity<String> result = restTemplate.exchange(uri, HttpMethod.DELETE, entity, String.class);
+
+        RosterNotFoundException e = new RosterNotFoundException(roster.getId(), workLocation.getId());
+
+        assertEquals(e.getMessage(), result.getBody());
+        assertEquals(404, result.getStatusCode().value());
+    }
+
+    @Test
+    public void deleteRoster_RosterExists_Return200() throws URISyntaxException {
+        WorkLocation workLocation = workLocationRepository.findAll().get(0);
+        Roster roster = rosterRepository.findAll().get(0);
+        URI uri = new URI(baseUrl + port + "/work-locations/" + workLocation.getId() + "/rosters/" + roster.getId());
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Authorization", "Bearer " + this.accessToken);
+
+        HttpEntity<String> entity = new HttpEntity<String>("parameters", headers);
+        ResponseEntity<Roster> result = restTemplate.exchange(uri, HttpMethod.DELETE, entity, Roster.class);
+
+
+        assertEquals(200, result.getStatusCode().value());
+    }
 }
