@@ -105,7 +105,7 @@ public class AwsCognitoUtil {
 
     // note that this is only used for development purposes
     // strictly for integration testing
-    public String authenticateAndGetToken(final String username, final String password) {
+    public String authenticateAndGetToken() {
         AdminInitiateAuthRequest adminInitiateAuthRequest = new AdminInitiateAuthRequest();
 
         adminInitiateAuthRequest.setAuthFlow(AuthFlowType.ADMIN_NO_SRP_AUTH);
