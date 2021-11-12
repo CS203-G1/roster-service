@@ -45,9 +45,9 @@ public class Employee {
     @Column(name = "id")
     private UUID id;
 
-    @OneToMany(mappedBy = "employee")
     @JsonIgnore
     @Transient
+    @OneToMany(mappedBy = "employee", orphanRemoval = true, cascade = CascadeType.ALL)
     private Set<RosterEmployee> roster_employees;
 
     @ManyToOne
