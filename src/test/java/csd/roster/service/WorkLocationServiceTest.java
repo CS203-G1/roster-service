@@ -112,7 +112,7 @@ public class WorkLocationServiceTest {
         Department department = new Department();
         department.setId(departmentId);
         department.setCompany(company);
-        
+
 
         UUID workLocationId = UUID.randomUUID();
         WorkLocation workLocation = new WorkLocation(workLocationId, department, null, null, "Eppal Headquarter", "7 Jalan Naga Sari", 40);
