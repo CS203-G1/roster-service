@@ -45,6 +45,7 @@ public class DepartmentServiceTest {
         department.setId(departmentId);
         department.setCompany(company);
 
+
         when(companyService.getCompanyById(any(UUID.class))).thenReturn(company);
         when(departments.save(any(Department.class))).thenReturn(department);
 
@@ -78,6 +79,7 @@ public class DepartmentServiceTest {
         department.setId(departmentId);
         department.setCompany(company);
 
+
         when(departments.findById(any(UUID.class))).thenReturn(java.util.Optional.of(department));
 
         Department foundDepartment = departmentService.getDepartmentById(departmentId);
@@ -95,6 +97,7 @@ public class DepartmentServiceTest {
         Department department = new Department();
         department.setId(departmentId);
         department.setCompany(company);
+
 
         when(departments.findByIdAndCompanyId(any(UUID.class),any(UUID.class))).thenReturn(java.util.Optional.of(department));
 

@@ -44,6 +44,7 @@ public class WorkLocationServiceTest {
         department.setId(departmentId);
         department.setCompany(company);
 
+
         WorkLocation workLocation = new WorkLocation(null, null, null, "Eppal Headquarter", "7 Jalan Naga Sari", 40);
 
         when(departmentService.getDepartmentByIdAndCompanyId(any(UUID.class), any(UUID.class))).thenReturn(department);
@@ -67,6 +68,7 @@ public class WorkLocationServiceTest {
         Department department = new Department();
         department.setId(departmentId);
         department.setCompany(company);
+
 
         UUID workLocationId = UUID.randomUUID();
         WorkLocation workLocation = new WorkLocation(workLocationId, department, null, "Eppal Headquarter", "7 Jalan Naga Sari", 40);
@@ -106,9 +108,11 @@ public class WorkLocationServiceTest {
         Company company = new Company(companyId, "Eppal", null, null);
 
         UUID departmentId = UUID.randomUUID();
+
         Department department = new Department();
         department.setId(departmentId);
         department.setCompany(company);
+
 
         UUID workLocationId = UUID.randomUUID();
         WorkLocation workLocation = new WorkLocation(workLocationId, department, null, "Eppal Headquarter", "7 Jalan Naga Sari", 40);

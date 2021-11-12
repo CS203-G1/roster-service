@@ -48,6 +48,7 @@ public class EmployeeServiceTest {
         department.setId(departmentId);
         department.setCompany(company);
 
+
         UUID employeeId = UUID.randomUUID();
         VaccinationStatus vaccinationStatus = VaccinationStatus.NOT_VACCINATED;
         VaccinationBrand vaccinationBrand = VaccinationBrand.PFIZER;
@@ -113,6 +114,7 @@ public class EmployeeServiceTest {
         Department department = new Department();
         department.setId(departmentId);
         department.setCompany(company);
+
 
         UUID employeeId = UUID.randomUUID();
         VaccinationStatus vaccinationStatus = VaccinationStatus.NOT_VACCINATED;
