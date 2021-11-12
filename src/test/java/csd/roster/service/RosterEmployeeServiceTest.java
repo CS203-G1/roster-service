@@ -48,7 +48,6 @@ public class RosterEmployeeServiceTest {
         UUID employeeId = UUID.randomUUID();
         VaccinationStatus vaccinationStatus = VaccinationStatus.SECOND_DOSE;
         VaccinationBrand vaccinationBrand = VaccinationBrand.PFIZER;
-
         HealthStatus healthStatus = HealthStatus.HEALTHY;
 
         Employee employee = new Employee();

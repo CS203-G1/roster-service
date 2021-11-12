@@ -48,6 +48,7 @@ public class EmployeeServiceTest {
         Company company = new Company(companyId, "Eppal", null, LocalDateTime.now());
 
         UUID departmentId = UUID.randomUUID();
+<<<<<<< HEAD
 
         Department department = new Department();
         department.setId(departmentId);
@@ -62,12 +63,25 @@ public class EmployeeServiceTest {
         Employee employee = new Employee();
         employee.setId(employeeId);
         employee.setDepartment(department);
+=======
+        Department department = new Department(departmentId, company, null, "Marketing", LocalDateTime.now());
+
+        UUID employeeId = UUID.randomUUID();
+        VaccinationStatus vaccinationStatus = VaccinationStatus.NOT_VACCINATED;
+        VaccinationBrand vaccinationBrand = null;
+        HealthStatus healthStatus = HealthStatus.COVID;
+        Employee employee = new Employee();
+        employee.setId(employeeId);
+>>>>>>> e4e84af855d658941c3dea799723091b819d1713
         employee.setVaccinationStatus(vaccinationStatus);
         employee.setVaccinationBrand(vaccinationBrand);
         employee.setHealthStatus(healthStatus);
 
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> e4e84af855d658941c3dea799723091b819d1713
         when(departmentService.getDepartmentById(any(UUID.class))).thenReturn(department);
         when(employees.save(any(Employee.class))).thenReturn(employee);
         when(awsCognitoUtil.createUser(any(Employee.class))).thenReturn(employee);
@@ -88,14 +102,20 @@ public class EmployeeServiceTest {
         VaccinationStatus vaccinationStatus = VaccinationStatus.NOT_VACCINATED;
         VaccinationBrand vaccinationBrand = null;
         HealthStatus healthStatus = HealthStatus.COVID;
+<<<<<<< HEAD
 
+=======
+>>>>>>> e4e84af855d658941c3dea799723091b819d1713
         Employee employee = new Employee();
         employee.setId(employeeId);
         employee.setVaccinationStatus(vaccinationStatus);
         employee.setVaccinationBrand(vaccinationBrand);
         employee.setHealthStatus(healthStatus);
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> e4e84af855d658941c3dea799723091b819d1713
         when(employees.findById(any(UUID.class))).thenReturn(java.util.Optional.of(employee));
 
         Employee foundEmployee = employeeService.getEmployee(employeeId);
@@ -120,24 +140,36 @@ public class EmployeeServiceTest {
         Company company = new Company(companyId, "Eppal", null, LocalDateTime.now());
 
         UUID departmentId = UUID.randomUUID();
+<<<<<<< HEAD
         Department department = new Department();
         department.setId(departmentId);
         department.setCompany(company);
 
+=======
+        Department department = new Department(departmentId, company, null, "Marketing", LocalDateTime.now());
+>>>>>>> e4e84af855d658941c3dea799723091b819d1713
 
         UUID employeeId = UUID.randomUUID();
         VaccinationStatus vaccinationStatus = VaccinationStatus.NOT_VACCINATED;
         VaccinationBrand vaccinationBrand = null;
         HealthStatus healthStatus = HealthStatus.COVID;
+<<<<<<< HEAD
 
         Employee employee = new Employee();
         employee.setId(employeeId);
         employee.setDepartment(department);
+=======
+        Employee employee = new Employee();
+        employee.setId(employeeId);
+>>>>>>> e4e84af855d658941c3dea799723091b819d1713
         employee.setVaccinationStatus(vaccinationStatus);
         employee.setVaccinationBrand(vaccinationBrand);
         employee.setHealthStatus(healthStatus);
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> e4e84af855d658941c3dea799723091b819d1713
         when(employees.findByIdAndDepartmentId(any(UUID.class), any(UUID.class))).thenReturn(java.util.Optional.of(employee));
 
         Employee foundEmployee = employeeService.getEmployee(departmentId,employeeId);

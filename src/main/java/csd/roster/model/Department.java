@@ -1,7 +1,10 @@
 package csd.roster.model;
 
+<<<<<<< HEAD
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+=======
+>>>>>>> e4e84af855d658941c3dea799723091b819d1713
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;

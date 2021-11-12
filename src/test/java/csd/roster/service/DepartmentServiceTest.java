@@ -41,11 +41,9 @@ public class DepartmentServiceTest {
         Company company = new Company(companyId, "Eppal", null, LocalDateTime.now());
 
         UUID departmentId = UUID.randomUUID();
-
         Department department = new Department();
         department.setId(departmentId);
         department.setCompany(company);
-
 
 
         when(companyService.getCompanyById(any(UUID.class))).thenReturn(company);
@@ -77,7 +75,6 @@ public class DepartmentServiceTest {
         Company company = new Company(companyId, "Eppal", null, null);
 
         UUID departmentId = UUID.randomUUID();
-
         Department department = new Department();
         department.setId(departmentId);
         department.setCompany(company);
@@ -115,10 +112,10 @@ public class DepartmentServiceTest {
         Company company = new Company(companyId, "Eppal", null, LocalDateTime.now());
 
         UUID departmentId = UUID.randomUUID();
-
         Department department = new Department();
         department.setId(departmentId);
         department.setCompany(company);
+
 
         Exception exception = assertThrows(DepartmentNotFoundException.class,
                 () -> departmentService.getDepartmentByIdAndCompanyId(departmentId, companyId));
