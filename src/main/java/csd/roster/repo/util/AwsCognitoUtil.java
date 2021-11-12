@@ -29,6 +29,7 @@ public class AwsCognitoUtil {
 
     @Autowired
     public AwsCognitoUtil(@Value("${aws.cognito.userPoolId}") String userPoolId,
+                          @Value("${aws.cognito.clientId}") String clientId,
                           @Value("${aws.access-key}") String accessKey,
                           @Value("${aws.access-secret}") String secretKey,
                           @Value("${aws.default-region}") String awsRegion) {
@@ -87,5 +88,11 @@ public class AwsCognitoUtil {
         AdminGetUserResult adminGetUserResult = identityProvider.adminGetUser(adminGetUserRequest);
 
         return adminGetUserResult.getUserStatus();
+    }
+
+    // note that this is only used for development purposes
+    // strictly for integration testing
+    public String authenticateAndGetToken(final String username, final String password) {
+        AdminInitiateAuthRequest adminInitiateAuthRequest = new AdminInitiateAuthRequest();
     }
 }
