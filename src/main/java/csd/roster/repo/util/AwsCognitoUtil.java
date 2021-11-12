@@ -41,8 +41,8 @@ public class AwsCognitoUtil {
                           @Value("${aws.access-key}") String accessKey,
                           @Value("${aws.access-secret}") String secretKey,
                           @Value("${aws.default-region}") String awsRegion,
-                          @Value("aws.cognito.employerUsername") String employerUsername,
-                          @Value("aws.cognito.employerPassword") String employerPassword) {
+                          @Value("${aws.cognito.employerUsername}") String employerUsername,
+                          @Value("${aws.cognito.employerPassword}") String employerPassword) {
         this.userPoolId = userPoolId;
         this.clientId = clientId;
         this.accessKey = accessKey;
