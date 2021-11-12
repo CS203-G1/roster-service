@@ -126,7 +126,6 @@ public class RosterEmployeeServiceTest {
         employee.setVaccinationBrand(vaccinationBrand);
         employee.setHealthStatus(healthStatus);
 
-
         UUID rosterEmployeeId = UUID.randomUUID();
         LocalDateTime fromTime = LocalDateTime.of(2023, 12, 12, 9,0,0);
         LocalDateTime toTime = LocalDateTime.of(2023, 12, 12, 17,0,0);
