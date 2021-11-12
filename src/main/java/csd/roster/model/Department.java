@@ -1,6 +1,8 @@
 package csd.roster.model;
 
 import java.util.Date;
+import javax.persistence.*;
+import java.io.Serializable;
 import java.util.UUID;
 
 import javax.persistence.Column;
@@ -28,8 +30,8 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode
-public class Department {
-    @javax.persistence.Id
+public class Department implements Serializable {
+    @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name="id")
     private UUID id;

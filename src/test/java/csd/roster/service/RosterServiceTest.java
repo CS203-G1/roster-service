@@ -103,7 +103,7 @@ public class RosterServiceTest {
 
         UUID rosterId = UUID.randomUUID();
         Roster roster = new Roster(rosterId, LocalDate.now(), workLocation, null);
-        
+
         when(rosters.findByIdAndWorkLocationId(rosterId,workLocationId)).thenReturn(Optional.of(roster));
 
 
