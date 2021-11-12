@@ -41,7 +41,9 @@ public class DepartmentServiceTest {
         Company company = new Company(companyId, "Eppal", null, new Date());
 
         UUID departmentId = UUID.randomUUID();
-        Department department = new Department(departmentId, null, "Marketing", new Date());
+        Department department = new Department();
+        department.setId(departmentId);
+        department.setCompany(company);
 
         when(companyService.getCompanyById(any(UUID.class))).thenReturn(company);
         when(departments.save(any(Department.class))).thenReturn(department);
@@ -72,7 +74,9 @@ public class DepartmentServiceTest {
         Company company = new Company(companyId, "Eppal", null, null);
 
         UUID departmentId = UUID.randomUUID();
-        Department department = new Department(departmentId, company, "Marketing", new Date());
+        Department department = new Department();
+        department.setId(departmentId);
+        department.setCompany(company);
 
         when(departments.findById(any(UUID.class))).thenReturn(java.util.Optional.of(department));
 
@@ -88,7 +92,9 @@ public class DepartmentServiceTest {
         Company company = new Company(companyId, "Eppal", null, new Date());
 
         UUID departmentId = UUID.randomUUID();
-        Department department = new Department(departmentId, company, "Marketing", new Date());
+        Department department = new Department();
+        department.setId(departmentId);
+        department.setCompany(company);
 
         when(departments.findByIdAndCompanyId(any(UUID.class),any(UUID.class))).thenReturn(java.util.Optional.of(department));
 
@@ -104,7 +110,9 @@ public class DepartmentServiceTest {
         Company company = new Company(companyId, "Eppal", null, new Date());
 
         UUID departmentId = UUID.randomUUID();
-        Department department = new Department(departmentId, company, "Marketing", new Date());
+        Department department = new Department();
+        department.setId(departmentId);
+        department.setCompany(company);
 
         Exception exception = assertThrows(DepartmentNotFoundException.class,
                 () -> departmentService.getDepartmentByIdAndCompanyId(departmentId, companyId));

@@ -44,13 +44,15 @@ public class EmployeeServiceTest {
         Company company = new Company(companyId, "Eppal", null, new Date());
 
         UUID departmentId = UUID.randomUUID();
-        Department department = new Department(departmentId, company, "Marketing", new Date());
+        Department department = new Department();
+        department.setId(departmentId);
+        department.setCompany(company);
 
         UUID employeeId = UUID.randomUUID();
         VaccinationStatus vaccinationStatus = VaccinationStatus.NOT_VACCINATED;
         VaccinationBrand vaccinationBrand = VaccinationBrand.PFIZER;
         HealthStatus healthStatus = HealthStatus.COVID;
-<<<<<<< HEAD
+
         Employee employee = new Employee();
         employee.setId(employeeId);
         employee.setDepartment(department);
@@ -58,9 +60,6 @@ public class EmployeeServiceTest {
         employee.setVaccinationBrand(vaccinationBrand);
         employee.setHealthStatus(healthStatus);
 
-=======
-        Employee employee = new Employee(employeeId, null, null, "John Doe", vaccinationStatus, vaccinationBrand, healthStatus);
->>>>>>> Update test parameters as models are edited
 
         when(departmentService.getDepartmentById(any(UUID.class))).thenReturn(department);
         when(employees.save(any(Employee.class))).thenReturn(employee);
@@ -111,7 +110,9 @@ public class EmployeeServiceTest {
         Company company = new Company(companyId, "Eppal", null, new Date());
 
         UUID departmentId = UUID.randomUUID();
-        Department department = new Department(departmentId, company, "Marketing", new Date());
+        Department department = new Department();
+        department.setId(departmentId);
+        department.setCompany(company);
 
         UUID employeeId = UUID.randomUUID();
         VaccinationStatus vaccinationStatus = VaccinationStatus.NOT_VACCINATED;
