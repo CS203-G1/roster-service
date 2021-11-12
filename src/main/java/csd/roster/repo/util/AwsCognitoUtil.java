@@ -121,4 +121,13 @@ public class AwsCognitoUtil {
 
         return adminInitiateAuthResult.getAuthenticationResult().getAccessToken();
     }
+
+    public void deleteUser(final String username) {
+        AdminDeleteUserRequest adminDeleteUserRequest = new AdminDeleteUserRequest();
+
+        adminDeleteUserRequest.setUsername(username);
+        adminDeleteUserRequest.setUserPoolId(this.userPoolId);
+
+        AdminDeleteUserResult adminDeleteUserResult = identityProvider.adminDeleteUser(adminDeleteUserRequest);
+    }
 }
