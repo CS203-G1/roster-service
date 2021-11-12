@@ -55,8 +55,7 @@ public class EmployeeServiceTest {
         VaccinationStatus vaccinationStatus = VaccinationStatus.NOT_VACCINATED;
         VaccinationBrand vaccinationBrand = VaccinationBrand.PFIZER;
         HealthStatus healthStatus = HealthStatus.COVID;
-
-
+        
         Employee employee = new Employee();
         employee.setId(employeeId);
         employee.setDepartment(department);
@@ -90,6 +89,7 @@ public class EmployeeServiceTest {
         employee.setVaccinationStatus(vaccinationStatus);
         employee.setVaccinationBrand(vaccinationBrand);
         employee.setHealthStatus(healthStatus);
+
 
         when(employees.findById(any(UUID.class))).thenReturn(java.util.Optional.of(employee));
 
