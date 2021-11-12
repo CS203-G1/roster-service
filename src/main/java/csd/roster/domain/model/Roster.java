@@ -41,7 +41,6 @@ public class Roster {
 
     @ManyToOne
     @JoinColumn(name = "workLocation_id")
-    @JsonIgnore
     private WorkLocation workLocation;
 
     // When the roster for this employee starts
