@@ -8,6 +8,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -38,12 +39,14 @@ public class DepartmentServiceTest {
     @Test
     public void addDepartment_NewDepartment_ReturnSavedDepartment(){
         UUID companyId = UUID.randomUUID();
-        Company company = new Company(companyId, "Eppal", null, new Date());
+        Company company = new Company(companyId, "Eppal", null, LocalDateTime.now());
 
         UUID departmentId = UUID.randomUUID();
+
         Department department = new Department();
         department.setId(departmentId);
         department.setCompany(company);
+
 
 
         when(companyService.getCompanyById(any(UUID.class))).thenReturn(company);
@@ -75,6 +78,7 @@ public class DepartmentServiceTest {
         Company company = new Company(companyId, "Eppal", null, null);
 
         UUID departmentId = UUID.randomUUID();
+
         Department department = new Department();
         department.setId(departmentId);
         department.setCompany(company);
@@ -91,13 +95,12 @@ public class DepartmentServiceTest {
     @Test
     public void getDepartmentByIdAndCompanyId_DepartmentExists_ReturnFoundDepartment(){
         UUID companyId = UUID.randomUUID();
-        Company company = new Company(companyId, "Eppal", null, new Date());
+        Company company = new Company(companyId, "Eppal", null, LocalDateTime.now());
 
         UUID departmentId = UUID.randomUUID();
         Department department = new Department();
         department.setId(departmentId);
         department.setCompany(company);
-
 
         when(departments.findByIdAndCompanyId(any(UUID.class),any(UUID.class))).thenReturn(java.util.Optional.of(department));
 
@@ -110,9 +113,10 @@ public class DepartmentServiceTest {
     @Test
     public void getDepartmentByIdAndCompanyId_DepartmentDoesNotExist_ThrowException(){
         UUID companyId = UUID.randomUUID();
-        Company company = new Company(companyId, "Eppal", null, new Date());
+        Company company = new Company(companyId, "Eppal", null, LocalDateTime.now());
 
         UUID departmentId = UUID.randomUUID();
+
         Department department = new Department();
         department.setId(departmentId);
         department.setCompany(company);

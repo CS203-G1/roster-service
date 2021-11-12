@@ -8,7 +8,6 @@ import static org.mockito.Mockito.when;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.UUID;
 
 import org.junit.jupiter.api.Test;
@@ -51,11 +50,13 @@ public class RosterEmployeeServiceTest {
         VaccinationBrand vaccinationBrand = VaccinationBrand.PFIZER;
         HealthStatus healthStatus = HealthStatus.HEALTHY;
 
+
         Employee employee = new Employee();
         employee.setId(employeeId);
         employee.setVaccinationStatus(vaccinationStatus);
         employee.setVaccinationBrand(vaccinationBrand);
         employee.setHealthStatus(healthStatus);
+
 
         UUID rosterEmployeeId = UUID.randomUUID();
         LocalDateTime fromTime = LocalDateTime.of(2023, 12, 12, 9,0,0);
@@ -92,6 +93,7 @@ public class RosterEmployeeServiceTest {
         employee.setVaccinationBrand(vaccinationBrand);
         employee.setHealthStatus(healthStatus);
 
+
         UUID rosterEmployeeId = UUID.randomUUID();
         LocalDateTime fromTime = LocalDateTime.of(2023, 12, 12, 9,0,0);
         LocalDateTime toTime = LocalDateTime.of(2023, 12, 12, 17,0,0);
@@ -125,6 +127,7 @@ public class RosterEmployeeServiceTest {
         employee.setVaccinationBrand(vaccinationBrand);
         employee.setHealthStatus(healthStatus);
 
+
         UUID rosterEmployeeId = UUID.randomUUID();
         LocalDateTime fromTime = LocalDateTime.of(2023, 12, 12, 9,0,0);
         LocalDateTime toTime = LocalDateTime.of(2023, 12, 12, 17,0,0);
@@ -153,6 +156,7 @@ public class RosterEmployeeServiceTest {
         employee.setVaccinationStatus(vaccinationStatus);
         employee.setVaccinationBrand(vaccinationBrand);
         employee.setHealthStatus(healthStatus);
+
 
         Exception exception = assertThrows(RosterEmployeeNotFoundException.class, () -> rosterEmployeeService.getRosterEmployee(rosterId,employeeId));
 
