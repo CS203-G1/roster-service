@@ -193,4 +193,118 @@ public class EmployeeIntegrationTest {
         assertEquals(employee.getName(), result.getBody().getName());
         assertEquals(200, result.getStatusCode().value());
     }
+
+    @Test
+    public void updateEmployee_DepartmentDoesNotExist_Return404() throws URISyntaxException {
+        Department department = new Department();
+        department.setId(UUID.randomUUID());
+        Employee employee= new Employee();
+        employee.setId(UUID.randomUUID());
+        URI uri = new URI(baseUrl + port +  "/departments/" + department.getId() + "/employees/" + employee.getId());
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Authorization", "Bearer " + this.accessToken);
+
+        HttpEntity<Employee> entity = new HttpEntity<Employee>(employee, headers);
+        ResponseEntity<String> result = restTemplate.exchange(uri, HttpMethod.PUT, entity, String.class);
+
+        DepartmentNotFoundException e = new DepartmentNotFoundException(department.getId());
+
+        assertEquals( e.getMessage(), result.getBody());
+        assertEquals(404, result.getStatusCode().value());
+    }
+
+    @Test
+    public void updateEmployee_EmployeeDoesNotExist_Return404() throws URISyntaxException {
+        Department department = departmentRepository.findAll().get(0);
+        Employee employee= new Employee();
+        employee.setId(UUID.randomUUID());
+        URI uri = new URI(baseUrl + port +  "/departments/" + department.getId() + "/employees/" + employee.getId());
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Authorization", "Bearer " + this.accessToken);
+
+        HttpEntity<Employee> entity = new HttpEntity<Employee>(employee, headers);
+        ResponseEntity<String> result = restTemplate.exchange(uri, HttpMethod.PUT, entity, String.class);
+
+
+        EmployeeNotFoundException e = new EmployeeNotFoundException(employee.getId());
+
+        assertEquals( e.getMessage(), result.getBody());
+        assertEquals(404, result.getStatusCode().value());
+    }
+
+    @Test
+    public void updateEmployee_EmployeeExists_Return200() throws URISyntaxException {
+        Department department = departmentRepository.findAll().get(0);
+        Employee employee= employeeService.getAllEmployees().get(0);
+        employee.setName("Updated Employee");
+        URI uri = new URI(baseUrl + port +  "/departments/" + department.getId() + "/employees/" + employee.getId());
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Authorization", "Bearer " + this.accessToken);
+
+        HttpEntity<Employee> entity = new HttpEntity<Employee>(employee, headers);
+        ResponseEntity<Employee> result = restTemplate.exchange(uri, HttpMethod.PUT, entity, Employee.class);
+
+
+        assertEquals(employee.getName(), result.getBody().getName());
+        assertEquals(200, result.getStatusCode().value());
+    }
+
+    @Test
+    public void deleteEmployee_DepartmentDoesNotExist_Return404() throws URISyntaxException {
+        Department department = new Department();
+        department.setId(UUID.randomUUID());
+        Employee employee= new Employee();
+        employee.setId(UUID.randomUUID());
+        URI uri = new URI(baseUrl + port +  "/departments/" + department.getId() + "/employees/" + employee.getId());
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Authorization", "Bearer " + this.accessToken);
+
+        HttpEntity<String> entity = new HttpEntity<String>("parameters", headers);
+        ResponseEntity<String> result = restTemplate.exchange(uri, HttpMethod.DELETE, entity, String.class);
+
+        DepartmentNotFoundException e = new DepartmentNotFoundException(department.getId());
+
+        assertEquals( e.getMessage(), result.getBody());
+        assertEquals(404, result.getStatusCode().value());
+    }
+
+    @Test
+    public void deleteEmployee_EmployeeDoesNotExist_Return404() throws URISyntaxException {
+        Department department = departmentRepository.findAll().get(0);
+        Employee employee= new Employee();
+        employee.setId(UUID.randomUUID());
+        URI uri = new URI(baseUrl + port +  "/departments/" + department.getId() + "/employees/" + employee.getId());
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Authorization", "Bearer " + this.accessToken);
+
+        HttpEntity<String> entity = new HttpEntity<String>("parameters", headers);
+        ResponseEntity<String> result = restTemplate.exchange(uri, HttpMethod.DELETE, entity, String.class);
+
+
+        EmployeeNotFoundException e = new EmployeeNotFoundException(employee.getId());
+
+        assertEquals( e.getMessage(), result.getBody());
+        assertEquals(404, result.getStatusCode().value());
+    }
+
+    @Test
+    public void deleteEmployee_EmployeeExists_Return200() throws URISyntaxException {
+        Department department = departmentRepository.findAll().get(0);
+        Employee employee= employeeService.getAllEmployees().get(0);
+        URI uri = new URI(baseUrl + port +  "/departments/" + department.getId() + "/employees/" + employee.getId());
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Authorization", "Bearer " + this.accessToken);
+
+        HttpEntity<String> entity = new HttpEntity<String>("parameters", headers);
+        ResponseEntity<Employee> result = restTemplate.exchange(uri, HttpMethod.DELETE, entity, Employee.class);
+
+
+        assertEquals(200, result.getStatusCode().value());
+    }
 }
