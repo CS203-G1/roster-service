@@ -85,12 +85,12 @@ public class RosterEmployeeServiceTest {
         VaccinationStatus vaccinationStatus = VaccinationStatus.SECOND_DOSE;
         VaccinationBrand vaccinationBrand = VaccinationBrand.PFIZER;
         HealthStatus healthStatus = HealthStatus.COVID;
+
         Employee employee = new Employee();
         employee.setId(employeeId);
         employee.setVaccinationStatus(vaccinationStatus);
         employee.setVaccinationBrand(vaccinationBrand);
         employee.setHealthStatus(healthStatus);
-
 
         UUID rosterEmployeeId = UUID.randomUUID();
         LocalDateTime fromTime = LocalDateTime.of(2023, 12, 12, 9,0,0);
@@ -118,12 +118,12 @@ public class RosterEmployeeServiceTest {
         VaccinationStatus vaccinationStatus = VaccinationStatus.SECOND_DOSE;
         VaccinationBrand vaccinationBrand = VaccinationBrand.PFIZER;
         HealthStatus healthStatus = HealthStatus.COVID;
+
         Employee employee = new Employee();
         employee.setId(employeeId);
         employee.setVaccinationStatus(vaccinationStatus);
         employee.setVaccinationBrand(vaccinationBrand);
         employee.setHealthStatus(healthStatus);
-
 
         UUID rosterEmployeeId = UUID.randomUUID();
         LocalDateTime fromTime = LocalDateTime.of(2023, 12, 12, 9,0,0);

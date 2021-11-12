@@ -8,6 +8,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.UUID;
 
@@ -61,7 +62,6 @@ public class EmployeeServiceTest {
         employee.setVaccinationBrand(vaccinationBrand);
         employee.setHealthStatus(healthStatus);
 
-
         when(departmentService.getDepartmentById(any(UUID.class))).thenReturn(department);
         when(employees.save(any(Employee.class))).thenReturn(employee);
 
@@ -87,6 +87,7 @@ public class EmployeeServiceTest {
         employee.setVaccinationStatus(vaccinationStatus);
         employee.setVaccinationBrand(vaccinationBrand);
         employee.setHealthStatus(healthStatus);
+
 
         when(employees.findById(any(UUID.class))).thenReturn(java.util.Optional.of(employee));
 
