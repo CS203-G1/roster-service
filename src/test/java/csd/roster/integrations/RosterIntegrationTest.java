@@ -154,7 +154,7 @@ public class RosterIntegrationTest {
         ResponseEntity<Roster> result = restTemplate.exchange(uri, HttpMethod.GET, entity, Roster.class);
 
 
-        assertEquals(roster, result.getBody());
+        assertEquals(roster.getId(), result.getBody().getId());
         assertEquals(200, result.getStatusCode().value());
     }
 
