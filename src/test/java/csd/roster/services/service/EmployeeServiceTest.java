@@ -74,7 +74,7 @@ public class EmployeeServiceTest {
         assertEquals(employee,savedEmployee);
         assertEquals(department, savedEmployee.getDepartment());
 
-        verify(departmentService, times(1)).getDepartmentById(departmentId);
+        verify(departmentService, times(2)).getDepartmentById(departmentId);
         verify(employees, times(1)).save(employee);
     }
 
