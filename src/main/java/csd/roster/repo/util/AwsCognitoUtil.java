@@ -12,6 +12,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import wiremock.org.apache.commons.lang3.RandomStringUtils;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 @Component
@@ -26,6 +28,10 @@ public class AwsCognitoUtil {
 
     private final String awsRegion;
 
+    private final String employerUsername;
+
+    private final String employerPassword;
+
     // AWSCognitoIdentityProvider: https://docs.aws.amazon.com/AWSJavaSDK/latest/javadoc/com/amazonaws/services/cognitoidp/AWSCognitoIdentityProvider.html
     private final AWSCognitoIdentityProvider identityProvider;
 
@@ -34,12 +40,16 @@ public class AwsCognitoUtil {
                           @Value("${aws.cognito.clientId}") String clientId,
                           @Value("${aws.access-key}") String accessKey,
                           @Value("${aws.access-secret}") String secretKey,
-                          @Value("${aws.default-region}") String awsRegion) {
+                          @Value("${aws.default-region}") String awsRegion,
+                          @Value("aws.cognito.employerUsername") String employerUsername,
+                          @Value("aws.cognito.employerPassword") String employerPassword) {
         this.userPoolId = userPoolId;
         this.clientId = clientId;
         this.accessKey = accessKey;
         this.secretKey = secretKey;
         this.awsRegion = awsRegion;
+        this.employerUsername = employerUsername;
+        this.employerPassword = employerPassword;
 
         AWSCredentials credentials = new BasicAWSCredentials(this.accessKey, this.secretKey);
 
@@ -100,5 +110,15 @@ public class AwsCognitoUtil {
 
         adminInitiateAuthRequest.setAuthFlow(AuthFlowType.ADMIN_NO_SRP_AUTH);
         adminInitiateAuthRequest.setClientId(this.clientId);
+        adminInitiateAuthRequest.setUserPoolId(this.userPoolId);
+
+        Map<String, String> authParameters = new HashMap<String, String>();
+        authParameters.put("USERNAME", this.employerUsername);
+        authParameters.put("PASSWORD", this.employerPassword);
+        adminInitiateAuthRequest.setAuthParameters(authParameters);
+
+        AdminInitiateAuthResult adminInitiateAuthResult = identityProvider.adminInitiateAuth(adminInitiateAuthRequest);
+
+        return adminInitiateAuthResult.getAuthenticationResult().getAccessToken();
     }
 }
