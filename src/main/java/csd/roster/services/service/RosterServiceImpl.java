@@ -53,6 +53,7 @@ public class RosterServiceImpl implements RosterService {
 
     @Override
     public Roster getRoster(final UUID workLocationId, final UUID rosterId) {
+        workLocationService.getWorkLocationById(workLocationId);
         return rosterRepository.findByIdAndWorkLocationId(rosterId, workLocationId)
                 .orElseThrow(() -> new RosterNotFoundException(rosterId, workLocationId));
     }
