@@ -50,6 +50,7 @@ public class EmployeeServiceTest {
         VaccinationStatus vaccinationStatus = VaccinationStatus.NOT_VACCINATED;
         VaccinationBrand vaccinationBrand = VaccinationBrand.PFIZER;
         HealthStatus healthStatus = HealthStatus.COVID;
+<<<<<<< HEAD
         Employee employee = new Employee();
         employee.setId(employeeId);
         employee.setDepartment(department);
@@ -57,6 +58,9 @@ public class EmployeeServiceTest {
         employee.setVaccinationBrand(vaccinationBrand);
         employee.setHealthStatus(healthStatus);
 
+=======
+        Employee employee = new Employee(employeeId, null, null, "John Doe", vaccinationStatus, vaccinationBrand, healthStatus);
+>>>>>>> Update test parameters as models are edited
 
         when(departmentService.getDepartmentById(any(UUID.class))).thenReturn(department);
         when(employees.save(any(Employee.class))).thenReturn(employee);
@@ -113,6 +117,7 @@ public class EmployeeServiceTest {
         VaccinationStatus vaccinationStatus = VaccinationStatus.NOT_VACCINATED;
         VaccinationBrand vaccinationBrand = null;
         HealthStatus healthStatus = HealthStatus.COVID;
+
         Employee employee = new Employee();
         employee.setId(employeeId);
         employee.setDepartment(department);
