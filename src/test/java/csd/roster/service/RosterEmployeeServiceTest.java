@@ -50,7 +50,6 @@ public class RosterEmployeeServiceTest {
         VaccinationBrand vaccinationBrand = VaccinationBrand.PFIZER;
         HealthStatus healthStatus = HealthStatus.HEALTHY;
 
-
         Employee employee = new Employee();
         employee.setId(employeeId);
         employee.setVaccinationStatus(vaccinationStatus);
