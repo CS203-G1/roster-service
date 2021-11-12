@@ -135,7 +135,7 @@ public class EmployeeServiceTest {
         employee.setVaccinationStatus(vaccinationStatus);
         employee.setVaccinationBrand(vaccinationBrand);
         employee.setHealthStatus(healthStatus);
-        
+
 
         when(employees.findByIdAndDepartmentId(any(UUID.class), any(UUID.class))).thenReturn(java.util.Optional.of(employee));
 
