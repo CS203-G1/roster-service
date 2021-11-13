@@ -53,6 +53,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public Employee addEmployee(final UUID departmentId, final Employee employee) {
+        departmentService.getDepartmentById(departmentId);
         Employee createdEmployee = awsCognitoUtil.createUser(employee);
         awsCognitoUtil.addUserToGroup(createdEmployee.getId().toString(), employeeGroup);
         emailService.addEmailToPool(createdEmployee.getEmail());
@@ -82,6 +83,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public Employee getEmployee(final UUID departmentId, final UUID employeeId) {
+        departmentService.getDepartmentById(departmentId);
         return employeeRepository.findByIdAndDepartmentId(employeeId, departmentId)
                 .orElseThrow(() -> new EmployeeNotFoundException(employeeId));
     }

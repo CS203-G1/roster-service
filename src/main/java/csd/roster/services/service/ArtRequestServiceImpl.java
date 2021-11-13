@@ -4,9 +4,11 @@ import csd.roster.domain.enumerator.HealthStatus;
 import csd.roster.domain.enumerator.RequestStatus;
 import csd.roster.domain.exception.exceptions.ArtRequestNotFoundException;
 import csd.roster.domain.model.ArtRequest;
+import csd.roster.domain.model.Company;
 import csd.roster.domain.model.Employee;
 import csd.roster.repo.repository.ArtRequestRepository;
 import csd.roster.services.service.interfaces.ArtRequestService;
+import csd.roster.services.service.interfaces.CompanyService;
 import csd.roster.services.service.interfaces.EmailService;
 import csd.roster.services.service.interfaces.EmployeeService;
 import csd.roster.repo.util.AwsS3Util;
@@ -26,6 +28,8 @@ import java.util.UUID;
 public class ArtRequestServiceImpl implements ArtRequestService {
     private final ArtRequestRepository artRequestRepository;
 
+    private final CompanyService companyService;
+
     private final EmployeeService employeeService;
 
     private final EmailService emailService;
@@ -42,11 +46,13 @@ public class ArtRequestServiceImpl implements ArtRequestService {
     @Autowired
     public ArtRequestServiceImpl(
             ArtRequestRepository artRequestRepository,
+            CompanyService companyService,
             EmployeeService employeeService,
             AwsS3Util awsS3Util,
             EmailService emailService
     ) {
         this.artRequestRepository = artRequestRepository;
+        this.companyService = companyService;
         this.employeeService = employeeService;
         this.awsS3Util = awsS3Util;
         this.emailService = emailService;
@@ -86,6 +92,7 @@ public class ArtRequestServiceImpl implements ArtRequestService {
     @Override
     public List<ArtRequest> getArtRequestsByCompanyIdAndApprovalStatus(final UUID companyId,
                                                                        final RequestStatus requestStatus) {
+        Company company = companyService.getCompanyById(companyId);
         List<Employee> employees = employeeService.getAllEmployeesByCompanyId(companyId);
 
         ArrayList<ArtRequest> artRequests = new ArrayList<ArtRequest>();

@@ -25,4 +25,10 @@ public class AwsS3Util{
         }
     }
 
+
+    // For Testing Purposes only
+    public void delete(final String bucket, final String fileName){
+        s3.deleteObject(bucket, fileName);
+    }
+
 }

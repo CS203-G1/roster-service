@@ -68,6 +68,6 @@ public class DepartmentServiceImpl implements DepartmentService {
             department.setCompany(company);
             department.setId(departmentId);
             return departmentRepository.save(department);
-        }).orElseThrow(() -> new DepartmentNotFoundException(companyId, departmentId));
+        }).orElseThrow(() -> new DepartmentNotFoundException(departmentId, companyId));
     }
 }
