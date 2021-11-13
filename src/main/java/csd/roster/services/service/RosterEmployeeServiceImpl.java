@@ -68,6 +68,8 @@ public class RosterEmployeeServiceImpl implements RosterEmployeeService {
 
     @Override
     public void removeRosterEmployee(final UUID rosterId, final UUID employeeId) {
+        Roster roster = rosterService.getRoster(rosterId);
+        Employee employee = employeeService.getEmployee(employeeId);
         RosterEmployee rosterEmployee = getRosterEmployee(rosterId, employeeId);
 
         rosterEmployee.setRemote(true);
@@ -79,6 +81,8 @@ public class RosterEmployeeServiceImpl implements RosterEmployeeService {
     public RosterEmployee updateRosterEmployee(final UUID rosterId,
                                                final UUID employeeId,
                                                final RosterEmployee newRosterEmployee) {
+        Roster roster = rosterService.getRoster(rosterId);
+        Employee employee = employeeService.getEmployee(employeeId);
         RosterEmployee rosterEmployee = getRosterEmployee(rosterId, employeeId);
 
         // Different from the usual updates because we only want to allow the frontend request to be able to
