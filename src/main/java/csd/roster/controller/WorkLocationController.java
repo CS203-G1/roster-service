@@ -21,23 +21,16 @@ public class WorkLocationController {
         this.workLocationService = workLocationService;
     }
 
-    @PostMapping("/companies/{companyId}/departments/{departmentId}/work-locations")
-    public WorkLocation addWorkLocation(@PathVariable (value = "companyId") final UUID companyId,
-                                           @PathVariable (value = "departmentId") final UUID departmentId,
+    @PostMapping("/departments/{departmentId}/work-locations")
+    public WorkLocation addWorkLocation(@PathVariable (value = "departmentId") final UUID departmentId,
                                            @RequestBody final WorkLocation workLocation) {
-        return workLocationService.add(companyId, departmentId, workLocation);
+        return workLocationService.add(departmentId, workLocation);
     }
 
-    @GetMapping("/companies/{companyId}/departments/{departmentId}/work-locations/{workLocationId}")
-    public ResponseEntity<?> getWorkLocation(@PathVariable (value = "companyId") final UUID companyId,
-                                             @PathVariable (value = "departmentId") final UUID departmentId,
+    @GetMapping("/departments/{departmentId}/work-locations/{workLocationId}")
+    public WorkLocation getWorkLocation(@PathVariable (value = "departmentId") final UUID departmentId,
                                            @PathVariable (value = "workLocationId") final UUID workLocationId) {
-        try {
-            WorkLocation workLocation = workLocationService.get(companyId, departmentId, workLocationId);
-            return new ResponseEntity<>(workLocation, HttpStatus.OK);
-        } catch (ResourceNotFoundException e) {
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
-        }
+        return workLocationService.get(departmentId, workLocationId);
     }
 
     @GetMapping("/work-locations/{workLocationId}")
@@ -45,29 +38,18 @@ public class WorkLocationController {
         return workLocationService.getWorkLocationById(workLocationId);
     }
 
-    @PutMapping("/companies/{companyId}/departments/{departmentId}/work-locations/{workLocationId}")
-    public ResponseEntity<?> updateWorkLocation(@PathVariable (value = "companyId") final UUID companyId,
-                                             @PathVariable (value = "departmentId") final UUID departmentId,
+    @PutMapping("/departments/{departmentId}/work-locations/{workLocationId}")
+    public WorkLocation updateWorkLocation(@PathVariable (value = "departmentId") final UUID departmentId,
                                              @PathVariable (value = "workLocationId") final UUID workLocationId,
                                                 @RequestBody final WorkLocation newWorkLocation) {
-        try {
-            WorkLocation workLocation = workLocationService.update(companyId, departmentId, workLocationId, newWorkLocation);
-            return new ResponseEntity<>(workLocation, HttpStatus.OK);
-        } catch (ResourceNotFoundException e) {
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
-        }
+        return workLocationService.update(departmentId, workLocationId, newWorkLocation);
     }
 
-    @DeleteMapping("/companies/{companyId}/departments/{departmentId}/work-locations/{workLocationId}")
-    public ResponseEntity<?> updateWorkLocation(@PathVariable (value = "companyId") final UUID companyId,
-                                                @PathVariable (value = "departmentId") final UUID departmentId,
+    @DeleteMapping("/departments/{departmentId}/work-locations/{workLocationId}")
+    public ResponseEntity deleteWorkLocation(@PathVariable (value = "departmentId") final UUID departmentId,
                                                 @PathVariable (value = "workLocationId") final UUID workLocationId) {
-        try {
-            workLocationService.delete(companyId, departmentId, workLocationId);
-            return new ResponseEntity<>(null, HttpStatus.OK);
-        } catch (ResourceNotFoundException e) {
-            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
-        }
+        workLocationService.delete(departmentId, workLocationId);
+        return new ResponseEntity<>(null, HttpStatus.OK);
     }
 
 }
