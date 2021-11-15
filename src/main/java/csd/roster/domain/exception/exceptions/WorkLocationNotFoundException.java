@@ -10,11 +10,10 @@ import java.util.UUID;
 public class WorkLocationNotFoundException extends ResourceNotFoundException {
     private static final long serialVersionUID = 1L;
 
-    public WorkLocationNotFoundException(UUID departmentId, UUID companyId, UUID workLocationId) {
-        super(String.format("Could not find work location %s from department %s from company %s",
+    public WorkLocationNotFoundException(UUID departmentId, UUID workLocationId) {
+        super(String.format("Could not find work location %s from department %s",
                 workLocationId,
-                departmentId,
-                companyId));
+                departmentId));
     }
 
     public WorkLocationNotFoundException(Company company) {
