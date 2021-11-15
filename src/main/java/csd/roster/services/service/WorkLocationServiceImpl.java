@@ -24,10 +24,9 @@ public class WorkLocationServiceImpl implements WorkLocationService {
     }
 
     @Override
-    public WorkLocation add(final UUID companyId,
-                            final UUID departmentId,
+    public WorkLocation add(final UUID departmentId,
                             final WorkLocation workLocation) {
-        Department department = departmentService.getDepartmentByIdAndCompanyId(departmentId, companyId);
+        Department department = departmentService.getDepartmentById(departmentId);
 
         workLocation.setDepartment(department);
         return workLocationRepository.save(workLocation);
@@ -44,34 +43,32 @@ public class WorkLocationServiceImpl implements WorkLocationService {
     }
 
     @Override
-    public void delete(final UUID companyId, final UUID departmentId, final UUID workLocationId) {
-        WorkLocation workLocation = get(companyId, departmentId, workLocationId);
+    public void delete(final UUID departmentId, final UUID workLocationId) {
+        WorkLocation workLocation = get(departmentId, workLocationId);
 
         workLocationRepository.delete(workLocation);
     }
 
     @Override
-    public WorkLocation update(final UUID companyId,
-                               final UUID departmentId,
+    public WorkLocation update(final UUID departmentId,
                                final UUID workLocationId,
                                final WorkLocation newWorkLocation) {
-        Department department = departmentService.getDepartmentByIdAndCompanyId(departmentId, companyId);
+        Department department = departmentService.getDepartmentById(departmentId);
 
         return workLocationRepository.findByIdAndDepartmentId(workLocationId, departmentId).map(workLocation -> {
             newWorkLocation.setDepartment(department);
             newWorkLocation.setId(workLocationId);
             return workLocationRepository.save(newWorkLocation);
-        }).orElseThrow(() -> new WorkLocationNotFoundException(departmentId, companyId, workLocationId));
+        }).orElseThrow(() -> new WorkLocationNotFoundException(departmentId, workLocationId));
     }
 
     @Override
-    public WorkLocation get(final UUID companyId,
-                            final UUID departmentId,
+    public WorkLocation get(final UUID departmentId,
                             final UUID workLocationId) {
-        departmentService.getDepartmentByIdAndCompanyId(departmentId, companyId);
+        departmentService.getDepartmentById(departmentId);
 
         return workLocationRepository.findByIdAndDepartmentId(workLocationId, departmentId)
-                .orElseThrow(() -> new WorkLocationNotFoundException(departmentId, companyId, workLocationId));
+                .orElseThrow(() -> new WorkLocationNotFoundException(departmentId, workLocationId));
     }
 
     @Override
