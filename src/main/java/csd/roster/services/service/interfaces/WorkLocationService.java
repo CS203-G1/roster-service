@@ -6,15 +6,15 @@ import java.util.UUID;
 import csd.roster.domain.model.WorkLocation;
 
 public interface WorkLocationService {
-    WorkLocation add(UUID companyId, UUID departmentId, WorkLocation workLocation);
+    WorkLocation add(UUID departmentId, WorkLocation workLocation);
 
     List<WorkLocation> getWorkLocationsFromDepartment(UUID departmentId);
 
-    void delete(UUID companyId, UUID departmentId, UUID workLocationId);
+    void delete(UUID departmentId, UUID workLocationId);
 
-    WorkLocation update(UUID companyId, UUID departmentId, UUID workLocationId, WorkLocation workLocation);
+    WorkLocation update(UUID departmentId, UUID workLocationId, WorkLocation workLocation);
 
-    WorkLocation get(UUID companyId, UUID departmentId, UUID workLocationId);
+    WorkLocation get(UUID departmentId, UUID workLocationId);
 
     WorkLocation getWorkLocationById(UUID workLocationId);
 
