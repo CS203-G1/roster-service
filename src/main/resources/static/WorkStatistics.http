@@ -1,0 +1,28 @@
+###
+# Get Daily Work Statistics By Company
+GET http://localhost:8080/companies/14f671b0-511e-43e4-86bb-6828f7a8e12d/work-statistics/daily
+Authorization: Bearer
+
+###
+# Get Onsite Employees List By Company
+GET http://localhost:8080/companies/14f671b0-511e-43e4-86bb-6828f7a8e12d/work-statistics/onsite
+Authorization: Bearer
+
+###
+# Get Weekly Work Statistics By Company
+GET http://localhost:8080/companies/14f671b0-511e-43e4-86bb-6828f7a8e12d/work-statistics/weekly
+Authorization: Bearer
+
+###
+# Get Daily Summary By Company
+GET http://localhost:8080/companies/14f671b0-511e-43e4-86bb-6828f7a8e12d/work-statistics/summary
+Authorization: Bearer
+
+###
+# Get Daily Summary By Employers Company
+GET http://localhost:8080/employers/8cdbf3f5-4cae-4c20-adcd-9ee736c1813c/work-statistics/summary
+Authorization: Bearer
+
+###
+POST http://localhost:8080/schedule/a67a1a16-598b-416d-9744-e8c51c4551a1
+Authorization: Bearer

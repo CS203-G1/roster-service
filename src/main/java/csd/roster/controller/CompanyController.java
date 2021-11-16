@@ -1,18 +1,18 @@
 package csd.roster.controller;
 
-import csd.roster.exception.CompanyNotFoundException;
-import csd.roster.model.Company;
-import csd.roster.service.CompanyService;
+import csd.roster.domain.model.Company;
+import csd.roster.services.service.interfaces.CompanyService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 @RestController
+@PreAuthorize("hasRole('ROLE_EMPLOYER')")
 public class CompanyController {
-    private CompanyService companyService;
+    private final CompanyService companyService;
 
     @Autowired
     public CompanyController(CompanyService companyService) {
@@ -20,18 +20,22 @@ public class CompanyController {
     }
 
     @PostMapping("/companies")
-    public Company addCompany(@RequestBody Company company) {
+    public Company addCompany(@RequestBody final Company company) {
         return companyService.addCompany(company);
     }
 
     @GetMapping("/companies/{id}")
-    public Company getCompanyById(@PathVariable UUID id) {
-        return companyService.getCompanyById(id)
-                .orElseThrow(() -> new CompanyNotFoundException(id));
+    public Company getCompanyById(@PathVariable final UUID id) {
+        return companyService.getCompanyById(id);
     }
 
     @GetMapping("/companies")
     public List<Company> getCompanies() {
         return companyService.getAllCompanies();
+    }
+
+    @DeleteMapping("/companies/{companyId}")
+    public void delete(@PathVariable final UUID companyId) {
+        companyService.deleteCompanyByid(companyId);
     }
 }

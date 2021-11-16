@@ -1,0 +1,26 @@
+# This workflow will build a Java project with Maven, and cache/restore any dependencies to improve the workflow execution time
+# For more information see: https://help.github.com/actions/language-and-framework-guides/building-and-testing-java-with-maven
+
+name: Java CI with Maven
+
+on:
+  push:
+    branches: [ develop ]
+  pull_request:
+    branches: [ develop ]
+
+jobs:
+  test:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Run Tests
+      uses: actions/setup-java@v2
+      with:
+        java-version: '16'
+        distribution: 'adopt'
+        cache: maven
+    - name: Run Unit Tests
+      run: mvn test -D AWS_REGION=${{ secrets.AWS_REGION }} -D AWS_ACCESS_KEY=${{ secrets.AWS_ACCESS_KEY }} -D AWS_S3_BUCKET=${{ secrets.AWS_S3_BUCKET}} -D AWS_SECRET_KEY=${{ secrets.AWS_SECRET_KEY }} -D COGNITO_POOL_ID=${{ secrets.COGNITO_POOL_ID }} -D COGNITO_CLIENT_ID=${{ secrets.COGNITO_CLIENT_ID }} -D DATABASE_URL=${{ secrets.DATABASE_URL }} -D DATABASE_PASSWORD=${{ secrets.DATABASE_PASSWORD }} -D DATABASE_USERNAME=${{ secrets.DATABASE_USERNAME }} -D DATABASE_NAME=${{ secrets.DATABASE_NAME }} -D DATABASE_PORT=${{ secrets.DATABASE_PORT }}
