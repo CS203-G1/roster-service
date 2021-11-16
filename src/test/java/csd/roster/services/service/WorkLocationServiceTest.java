@@ -57,7 +57,7 @@ public class WorkLocationServiceTest {
         when(departmentService.getDepartmentByIdAndCompanyId(any(UUID.class), any(UUID.class))).thenReturn(department);
         when(workLocations.save(any(WorkLocation.class))).thenReturn(workLocation);
 
-        WorkLocation savedWorkLocation = workLocationService.add(companyId,departmentId, workLocation);
+        WorkLocation savedWorkLocation = workLocationService.add(departmentId, workLocation);
 
         assertNotNull(savedWorkLocation);
         assertEquals(department, workLocation.getDepartment());
@@ -80,7 +80,7 @@ public class WorkLocationServiceTest {
         when(departmentService.getDepartmentByIdAndCompanyId(any(UUID.class), any(UUID.class))).thenReturn(department);
         when(workLocations.findByIdAndDepartmentId(workLocationId, departmentId)).thenReturn(java.util.Optional.of(workLocation));
 
-        WorkLocation foundWorkLocation = workLocationService.get(companyId, departmentId, workLocationId);
+        WorkLocation foundWorkLocation = workLocationService.get(departmentId, workLocationId);
 
         assertEquals(workLocation, foundWorkLocation);
 
@@ -95,7 +95,7 @@ public class WorkLocationServiceTest {
         UUID departmentId = UUID.randomUUID();
         UUID workLocationId = UUID.randomUUID();
 
-        Exception exception = assertThrows(WorkLocationNotFoundException.class, () -> workLocationService.get(companyId,departmentId,workLocationId));
+        Exception exception = assertThrows(WorkLocationNotFoundException.class, () -> workLocationService.get(departmentId,workLocationId));
 
         String expectedExceptionMessage = String.format("Could not find work location %s from department %s from company %s",
                 workLocationId,

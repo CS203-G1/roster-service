@@ -142,7 +142,7 @@ public class WorkLocationIntegrationTest {
         HttpEntity<String> entity = new HttpEntity<String>("parameters", headers);
         ResponseEntity<String> result = restTemplate.exchange(uri, HttpMethod.GET, entity, String.class);
 
-        WorkLocationNotFoundException e = new WorkLocationNotFoundException(department.getId(), company.getId(), workLocation.getId());
+        WorkLocationNotFoundException e = new WorkLocationNotFoundException(department.getId(), workLocation.getId());
 
         assertEquals( e.getMessage(), result.getBody());
         assertEquals(404, result.getStatusCode().value());
@@ -288,7 +288,7 @@ public class WorkLocationIntegrationTest {
         HttpEntity<WorkLocation> entity = new HttpEntity<WorkLocation>(workLocation, headers);
         ResponseEntity<String> result = restTemplate.exchange(uri, HttpMethod.PUT, entity, String.class);
 
-        WorkLocationNotFoundException e = new WorkLocationNotFoundException(department.getId(), company.getId(), workLocation.getId());
+        WorkLocationNotFoundException e = new WorkLocationNotFoundException(department.getId(), workLocation.getId());
 
         assertEquals( e.getMessage(), result.getBody());
         assertEquals(404, result.getStatusCode().value());
@@ -373,7 +373,7 @@ public class WorkLocationIntegrationTest {
         HttpEntity<String> entity = new HttpEntity<String>("parameters", headers);
         ResponseEntity<String> result = restTemplate.exchange(uri, HttpMethod.DELETE, entity, String.class);
 
-        WorkLocationNotFoundException e = new WorkLocationNotFoundException(department.getId(), company.getId(), workLocation.getId());
+        WorkLocationNotFoundException e = new WorkLocationNotFoundException(department.getId(), workLocation.getId());
 
         assertEquals( e.getMessage(), result.getBody());
         assertEquals(404, result.getStatusCode().value());
