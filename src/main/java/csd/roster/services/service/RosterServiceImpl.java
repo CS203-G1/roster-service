@@ -42,7 +42,7 @@ public class RosterServiceImpl implements RosterService {
     }
 
     @Override
-    public List<Roster> getRosters(final UUID workLocationId) {
+    public List<Roster> getRostersByWorkLocationId(final UUID workLocationId) {
         List<Roster> rosters = rosterRepository.findByWorkLocationId(workLocationId);
 
         if (rosters.isEmpty()) {
@@ -52,7 +52,7 @@ public class RosterServiceImpl implements RosterService {
     }
 
     @Override
-    public Roster getRoster(final UUID workLocationId, final UUID rosterId) {
+    public Roster getRosterByIdAndWorkLocationId(final UUID workLocationId, final UUID rosterId) {
         workLocationService.getWorkLocationById(workLocationId);
         return rosterRepository.findByIdAndWorkLocationId(rosterId, workLocationId)
                 .orElseThrow(() -> new RosterNotFoundException(rosterId, workLocationId));
@@ -60,20 +60,20 @@ public class RosterServiceImpl implements RosterService {
 
     // This is added and meant to be used in RosterEmployeeService
     @Override
-    public Roster getRoster(final UUID rosterId) {
+    public Roster getRosterById(final UUID rosterId) {
         return rosterRepository.findById(rosterId)
                 .orElseThrow(() -> new RosterNotFoundException(rosterId));
     }
 
     @Override
-    public void deleteRoster(final UUID workLocationId, final UUID rosterId) {
-        Roster roster = getRoster(workLocationId, rosterId);
+    public void deleteRosterByIdAndWorkLocationId(final UUID workLocationId, final UUID rosterId) {
+        Roster roster = getRosterByIdAndWorkLocationId(workLocationId, rosterId);
 
         rosterRepository.delete(roster);
     }
 
     @Override
-    public Roster updateRoster(final UUID workLocationId, final UUID rosterId, final Roster roster) {
+    public Roster updateRosterByIdAndWorkLocationId(final UUID workLocationId, final UUID rosterId, final Roster roster) {
         workLocationService.getWorkLocationById(workLocationId);
         return rosterRepository.findByIdAndWorkLocationId(rosterId, workLocationId).map(oldRoster -> {
             oldRoster.setFromDateTime(roster.getFromDateTime());

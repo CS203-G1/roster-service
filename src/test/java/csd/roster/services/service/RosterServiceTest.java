@@ -70,7 +70,7 @@ public class RosterServiceTest {
 
         when(rosters.findByWorkLocationId(workLocationId)).thenReturn(workLocation.getRosters());
 
-        List<Roster> rostersForWorkLocation = rosterService.getRosters(workLocationId);
+        List<Roster> rostersForWorkLocation = rosterService.getRostersByWorkLocationId(workLocationId);
 
         assertNotNull(rostersForWorkLocation);
         assertEquals(1, rostersForWorkLocation.size());
@@ -87,7 +87,7 @@ public class RosterServiceTest {
 
         when(rosters.findByWorkLocationId(workLocationId)).thenReturn(workLocation.getRosters());
 
-        Exception exception = assertThrows(RosterNotFoundException.class, () -> rosterService.getRosters(workLocationId));
+        Exception exception = assertThrows(RosterNotFoundException.class, () -> rosterService.getRostersByWorkLocationId(workLocationId));
         String expectedExceptionMessage = String.format("Work location %s does not contain any rosters", workLocationId);
 
         assertEquals(expectedExceptionMessage, exception.getMessage());
@@ -106,7 +106,7 @@ public class RosterServiceTest {
 
         when(rosters.findByIdAndWorkLocationId(rosterId,workLocationId)).thenReturn(Optional.of(roster));
 
-        Roster foundRoster = rosterService.getRoster(workLocationId, rosterId);
+        Roster foundRoster = rosterService.getRosterByIdAndWorkLocationId(workLocationId, rosterId);
 
         assertEquals(roster, foundRoster);
 
@@ -124,7 +124,7 @@ public class RosterServiceTest {
         Roster roster = new Roster(rosterId, LocalDate.now(), workLocation, null, null, null);
 
 
-        Exception exception = assertThrows(RosterNotFoundException.class, () -> rosterService.getRoster(workLocationId, rosterId));
+        Exception exception = assertThrows(RosterNotFoundException.class, () -> rosterService.getRosterByIdAndWorkLocationId(workLocationId, rosterId));
         String expectedExceptionMessage = String.format("Unable to find roster %s from work location %s",
                 rosterId, workLocationId);
 
@@ -144,7 +144,7 @@ public class RosterServiceTest {
 
         when(rosters.findById(rosterId)).thenReturn(Optional.of(roster));
 
-        Roster foundRoster = rosterService.getRoster(rosterId);
+        Roster foundRoster = rosterService.getRosterById(rosterId);
 
         assertEquals(roster, foundRoster);
 
@@ -161,7 +161,7 @@ public class RosterServiceTest {
         UUID rosterId = UUID.randomUUID();
         Roster roster = new Roster(rosterId, LocalDate.now(), workLocation, null, null, null);
 
-        Exception exception = assertThrows(RosterNotFoundException.class, () -> rosterService.getRoster(rosterId));
+        Exception exception = assertThrows(RosterNotFoundException.class, () -> rosterService.getRosterById(rosterId));
         String expectedExceptionMessage = String.format("Roster %s does not exist", rosterId);
 
         assertEquals(expectedExceptionMessage, exception.getMessage());

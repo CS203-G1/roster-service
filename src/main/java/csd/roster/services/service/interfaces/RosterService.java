@@ -11,15 +11,15 @@ import csd.roster.domain.response_model.RosterResponseModel;
 public interface RosterService {
     Roster addRoster(UUID workLocationId, Roster roster);
 
-    List<Roster> getRosters(UUID workLocationId);
+    List<Roster> getRostersByWorkLocationId(UUID workLocationId);
 
-    Roster getRoster(UUID workLocationId, UUID rosterId);
+    Roster getRosterByIdAndWorkLocationId(UUID workLocationId, UUID rosterId);
 
-    Roster getRoster(UUID rosterId);
+    Roster getRosterById(UUID rosterId);
 
-    void deleteRoster(UUID workLocationId, UUID rosterId);
+    void deleteRosterByIdAndWorkLocationId(UUID workLocationId, UUID rosterId);
 
-    Roster updateRoster(UUID workLocationId, UUID rosterId, Roster roster);
+    Roster updateRosterByIdAndWorkLocationId(UUID workLocationId, UUID rosterId, Roster roster);
 
     Roster getCurrentRosterByWorkLocation(WorkLocation workLocation);
 
