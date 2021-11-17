@@ -36,6 +36,6 @@ public class CompanyController {
 
     @DeleteMapping("/companies/{companyId}")
     public void delete(@PathVariable final UUID companyId) {
-        companyService.deleteCompanyByid(companyId);
+        companyService.deleteCompanyById(companyId);
     }
 }

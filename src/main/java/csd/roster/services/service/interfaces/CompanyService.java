@@ -12,7 +12,7 @@ public interface CompanyService {
 
     Company getCompanyById(UUID id);
 
-    Company updateCompanyByid(UUID id, Company company);
+    Company updateCompanyById(UUID id, Company company);
 
-    void deleteCompanyByid(UUID id);
+    void deleteCompanyById(UUID id);
 }
