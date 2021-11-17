@@ -36,7 +36,7 @@ public class RosterEmployeeServiceImpl implements RosterEmployeeService {
     public RosterEmployee addRosterEmployee(final UUID rosterId,
                                             final UUID employeeId,
                                             final RosterEmployee rosterEmployee) {
-        Roster roster = rosterService.getRoster(rosterId);
+        Roster roster = rosterService.getRosterById(rosterId);
         Employee employee = employeeService.getEmployee(employeeId);
 
         List<Employee> allRosterEmployees = employeeService.getAllEmployeesByWorkLocationId(roster.getWorkLocation().getId());
@@ -68,7 +68,7 @@ public class RosterEmployeeServiceImpl implements RosterEmployeeService {
 
     @Override
     public void removeRosterEmployee(final UUID rosterId, final UUID employeeId) {
-        Roster roster = rosterService.getRoster(rosterId);
+        Roster roster = rosterService.getRosterById(rosterId);
         Employee employee = employeeService.getEmployee(employeeId);
         RosterEmployee rosterEmployee = getRosterEmployee(rosterId, employeeId);
 
@@ -81,7 +81,7 @@ public class RosterEmployeeServiceImpl implements RosterEmployeeService {
     public RosterEmployee updateRosterEmployee(final UUID rosterId,
                                                final UUID employeeId,
                                                final RosterEmployee newRosterEmployee) {
-        Roster roster = rosterService.getRoster(rosterId);
+        Roster roster = rosterService.getRosterById(rosterId);
         Employee employee = employeeService.getEmployee(employeeId);
         RosterEmployee rosterEmployee = getRosterEmployee(rosterId, employeeId);
 

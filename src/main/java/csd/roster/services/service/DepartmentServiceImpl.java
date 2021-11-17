@@ -23,7 +23,7 @@ public class DepartmentServiceImpl implements DepartmentService {
     }
 
     @Override
-    public Department add(final UUID companyId, final Department department) {
+    public Department addDepartment(final UUID companyId, final Department department) {
         Company company = companyService.getCompanyById(companyId);
 
         department.setCompany(company);
@@ -50,7 +50,7 @@ public class DepartmentServiceImpl implements DepartmentService {
     }
 
     @Override
-    public void delete(final UUID companyId, final UUID departmentId) {
+    public void deleteDepartmentByIdAndDepartmentId(final UUID companyId, final UUID departmentId) {
         // Using getDepartmentByIdAndCompanyId for DRY purposes
         Department department = getDepartmentByIdAndCompanyId(departmentId, companyId);
 
@@ -58,7 +58,7 @@ public class DepartmentServiceImpl implements DepartmentService {
     }
 
     @Override
-    public Department update(final UUID companyId, final UUID departmentId, final Department department) {
+    public Department updateDepartmentByIdAndDepartmentId(final UUID companyId, final UUID departmentId, final Department department) {
         // Notice here we are using repeated code as getDepartmentByIdAndCompanyId
         // The rational is that we need to get the company object so we can pass it in the params of setCompany
 

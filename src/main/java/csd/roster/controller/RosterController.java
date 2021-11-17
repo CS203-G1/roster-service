@@ -34,12 +34,12 @@ public class RosterController {
     @GetMapping("/work-locations/{workLocationId}/rosters/{rosterId}")
     public Roster getRoster(@PathVariable(value = "workLocationId") final UUID workLocationId,
                             @PathVariable(value = "rosterId") final UUID rosterId) {
-        return rosterService.getRoster(workLocationId, rosterId);
+        return rosterService.getRosterByIdAndWorkLocationId(workLocationId, rosterId);
     }
 
     @GetMapping("/work-locations/{workLocationId}/rosters")
     public List<Roster> getRosters(@PathVariable(value = "workLocationId") final UUID workLocationId) {
-        return rosterService.getRosters(workLocationId);
+        return rosterService.getRostersByWorkLocationId(workLocationId);
     }
 
     @PostMapping("/work-locations/{workLocationId}/rosters")
@@ -51,14 +51,14 @@ public class RosterController {
     @DeleteMapping("/work-locations/{workLocationId}/rosters/{rosterId}")
     public void deleteRoster(@PathVariable(value = "workLocationId") final UUID workLocationId,
                             @PathVariable(value = "rosterId") final UUID rosterId) {
-        rosterService.deleteRoster(workLocationId, rosterId);
+        rosterService.deleteRosterByIdAndWorkLocationId(workLocationId, rosterId);
     }
 
     @PutMapping("/work-locations/{workLocationId}/rosters/{rosterId}")
     public Roster updateRoster(@PathVariable(value = "workLocationId") final UUID workLocationId,
                             @PathVariable(value = "rosterId") final UUID rosterId,
                             @Valid @RequestBody final Roster roster) {
-        return rosterService.updateRoster(workLocationId, rosterId, roster);
+        return rosterService.updateRosterByIdAndWorkLocationId(workLocationId, rosterId, roster);
     }
 
     @GetMapping("/employers/{employerId}/rosters/date/{date}")

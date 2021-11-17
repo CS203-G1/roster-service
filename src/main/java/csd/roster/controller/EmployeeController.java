@@ -74,7 +74,7 @@ public class EmployeeController {
     }
 
     @GetMapping("/employees/{employeeId}/cognito-status")
-    public String getEmployeeCognitoStaus(@PathVariable(value = "employeeId") final UUID employeeId) {
+    public String getEmployeeCognitoStatus(@PathVariable(value = "employeeId") final UUID employeeId) {
         return employeeService.getEmployeeCognitoStatus(employeeId);
     }
 }

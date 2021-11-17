@@ -26,7 +26,7 @@ public class DepartmentController {
     public ResponseEntity<?> addDepartment(@PathVariable (value = "companyId") final UUID companyId,
                                     @RequestBody final Department department) {
         try {
-            Department newDepartment = departmentService.add(companyId, department);
+            Department newDepartment = departmentService.addDepartment(companyId, department);
             return new ResponseEntity<>(newDepartment, HttpStatus.OK);
         } catch (ResourceNotFoundException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
@@ -54,7 +54,7 @@ public class DepartmentController {
                                        @PathVariable (value = "departmentId") final UUID departmentId,
                                        @RequestBody final Department department) {
         try {
-            Department updatedDepartment = departmentService.update(companyId, departmentId, department);
+            Department updatedDepartment = departmentService.updateDepartmentByIdAndDepartmentId(companyId, departmentId, department);
             return new ResponseEntity<>(updatedDepartment, HttpStatus.OK);
         } catch (ResourceNotFoundException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
@@ -66,7 +66,7 @@ public class DepartmentController {
                                        @PathVariable (value = "departmentId") final UUID departmentId) {
 
         try {
-            departmentService.delete(companyId, departmentId);
+            departmentService.deleteDepartmentByIdAndDepartmentId(companyId, departmentId);
             return ResponseEntity.ok().build();
         } catch (ResourceNotFoundException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);

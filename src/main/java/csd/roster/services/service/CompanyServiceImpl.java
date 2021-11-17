@@ -34,12 +34,12 @@ public class CompanyServiceImpl implements CompanyService {
     }
 
     @Override
-    public Company updateCompanyByid(final UUID id, final Company company) {
+    public Company updateCompanyById(final UUID id, final Company company) {
         return null;
     }
 
     @Override
-    public void deleteCompanyByid(final UUID id) throws CompanyNotFoundException {
+    public void deleteCompanyById(final UUID id) throws CompanyNotFoundException {
         Company company = getCompanyById(id);
 
         companyRepository.delete(company);
