@@ -46,7 +46,7 @@ public class DepartmentServiceTest {
         when(companyService.getCompanyById(any(UUID.class))).thenReturn(company);
         when(departments.save(any(Department.class))).thenReturn(department);
 
-        Department savedDepartment = departmentService.add(companyId, department);
+        Department savedDepartment = departmentService.addDepartment(companyId, department);
 
         assertNotNull(savedDepartment);
 
